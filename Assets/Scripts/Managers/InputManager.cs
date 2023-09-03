@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class InputManager : Singleton<InputManager>
 {
-    private PlayerControls playerControls;
+    public PlayerControls playerControls;
 
     public override void Awake()
     {

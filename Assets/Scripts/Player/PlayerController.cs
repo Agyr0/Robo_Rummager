@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
 
+
 public class PlayerController : MonoBehaviour
 {
     #region Player Movement
@@ -28,8 +29,7 @@ public class PlayerController : MonoBehaviour
     private float staminaMax = 100f;
     [SerializeField]
     private float staminaDrain = 3f;
-    [SerializeField]
-    private float staminaRegen = 5f;
+    private float staminaRegen;
 
 
     [Space(5)]
@@ -64,9 +64,14 @@ public class PlayerController : MonoBehaviour
     private bool _canJump = true;
     [SerializeField]
     private bool _canSprint = true;
-
+    [SerializeField]
+    private bool _canDash = true;
 
     private bool isSprinting, isDashing = false;
+    private Coroutine startSprint;
+    private Coroutine stopSprint;
+    private Coroutine playerDash;
+
 
     public bool CanMove
     {
@@ -83,22 +88,40 @@ public class PlayerController : MonoBehaviour
         get { return _canSprint; }
         private set { _canSprint = value; }
     }
+    public bool CanDash
+    {
+        get { return _canDash; }
+        private set { _canDash = value; }
+    }
     #endregion
+
+    #region Holding Robots
+    public Transform handTransform;
+    [HideInInspector]
+    public bool holdingRobot = false;
+
+    #endregion
+
+
 
     private void OnEnable()
     {
-        EventBus.Subscribe(EventType.PLAYER_START_SPRINT, ReduceStamina);
-        EventBus.Subscribe(EventType.PLAYER_STOP_SPRINT, IncreaseStamina);
+        EventBus.Subscribe(EventType.PLAYER_START_SPRINT, PlayerStartSprint);
+        EventBus.Subscribe(EventType.PLAYER_STOP_SPRINT, PlayerStopSprint);
+        EventBus.Subscribe(EventType.PLAYER_DASH, StartDash);
     }
     private void OnDisable()
     {
-        EventBus.Unsubscribe(EventType.PLAYER_START_SPRINT, ReduceStamina);
-        EventBus.Unsubscribe(EventType.PLAYER_STOP_SPRINT, IncreaseStamina);
+        EventBus.Unsubscribe(EventType.PLAYER_START_SPRINT, PlayerStartSprint);
+        EventBus.Unsubscribe(EventType.PLAYER_STOP_SPRINT, PlayerStopSprint);
+        EventBus.Unsubscribe(EventType.PLAYER_DASH, StartDash);
 
     }
 
     private void Start()
     {
+        GameManager.Instance.playerController = this;
+
         controller = GetComponent<CharacterController>();
         cameraTransform = Camera.main.transform;
         inputManager = InputManager.Instance;   
@@ -106,6 +129,7 @@ public class PlayerController : MonoBehaviour
         CanMove = _canMove;
         CanJump = _canJump;
         CurStamina = staminaMax;
+        staminaRegen = staminaDrain * 2f;
     }
 
     private void Update()
@@ -116,7 +140,8 @@ public class PlayerController : MonoBehaviour
             HandleJump();
         if(CanSprint) 
             HandleSprint();
-        
+        if(CanDash)
+            HandleDash();
     }
 
     private void HandleMovement()
@@ -157,82 +182,90 @@ public class PlayerController : MonoBehaviour
 
     private void HandleSprint()
     {
-        if(CurStamina > 0 && inputManager.GetPlayerSprint())
+        inputManager.playerControls.Player.Sprint.performed += context =>
         {
-            if (!isSprinting)
-            {
-                CurSpeed = runSpeed;
-                //EventBus.Publish(EventType.PLAYER_START_SPRINT);
-                isSprinting = true;
-            }
-        }
-        else if( !inputManager.GetPlayerSprint() || CurStamina <= 0)
+            EventBus.Publish(EventType.PLAYER_START_SPRINT);
+        };
+        inputManager.playerControls.Player.Sprint.canceled += context =>
         {
-            //EventBus.Publish(EventType.PLAYER_STOP_SPRINT);
-            CurSpeed = walkSpeed;
-            isSprinting = false;
-        }
+            EventBus.Publish(EventType.PLAYER_STOP_SPRINT);
+        };
     }
 
+    private void HandleDash()
+    {
+        inputManager.playerControls.Player.Dash.performed += context =>
+        {
+            EventBus.Publish(EventType.PLAYER_DASH);
+        };
+    }
+
+    private void StartDash()
+    {
+        if (playerDash == null && !isDashing)
+            playerDash = StartCoroutine(StartDashCoolDown());
+        else
+            playerDash = null;
+    }
+
+    private IEnumerator StartDashCoolDown()
+    {
+        isDashing = true;
+        CurSpeed = dashSpeed;
+        yield return new WaitForSeconds(0.25f);
+        CurSpeed = walkSpeed;
+        yield return new WaitForSeconds(5f);
+        isDashing = false;
+    }
 
     #region Handle Stamina
 
-    private void ReduceStamina()
+    private void PlayerStartSprint()
     {
-        while(CurStamina > 0 - staminaDrain)
-        {
-            CurStamina -= staminaDrain * Time.deltaTime;
-        }
-        CurStamina = 0f;
+        isSprinting = true;
+        StopCoroutine(IncreaseStamina());
+        stopSprint = null;
+        if(startSprint == null)
+            startSprint = StartCoroutine(ReduceStamina());
     }
 
-    private void IncreaseStamina()
+    private void PlayerStopSprint()
     {
-        while(CurStamina < staminaMax - staminaRegen)
-        {
-            CurStamina += staminaRegen * Time.deltaTime;
-        }
-        CurStamina = staminaMax;
+        isSprinting = false;
+        StopCoroutine(ReduceStamina());
+        startSprint = null;
+        if(stopSprint == null)
+            stopSprint = StartCoroutine(IncreaseStamina());
     }
 
 
-    //private IEnumerator ReduceStamina()
-    //{
-    //    while (true && CurStamina > 0)
-    //    {
-    //        yield return new WaitForSeconds(1f);
-    //        CurStamina--;
-    //        yield return null;
-    //    }
-    //}
-    //private IEnumerator ReduceStamina(float modifier)
-    //{
-    //    while (true && CurStamina > 0)
-    //    {
-    //        yield return new WaitForSeconds(1f);
-    //        CurStamina = CurStamina - modifier;
-    //        yield return null;
-    //    }
-    //}
-    //private IEnumerator ReduceStamina(float modifier, float waitTime)
-    //{
-    //    while (true && CurStamina > 0)
-    //    {
-    //        yield return new WaitForSeconds(waitTime);
-    //        CurStamina = CurStamina - modifier;
-    //        yield return null;
-    //    }
-    //}
+    private IEnumerator ReduceStamina()
+    {
 
-    //private IEnumerator IncreaseStamina()
-    //{
-    //    while(true && CurStamina < staminaMax)
-    //    {
-    //        yield return new WaitForSeconds(1f);
-    //        CurStamina++;
-    //        yield return null;
-    //    }
-    //}
+        while (true && CurStamina >= (0 + staminaDrain) && isSprinting)
+        {
+            CurSpeed = runSpeed;
+            yield return new WaitForSeconds(1f);
+            CurStamina -= staminaDrain;
+            yield return null;
+        }
+        CurSpeed = walkSpeed;
+
+    }
+
+    private IEnumerator IncreaseStamina()
+    {
+
+        while (true && CurStamina <= staminaMax && !isSprinting)
+        {
+            CurSpeed = walkSpeed;
+            yield return new WaitForSeconds(1f);
+            CurStamina += staminaRegen;
+            if(CurStamina > staminaMax)
+                CurStamina = staminaMax;
+            yield return null;
+        }
+    }
     #endregion
 }
 
