@@ -21540,11 +21540,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73bb79af20b21db45bc5d83380e261d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waitTime: 0
   range: 25
   centerPoint: {fileID: 1769826845}
   minDistFromLastPoint: 10
+  minWaitTime: 2
   maxWaitTime: 5
-  minWaitTime: 3
 --- !u!195 &1388170245
 NavMeshAgent:
   m_ObjectHideFlags: 0

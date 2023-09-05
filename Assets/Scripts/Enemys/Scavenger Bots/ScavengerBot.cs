@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class ScavengerBot : MonoBehaviour
 {
     private NavMeshAgent _agent;
+    public float waitTime;
 
     [Tooltip("Range that the enemy AI will patrol around in.")]
     public float range;
@@ -13,10 +14,10 @@ public class ScavengerBot : MonoBehaviour
     public Transform centerPoint;
     [Tooltip("Minimum distance that can be between new patrol points.")]
     public float minDistFromLastPoint;
-    [Tooltip("Max time the AI can wait at a patrol point before selecting another.")]
-    public float maxWaitTime;
-    [Tooltip("Min time the AI can wait at a patrol point before selecting another.")]
+    [Tooltip("Minimum time the enemy AI will wait at a location before moving to another.")]
     public float minWaitTime;
+    [Tooltip("Maximum time the enemy AI will wait at a location before moving to another.")]
+    public float maxWaitTime;
 
 
     // Start is called before the first frame update
@@ -30,12 +31,20 @@ public class ScavengerBot : MonoBehaviour
     {
         if (_agent.remainingDistance <= _agent.stoppingDistance)
         {
-            Vector3 point;
-            if (RandomPoint(centerPoint.position, range, out point))
+            waitTime -= Time.deltaTime;
+            if (waitTime <= 0) //Check if the enemy has waited at their patrol point
             {
-                Debug.DrawRay(point, Vector3.up, Color.red, 5.0f); //Display the next point the AI will move to
-                _agent.SetDestination(point);
+                Vector3 point;
+                if (RandomPoint(centerPoint.position, range, out point))
+                {
+                    Debug.DrawRay(point, Vector3.up, Color.red, 5.0f); //Display the next point the AI will move to
+                    _agent.SetDestination(point);
+                }
             }
+        }
+        else
+        {
+            waitTime = Random.Range(minWaitTime, maxWaitTime);
         }
 
         bool RandomPoint(Vector3 center, float range, out Vector3 result)
