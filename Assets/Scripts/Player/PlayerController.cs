@@ -10,6 +10,14 @@ using UnityEngine.InputSystem.Interactions;
 
 public class PlayerController : MonoBehaviour
 {
+    private float _health;
+    private float _maxHealth = 100f;
+
+    public float Health
+    { 
+        get { return _health; } 
+         set {_health = value; } 
+    }
     #region Player Movement
     private Transform cameraTransform;
     private CharacterController controller;
