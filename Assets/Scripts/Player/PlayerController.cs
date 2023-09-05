@@ -10,6 +10,8 @@ using UnityEngine.InputSystem.Interactions;
 
 public class PlayerController : MonoBehaviour
 {
+    private GameManager gameManager;
+
     private float _health;
     private float _maxHealth = 100f;
 
@@ -19,7 +21,6 @@ public class PlayerController : MonoBehaviour
          set {_health = value; } 
     }
     #region Player Movement
-    private Transform cameraTransform;
     private CharacterController controller;
     private Vector3 playerVelocity;
 
@@ -128,10 +129,10 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.playerController = this;
+        gameManager = GameManager.Instance;
+        gameManager.playerController = this;
 
         controller = GetComponent<CharacterController>();
-        cameraTransform = Camera.main.transform;
         inputManager = InputManager.Instance;   
         CurSpeed = walkSpeed;
         CanMove = _canMove;
@@ -163,7 +164,7 @@ public class PlayerController : MonoBehaviour
 
         Vector2 _movement = inputManager.GetMovement();
         Vector3 move = new Vector3(_movement.x, 0f, _movement.y);
-        move = cameraTransform.forward * move.z + cameraTransform.right * move.x;
+        move = gameManager.CameraTransform.forward * move.z + gameManager.CameraTransform.right * move.x;
         move.y = 0f;
         move.Normalize();
 
@@ -175,7 +176,7 @@ public class PlayerController : MonoBehaviour
         controller.Move(playerVelocity * Time.deltaTime);
 
         //Keep player facing the same direction as the camera
-        transform.rotation = Quaternion.Euler(0, cameraTransform.rotation.eulerAngles.y, 0);
+        transform.rotation = Quaternion.Euler(0, gameManager.CameraTransform.rotation.eulerAngles.y, 0);
     }
     private void HandleJump()
     {
