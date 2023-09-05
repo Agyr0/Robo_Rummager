@@ -8,7 +8,13 @@ public class Player_InventoryManager : MonoBehaviour
     private GameObject _inventory_UI;
 
     [SerializeField]
-    private GameObject[] InventorySlotArray;
+    private GameObject _inventory_HUD_UI;
+
+    [SerializeField]
+    private GameObject[] Inventory_SlotArray;
+
+    [SerializeField]
+    private GameObject[] InventoryHUD_SlotArray;
 
     [SerializeField]
     private int _slotStackLimit;
@@ -67,7 +73,8 @@ public class Player_InventoryManager : MonoBehaviour
     {
         if (_inventorySlotCount <= _inventorySlotMax)
         {
-            InventorySlotArray[_inventorySlotCount].SetActive(true);
+            InventoryHUD_SlotArray[_inventorySlotCount].SetActive(true);
+            Inventory_SlotArray[_inventorySlotCount].SetActive(true);
             _inventorySlotCount++;
         }
     }
@@ -76,7 +83,8 @@ public class Player_InventoryManager : MonoBehaviour
     {
         if (_inventorySlotCount > _inventorySlotMin)
         {
-            InventorySlotArray[_inventorySlotCount-1].SetActive(false);
+            InventoryHUD_SlotArray[_inventorySlotCount-1].SetActive(false);
+            Inventory_SlotArray[_inventorySlotCount-1].SetActive(false);
             _inventorySlotCount--;
         }
     }
@@ -89,31 +97,44 @@ public class Player_InventoryManager : MonoBehaviour
             if (itemPicked.GetComponent<Resource_Item>().ResourceAmount != 0)
             {
                 //Looks for an empty or matching resource slot
-                if (InventorySlotArray[i].GetComponent<Inventory_Slot>().ItemStored == ResourceType.Empty
-                    || InventorySlotArray[i].GetComponent<Inventory_Slot>().ItemStored == itemPicked.GetComponent<Resource_Item>().ItemData.ResourceName)
+                if (Inventory_SlotArray[i].GetComponent<Inventory_Slot>().ItemStored == ResourceType.Empty
+                    || Inventory_SlotArray[i].GetComponent<Inventory_Slot>().ItemStored == itemPicked.GetComponent<Resource_Item>().ItemData.ResourceName)
                 {
-                    if (InventorySlotArray[i].GetComponent<Inventory_Slot>().AmountStored != 25)
+                    Inventory_SlotArray[i].GetComponent<Inventory_Slot>().ItemIcon.sprite = itemPicked.GetComponent<Resource_Item>().ItemData.ResourceIcon;
+                    if (Inventory_SlotArray[i].GetComponent<Inventory_Slot>().AmountStored != 25)
                     {
                         //checks if adding the resource amount would exceed the slot stack limit
-                        if (InventorySlotArray[i].GetComponent<Inventory_Slot>().AmountStored +
+                        if (Inventory_SlotArray[i].GetComponent<Inventory_Slot>().AmountStored +
                             itemPicked.GetComponent<Resource_Item>().ResourceAmount > _slotStackLimit)
                         {
-                            itemPicked.GetComponent<Resource_Item>().ResourceAmount = (InventorySlotArray[i].GetComponent<Inventory_Slot>().AmountStored +
+                            itemPicked.GetComponent<Resource_Item>().ResourceAmount = (Inventory_SlotArray[i].GetComponent<Inventory_Slot>().AmountStored +
                             itemPicked.GetComponent<Resource_Item>().ResourceAmount) - _slotStackLimit;
-                            InventorySlotArray[i].GetComponent<Inventory_Slot>().ItemStored = itemPicked.GetComponent<Resource_Item>().ItemData.ResourceName;
-                            InventorySlotArray[i].GetComponent<Inventory_Slot>().AmountStored = _slotStackLimit;
+
+                            Inventory_SlotArray[i].GetComponent<Inventory_Slot>().ItemStored = itemPicked.GetComponent<Resource_Item>().ItemData.ResourceName;
+                            Inventory_SlotArray[i].GetComponent<Inventory_Slot>().AmountStored = _slotStackLimit;
+
+                            Inventory_SlotArray[i].GetComponent<Inventory_Slot>().ItemIcon.sprite = itemPicked.GetComponent<Resource_Item>().ItemData.ResourceIcon;
+
+                            InventoryHUD_SlotArray[i].GetComponent<Inventory_Slot>().ItemStored = Inventory_SlotArray[i].GetComponent<Inventory_Slot>().ItemStored;
+                            InventoryHUD_SlotArray[i].GetComponent<Inventory_Slot>().AmountStored += Inventory_SlotArray[i].GetComponent<Inventory_Slot>().AmountStored;
+                            InventoryHUD_SlotArray[i].GetComponent<Inventory_Slot>().ItemIcon.sprite = Inventory_SlotArray[i].GetComponent<Inventory_Slot>().ItemIcon.sprite;
                         }
                         else
                         {
-                            InventorySlotArray[i].GetComponent<Inventory_Slot>().ItemStored = itemPicked.GetComponent<Resource_Item>().ItemData.ResourceName;
-                            InventorySlotArray[i].GetComponent<Inventory_Slot>().AmountStored += itemPicked.GetComponent<Resource_Item>().ResourceAmount;
+                            Inventory_SlotArray[i].GetComponent<Inventory_Slot>().ItemStored = itemPicked.GetComponent<Resource_Item>().ItemData.ResourceName;
+                            Inventory_SlotArray[i].GetComponent<Inventory_Slot>().AmountStored += itemPicked.GetComponent<Resource_Item>().ResourceAmount;
+
+                            InventoryHUD_SlotArray[i].GetComponent<Inventory_Slot>().ItemStored = Inventory_SlotArray[i].GetComponent<Inventory_Slot>().ItemStored;
+                            InventoryHUD_SlotArray[i].GetComponent<Inventory_Slot>().AmountStored += Inventory_SlotArray[i].GetComponent<Inventory_Slot>().AmountStored;
+                            InventoryHUD_SlotArray[i].GetComponent<Inventory_Slot>().ItemIcon.sprite = Inventory_SlotArray[i].GetComponent<Inventory_Slot>().ItemIcon.sprite;
                             break;
                         }
                     }
                 }
             }
         }
-        if (itemPicked.GetComponent<Resource_Item>().ResourceAmount == 0)
+        
+            if (itemPicked.GetComponent<Resource_Item>().ResourceAmount == 0)
         {
             itemPicked.SetActive(false);
         }
