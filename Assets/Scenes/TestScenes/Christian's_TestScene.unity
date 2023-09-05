@@ -123,6 +123,40 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &97721605
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 97721606}
+  m_Layer: 0
+  m_Name: Geo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &97721606
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 97721605}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 690326379}
+  - {fileID: 1877179912}
+  - {fileID: 126871782}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &126871778
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,12 +255,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 126871778}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -19.3, y: 0.5404539, z: 31}
   m_LocalScale: {x: 6.4118667, y: 12.015, z: 6.0011}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 97721606}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &440324536
 GameObject:
@@ -304,7 +338,7 @@ GameObject:
   - component: {fileID: 480745422}
   - component: {fileID: 480745421}
   m_Layer: 0
-  m_Name: TestScavengerBotHead (1)
+  m_Name: TestRogueBotHead (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -411,7 +445,7 @@ GameObject:
   - component: {fileID: 576459094}
   - component: {fileID: 576459093}
   m_Layer: 0
-  m_Name: TestScavengerBotHead
+  m_Name: TestRogueBotHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21004,12 +21038,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 690326373}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 97721606}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &746569948
 GameObject:
@@ -21281,10 +21315,10 @@ GameObject:
   - component: {fileID: 1388170241}
   - component: {fileID: 1388170240}
   - component: {fileID: 1388170239}
-  - component: {fileID: 1388170244}
   - component: {fileID: 1388170245}
+  - component: {fileID: 1388170246}
   m_Layer: 0
-  m_Name: TestScavengerBot
+  m_Name: TestRogueBot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21528,24 +21562,6 @@ Transform:
   - {fileID: 480745420}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1388170244
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1388170238}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73bb79af20b21db45bc5d83380e261d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  waitTime: 0
-  range: 25
-  centerPoint: {fileID: 1769826845}
-  minDistFromLastPoint: 10
-  minWaitTime: 2
-  maxWaitTime: 5
 --- !u!195 &1388170245
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -21568,6 +21584,23 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1388170246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1388170238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97dcafeaa77f74147adbca3b270c22b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 25
+  centerPoint: {fileID: 1769826845}
+  minDistFromLastPoint: 10
+  minWaitTime: 1
+  maxWaitTime: 3
 --- !u!1 &1769826844
 GameObject:
   m_ObjectHideFlags: 0
@@ -21763,10 +21796,10 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.37996727, z: -0, w: 0.92499995}
   m_LocalPosition: {x: -0.82, y: -2.78, z: 7.93}
-  m_LocalScale: {x: 16.754423, y: 16.006, z: 8.1373}
+  m_LocalScale: {x: 16.754423, y: 16.006, z: 8.1373005}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 97721606}
   m_LocalEulerAnglesHint: {x: 0, y: -44.663, z: 0}
 --- !u!1 &2025637993
 GameObject:
@@ -21892,9 +21925,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 746569951}
   - {fileID: 2025637995}
-  - {fileID: 690326379}
-  - {fileID: 1388170243}
   - {fileID: 440324538}
-  - {fileID: 1877179912}
-  - {fileID: 126871782}
+  - {fileID: 97721606}
+  - {fileID: 1388170243}
   - {fileID: 1769826845}
