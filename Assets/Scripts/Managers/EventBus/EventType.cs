@@ -18,6 +18,10 @@ public enum EventType
     PLAYER_DASH,
     #endregion
 
+    #region Shooting
+    PLAYER_SHOOT,
+    #endregion
+
     #endregion
 
     #region Testing Events

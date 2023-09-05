@@ -7,9 +7,12 @@ public class WeaponData : ScriptableObject
 {
     public WeaponType _weapon;
     public float _damage;
-    public float _reloadTimeDisassembleTime = 0;
+    public float _reloadTime = 0;
+    public float _range = Mathf.Infinity;
     public float _curAmmo = Mathf.Infinity;
     public float _magSize = Mathf.Infinity;
+    public int _wrenchLevel = 0;
+    public float _disassembleTime = 0;
     public Sprite _icon;
 
 
@@ -40,22 +43,22 @@ public class WeaponData : ScriptableObject
     {  
         get 
         { 
-            return _reloadTimeDisassembleTime; 
+            return _reloadTime; 
         } 
         set 
         { 
-            _reloadTimeDisassembleTime = value; 
+            _reloadTime = value; 
         } 
     }
-    public float DisassembleTime
+    public float Range
     {
         get
         {
-            return _reloadTimeDisassembleTime;
+            return _range;
         }
         set
         {
-            _reloadTimeDisassembleTime = value;
+            _range = value;
         }
     }
     public float CurAmmo 
@@ -79,6 +82,28 @@ public class WeaponData : ScriptableObject
         { 
             _magSize = value; 
         } 
+    }
+    public int WrenchLevel
+    {
+        get
+        {
+            return _wrenchLevel;
+        }
+        set
+        {
+            _wrenchLevel = value;
+        }
+    }
+    public float DisassembleTime
+    {
+        get
+        {
+            return _disassembleTime;
+        }
+        set
+        {
+            _disassembleTime = value;
+        }
     }
     public Sprite Icon 
     {  
