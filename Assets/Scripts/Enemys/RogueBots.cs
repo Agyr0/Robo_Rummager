@@ -39,12 +39,19 @@ public class RogueBots : MonoBehaviour
     #endregion
 
     #region Chasing
+    private bool robotInLeashRange;
+
+    [Header("Chase Settings")]
     [SerializeField]
     private bool playerInSightRange;
 
     [SerializeField]
     [Tooltip("Range that the Rogue Bot will detect the player and begin to chase them.")]
     private float sightRange;
+
+    [SerializeField]
+    [Tooltip("Range that the Rogue Bot will chase the player before giving up.")]
+    private float leashRange;
     #endregion
 
     // Start is called before the first frame update
@@ -57,9 +64,17 @@ public class RogueBots : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Check if player is in sight range to chase them
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, playerLayerMask);
 
-        if (playerInSightRange)
+        // Check if robot is in the leash range
+        if (Vector3.Distance(transform.position, patrolCenterPoint.transform.position) > leashRange)
+            robotInLeashRange = false;
+        else
+            robotInLeashRange = true;
+
+        // State Handler
+        if (playerInSightRange && robotInLeashRange)
             RogueBotChasing();
         else
             RogueBotPatrolling();
@@ -122,5 +137,9 @@ public class RogueBots : MonoBehaviour
         // Draw the Sight Range
         Gizmos.color = UnityEngine.Color.blue;
         Gizmos.DrawWireSphere(transform.position, sightRange);
+
+        // Draw the Leash Range
+        Gizmos.color = UnityEngine.Color.yellow;
+        Gizmos.DrawWireSphere(patrolCenterPoint.position, leashRange);
     }
 }
