@@ -47,7 +47,14 @@ public class WeaponController : MonoBehaviour
         Ray ray = new Ray(gameManager.CameraTransform.position, gameManager.CameraTransform.forward);
         if(Physics.Raycast(ray, out RaycastHit hit, _curWeapon.Range))
         {
-            if(hit.transform.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+            //Handle VFX
+            //Spawn Laser Bullet
+            GameObject laser = Instantiate(_curWeapon.LaserBeam, transform.position, Quaternion.FromToRotation(transform.position, transform.forward));
+            //Spawn Muzzle Flash
+            GameObject muzzleFlash = Instantiate(_curWeapon.MuzzleFlash, transform.position, Quaternion.FromToRotation(transform.position, transform.forward));
+
+            //Handle Hit
+            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             {
                 Debug.Log("Hit enemmy of type " + hit.transform.gameObject.layer);
             }

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: LaserRife_Data
   m_EditorClassIdentifier: 
   _weapon: 0
+  _weaponPrefab: {fileID: 0}
   _damage: 0
   _reloadTime: 0
   _range: Infinity
@@ -21,3 +22,8 @@ MonoBehaviour:
   _wrenchLevel: 0
   _disassembleTime: 0
   _icon: {fileID: 0}
+  _laserBeam: {fileID: 5902535737271527867, guid: f6a37531fe1b65e4ebcddde6b065c565,
+    type: 3}
+  _muzzleFlash: {fileID: 8822856850537434410, guid: f048a5a71582dbb4b905f109b12fd3db,
+    type: 3}
+  _muzzlePos: {fileID: 0}
