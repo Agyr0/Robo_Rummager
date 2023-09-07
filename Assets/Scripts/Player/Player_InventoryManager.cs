@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player_InventoryManager : MonoBehaviour
 {
@@ -9,6 +11,12 @@ public class Player_InventoryManager : MonoBehaviour
 
     [SerializeField]
     private GameObject _inventory_HUD_UI;
+
+    [SerializeField]
+    private Inventory_Slot[] Inventory_DataArray;
+
+    [SerializeField]
+    private GameObject[] InventoryItemDropDialougeArray;
 
     [SerializeField]
     private GameObject[] Inventory_SlotArray;
@@ -24,6 +32,12 @@ public class Player_InventoryManager : MonoBehaviour
 
     [SerializeField]
     private int _inventorySlotMin;
+
+    [SerializeField]
+    private Resource_ItemData _resourceEmpty;
+
+    [SerializeField]
+    private GameObject _itemBlankPrefab;
 
     //Current method of keeping track of players inventory slot counts untill
     //a player data script is implemented.
@@ -62,11 +76,13 @@ public class Player_InventoryManager : MonoBehaviour
     private void OnDisplayInventory()
     {
         _inventory_UI.SetActive(true);
+        _inventory_HUD_UI.SetActive(false);
     }
 
     private void OnHideInventory()
     {
         _inventory_UI.SetActive(false);
+        _inventory_HUD_UI.SetActive(true);
     }
 
     private void OnInventoryAddSlot()
@@ -113,20 +129,26 @@ public class Player_InventoryManager : MonoBehaviour
                             Inventory_SlotArray[i].GetComponent<Inventory_Slot>().ItemStored = itemPicked.GetComponent<Resource_Item>().ItemData.ResourceName;
                             Inventory_SlotArray[i].GetComponent<Inventory_Slot>().AmountStored = _slotStackLimit;
 
+                            Inventory_SlotArray[i].GetComponent<Inventory_Slot>().SlotItemData = itemPicked.GetComponent<Resource_Item>().ItemData;
+
                             Inventory_SlotArray[i].GetComponent<Inventory_Slot>().ItemIcon.sprite = itemPicked.GetComponent<Resource_Item>().ItemData.ResourceIcon;
 
                             InventoryHUD_SlotArray[i].GetComponent<Inventory_Slot>().ItemStored = Inventory_SlotArray[i].GetComponent<Inventory_Slot>().ItemStored;
-                            InventoryHUD_SlotArray[i].GetComponent<Inventory_Slot>().AmountStored += Inventory_SlotArray[i].GetComponent<Inventory_Slot>().AmountStored;
+                            InventoryHUD_SlotArray[i].GetComponent<Inventory_Slot>().AmountStored = Inventory_SlotArray[i].GetComponent<Inventory_Slot>().AmountStored;
                             InventoryHUD_SlotArray[i].GetComponent<Inventory_Slot>().ItemIcon.sprite = Inventory_SlotArray[i].GetComponent<Inventory_Slot>().ItemIcon.sprite;
+
                         }
                         else
                         {
                             Inventory_SlotArray[i].GetComponent<Inventory_Slot>().ItemStored = itemPicked.GetComponent<Resource_Item>().ItemData.ResourceName;
                             Inventory_SlotArray[i].GetComponent<Inventory_Slot>().AmountStored += itemPicked.GetComponent<Resource_Item>().ResourceAmount;
+                            Inventory_SlotArray[i].GetComponent<Inventory_Slot>().ItemIcon.sprite = Inventory_SlotArray[i].GetComponent<Inventory_Slot>().ItemIcon.sprite;
+                            Inventory_SlotArray[i].GetComponent<Inventory_Slot>().SlotItemData = itemPicked.GetComponent<Resource_Item>().ItemData;
 
                             InventoryHUD_SlotArray[i].GetComponent<Inventory_Slot>().ItemStored = Inventory_SlotArray[i].GetComponent<Inventory_Slot>().ItemStored;
-                            InventoryHUD_SlotArray[i].GetComponent<Inventory_Slot>().AmountStored += Inventory_SlotArray[i].GetComponent<Inventory_Slot>().AmountStored;
+                            InventoryHUD_SlotArray[i].GetComponent<Inventory_Slot>().AmountStored = Inventory_SlotArray[i].GetComponent<Inventory_Slot>().AmountStored;
                             InventoryHUD_SlotArray[i].GetComponent<Inventory_Slot>().ItemIcon.sprite = Inventory_SlotArray[i].GetComponent<Inventory_Slot>().ItemIcon.sprite;
+                            itemPicked.GetComponent<Resource_Item>().ResourceAmount = 0;
                             break;
                         }
                     }
@@ -134,10 +156,54 @@ public class Player_InventoryManager : MonoBehaviour
             }
         }
         
-            if (itemPicked.GetComponent<Resource_Item>().ResourceAmount == 0)
+        if (itemPicked.GetComponent<Resource_Item>().ResourceAmount == 0)
         {
-            itemPicked.SetActive(false);
+            itemPicked.gameObject.SetActive(false);
         }
         EventBus.Publish(EventType.INVENTORY_UPDATE);
+    }
+
+    public void OnButtonPress(int slotNumber)
+    {
+        if (Inventory_SlotArray[slotNumber].GetComponent<Inventory_Slot>().ItemStored != ResourceType.Empty)
+        {
+            InventoryItemDropDialougeArray[slotNumber].SetActive(true);
+        }
+    }
+
+    public void OnItemDrop(int slotNumber)
+    {
+        //EventBus.Publish<InventorySlot>(EventType.INVENTORY_ITEMDROPPED, ItemDropped);
+        Inventory_Slot ItemData;
+        ItemData = Inventory_SlotArray[slotNumber].GetComponent<Inventory_Slot>();
+
+        GameObject tempItemBlank;
+        tempItemBlank = Instantiate(_itemBlankPrefab, this.transform.position, this.transform.rotation);
+        tempItemBlank.GetComponent<Resource_Item>().ItemData = ItemData.SlotItemData;
+        tempItemBlank.GetComponent<Resource_Item>().ResourceAmount = ItemData.AmountStored;
+
+        Inventory_SlotArray[slotNumber].GetComponent<Inventory_Slot>().ItemIcon.sprite = _resourceEmpty.ResourceIcon;
+        Inventory_SlotArray[slotNumber].GetComponent<Inventory_Slot>().ItemStored = ResourceType.Empty;
+        Inventory_SlotArray[slotNumber].GetComponent<Inventory_Slot>().AmountStored = 0;
+        InventoryItemDropDialougeArray[slotNumber].SetActive(false);
+        EventBus.Publish(EventType.INVENTORY_UPDATE);
+    }
+
+    public void ItemDropped(Inventory_Slot ItemData)
+    {
+        GameObject tempItemBlank;
+        tempItemBlank = Instantiate(_itemBlankPrefab, this.transform.position, this.transform.rotation);
+        tempItemBlank.GetComponent<Resource_Item>().ItemData = ItemData.SlotItemData;
+        tempItemBlank.GetComponent<Resource_Item>().ResourceAmount = ItemData.AmountStored;
+    }
+
+    public void OnItemDropCanceled(int slotNumber)
+    {
+        InventoryItemDropDialougeArray[slotNumber].SetActive(false);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        EventBus.Publish<GameObject>(EventType.INVENTORY_PICKUP, other.gameObject);
     }
 }

@@ -11,10 +11,8 @@ public class Resource_ItemData : ScriptableObject
     [SerializeField]
     private ResourceType _resourceName;
 
-    /*
     [SerializeField]
-    private int _resourceAmount;
-    */
+    private int _maxStackSize;
 
     public Sprite ResourceIcon
     {
@@ -26,11 +24,9 @@ public class Resource_ItemData : ScriptableObject
         get { return _resourceName; }
     }
 
-    /*
-    public int ResourceAmount
+    public int MaxStackSize
     {
-        get { return _resourceAmount; }
-        set { _resourceAmount = value; }
+        get { return _maxStackSize; }
     }
-    */
+
 }

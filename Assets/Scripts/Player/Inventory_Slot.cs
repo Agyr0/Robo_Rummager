@@ -17,6 +17,9 @@ public class Inventory_Slot : MonoBehaviour
     [SerializeField]
     private Text _textDisplayCount;
 
+    [SerializeField]
+    private Resource_ItemData _slotItemData;
+
     public Image ItemIcon
     {
         get { return _itemIcon; }
@@ -35,6 +38,12 @@ public class Inventory_Slot : MonoBehaviour
         set { _amountStored = value; }
     }
 
+    public Resource_ItemData SlotItemData
+    {
+        get { return _slotItemData; }
+        set { _slotItemData = value; }
+    }
+
     private void OnEnable()
     {
         EventBus.Subscribe(EventType.INVENTORY_UPDATE, OnInventoryUpdate);
@@ -49,7 +58,12 @@ public class Inventory_Slot : MonoBehaviour
     {
         if (ItemStored != ResourceType.Empty)
         {
-            this.GetComponent<Image>().sprite = ItemIcon.sprite;
+            ItemIcon.sprite = ItemIcon.sprite;
+            _textDisplayCount.text = AmountStored.ToString();
+        }
+        else
+        {
+            ItemIcon.sprite = ItemIcon.sprite;
             _textDisplayCount.text = AmountStored.ToString();
         }
     }
