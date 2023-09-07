@@ -13,16 +13,16 @@ public class Player_InventoryManager : MonoBehaviour
     private GameObject _inventory_HUD_UI;
 
     [SerializeField]
-    private Inventory_Slot[] Inventory_DataArray;
+    private Inventory_Slot[] _inventory_DataArray;
 
     [SerializeField]
-    private GameObject[] InventoryItemDropDialougeArray;
+    private GameObject[] _inventoryItemDropDialougeArray;
 
     [SerializeField]
-    private GameObject[] Inventory_SlotArray;
+    private GameObject[] _inventory_SlotArray;
 
     [SerializeField]
-    private GameObject[] InventoryHUD_SlotArray;
+    private GameObject[] _inventoryHUD_SlotArray;
 
     [SerializeField]
     private int _slotStackLimit;
@@ -38,6 +38,12 @@ public class Player_InventoryManager : MonoBehaviour
 
     [SerializeField]
     private GameObject _itemBlankPrefab;
+
+    public Inventory_Slot[] Inventory_DataArray
+    {
+        get { return _inventory_DataArray; }
+        set { _inventory_DataArray = value; }
+    }
 
     //Current method of keeping track of players inventory slot counts untill
     //a player data script is implemented.
@@ -89,8 +95,8 @@ public class Player_InventoryManager : MonoBehaviour
     {
         if (_inventorySlotCount <= _inventorySlotMax)
         {
-            InventoryHUD_SlotArray[_inventorySlotCount].SetActive(true);
-            Inventory_SlotArray[_inventorySlotCount].SetActive(true);
+            _inventoryHUD_SlotArray[_inventorySlotCount].SetActive(true);
+            _inventory_SlotArray[_inventorySlotCount].SetActive(true);
             _inventorySlotCount++;
         }
     }
@@ -99,8 +105,8 @@ public class Player_InventoryManager : MonoBehaviour
     {
         if (_inventorySlotCount > _inventorySlotMin)
         {
-            InventoryHUD_SlotArray[_inventorySlotCount-1].SetActive(false);
-            Inventory_SlotArray[_inventorySlotCount-1].SetActive(false);
+            _inventoryHUD_SlotArray[_inventorySlotCount-1].SetActive(false);
+            _inventory_SlotArray[_inventorySlotCount-1].SetActive(false);
             _inventorySlotCount--;
         }
     }
@@ -113,42 +119,32 @@ public class Player_InventoryManager : MonoBehaviour
             if (itemPicked.GetComponent<Resource_Item>().ResourceAmount != 0)
             {
                 //Looks for an empty or matching resource slot
-                if (Inventory_SlotArray[i].GetComponent<Inventory_Slot>().ItemStored == ResourceType.Empty
-                    || Inventory_SlotArray[i].GetComponent<Inventory_Slot>().ItemStored == itemPicked.GetComponent<Resource_Item>().ItemData.ResourceName)
+                if (Inventory_DataArray[i].SlotItemData.ResourceName == ResourceType.Empty
+                    || Inventory_DataArray[i].SlotItemData.ResourceName == itemPicked.GetComponent<Resource_Item>().ItemData.ResourceName)
                 {
-                    Inventory_SlotArray[i].GetComponent<Inventory_Slot>().ItemIcon.sprite = itemPicked.GetComponent<Resource_Item>().ItemData.ResourceIcon;
-                    if (Inventory_SlotArray[i].GetComponent<Inventory_Slot>().AmountStored != 25)
+                    Inventory_DataArray[i].SlotItemData = itemPicked.GetComponent<Resource_Item>().ItemData;
+                    if (Inventory_DataArray[i].AmountStored != 25)
                     {
                         //checks if adding the resource amount would exceed the slot stack limit
-                        if (Inventory_SlotArray[i].GetComponent<Inventory_Slot>().AmountStored +
+                        if (Inventory_DataArray[i].AmountStored +
                             itemPicked.GetComponent<Resource_Item>().ResourceAmount > _slotStackLimit)
                         {
-                            itemPicked.GetComponent<Resource_Item>().ResourceAmount = (Inventory_SlotArray[i].GetComponent<Inventory_Slot>().AmountStored +
+                            itemPicked.GetComponent<Resource_Item>().ResourceAmount = (Inventory_DataArray[i].AmountStored +
                             itemPicked.GetComponent<Resource_Item>().ResourceAmount) - _slotStackLimit;
 
-                            Inventory_SlotArray[i].GetComponent<Inventory_Slot>().ItemStored = itemPicked.GetComponent<Resource_Item>().ItemData.ResourceName;
-                            Inventory_SlotArray[i].GetComponent<Inventory_Slot>().AmountStored = _slotStackLimit;
+                            Inventory_DataArray[i].SlotItemData = itemPicked.GetComponent<Resource_Item>().ItemData;
+                            Inventory_DataArray[i].AmountStored = _slotStackLimit;
 
-                            Inventory_SlotArray[i].GetComponent<Inventory_Slot>().SlotItemData = itemPicked.GetComponent<Resource_Item>().ItemData;
-
-                            Inventory_SlotArray[i].GetComponent<Inventory_Slot>().ItemIcon.sprite = itemPicked.GetComponent<Resource_Item>().ItemData.ResourceIcon;
-
-                            InventoryHUD_SlotArray[i].GetComponent<Inventory_Slot>().ItemStored = Inventory_SlotArray[i].GetComponent<Inventory_Slot>().ItemStored;
-                            InventoryHUD_SlotArray[i].GetComponent<Inventory_Slot>().AmountStored = Inventory_SlotArray[i].GetComponent<Inventory_Slot>().AmountStored;
-                            InventoryHUD_SlotArray[i].GetComponent<Inventory_Slot>().ItemIcon.sprite = Inventory_SlotArray[i].GetComponent<Inventory_Slot>().ItemIcon.sprite;
-
+                            EventBus.Publish<GameObject>(EventType.INVENTORY_UPDATE, this.gameObject);
                         }
                         else
                         {
-                            Inventory_SlotArray[i].GetComponent<Inventory_Slot>().ItemStored = itemPicked.GetComponent<Resource_Item>().ItemData.ResourceName;
-                            Inventory_SlotArray[i].GetComponent<Inventory_Slot>().AmountStored += itemPicked.GetComponent<Resource_Item>().ResourceAmount;
-                            Inventory_SlotArray[i].GetComponent<Inventory_Slot>().ItemIcon.sprite = Inventory_SlotArray[i].GetComponent<Inventory_Slot>().ItemIcon.sprite;
-                            Inventory_SlotArray[i].GetComponent<Inventory_Slot>().SlotItemData = itemPicked.GetComponent<Resource_Item>().ItemData;
+                            Inventory_DataArray[i].AmountStored += itemPicked.GetComponent<Resource_Item>().ResourceAmount;
+                            Inventory_DataArray[i].SlotItemData = itemPicked.GetComponent<Resource_Item>().ItemData;
 
-                            InventoryHUD_SlotArray[i].GetComponent<Inventory_Slot>().ItemStored = Inventory_SlotArray[i].GetComponent<Inventory_Slot>().ItemStored;
-                            InventoryHUD_SlotArray[i].GetComponent<Inventory_Slot>().AmountStored = Inventory_SlotArray[i].GetComponent<Inventory_Slot>().AmountStored;
-                            InventoryHUD_SlotArray[i].GetComponent<Inventory_Slot>().ItemIcon.sprite = Inventory_SlotArray[i].GetComponent<Inventory_Slot>().ItemIcon.sprite;
                             itemPicked.GetComponent<Resource_Item>().ResourceAmount = 0;
+
+                            EventBus.Publish<GameObject>(EventType.INVENTORY_UPDATE, this.gameObject);
                             break;
                         }
                     }
@@ -160,14 +156,13 @@ public class Player_InventoryManager : MonoBehaviour
         {
             itemPicked.gameObject.SetActive(false);
         }
-        EventBus.Publish(EventType.INVENTORY_UPDATE);
     }
 
-    public void OnButtonPress(int slotNumber)
+    public void OnSlotPress(int slotNumber)
     {
-        if (Inventory_SlotArray[slotNumber].GetComponent<Inventory_Slot>().ItemStored != ResourceType.Empty)
+        if (Inventory_DataArray[slotNumber].SlotItemData.ResourceName != ResourceType.Empty)
         {
-            InventoryItemDropDialougeArray[slotNumber].SetActive(true);
+            _inventoryItemDropDialougeArray[slotNumber].SetActive(true);
         }
     }
 
@@ -175,18 +170,19 @@ public class Player_InventoryManager : MonoBehaviour
     {
         //EventBus.Publish<InventorySlot>(EventType.INVENTORY_ITEMDROPPED, ItemDropped);
         Inventory_Slot ItemData;
-        ItemData = Inventory_SlotArray[slotNumber].GetComponent<Inventory_Slot>();
+        ItemData = Inventory_DataArray[slotNumber];
 
         GameObject tempItemBlank;
         tempItemBlank = Instantiate(_itemBlankPrefab, this.transform.position, this.transform.rotation);
         tempItemBlank.GetComponent<Resource_Item>().ItemData = ItemData.SlotItemData;
         tempItemBlank.GetComponent<Resource_Item>().ResourceAmount = ItemData.AmountStored;
 
-        Inventory_SlotArray[slotNumber].GetComponent<Inventory_Slot>().ItemIcon.sprite = _resourceEmpty.ResourceIcon;
-        Inventory_SlotArray[slotNumber].GetComponent<Inventory_Slot>().ItemStored = ResourceType.Empty;
-        Inventory_SlotArray[slotNumber].GetComponent<Inventory_Slot>().AmountStored = 0;
-        InventoryItemDropDialougeArray[slotNumber].SetActive(false);
-        EventBus.Publish(EventType.INVENTORY_UPDATE);
+        Debug.Log(Inventory_DataArray[slotNumber].SlotItemData);
+        Inventory_DataArray[slotNumber].SlotItemData = _resourceEmpty;
+        Debug.Log(Inventory_DataArray[slotNumber].SlotItemData);
+        Inventory_DataArray[slotNumber].AmountStored = 0;
+        _inventoryItemDropDialougeArray[slotNumber].SetActive(false);
+        EventBus.Publish(EventType.INVENTORY_UPDATE, this.gameObject);
     }
 
     public void ItemDropped(Inventory_Slot ItemData)
@@ -199,7 +195,7 @@ public class Player_InventoryManager : MonoBehaviour
 
     public void OnItemDropCanceled(int slotNumber)
     {
-        InventoryItemDropDialougeArray[slotNumber].SetActive(false);
+        _inventoryItemDropDialougeArray[slotNumber].SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
