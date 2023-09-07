@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.ProBuilder.MeshOperations;
 
 public class RogueBots : MonoBehaviour
 {
-    private NavMeshAgent agent;
+    private NavMeshAgent rogueBotAgent;
 
     public Transform player;
+
+    public Animator rogueBotTestAttackAnimator;
+
+    public GameObject rogueBotAttackHitbox;
 
     [SerializeField]
     private LayerMask playerLayerMask;
@@ -18,7 +23,7 @@ public class RogueBots : MonoBehaviour
 
     [Header("Patrol Settings")]
     [SerializeField]
-    [Tooltip("Range that the Rogue Bot will patrol around in.")]
+    [Tooltip("Range that the Rogue Bot will patrol around in. Indicated by a green wire sphere.")]
     private float patrolRange;
 
     [SerializeField]
@@ -40,30 +45,44 @@ public class RogueBots : MonoBehaviour
 
     #region Chasing
     private bool robotInLeashRange;
+    private bool playerInSightRange;
 
     [Header("Chase Settings")]
     [SerializeField]
-    private bool playerInSightRange;
-
-    [SerializeField]
-    [Tooltip("Range that the Rogue Bot will detect the player and begin to chase them.")]
+    [Tooltip("Range that the Rogue Bot will detect the player and begin to chase them. Indicated by a blue wire sphere.")]
     private float sightRange;
 
     [SerializeField]
-    [Tooltip("Range that the Rogue Bot will chase the player before giving up.")]
+    [Tooltip("Range that the Rogue Bot will chase the player before giving up. Indicated by a yellow wire sphere.")]
     private float leashRange;
     #endregion
 
-    // Start is called before the first frame update
+    #region Attacking
+    private bool playerInAttackRange;
+    [SerializeField]
+    private bool canAttack = true;
+
+    [Header("Attack Settings")]
+    [SerializeField]
+    [Tooltip("Range that the Rogue Bot will attack the player. Indicated by a red wire sphere.")]
+    private float attackRange;
+
+    [SerializeField]
+    [Tooltip("The time between the Rogue Bots attacks.")]
+    private float attackCooldown;
+    #endregion
+
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
+        rogueBotAgent = GetComponent<NavMeshAgent>();
         player = GameObject.Find("Player").transform;
     }
 
-    // Update is called once per frame
     void Update()
     {
+        // Check if player is in attack range to attack them
+        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayerMask);
+
         // Check if player is in sight range to chase them
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, playerLayerMask);
 
@@ -74,7 +93,9 @@ public class RogueBots : MonoBehaviour
             robotInLeashRange = true;
 
         // State Handler
-        if (playerInSightRange && robotInLeashRange)
+        if (playerInAttackRange && robotInLeashRange)
+            RogueBotAttacking();
+        else if (playerInSightRange && robotInLeashRange)
             RogueBotChasing();
         else
             RogueBotPatrolling();
@@ -83,7 +104,7 @@ public class RogueBots : MonoBehaviour
     // Patrolling
     private void RogueBotPatrolling()
     {
-        if (agent.remainingDistance <= agent.stoppingDistance) // Check if Rogue Bot has reached position
+        if (rogueBotAgent.remainingDistance <= rogueBotAgent.stoppingDistance) // Check if Rogue Bot has reached position
         {
             patrolWaitTime -= Time.deltaTime;
             if (patrolWaitTime <= 0)
@@ -92,7 +113,7 @@ public class RogueBots : MonoBehaviour
                 if (RandomPoint(patrolCenterPoint.position, patrolRange, out point))
                 {
                     Debug.DrawRay(point, Vector3.up, UnityEngine.Color.red, 5.0f); // Draw the Rogue Bot's next position
-                    agent.SetDestination(point);
+                    rogueBotAgent.SetDestination(point);
                 }
             }
         }
@@ -125,21 +146,52 @@ public class RogueBots : MonoBehaviour
     // Chasing
     private void RogueBotChasing()
     {
-        agent.SetDestination(player.position);
+        rogueBotAgent.SetDestination(player.position);
+    }
+
+    // Attacking
+    private void RogueBotAttacking()
+    {
+        rogueBotAgent.ResetPath();
+        if(canAttack == true)
+        {
+            rogueBotTestAttackAnimator.Play("RogueBotTestAttack");
+            StartCoroutine(ResetRogueBotAttackCooldown());
+            StartCoroutine(ActivateHitbox());
+            canAttack = false;
+        }
+    }
+
+    IEnumerator ResetRogueBotAttackCooldown()
+    {
+        yield return new WaitForSeconds(attackCooldown);
+        canAttack = true;
+    }
+
+    IEnumerator ActivateHitbox()
+    {
+        yield return new WaitForSeconds(0.75f);
+        rogueBotAttackHitbox.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        rogueBotAttackHitbox.SetActive(false);
     }
 
     private void OnDrawGizmos()
     {
         // Draw the Patrolling Range
-        Gizmos.color = UnityEngine.Color.red;
+        Gizmos.color = UnityEngine.Color.green;
         Gizmos.DrawWireSphere(patrolCenterPoint.position, patrolRange);
 
         // Draw the Sight Range
         Gizmos.color = UnityEngine.Color.blue;
         Gizmos.DrawWireSphere(transform.position, sightRange);
 
+        // Draw the Attack Range
+        Gizmos.color = UnityEngine.Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+
         // Draw the Leash Range
-        Gizmos.color = UnityEngine.Color.yellow;
+        Gizmos.color = UnityEngine.Color.red;
         Gizmos.DrawWireSphere(patrolCenterPoint.position, leashRange);
     }
 }

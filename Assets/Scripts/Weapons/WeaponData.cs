@@ -6,11 +6,18 @@ using UnityEngine;
 public class WeaponData : ScriptableObject
 {
     public WeaponType _weapon;
+    public GameObject _weaponPrefab;
     public float _damage;
-    public float _reloadTimeDisassembleTime = 0;
+    public float _reloadTime = 0;
+    public float _range = Mathf.Infinity;
     public float _curAmmo = Mathf.Infinity;
     public float _magSize = Mathf.Infinity;
+    public int _wrenchLevel = 0;
+    public float _disassembleTime = 0;
     public Sprite _icon;
+    public GameObject _laserBeam;
+    public GameObject _muzzleFlash;
+    public GameObject _muzzlePos;
 
 
 
@@ -24,6 +31,17 @@ public class WeaponData : ScriptableObject
         { 
             _weapon = value; 
         } 
+    }
+    public GameObject WeaponPrefab
+    {
+        get
+        {
+            return _weaponPrefab;
+        }
+        set
+        {
+            _weaponPrefab = value;
+        }
     }
     public float Damage 
     {  
@@ -40,22 +58,22 @@ public class WeaponData : ScriptableObject
     {  
         get 
         { 
-            return _reloadTimeDisassembleTime; 
+            return _reloadTime; 
         } 
         set 
         { 
-            _reloadTimeDisassembleTime = value; 
+            _reloadTime = value; 
         } 
     }
-    public float DisassembleTime
+    public float Range
     {
         get
         {
-            return _reloadTimeDisassembleTime;
+            return _range;
         }
         set
         {
-            _reloadTimeDisassembleTime = value;
+            _range = value;
         }
     }
     public float CurAmmo 
@@ -80,6 +98,28 @@ public class WeaponData : ScriptableObject
             _magSize = value; 
         } 
     }
+    public int WrenchLevel
+    {
+        get
+        {
+            return _wrenchLevel;
+        }
+        set
+        {
+            _wrenchLevel = value;
+        }
+    }
+    public float DisassembleTime
+    {
+        get
+        {
+            return _disassembleTime;
+        }
+        set
+        {
+            _disassembleTime = value;
+        }
+    }
     public Sprite Icon 
     {  
         get 
@@ -91,7 +131,39 @@ public class WeaponData : ScriptableObject
             _icon = value; 
         } 
     }
-
+    public GameObject LaserBeam
+    {
+        get
+        {
+            return _laserBeam;
+        }
+        set
+        {
+            _laserBeam = value;
+        }
+    }
+    public GameObject MuzzleFlash
+    {
+        get
+        {
+            return _muzzleFlash;
+        }
+        set
+        {
+            _muzzleFlash = value;
+        }
+    }
+    public GameObject MuzzlePos
+    {
+        get
+        {
+            return _muzzlePos;
+        }
+        set
+        {
+            _muzzlePos = value;
+        }
+    }
 }
 
 public enum WeaponType
