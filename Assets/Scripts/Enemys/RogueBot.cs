@@ -6,11 +6,14 @@ using UnityEngine.AI;
 public class RogueBot : MonoBehaviour
 {
     private NavMeshAgent agent;
-    private LayerMask playerLayerMask;
     private Transform playerTransform;
-    private GameObject rogueBotAttackHitbox;
 
-    public Animator rogueBotTestAttackAnimator;
+    [SerializeField]
+    private GameObject rogueBotAttackHitbox;
+    [SerializeField]
+    private LayerMask playerLayerMask;
+    [SerializeField]
+    private Animator rogueBotTestAttackAnimator;
 
     #region Patrolling
     private float patrolWaitTime;
@@ -68,8 +71,7 @@ public class RogueBot : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        playerTransform = GameObject.Find("Player").transform;                    // Need to find a better way to
-        rogueBotAttackHitbox = GameObject.Find("TestRogueBotAttackHitbox");       // assign this transform/GO at runtime
+        playerTransform = GameObject.Find("Player").transform;                    // Need to find a better way to assign this at runtime
     }
 
     void Update()
