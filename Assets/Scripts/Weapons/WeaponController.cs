@@ -49,7 +49,7 @@ public class WeaponController : MonoBehaviour
         {
             //Handle VFX
             //Spawn Laser Bullet
-            GameObject laser = Instantiate(_curWeapon.LaserBeam, transform.position, Quaternion.FromToRotation(transform.position, transform.forward));
+            GameObject laser = Instantiate(_curWeapon.LaserBeam, transform.position, Quaternion.identity);
             //Spawn Muzzle Flash
             GameObject muzzleFlash = Instantiate(_curWeapon.MuzzleFlash, transform.position, Quaternion.FromToRotation(transform.position, transform.forward));
 

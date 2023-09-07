@@ -17,7 +17,7 @@ public class LaserController : MonoBehaviour
     {
         if(other.gameObject != null)
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
 }
