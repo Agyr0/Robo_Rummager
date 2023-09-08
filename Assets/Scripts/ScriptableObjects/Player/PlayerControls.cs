@@ -103,9 +103,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""SwitchWeapon"",
                     ""type"": ""PassThrough"",
                     ""id"": ""7b08de45-7791-412a-a062-5bb96f4a4dce"",
-                    ""expectedControlType"": ""Integer"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""initialStateCheck"": false
                 },
                 {

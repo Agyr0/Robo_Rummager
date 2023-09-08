@@ -17,7 +17,7 @@ public class WeaponData : ScriptableObject
     public Sprite _icon;
     public GameObject _laserBeam;
     public GameObject _muzzleFlash;
-    public GameObject _muzzlePos;
+    public Transform _muzzlePos;
 
 
 
@@ -153,7 +153,7 @@ public class WeaponData : ScriptableObject
             _muzzleFlash = value;
         }
     }
-    public GameObject MuzzlePos
+    public Transform MuzzlePos
     {
         get
         {

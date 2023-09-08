@@ -20,6 +20,8 @@ public enum EventType
 
     #region Shooting
     PLAYER_SHOOT,
+    WEAPON_SWITCH,
+    DISPLAY_WEAPON,
     #endregion
 
     #endregion
