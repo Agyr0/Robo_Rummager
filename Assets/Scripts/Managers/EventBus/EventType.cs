@@ -16,12 +16,15 @@ public enum EventType
     PLAYER_START_SPRINT,
     PLAYER_STOP_SPRINT,
     PLAYER_DASH,
+    TOGGLE_SCANNER,
     #endregion
 
     #region Shooting
     PLAYER_SHOOT,
     WEAPON_SWITCH,
     DISPLAY_WEAPON,
+    PLAYER_RELOAD,
+    LOW_AMMO,
     #endregion
 
     #endregion

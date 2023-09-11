@@ -1,3 +1,4 @@
+using Cinemachine.PostFX;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -76,7 +77,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private bool _canDash = true;
 
-    private bool isSprinting, isDashing = false;
+    private bool isSprinting, isDashing, scannerActive = false;
     private Coroutine startSprint;
     private Coroutine stopSprint;
     private Coroutine playerDash;
@@ -111,19 +112,21 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
-
+    private CinemachineVolumeSettings scannerVolume;
 
     private void OnEnable()
     {
         EventBus.Subscribe(EventType.PLAYER_START_SPRINT, PlayerStartSprint);
         EventBus.Subscribe(EventType.PLAYER_STOP_SPRINT, PlayerStopSprint);
         EventBus.Subscribe(EventType.PLAYER_DASH, StartDash);
+        EventBus.Subscribe(EventType.TOGGLE_SCANNER, ToggleScanner);
     }
     private void OnDisable()
     {
         EventBus.Unsubscribe(EventType.PLAYER_START_SPRINT, PlayerStartSprint);
         EventBus.Unsubscribe(EventType.PLAYER_STOP_SPRINT, PlayerStopSprint);
         EventBus.Unsubscribe(EventType.PLAYER_DASH, StartDash);
+        EventBus.Unsubscribe(EventType.TOGGLE_SCANNER, ToggleScanner);
 
     }
 
@@ -141,9 +144,9 @@ public class PlayerController : MonoBehaviour
         staminaRegen = staminaDrain * 2f;
 
         //Input Events
-        HandleDash();
-        HandleSprint();
+        SubscribeInputEvents();
 
+        scannerVolume = gameManager.PlayerVCam.GetComponent<CinemachineVolumeSettings>();
     }
 
     private void Update()
@@ -154,6 +157,16 @@ public class PlayerController : MonoBehaviour
             HandleJump();
     }
 
+    private void SubscribeInputEvents()
+    {
+        //Sprint and stamina
+        inputManager.playerControls.Player.Sprint.performed += _ => EventBus.Publish(EventType.PLAYER_START_SPRINT);
+        inputManager.playerControls.Player.Sprint.canceled += _ => EventBus.Publish(EventType.PLAYER_STOP_SPRINT);
+        //Dash
+        inputManager.playerControls.Player.Dash.performed += _ => EventBus.Publish(EventType.PLAYER_DASH);
+        //ScannerGoggles
+        inputManager.playerControls.Player.Scanner.performed += _ => EventBus.Publish(EventType.TOGGLE_SCANNER);
+    }
     private void HandleMovement()
     {
 
@@ -190,35 +203,9 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    private void HandleSprint()
-    {
-        if (CanSprint)
-        {
-            inputManager.playerControls.Player.Sprint.performed += context =>
-            {
-                EventBus.Publish(EventType.PLAYER_START_SPRINT);
-            };
-            inputManager.playerControls.Player.Sprint.canceled += context =>
-            {
-                EventBus.Publish(EventType.PLAYER_STOP_SPRINT);
-            };
-        }
-    }
-
-    private void HandleDash()
-    {
-        if (CanDash)
-        {
-            inputManager.playerControls.Player.Dash.performed += context =>
-            {
-                EventBus.Publish(EventType.PLAYER_DASH);
-            };
-        }
-    }
-
     private void StartDash()
     {
-        if (playerDash == null && !isDashing)
+        if (playerDash == null && !isDashing && CanDash)
             playerDash = StartCoroutine(StartDashCoolDown());
         else
             playerDash = null;
@@ -238,20 +225,26 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerStartSprint()
     {
-        isSprinting = true;
-        StopCoroutine(IncreaseStamina());
-        stopSprint = null;
-        if(startSprint == null)
-            startSprint = StartCoroutine(ReduceStamina());
+        if (CanSprint)
+        {
+            isSprinting = true;
+            StopCoroutine(IncreaseStamina());
+            stopSprint = null;
+            if (startSprint == null)
+                startSprint = StartCoroutine(ReduceStamina());
+        }
     }
 
     private void PlayerStopSprint()
     {
-        isSprinting = false;
-        StopCoroutine(ReduceStamina());
-        startSprint = null;
-        if(stopSprint == null)
-            stopSprint = StartCoroutine(IncreaseStamina());
+        if (CanSprint)
+        {
+            isSprinting = false;
+            StopCoroutine(ReduceStamina());
+            startSprint = null;
+            if (stopSprint == null)
+                stopSprint = StartCoroutine(IncreaseStamina());
+        }
     }
 
 
@@ -282,6 +275,15 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
     }
+    #endregion
+
+    #region Scanner Goggles
+    private void ToggleScanner()
+    {
+        scannerActive = !scannerActive;
+        scannerVolume.enabled = scannerActive;
+    }
+
     #endregion
 }
 
