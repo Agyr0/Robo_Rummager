@@ -128,6 +128,7 @@ public class RogueBot : MonoBehaviour
 
             if (distFromLastPoint < minDistFromLastPoint)
                 randomPoint = center + Random.insideUnitSphere * range; // Generate a random point if the first point was within the minimum distance
+           
             else if(distFromLastPoint > minDistFromLastPoint)
             {
                 NavMeshHit hit;
@@ -190,7 +191,7 @@ public class RogueBot : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, attackRange);
 
         // Draw the Leash Range
-        Gizmos.color = UnityEngine.Color.red;
+        Gizmos.color = UnityEngine.Color.yellow;
         Gizmos.DrawWireSphere(patrolCenterPoint.position, leashRange);
     }
 }
