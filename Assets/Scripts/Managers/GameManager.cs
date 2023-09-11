@@ -22,4 +22,10 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;   
+        Cursor.visible = false;
+    }
+
 }
