@@ -6,7 +6,9 @@ using UnityEngine.AI;
 public class Scavenger : MonoBehaviour
 {
     private NavMeshAgent agent;
+    private Animator animator;
     private Transform playerTransform;
+    
 
     [SerializeField]
     private LayerMask playerLayerMask;
@@ -39,11 +41,13 @@ public class Scavenger : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
         playerTransform = GameObject.Find("Player").transform;                    // Need to find a better way to assign this at runtime
     }
 
     void Update()
     {
+        animator.SetFloat("Speed", agent.velocity.magnitude);
         ScavengerPatrolling();
     }
 
