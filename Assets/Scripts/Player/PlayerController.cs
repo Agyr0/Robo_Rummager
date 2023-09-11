@@ -139,6 +139,11 @@ public class PlayerController : MonoBehaviour
         CanJump = _canJump;
         CurStamina = staminaMax;
         staminaRegen = staminaDrain * 2f;
+
+        //Input Events
+        HandleDash();
+        HandleSprint();
+
     }
 
     private void Update()
@@ -147,10 +152,6 @@ public class PlayerController : MonoBehaviour
             HandleMovement();
         if (CanJump)
             HandleJump();
-        if(CanSprint) 
-            HandleSprint();
-        if(CanDash)
-            HandleDash();
     }
 
     private void HandleMovement()
@@ -162,7 +163,7 @@ public class PlayerController : MonoBehaviour
             playerVelocity.y = 0f;
         }
 
-        Vector2 _movement = inputManager.GetMovement();
+        Vector2 _movement = inputManager.playerControls.Player.Movement.ReadValue<Vector2>();
         Vector3 move = new Vector3(_movement.x, 0f, _movement.y);
         move = gameManager.CameraTransform.forward * move.z + gameManager.CameraTransform.right * move.x;
         move.y = 0f;
@@ -181,7 +182,7 @@ public class PlayerController : MonoBehaviour
     private void HandleJump()
     {
         // Changes the height position of the player..
-        if (inputManager.GetPlayerJump() && GroundedPlayer)
+        if (inputManager.playerControls.Player.Jump.triggered && GroundedPlayer)
         {
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
         }
@@ -191,22 +192,28 @@ public class PlayerController : MonoBehaviour
 
     private void HandleSprint()
     {
-        inputManager.playerControls.Player.Sprint.performed += context =>
+        if (CanSprint)
         {
-            EventBus.Publish(EventType.PLAYER_START_SPRINT);
-        };
-        inputManager.playerControls.Player.Sprint.canceled += context =>
-        {
-            EventBus.Publish(EventType.PLAYER_STOP_SPRINT);
-        };
+            inputManager.playerControls.Player.Sprint.performed += context =>
+            {
+                EventBus.Publish(EventType.PLAYER_START_SPRINT);
+            };
+            inputManager.playerControls.Player.Sprint.canceled += context =>
+            {
+                EventBus.Publish(EventType.PLAYER_STOP_SPRINT);
+            };
+        }
     }
 
     private void HandleDash()
     {
-        inputManager.playerControls.Player.Dash.performed += context =>
+        if (CanDash)
         {
-            EventBus.Publish(EventType.PLAYER_DASH);
-        };
+            inputManager.playerControls.Player.Dash.performed += context =>
+            {
+                EventBus.Publish(EventType.PLAYER_DASH);
+            };
+        }
     }
 
     private void StartDash()

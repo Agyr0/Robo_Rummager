@@ -9,7 +9,6 @@ public class WeaponController : MonoBehaviour
 
     [SerializeField]
     private Transform playerHand;
-    public Transform _muzzlePos;
 
     [SerializeField]
     private WeaponData _curWeapon;
@@ -24,12 +23,19 @@ public class WeaponController : MonoBehaviour
         _curWeapon = _availableWeapons[0];
         inputManager = InputManager.Instance;
 
+        //Input Events
+        HandleWeaponSwitch();
+        HandleShoot();
 
+        //Ensure weapon is displayed on start
         EventBus.Publish(EventType.DISPLAY_WEAPON);
     }
 
     private void OnEnable()
     {
+
+        
+
         EventBus.Subscribe(EventType.PLAYER_SHOOT, ShootRifle);
         EventBus.Subscribe<Vector2>(EventType.WEAPON_SWITCH, SwitchWeapon);
         EventBus.Subscribe(EventType.DISPLAY_WEAPON, DisplayWeapon);
@@ -41,23 +47,21 @@ public class WeaponController : MonoBehaviour
         EventBus.Unsubscribe(EventType.DISPLAY_WEAPON, DisplayWeapon);
 
     }
-
-    private void Update()
-    {
-        if (canShoot)
-            HandleShoot();
-        HandleWeaponSwitch();
-    }
-    private void HandleShoot()
-    {
-        inputManager.playerControls.Player.Shoot.performed += _ =>
-        {
-            EventBus.Publish(EventType.PLAYER_SHOOT);
-        };
-    }
     private void LateUpdate()
     {
         PointWeapon();
+    }
+
+
+    private void HandleShoot()
+    {
+        if (canShoot)
+        {
+            inputManager.playerControls.Player.Shoot.performed += _ =>
+            {
+                EventBus.Publish(EventType.PLAYER_SHOOT);
+            };
+        }
     }
     private void PointWeapon()
     {
@@ -71,7 +75,7 @@ public class WeaponController : MonoBehaviour
 
         //Handle VFX
         //Spawn Laser Bullet
-        GameObject laser = Instantiate(_curWeapon.LaserBeam, _muzzlePos.position, transform.rotation);
+        GameObject laser = Instantiate(_curWeapon.LaserBeam, _curWeapon.MuzzlePos.position, transform.rotation);
         //Spawn Muzzle Flash
         //GameObject muzzleFlash = Instantiate(_curWeapon.MuzzleFlash, transform.position, Quaternion.FromToRotation(transform.position, transform.forward));
 
@@ -137,11 +141,11 @@ public class WeaponController : MonoBehaviour
         if (_weaponPrefab != null)
         {
             //Spawn weapon in the playerhand
-            Instantiate(_weaponPrefab, playerHand.position, transform.rotation, transform);
-            
-            //Working on assigning the correct muzzlepos
-            _curWeapon.MuzzlePos = _curWeapon.WeaponPrefab.transform.GetChild(0);
-            _muzzlePos = _curWeapon.MuzzlePos;
+            GameObject weaponInstance = Instantiate(_weaponPrefab, playerHand.position, transform.rotation, transform);
+
+            //Assign _curWeapon.MuzzlePos with the instanced muzzle pos if available
+            if (weaponInstance.transform.childCount > 0)
+                _curWeapon.MuzzlePos = weaponInstance.transform.GetChild(0);
         }
     }
 }
