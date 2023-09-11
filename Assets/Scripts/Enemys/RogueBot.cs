@@ -128,14 +128,15 @@ public class RogueBot : MonoBehaviour
 
             if (distFromLastPoint < minDistFromLastPoint)
                 randomPoint = center + Random.insideUnitSphere * range; // Generate a random point if the first point was within the minimum distance
-
-            NavMeshHit hit;
-            if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))  // Find closest point on NavMesh
+            else if(distFromLastPoint > minDistFromLastPoint)
             {
-                result = hit.position;
-                return true;
+                NavMeshHit hit;
+                if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))  // Find closest point on NavMesh
+                {
+                    result = hit.position;
+                    return true;
+                }
             }
-
             result = Vector3.zero;
             return false;
         }
