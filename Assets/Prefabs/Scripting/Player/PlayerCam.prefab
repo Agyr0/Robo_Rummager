@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 3615838600904197193}
   - component: {fileID: 4379116338808956791}
   - component: {fileID: 1039533867911548675}
+  - component: {fileID: 273439173363013572}
   m_Layer: 0
   m_Name: PlayerCam
   m_TagString: Untagged
@@ -210,3 +211,20 @@ MonoBehaviour:
   AutoEnableInputs: 1
   XYAxis: {fileID: -497808963418619101, guid: 66139088cc49af245a74af800e01d5b4, type: 3}
   ZAxis: {fileID: 0}
+--- !u!114 &273439173363013572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5573113340356985743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 449ef5ebbe24720439ec31d15f7b6f3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FocusTracksTarget: 0
+  m_FocusTracking: 0
+  m_FocusTarget: {fileID: 0}
+  m_FocusOffset: 0
+  m_Profile: {fileID: 11400000, guid: 4632d40abde4111479b9b9ac4f209d84, type: 2}
