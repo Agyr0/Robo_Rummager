@@ -9,7 +9,7 @@ public class ScannerGoggleController : MonoBehaviour
 {
     [SerializeField] private RectTransform barTransform;
     private RectTransform canvasRect;
-    public float distance = 0f;
+    private float distance = 0f;
     [SerializeField] private float speed = 40f;
     private bool movingRight = true;
 
@@ -40,11 +40,11 @@ public class ScannerGoggleController : MonoBehaviour
 
             if (movingRight)
             {
-                targetPosition = new Vector3(canvasRect.rect.width * 2, barTransform.position.y, barTransform.position.z);
+                targetPosition = new Vector3(distance, barTransform.position.y, barTransform.position.z);
             }
             else
             {
-                targetPosition = new Vector3(-40, barTransform.position.y, barTransform.position.z);
+                targetPosition = new Vector3(-130, barTransform.position.y, barTransform.position.z);
             }
 
             float journeyLength = Vector3.Distance(startPosition, targetPosition);
@@ -58,9 +58,9 @@ public class ScannerGoggleController : MonoBehaviour
                 yield return null;
             }
 
-            barTransform.position = targetPosition; // Ensure it reaches the exact target position.
+            barTransform.position = targetPosition;
             movingRight = !movingRight;
-            yield return new WaitForSeconds(1.0f); // Pause for 1 second before changing direction.
+            yield return new WaitForSeconds(.5f);
         }
     }
 }
