@@ -24,45 +24,54 @@ public class WeaponController : MonoBehaviour
         inputManager = InputManager.Instance;
 
         //Input Events
-        HandleWeaponSwitch();
-        HandleShoot();
+        SubscribeInputEvents();
 
-        //Ensure weapon is displayed on start
-        EventBus.Publish(EventType.DISPLAY_WEAPON);
+        InitializeWeapon();
     }
 
     private void OnEnable()
     {
-
-        
-
         EventBus.Subscribe(EventType.PLAYER_SHOOT, ShootRifle);
         EventBus.Subscribe<Vector2>(EventType.WEAPON_SWITCH, SwitchWeapon);
         EventBus.Subscribe(EventType.DISPLAY_WEAPON, DisplayWeapon);
+        EventBus.Subscribe(EventType.PLAYER_RELOAD, HandleReload);
     }
     private void OnDisable()
     {
         EventBus.Unsubscribe(EventType.PLAYER_SHOOT, ShootRifle);
         EventBus.Unsubscribe<Vector2>(EventType.WEAPON_SWITCH, SwitchWeapon);
         EventBus.Unsubscribe(EventType.DISPLAY_WEAPON, DisplayWeapon);
+        EventBus.Unsubscribe(EventType.PLAYER_RELOAD, HandleReload);
 
     }
     private void LateUpdate()
     {
         PointWeapon();
     }
-
-
-    private void HandleShoot()
+    private void InitializeWeapon()
     {
-        if (canShoot)
+        //Ensure weapon is displayed on start
+        EventBus.Publish(EventType.DISPLAY_WEAPON);
+
+        //Set ammo to magsize for each
+        for (int i = 0; i < _availableWeapons.Length; i++)
         {
-            inputManager.playerControls.Player.Shoot.performed += _ =>
-            {
-                EventBus.Publish(EventType.PLAYER_SHOOT);
-            };
+            _availableWeapons[i].CurAmmo = _availableWeapons[i].MagSize;
         }
     }
+    private void SubscribeInputEvents()
+    {
+        //Weapon Switch
+        inputManager.playerControls.Player.SwitchWeapon.performed += ctx => EventBus.Publish(EventType.WEAPON_SWITCH, ctx.ReadValue<Vector2>());
+
+        //Shooting
+        inputManager.playerControls.Player.Shoot.performed += _ => EventBus.Publish(EventType.PLAYER_SHOOT);
+
+        //Reload
+        inputManager.playerControls.Player.Reload.performed += _ => EventBus.Publish(EventType.PLAYER_RELOAD);
+    }
+
+    
     private void PointWeapon()
     {
         transform.rotation = gameManager.CameraTransform.rotation;
@@ -70,37 +79,60 @@ public class WeaponController : MonoBehaviour
 
     private void ShootRifle()
     {
-        Ray ray = new Ray(gameManager.CameraTransform.position, gameManager.CameraTransform.forward);
-
-
-        //Handle VFX
-        //Spawn Laser Bullet
-        GameObject laser = Instantiate(_curWeapon.LaserBeam, _curWeapon.MuzzlePos.position, transform.rotation);
-        //Spawn Muzzle Flash
-        //GameObject muzzleFlash = Instantiate(_curWeapon.MuzzleFlash, transform.position, Quaternion.FromToRotation(transform.position, transform.forward));
-
-
-        if (Physics.Raycast(ray, out RaycastHit hit, _curWeapon.Range))
+        if (canShoot)
         {
-            //Handle Hit
-            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+            Ray ray = new Ray(gameManager.CameraTransform.position, gameManager.CameraTransform.forward);
+
+
+            //Handle VFX
+            //Spawn Laser Bullet
+            GameObject laser = Instantiate(_curWeapon.LaserBeam, _curWeapon.MuzzlePos.position, transform.rotation);
+            //Spawn Muzzle Flash
+            //GameObject muzzleFlash = Instantiate(_curWeapon.MuzzleFlash, transform.position, Quaternion.FromToRotation(transform.position, transform.forward));
+
+
+            if (Physics.Raycast(ray, out RaycastHit hit, _curWeapon.Range))
             {
-                Debug.Log("Hit enemmy of type " + hit.transform.gameObject.layer);
+                //Handle Hit
+                if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+                {
+                    Debug.Log("Hit enemmy of type " + hit.transform.gameObject.layer);
+                }
+                else
+                    Debug.Log("Hit " + hit.transform.gameObject.layer);
+
             }
-            else
-                Debug.Log("Hit " + hit.transform.gameObject.layer);
 
+            _curWeapon.CurAmmo--;
+            if (_curWeapon.CurAmmo <= 0)
+            {
+                canShoot = false;
+                Debug.Log("Out of Ammo");
+            }
+            else if (_curWeapon.CurAmmo > 0 && (_curWeapon.MagSize / 5) > _curWeapon.CurAmmo)
+            {
+                EventBus.Publish(EventType.LOW_AMMO);
+                Debug.Log("Low on Ammo");
+            }
+            Debug.Log("Ammo: " + _curWeapon.CurAmmo);
         }
-
     }
-
-    private void HandleWeaponSwitch()
+    private void HandleReload()
     {
-        inputManager.playerControls.Player.SwitchWeapon.performed += ctx =>
-        {
-            EventBus.Publish(EventType.WEAPON_SWITCH, ctx.ReadValue<Vector2>());
-        };
+        StartCoroutine(Reload());
     }
+    private IEnumerator Reload()
+    {
+        Debug.Log("Reloading...");
+
+        canShoot = false;
+        yield return new WaitForSeconds(_curWeapon.ReloadTime);
+        canShoot = true;
+        _curWeapon.CurAmmo = _curWeapon.MagSize;
+        Debug.Log("Reload complete\n" + "Ammo: " + _curWeapon.CurAmmo);
+    }
+
+    
 
     private void SwitchWeapon(Vector2 index)
     {
