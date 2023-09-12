@@ -188,40 +188,14 @@ public class Player_InventoryManager : MonoBehaviour
     {
         if (Inventory_ItemPickupList.Count > 0)
         {
-
             Inventory_ItemPickupList = Inventory_ItemPickupList.OrderBy(x => Vector2.Distance(this.transform.position, x.transform.position)).ToList();
-            for (int x = 0; x < Inventory_ItemPickupList.Count; x++)
+
+            int temp_ListCount = Inventory_ItemPickupList.Count;
+
+            for (int x = 0; x < temp_ListCount; x++)
             {
                 EventBus.Publish<GameObject>(EventType.INVENTORY_SORTPICKUP, Inventory_ItemPickupList[x]);
             }
-
-            /*
-            List<GameObject> temp_ItemList = new List<GameObject>();
-            GameObject temp_Pickup = Inventory_ItemPickupList[0];
-            float temp_distance = 500;
-            for (int x = 0; x < Inventory_ItemPickupList.Count; x++)
-            {
-                for (int y = 0; y < Inventory_ItemPickupList.Count; y++)
-                {
-                    Debug.Log(temp_distance);
-                    
-                    if (!temp_ItemList.Contains(Inventory_ItemPickupList[y]))
-                    {
-                        if (Vector3.Distance(temp_Pickup.transform.position, Inventory_ItemPickupList[y].transform.position) <
-                            temp_distance)
-                        {
-                            Debug.Log(temp_distance);
-                            Debug.Log(Vector3.Distance(temp_Pickup.transform.position, Inventory_ItemPickupList[y].transform.position));
-                            temp_Pickup = Inventory_ItemPickupList[y];
-                            temp_distance = Vector3.Distance(temp_Pickup.transform.position, Inventory_ItemPickupList[y].transform.position);
-                        }
-                    }
-                    
-                }
-                temp_ItemList.Add(temp_Pickup);
-                EventBus.Publish<GameObject>(EventType.INVENTORY_SORTPICKUP, temp_Pickup);
-            }
-            */
         }   
     }
 
