@@ -222,7 +222,6 @@ GameObject:
   m_Component:
   - component: {fileID: 598241843}
   - component: {fileID: 598241845}
-  - component: {fileID: 598241846}
   - component: {fileID: 598241844}
   m_Layer: 5
   m_Name: ScanBar
@@ -246,10 +245,10 @@ RectTransform:
   m_Father: {fileID: 670036923}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -937.735, y: 0}
-  m_SizeDelta: {x: -1875.47, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 40, y: 1080}
+  m_Pivot: {x: 0, y: 0}
 --- !u!114 &598241844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,20 +287,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 598241842}
   m_CullTransparentMesh: 1
---- !u!114 &598241846
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 598241842}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 160dacd75a82bb542a9cb770918962c7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  barTransform: {fileID: 598241843}
-  speed: 200
 --- !u!1 &670036919
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,6 +299,7 @@ GameObject:
   - component: {fileID: 670036922}
   - component: {fileID: 670036921}
   - component: {fileID: 670036920}
+  - component: {fileID: 670036924}
   m_Layer: 5
   m_Name: ScannerTestCanvas
   m_TagString: Untagged
@@ -404,6 +390,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &670036924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 670036919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 160dacd75a82bb542a9cb770918962c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  barTransform: {fileID: 598241843}
+  distance: 0
+  speed: 300
 --- !u!1 &746569948
 GameObject:
   m_ObjectHideFlags: 0
@@ -1386,7 +1387,7 @@ MonoBehaviour:
   _canDash: 1
   handTransform: {fileID: 1849377819}
   holdingRobot: 0
-  scannerVolume: {fileID: 0}
+  scannerCanvas: {fileID: 670036922}
 --- !u!4 &7685187969769858545
 Transform:
   m_ObjectHideFlags: 0

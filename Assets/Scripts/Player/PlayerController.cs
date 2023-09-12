@@ -113,6 +113,7 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     private CinemachineVolumeSettings scannerVolume;
+    public Canvas scannerCanvas;
 
     private void OnEnable()
     {
@@ -282,6 +283,7 @@ public class PlayerController : MonoBehaviour
     {
         scannerActive = !scannerActive;
         scannerVolume.enabled = scannerActive;
+        scannerCanvas.gameObject.SetActive(scannerActive);
     }
 
     #endregion
