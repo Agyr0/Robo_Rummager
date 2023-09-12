@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,6 +27,9 @@ public class Player_InventoryManager : MonoBehaviour
     private GameObject[] _inventoryHUD_SlotArray;
 
     [SerializeField]
+    private List<GameObject> _inventory_ItemPickupList;
+
+    [SerializeField]
     private int _slotStackLimit;
 
     [SerializeField]
@@ -45,6 +50,12 @@ public class Player_InventoryManager : MonoBehaviour
         set { _inventory_DataArray = value; }
     }
 
+    public List<GameObject> Inventory_ItemPickupList
+    {
+        get { return _inventory_ItemPickupList; }
+        set { _inventory_ItemPickupList = value; }
+    }
+
     //Current method of keeping track of players inventory slot counts untill
     //a player data script is implemented.
 
@@ -56,7 +67,10 @@ public class Player_InventoryManager : MonoBehaviour
         EventBus.Subscribe(EventType.INVENTORY_TOGGLE, OnToggleInventory);
         EventBus.Subscribe(EventType.INVENTORY_ADDSLOT, OnInventoryAddSlot);
         EventBus.Subscribe(EventType.INVENTORY_REMOVESLOT, OnInventoryRemoveSlot);
-        EventBus.Subscribe<GameObject>(EventType.INVENTORY_PICKUP, OnItemPickup);
+        EventBus.Subscribe(EventType.INVENTORY_PICKUP, OnItemPickup);
+        EventBus.Subscribe<GameObject>(EventType.INVENTORY_SORTPICKUP, OnItemSortPickup);
+        EventBus.Subscribe<GameObject>(EventType.INVENTORY_ADDITEM, OnAddItem);
+        EventBus.Subscribe<GameObject>(EventType.INVENTORY_REMOVEITEM, OnRemoveItem);
     }
 
     private void OnDisable()
@@ -64,7 +78,10 @@ public class Player_InventoryManager : MonoBehaviour
         EventBus.Unsubscribe(EventType.INVENTORY_TOGGLE, OnToggleInventory);
         EventBus.Unsubscribe(EventType.INVENTORY_ADDSLOT, OnInventoryAddSlot);
         EventBus.Unsubscribe(EventType.INVENTORY_REMOVESLOT, OnInventoryRemoveSlot);
-        EventBus.Unsubscribe<GameObject>(EventType.INVENTORY_PICKUP, OnItemPickup);
+        EventBus.Unsubscribe(EventType.INVENTORY_PICKUP, OnItemPickup);
+        EventBus.Unsubscribe<GameObject>(EventType.INVENTORY_SORTPICKUP, OnItemSortPickup);
+        EventBus.Unsubscribe<GameObject>(EventType.INVENTORY_ADDITEM, OnAddItem);
+        EventBus.Unsubscribe<GameObject>(EventType.INVENTORY_REMOVEITEM, OnRemoveItem);
     }
 
     private void OnToggleInventory()
@@ -111,7 +128,7 @@ public class Player_InventoryManager : MonoBehaviour
         }
     }
 
-    private void OnItemPickup(GameObject itemPicked)
+    private void OnItemSortPickup(GameObject itemPicked)
     {
         for (int i = 0; i < _inventorySlotCount; i++)
         {
@@ -154,6 +171,7 @@ public class Player_InventoryManager : MonoBehaviour
         
         if (itemPicked.GetComponent<Resource_Item>().ResourceAmount == 0)
         {
+            EventBus.Publish<GameObject>(EventType.INVENTORY_REMOVEITEM, itemPicked);
             itemPicked.gameObject.SetActive(false);
         }
     }
@@ -164,6 +182,47 @@ public class Player_InventoryManager : MonoBehaviour
         {
             _inventoryItemDropDialougeArray[slotNumber].SetActive(true);
         }
+    }
+
+    public void OnItemPickup()
+    {
+        if (Inventory_ItemPickupList.Count > 0)
+        {
+
+            Inventory_ItemPickupList = Inventory_ItemPickupList.OrderBy(x => Vector2.Distance(this.transform.position, x.transform.position)).ToList();
+            for (int x = 0; x < Inventory_ItemPickupList.Count; x++)
+            {
+                EventBus.Publish<GameObject>(EventType.INVENTORY_SORTPICKUP, Inventory_ItemPickupList[x]);
+            }
+
+            /*
+            List<GameObject> temp_ItemList = new List<GameObject>();
+            GameObject temp_Pickup = Inventory_ItemPickupList[0];
+            float temp_distance = 500;
+            for (int x = 0; x < Inventory_ItemPickupList.Count; x++)
+            {
+                for (int y = 0; y < Inventory_ItemPickupList.Count; y++)
+                {
+                    Debug.Log(temp_distance);
+                    
+                    if (!temp_ItemList.Contains(Inventory_ItemPickupList[y]))
+                    {
+                        if (Vector3.Distance(temp_Pickup.transform.position, Inventory_ItemPickupList[y].transform.position) <
+                            temp_distance)
+                        {
+                            Debug.Log(temp_distance);
+                            Debug.Log(Vector3.Distance(temp_Pickup.transform.position, Inventory_ItemPickupList[y].transform.position));
+                            temp_Pickup = Inventory_ItemPickupList[y];
+                            temp_distance = Vector3.Distance(temp_Pickup.transform.position, Inventory_ItemPickupList[y].transform.position);
+                        }
+                    }
+                    
+                }
+                temp_ItemList.Add(temp_Pickup);
+                EventBus.Publish<GameObject>(EventType.INVENTORY_SORTPICKUP, temp_Pickup);
+            }
+            */
+        }   
     }
 
     public void OnItemDrop(int slotNumber)
@@ -193,13 +252,33 @@ public class Player_InventoryManager : MonoBehaviour
         tempItemBlank.GetComponent<Resource_Item>().ResourceAmount = ItemData.AmountStored;
     }
 
-    public void OnItemDropCanceled(int slotNumber)
+    public void OnItemDropCancelled(int slotNumber)
     {
         _inventoryItemDropDialougeArray[slotNumber].SetActive(false);
     }
 
+    public void OnAddItem(GameObject item_GO)
+    {
+        if (!Inventory_ItemPickupList.Contains(item_GO))
+        {
+            Inventory_ItemPickupList.Add(item_GO);
+        }
+    }
+    private void OnRemoveItem(GameObject item_GO)
+    {
+        if (Inventory_ItemPickupList.Contains(item_GO))
+        {
+            Inventory_ItemPickupList.Remove(item_GO);
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        EventBus.Publish<GameObject>(EventType.INVENTORY_PICKUP, other.gameObject);
+        EventBus.Publish<GameObject>(EventType.INVENTORY_ADDITEM, other.gameObject);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        EventBus.Publish<GameObject>(EventType.INVENTORY_REMOVEITEM, other.gameObject);
     }
 }
