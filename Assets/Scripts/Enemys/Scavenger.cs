@@ -7,34 +7,25 @@ public class Scavenger : MonoBehaviour
 {
     private NavMeshAgent agent;
     private Animator animator;
-    private Transform playerTransform;
-    
-
-    [SerializeField]
-    private LayerMask playerLayerMask;
 
     #region Patrolling
+    private int destPoint;
     private float patrolWaitTime;
 
-    [Header("Patrol Settings")]
     [SerializeField]
-    [Tooltip("Range that the Rogue Bot will patrol around in. Indicated by a green wire sphere.")]
-    private float patrolRange;
+    [Tooltip("List of points that the Scavenger will patrol.")]
+    public Transform[] scavengerPatrolPoints;
 
     [SerializeField]
-    [Tooltip("Center Point that the Rogue Bot will patrol around.")]
-    private Transform patrolCenterPoint;
+    [Tooltip("Check the box to have the Scavenger patrol randomly amongst patrol points, leave unchecked to patrol in order.")]
+    private bool randomPatrol;
 
     [SerializeField]
-    [Tooltip("Minimum distance that can be between new patrol points.")]
-    private float minDistFromLastPoint;
-
-    [SerializeField]
-    [Tooltip("Minimum time the Rogue Bot will wait at a location before moving to another.")]
+    [Tooltip("Minimum time the Scavenger will wait at a location before moving to another.")]
     private float minWaitTime;
 
     [SerializeField]
-    [Tooltip("Maximum time the Rogue Bot will wait at a location before moving to another.")]
+    [Tooltip("Maximum time the Scavenger will wait at a location before moving to another.")]
     private float maxWaitTime;
     #endregion
 
@@ -42,63 +33,38 @@ public class Scavenger : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-        playerTransform = GameObject.Find("Player").transform;                    // Need to find a better way to assign this at runtime
     }
 
     void Update()
     {
         animator.SetFloat("Speed", agent.velocity.magnitude);
-        ScavengerPatrolling();
+        Debug.Log("Agent Velocity: " + agent.velocity.magnitude);
+        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+            ScavengerPatrolling();
     }
 
     // Patrolling
     private void ScavengerPatrolling()
     {
-        if (agent.remainingDistance <= agent.stoppingDistance) // Check if Rogue Bot has reached position
+        if (scavengerPatrolPoints.Length == 0)
+            return;
+
+        if (agent.remainingDistance <= agent.stoppingDistance) // Check if Scavenger has reached position
         {
-            patrolWaitTime -= Time.deltaTime;
+            patrolWaitTime -= Time.deltaTime; // Countdown the wait timer
             if (patrolWaitTime <= 0)
             {
-                Vector3 point;
-                if (RandomPoint(patrolCenterPoint.position, patrolRange, out point))
-                {
-                    Debug.DrawRay(point, Vector3.up, UnityEngine.Color.red, 5.0f); // Draw the Rogue Bot's next position
-                    agent.SetDestination(point);
-                }
+                if (randomPatrol == false)
+                    destPoint = (destPoint + 1) % scavengerPatrolPoints.Length;
+                else if (randomPatrol == true)
+                    destPoint = Random.Range(0, scavengerPatrolPoints.Length);
+                agent.destination = scavengerPatrolPoints[destPoint].position; // If timer hits 0 and within stopping distance set a new point
             }
         }
         else
         {
             if (patrolWaitTime <= 0)
-                patrolWaitTime = Random.Range(minWaitTime, maxWaitTime);
+                patrolWaitTime = Random.Range(minWaitTime, maxWaitTime);  // If timer hits 0 and not within stopping distance reset timer for next point
         }
-
-        bool RandomPoint(Vector3 center, float range, out Vector3 result)
-        {
-            Vector3 randomPoint = center + Random.insideUnitSphere * range; // Generate a random point
-            float distFromLastPoint = Vector3.Distance(this.transform.position, randomPoint);
-
-            if (distFromLastPoint < minDistFromLastPoint)
-                randomPoint = center + Random.insideUnitSphere * range; // Generate a random point if the first point was within the minimum distance
-
-            else if (distFromLastPoint > minDistFromLastPoint)
-            {
-                NavMeshHit hit;
-                if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))  // Find closest point on NavMesh
-                {
-                    result = hit.position;
-                    return true;
-                }
-            }
-            result = Vector3.zero;
-            return false;
-        }
-    }
-
-    private void OnDrawGizmos()
-    {
-        // Draw the Patrolling Range
-        Gizmos.color = UnityEngine.Color.green;
-        Gizmos.DrawWireSphere(patrolCenterPoint.position, patrolRange);
     }
 }

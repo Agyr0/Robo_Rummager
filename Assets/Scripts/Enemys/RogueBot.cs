@@ -71,7 +71,7 @@ public class RogueBot : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        playerTransform = GameObject.Find("Player").transform;                    // Need to find a better way to assign this at runtime
+        playerTransform = GameObject.Find("Player").transform; // Need to find a better way to assign this at runtime
     }
 
     void Update()
@@ -95,7 +95,7 @@ public class RogueBot : MonoBehaviour
             RogueBotAttacking();
         else if (playerInChaseRange && robotInLeashRange)
             RogueBotChasing();
-        else
+        else if(!agent.pathPending && agent.remainingDistance < 0.5f)
             RogueBotPatrolling();
     }
 
@@ -104,21 +104,20 @@ public class RogueBot : MonoBehaviour
     {
         if (agent.remainingDistance <= agent.stoppingDistance) // Check if Rogue Bot has reached position
         {
-            patrolWaitTime -= Time.deltaTime;
+            patrolWaitTime -= Time.deltaTime; // Countdown the wait timer
             if (patrolWaitTime <= 0)
             {
                 Vector3 point;
                 if (RandomPoint(patrolCenterPoint.position, patrolRange, out point))
                 {
-                    Debug.DrawRay(point, Vector3.up, UnityEngine.Color.red, 5.0f); // Draw the Rogue Bot's next position
-                    agent.SetDestination(point);
+                    agent.SetDestination(point); // If timer hits 0 and within stopping distance set a new point
                 }
             }
         }
         else
         {
             if (patrolWaitTime <= 0)
-                patrolWaitTime = Random.Range(minWaitTime, maxWaitTime);
+                patrolWaitTime = Random.Range(minWaitTime, maxWaitTime); // If timer hits 0 and not within stopping distance reset timer for next point
         }
 
         bool RandomPoint(Vector3 center, float range, out Vector3 result)
@@ -161,6 +160,8 @@ public class RogueBot : MonoBehaviour
             canAttack = false;
         }
     }
+    
+
 
     IEnumerator ResetRogueBotAttackCooldown()
     {
