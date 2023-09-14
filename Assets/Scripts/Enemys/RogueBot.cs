@@ -54,6 +54,20 @@ public class RogueBot : MonoBehaviour
     private float leashRange;
     #endregion
 
+    #region Charging
+    private bool playerInChargeRange;
+    private bool canCharge = true;
+
+    [Header("Charge Settings")]
+    [SerializeField]
+    [Tooltip("Range that the Rogue Bot will attack the player. Indicated by a red wire sphere.")]
+    private float chargeRange;
+
+    [SerializeField]
+    [Tooltip("The time between the Rogue Bots attacks.")]
+    private float timeBetweenCharge;
+    #endregion
+
     #region Attacking
     private bool playerInAttackRange;
     private bool canAttack = true;
@@ -79,7 +93,10 @@ public class RogueBot : MonoBehaviour
         // Check if player is in attack range
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayerMask);
 
-        // Check if player is in sight range
+        // Check if player is in charge range
+        playerInChargeRange = Physics.CheckSphere(transform.position, chargeRange, playerLayerMask);
+
+        // Check if player is in chase range
         playerInChaseRange = Physics.CheckSphere(transform.position, chaseRange, playerLayerMask);
 
         // Check if robot is in the leash range
@@ -148,6 +165,19 @@ public class RogueBot : MonoBehaviour
         agent.SetDestination(playerTransform.position);
     }
 
+    // Charging
+    private void RogueBotCharging()
+    {
+        agent.ResetPath();
+        if (canAttack == true)
+        {
+            rogueBotTestAttackAnimator.Play("RogueBotTestAttack");
+            StartCoroutine(ResetRogueBotAttackCooldown());
+            StartCoroutine(ActivateHitbox());
+            canAttack = false;
+        }
+    }
+
     // Attacking
     private void RogueBotAttacking()
     {
@@ -160,8 +190,6 @@ public class RogueBot : MonoBehaviour
             canAttack = false;
         }
     }
-    
-
 
     IEnumerator ResetRogueBotAttackCooldown()
     {
@@ -183,9 +211,13 @@ public class RogueBot : MonoBehaviour
         Gizmos.color = UnityEngine.Color.green;
         Gizmos.DrawWireSphere(patrolCenterPoint.position, patrolRange);
 
-        // Draw the Sight Range
+        // Draw the Chase Range
         Gizmos.color = UnityEngine.Color.blue;
         Gizmos.DrawWireSphere(transform.position, chaseRange);
+
+        // Draw the Charge Range
+        Gizmos.color = UnityEngine.Color.magenta;
+        Gizmos.DrawWireSphere(transform.position, chargeRange);
 
         // Draw the Attack Range
         Gizmos.color = UnityEngine.Color.red;
