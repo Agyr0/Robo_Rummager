@@ -12,38 +12,29 @@ public enum EventType
     PLAYER_SPAWN,
     PLAYER_DEATH,
 
+    #region PlayerInput
+    PLAYER_START_SPRINT,
+    PLAYER_STOP_SPRINT,
+    PLAYER_DASH,
+    TOGGLE_SCANNER,
+    SEND_DETECTION_SPHERE,
     #endregion
 
-    #region Player HUD
-    //Togles the visibility of the players fanny pack UI,
-    //defaulting to the the inventory screen.
-    INVENTORY_TOGGLE,
-    BULLETINBOARD_INTERACT,
-    BULLETINBOARD_EXIT,
-
+    #region Shooting
+    PLAYER_SHOOT,
+    WEAPON_SWITCH,
+    DISPLAY_WEAPON,
+    PLAYER_RELOAD,
+    LOW_AMMO,
     #endregion
-
-    #region Player Inventory
-    //Enables an available inventory slot.
-    INVENTORY_ADDSLOT,
-    //Disables the last enabled inventory slot.
-    INVENTORY_REMOVESLOT,
-    //Adds the gameobject to an item reference list.
-    INVENTORY_PICKUP,
-    //Adds items from the reference list to the player inventory
-    INVENTORY_SORTPICKUP,
-    INVENTORY_ADDITEM,
-    INVENTORY_ADDITEMCULL,
-    INVENTORY_REMOVEITEM,
-    INVENTORY_UPDATE,
-    INVENTORY_SLOTUPDATED,
-    INVENTORY_ITEMDROPPED,
 
     #endregion
 
-    #region Bulletin Board
-    BOARD_ADDCONTRACT,
+    #region Testing Events
+
+    TEST_EVENT_0,
+    TEST_EVENT_1,
+    TEST_EVENT_2
 
     #endregion
-
 }

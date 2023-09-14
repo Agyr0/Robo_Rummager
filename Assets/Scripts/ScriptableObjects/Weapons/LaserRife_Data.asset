@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85fba88f59a72de4cae41550cc515703, type: 3}
+  m_Name: LaserRife_Data
+  m_EditorClassIdentifier: 
+  _weapon: 0
+  _weaponPrefab: {fileID: 6520869455448220376, guid: 4be174fede6d86a4f86f7bb34c1ad9b2,
+    type: 3}
+  _damage: 0
+  _reloadTime: 3
+  _range: Infinity
+  _curAmmo: 21
+  _magSize: 30
+  _wrenchLevel: 0
+  _disassembleTime: 0
+  _icon: {fileID: 0}
+  _laserBeam: {fileID: 6838286665357391685, guid: 910522a0195365b42b30e57879156105,
+    type: 3}
+  _muzzleFlash: {fileID: 8822856850537434410, guid: f048a5a71582dbb4b905f109b12fd3db,
+    type: 3}
+  _muzzlePos: {fileID: 0}

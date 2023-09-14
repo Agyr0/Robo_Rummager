@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85fba88f59a72de4cae41550cc515703, type: 3}
+  m_Name: Wrench_Data
+  m_EditorClassIdentifier: 
+  _weapon: 1
+  _weaponPrefab: {fileID: 5320789994625388031, guid: 614ebe92be0e34642bae1cb853c0c051,
+    type: 3}
+  _damage: 0
+  _reloadTime: 0
+  _range: Infinity
+  _curAmmo: Infinity
+  _magSize: Infinity
+  _wrenchLevel: 0
+  _disassembleTime: 0
+  _icon: {fileID: 0}
+  _laserBeam: {fileID: 0}
+  _muzzleFlash: {fileID: 0}
+  _muzzlePos: {fileID: 0}
