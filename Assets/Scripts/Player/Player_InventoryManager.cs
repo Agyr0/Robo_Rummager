@@ -30,6 +30,9 @@ public class Player_InventoryManager : MonoBehaviour
     private List<GameObject> _inventory_ItemPickupList;
 
     [SerializeField]
+    private List<GameObject> _inventory_ItemCullPickupList;
+
+    [SerializeField]
     private int _slotStackLimit;
 
     [SerializeField]
@@ -56,6 +59,12 @@ public class Player_InventoryManager : MonoBehaviour
         set { _inventory_ItemPickupList = value; }
     }
 
+    public List<GameObject> Inventory_ItemCullPickupList
+    {
+        get { return _inventory_ItemPickupList; }
+        set { _inventory_ItemPickupList = value; }
+    }
+
     //Current method of keeping track of players inventory slot counts untill
     //a player data script is implemented.
 
@@ -70,7 +79,8 @@ public class Player_InventoryManager : MonoBehaviour
         EventBus.Subscribe(EventType.INVENTORY_PICKUP, OnItemPickup);
         EventBus.Subscribe<GameObject>(EventType.INVENTORY_SORTPICKUP, OnItemSortPickup);
         EventBus.Subscribe<GameObject>(EventType.INVENTORY_ADDITEM, OnAddItem);
-        EventBus.Subscribe<GameObject>(EventType.INVENTORY_REMOVEITEM, OnRemoveItem);
+        EventBus.Subscribe<GameObject>(EventType.INVENTORY_ADDITEMCULL, OnAddCullItem);
+        EventBus.Subscribe(EventType.INVENTORY_REMOVEITEM, OnRemoveItem);
     }
 
     private void OnDisable()
@@ -81,7 +91,8 @@ public class Player_InventoryManager : MonoBehaviour
         EventBus.Unsubscribe(EventType.INVENTORY_PICKUP, OnItemPickup);
         EventBus.Unsubscribe<GameObject>(EventType.INVENTORY_SORTPICKUP, OnItemSortPickup);
         EventBus.Unsubscribe<GameObject>(EventType.INVENTORY_ADDITEM, OnAddItem);
-        EventBus.Unsubscribe<GameObject>(EventType.INVENTORY_REMOVEITEM, OnRemoveItem);
+        EventBus.Unsubscribe<GameObject>(EventType.INVENTORY_ADDITEMCULL, OnAddCullItem);
+        EventBus.Unsubscribe(EventType.INVENTORY_REMOVEITEM, OnRemoveItem);
     }
 
     private void OnToggleInventory()
@@ -171,7 +182,7 @@ public class Player_InventoryManager : MonoBehaviour
         
         if (itemPicked.GetComponent<Resource_Item>().ResourceAmount == 0)
         {
-            EventBus.Publish<GameObject>(EventType.INVENTORY_REMOVEITEM, itemPicked);
+            EventBus.Publish<GameObject>(EventType.INVENTORY_ADDITEMCULL, itemPicked);
             itemPicked.gameObject.SetActive(false);
         }
     }
@@ -196,7 +207,8 @@ public class Player_InventoryManager : MonoBehaviour
             {
                 EventBus.Publish<GameObject>(EventType.INVENTORY_SORTPICKUP, Inventory_ItemPickupList[x]);
             }
-        }   
+        }
+        EventBus.Publish(EventType.INVENTORY_REMOVEITEM);
     }
 
     public void OnItemDrop(int slotNumber)
@@ -238,12 +250,22 @@ public class Player_InventoryManager : MonoBehaviour
             Inventory_ItemPickupList.Add(item_GO);
         }
     }
-    private void OnRemoveItem(GameObject item_GO)
+
+    public void OnAddCullItem(GameObject item_GO)
     {
-        if (Inventory_ItemPickupList.Contains(item_GO))
+        if (!Inventory_ItemPickupList.Contains(item_GO))
         {
-            Inventory_ItemPickupList.Remove(item_GO);
+            Inventory_ItemCullPickupList.Add(item_GO);
         }
+    }
+
+    private void OnRemoveItem()
+    {
+        for (int i = 0; i < Inventory_ItemCullPickupList.Count; i++)
+        {
+            Inventory_ItemPickupList.Remove(Inventory_ItemCullPickupList[i]);
+        }
+        Inventory_ItemCullPickupList.Clear();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -253,6 +275,7 @@ public class Player_InventoryManager : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        EventBus.Publish<GameObject>(EventType.INVENTORY_REMOVEITEM, other.gameObject);
+        EventBus.Publish<GameObject>(EventType.INVENTORY_ADDITEMCULL, other.gameObject);
+        EventBus.Publish(EventType.INVENTORY_REMOVEITEM);
     }
 }
