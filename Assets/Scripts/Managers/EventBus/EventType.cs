@@ -17,6 +17,7 @@ public enum EventType
     PLAYER_STOP_SPRINT,
     PLAYER_DASH,
     TOGGLE_SCANNER,
+    SEND_DETECTION_SPHERE,
     #endregion
 
     #region Shooting

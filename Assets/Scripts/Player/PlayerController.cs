@@ -291,7 +291,7 @@ public class PlayerController : MonoBehaviour
             scannerVFX = Instantiate(scannerVFXPrefab,Vector3.zero, Quaternion.identity).GetComponent<VisualEffect>();
             Transform target = scannerVFX.gameObject.transform.GetChild(0);
             target.parent = transform;
-            target.position = Vector3.zero;
+            target.position = transform.position;
 
         }
         //Toggle bool
@@ -303,10 +303,12 @@ public class PlayerController : MonoBehaviour
         {
             scannerVFX.enabled = true;
             scannerVFX.Play();
+            EventBus.Publish(EventType.SEND_DETECTION_SPHERE);
         }
         else
         {
             scannerVFX.Stop();
+            EventBus.Publish(EventType.SEND_DETECTION_SPHERE);
             scannerVFX.enabled = false;
         }
     }

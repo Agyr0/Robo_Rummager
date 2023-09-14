@@ -41,8 +41,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4136371447973384047}
   - component: {fileID: 6953192620783343281}
-  - component: {fileID: 6589683564969607359}
   - component: {fileID: 9064556493772872204}
+  - component: {fileID: 6589683564969607359}
+  - component: {fileID: 8218067479388813635}
   - component: {fileID: 2335870080040774268}
   m_Layer: 0
   m_Name: ScannerRing
@@ -126,6 +127,22 @@ VisualEffect:
       m_Array: []
     m_Bool:
       m_Array: []
+--- !u!114 &9064556493772872204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2421744647431247664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdafc37f32b176349b1684c4455b98e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ExecuteInEditor: 0
+  m_Bindings:
+  - {fileID: 2335870080040774268}
+  m_VisualEffect: {fileID: 6953192620783343281}
 --- !u!73398921 &6589683564969607359
 VFXRenderer:
   serializedVersion: 1
@@ -166,7 +183,7 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &9064556493772872204
+--- !u!114 &8218067479388813635
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -175,13 +192,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2421744647431247664}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdafc37f32b176349b1684c4455b98e9, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c55cf0ea2fa7a14894fb4c8c6cd678e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ExecuteInEditor: 0
-  m_Bindings:
-  - {fileID: 2335870080040774268}
-  m_VisualEffect: {fileID: 6953192620783343281}
+  target: {fileID: 5590172073683530221}
 --- !u!114 &2335870080040774268
 MonoBehaviour:
   m_ObjectHideFlags: 0
