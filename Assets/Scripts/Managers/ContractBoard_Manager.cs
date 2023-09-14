@@ -10,6 +10,9 @@ public class ContractBoard_Manager : MonoBehaviour
     [SerializeField]
     private GameObject _bulletinBoard_Container;
 
+    [SerializeField]
+    private List<Contract_Data> contract_DataList;
+
     private void OnEnable()
     {
         EventBus.Subscribe(EventType.BOARD_ADDCONTRACT, CreateContract);
