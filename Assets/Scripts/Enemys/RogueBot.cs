@@ -17,8 +17,16 @@ public class RogueBot : MonoBehaviour
 
     #region Patrolling
     private float patrolWaitTime;
-
     [Header("Patrol Settings")]
+
+    [SerializeField]
+    [Tooltip("Speed of the RogueBot during charge state")]
+    private float patrolSpeed;
+
+    [SerializeField]
+    [Tooltip("Acceleration of the RogueBot during charge state")]
+    private float patrolAcceleration;
+
     [SerializeField]
     [Tooltip("Range that the Rogue Bot will patrol around in. Indicated by a green wire sphere.")]
     private float patrolRange;
@@ -43,8 +51,16 @@ public class RogueBot : MonoBehaviour
     #region Chasing
     private bool robotInLeashRange;
     private bool playerInChaseRange;
-
     [Header("Chase Settings")]
+
+    [SerializeField]
+    [Tooltip("Speed of the RogueBot during chase state")]
+    private float chaseSpeed;
+
+    [SerializeField]
+    [Tooltip("Acceleration of the RogueBot during chase state")]
+    private float chaseAcceleration;
+
     [SerializeField]
     [Tooltip("Range that the Rogue Bot will detect the player and begin to chase them. Indicated by a blue wire sphere.")]
     private float chaseRange;
@@ -57,35 +73,38 @@ public class RogueBot : MonoBehaviour
     #region Charging
     private bool playerInChargeRange;
     private bool canCharge = true;
-
     [Header("Charge Settings")]
+
     [SerializeField]
-    [Tooltip("Range that the Rogue Bot will attack the player. Indicated by a red wire sphere.")]
+    [Tooltip("Speed of the RogueBot during charge state")]
+    private float chargeSpeed;
+
+    [SerializeField]
+    [Tooltip("Acceleration of the RogueBot during charge state")]
+    private float chargeAcceleration;
+
+    [SerializeField]
+    [Tooltip("Range that the Rogue Bot will attack the player. Indicated by a pink wire sphere.")]
     private float chargeRange;
 
     [SerializeField]
-    [Tooltip("The time between the Rogue Bots attacks.")]
+    [Tooltip("The time between the Rogue Bot charging the player.")]
     private float timeBetweenCharge;
     #endregion
 
     #region Attacking
     private bool playerInAttackRange;
-    private bool canAttack = true;
-
     [Header("Attack Settings")]
+
     [SerializeField]
     [Tooltip("Range that the Rogue Bot will attack the player. Indicated by a red wire sphere.")]
     private float attackRange;
-
-    [SerializeField]
-    [Tooltip("The time between the Rogue Bots attacks.")]
-    private float timeBetweenAttacks;
     #endregion
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        playerTransform = GameObject.Find("Player").transform; // Need to find a better way to assign this at runtime
+        playerTransform = GameObject.Find("Player").transform;
     }
 
     void Update()
@@ -110,15 +129,19 @@ public class RogueBot : MonoBehaviour
         // State Handler
         if (playerInAttackRange && robotInLeashRange)
             RogueBotAttacking();
+        else if (playerInChargeRange && robotInLeashRange)
+            RogueBotCharging();
         else if (playerInChaseRange && robotInLeashRange)
             RogueBotChasing();
-        else if(!agent.pathPending && agent.remainingDistance < 0.5f)
+        else
             RogueBotPatrolling();
     }
 
     // Patrolling
     private void RogueBotPatrolling()
     {
+        agent.speed = patrolSpeed;
+        agent.acceleration = patrolAcceleration;
         if (agent.remainingDistance <= agent.stoppingDistance) // Check if Rogue Bot has reached position
         {
             patrolWaitTime -= Time.deltaTime; // Countdown the wait timer
@@ -144,8 +167,8 @@ public class RogueBot : MonoBehaviour
 
             if (distFromLastPoint < minDistFromLastPoint)
                 randomPoint = center + Random.insideUnitSphere * range; // Generate a random point if the first point was within the minimum distance
-           
-            else if(distFromLastPoint > minDistFromLastPoint)
+
+            else if (distFromLastPoint > minDistFromLastPoint)
             {
                 NavMeshHit hit;
                 if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))  // Find closest point on NavMesh
@@ -162,19 +185,27 @@ public class RogueBot : MonoBehaviour
     // Chasing
     private void RogueBotChasing()
     {
+        agent.speed = chaseSpeed;
+        agent.acceleration = chaseAcceleration;
         agent.SetDestination(playerTransform.position);
     }
 
     // Charging
     private void RogueBotCharging()
     {
-        agent.ResetPath();
-        if (canAttack == true)
+        Debug.Log(agent.remainingDistance);
+        if (canCharge == true)
         {
-            rogueBotTestAttackAnimator.Play("RogueBotTestAttack");
-            StartCoroutine(ResetRogueBotAttackCooldown());
-            StartCoroutine(ActivateHitbox());
-            canAttack = false;
+            agent.speed = chargeSpeed;
+            agent.acceleration = chargeAcceleration;
+            if (agent.remainingDistance <= agent.stoppingDistance)
+            {
+                agent.speed = 0;
+                agent.isStopped = true;
+                StartCoroutine(ChargeAttack());
+                StartCoroutine(ResetRogueBotChargeCooldown());
+                canCharge = false;
+            }
         }
     }
 
@@ -182,19 +213,21 @@ public class RogueBot : MonoBehaviour
     private void RogueBotAttacking()
     {
         agent.ResetPath();
-        if (canAttack == true)
-        {
-            rogueBotTestAttackAnimator.Play("RogueBotTestAttack");
-            StartCoroutine(ResetRogueBotAttackCooldown());
-            StartCoroutine(ActivateHitbox());
-            canAttack = false;
-        }
+        rogueBotTestAttackAnimator.Play("RogueBotTestAttack");
+        StartCoroutine(ActivateHitbox());
     }
 
-    IEnumerator ResetRogueBotAttackCooldown()
+    IEnumerator ResetRogueBotChargeCooldown()
     {
-        yield return new WaitForSeconds(timeBetweenAttacks);
-        canAttack = true;
+        yield return new WaitForSeconds(timeBetweenCharge);
+        canCharge = true;
+    }
+
+    IEnumerator ChargeAttack()
+    {
+        agent.speed = chargeSpeed;
+        agent.acceleration = chargeAcceleration;
+        yield return new WaitForSeconds(0.5f);
     }
 
     IEnumerator ActivateHitbox()
