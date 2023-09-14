@@ -187,7 +187,7 @@ public class Player_InventoryManager : MonoBehaviour
         }
     }
 
-    public void OnSlotPress(int slotNumber)
+    public void OnInventorySlotInteract(int slotNumber)
     {
         if (Inventory_DataArray[slotNumber].SlotItemData.ResourceName != ResourceType.Empty)
         {
@@ -213,7 +213,6 @@ public class Player_InventoryManager : MonoBehaviour
 
     public void OnItemDrop(int slotNumber)
     {
-        //EventBus.Publish<InventorySlot>(EventType.INVENTORY_ITEMDROPPED, ItemDropped);
         Inventory_Slot ItemData;
         ItemData = Inventory_DataArray[slotNumber];
 
@@ -270,7 +269,10 @@ public class Player_InventoryManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        EventBus.Publish<GameObject>(EventType.INVENTORY_ADDITEM, other.gameObject);
+        if (other.GetComponent<Resource_Item>() != null)
+        {
+            EventBus.Publish<GameObject>(EventType.INVENTORY_ADDITEM, other.gameObject);
+        }
     }
 
     private void OnTriggerExit(Collider other)
