@@ -7,32 +7,23 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_ScannerOverlay
-  m_Shader: {fileID: -6465566751694194690, guid: c2fc65e91b3ab914f9b7b72f5ec2d7ab,
+  m_Name: Shader Graphs_ItemGlow
+  m_Shader: {fileID: -6465566751694194690, guid: 745a3cab574c80c4ca5898e117253ef0,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
-  m_InvalidKeywords:
-  - _SURFACE_TYPE_TRANSPARENT
-  m_LightmapFlags: 4
+  m_InvalidKeywords: []
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: 1950
   stringTagMap: {}
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _HologramTexture:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 476fee776da384344bf0473b79267c54, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -47,29 +38,21 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AlphaClip: 0.207
-    - _AlphaToMask: 0
-    - _Blend: 0
-    - _CastShadows: 1
-    - _Cull: 2
-    - _DecalMeshBiasType: 0
+    - _DecalAngleFadeSupported: 1
+    - _DecalMeshBiasType: 1
     - _DecalMeshDepthBias: 0
-    - _DecalMeshViewBias: 0
-    - _DrawOrder: 0
-    - _DstBlend: 10
-    - _QueueControl: 1
+    - _DecalMeshViewBias: 3.67
+    - _DrawOrder: -50
+    - _GlowValue: 0
+    - _QueueControl: 0
     - _QueueOffset: 0
-    - _ScrollSpeed: -1
-    - _SrcBlend: 5
-    - _Surface: 1
-    - _ZTest: 4
-    - _ZWrite: 0
-    - _ZWriteControl: 0
     m_Colors:
-    - _MainColor: {r: 0.27044, g: 0.48946357, b: 1, a: 1}
-    - _TextureTiling: {r: 15, g: 3, b: 0, a: 0}
+    - _BaseColor: {r: 24.251453, g: 0, b: 17.129051, a: 1}
+    - _Color: {r: 766.9961, g: 0, b: 72.75877, a: 1}
+    - _Color_1: {r: 183.90111, g: 975.6981, b: 0, a: 1}
+    - _EmissionColor: {r: 0, g: 3.545327, b: 8.574187, a: 1}
   m_BuildTextureStacks: []
---- !u!114 &5671191185045889688
+--- !u!114 &4654805935278714189
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

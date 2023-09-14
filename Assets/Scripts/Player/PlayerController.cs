@@ -7,7 +7,8 @@ using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
-
+using UnityEngine.VFX;
+using UnityEngine.VFX.Utility;
 
 public class PlayerController : MonoBehaviour
 {
@@ -113,7 +114,10 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     private CinemachineVolumeSettings scannerVolume;
-    public Canvas scannerCanvas;
+    [SerializeField]
+    private GameObject scannerVFXPrefab;
+    [HideInInspector]
+    public VisualEffect scannerVFX;
 
     private void OnEnable()
     {
@@ -281,10 +285,33 @@ public class PlayerController : MonoBehaviour
     #region Scanner Goggles
     private void ToggleScanner()
     {
+        //If null spawn scannerVFX at Vector3.zero and parent the vfx target to this
+        if(scannerVFX==null)
+        {
+            scannerVFX = Instantiate(scannerVFXPrefab,Vector3.zero, Quaternion.identity).GetComponent<VisualEffect>();
+            Transform target = scannerVFX.gameObject.transform.GetChild(0);
+            target.parent = transform;
+            target.position = Vector3.zero;
+
+        }
+        //Toggle bool
         scannerActive = !scannerActive;
+        //Toggle post process volume
         scannerVolume.enabled = scannerActive;
-        scannerCanvas.gameObject.SetActive(scannerActive);
+        //Handle VFX play and stop
+        if(scannerActive)
+        {
+            scannerVFX.enabled = true;
+            scannerVFX.Play();
+        }
+        else
+        {
+            scannerVFX.Stop();
+            scannerVFX.enabled = false;
+        }
     }
+
+    
 
     #endregion
 }
