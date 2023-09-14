@@ -103,13 +103,10 @@ public class Player_InventoryManager : MonoBehaviour
     private void OnToggleInventory()
     {
         if (_inventory_UI.activeSelf)
-        {
             OnHideInventory();
-        }
+
         else
-        {
             OnDisplayInventory();
-        }
     }
 
     private void OnDisplayInventory()
@@ -195,9 +192,7 @@ public class Player_InventoryManager : MonoBehaviour
     public void OnInventorySlotInteract(int slotNumber)
     {
         if (Inventory_DataArray[slotNumber].SlotItemData.ResourceName != ResourceType.Empty)
-        {
             _inventoryItemDropDialougeArray[slotNumber].SetActive(true);
-        }
     }
 
     public void OnItemPickup()
@@ -209,9 +204,8 @@ public class Player_InventoryManager : MonoBehaviour
             int temp_ListCount = Inventory_ItemPickupList.Count;
 
             for (int x = 0; x < temp_ListCount; x++)
-            {
                 EventBus.Publish<GameObject>(EventType.INVENTORY_SORTPICKUP, Inventory_ItemPickupList[x]);
-            }
+
         }
         EventBus.Publish(EventType.INVENTORY_REMOVEITEM);
     }
@@ -250,25 +244,20 @@ public class Player_InventoryManager : MonoBehaviour
     public void OnAddItem(GameObject item_GO)
     {
         if (!Inventory_ItemPickupList.Contains(item_GO))
-        {
             Inventory_ItemPickupList.Add(item_GO);
-        }
     }
 
     public void OnAddCullItem(GameObject item_GO)
     {
         if (!Inventory_ItemPickupList.Contains(item_GO))
-        {
             Inventory_ItemCullPickupList.Add(item_GO);
-        }
     }
 
     private void OnRemoveItem()
     {
         for (int i = 0; i < Inventory_ItemCullPickupList.Count; i++)
-        {
             Inventory_ItemPickupList.Remove(Inventory_ItemCullPickupList[i]);
-        }
+
         Inventory_ItemCullPickupList.Clear();
     }
 
@@ -277,12 +266,11 @@ public class Player_InventoryManager : MonoBehaviour
         while (_isSendingPickupEvents)
         {
             if (Inventory_ItemPickupList.Count == 0)
-            {
                 _isSendingPickupEvents = false;
-            }
-            /*
-            EventBus.Publish(EventType.INVENTORY_PICKUP);
-            */
+
+            else
+                EventBus.Publish(EventType.INVENTORY_PICKUP);
+
             yield return new WaitForSeconds(_pickupEventInterval);
         }
     }
