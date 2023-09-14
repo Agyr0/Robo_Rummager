@@ -25,7 +25,7 @@ public class DetectionController : MonoBehaviour
 
     private void ToggleDetection()
     {
-        VFXSize = scannerVFX.GetFloat("SizeMultiplier");
+       // VFXSize = scannerVFX.GetFloat("SizeMultiplier");
         
         send = !send;
 
@@ -42,15 +42,16 @@ public class DetectionController : MonoBehaviour
 
     private IEnumerator Detect()
     {
-        yield return new WaitForSeconds(1);
+       // yield return new WaitForSeconds(1);
         while (true && send)
         {
             float t = 0f;
             float lifetime = scannerVFX.GetFloat("Lifetime");
+            float startSize = scannerVFX.GetFloat("StartSize");
 
             while (t < lifetime && send)
             {
-                radius = Mathf.Lerp(0, VFXSize, t / lifetime);
+                radius = scannerVFX.GetAnimationCurve("SizeMultiplier").Evaluate(t) * startSize;
                 t += Time.deltaTime;
                 Collider[] hits = Physics.OverlapSphere(target.position, radius);
 

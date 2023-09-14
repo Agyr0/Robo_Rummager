@@ -26,6 +26,8 @@ public enum EventType
     DISPLAY_WEAPON,
     PLAYER_RELOAD,
     LOW_AMMO,
+    SWING_WRENCH,
+    PUNCH_HANDS,
     #endregion
 
     #endregion
@@ -36,7 +38,7 @@ public enum EventType
     INVENTORY_TOGGLE,
     BULLETINBOARD_INTERACT,
     BULLETINBOARD_EXIT,
-
+    TOGGLE_INTERACT_HOVER,
     #endregion
 
     #region Player Inventory

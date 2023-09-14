@@ -15,6 +15,9 @@ public class WeaponController : MonoBehaviour
     private GameObject _weaponPrefab;
     public WeaponData[] _availableWeapons;
     private int _weaponIndex = 0;
+    private const int _wrenchIndex = 0;
+    private const int _laserIndex = 1;
+    private const int _handsIndex = 2;
     private bool canShoot = true;
 
     private void Start()
@@ -65,7 +68,15 @@ public class WeaponController : MonoBehaviour
         inputManager.playerControls.Player.SwitchWeapon.performed += ctx => EventBus.Publish(EventType.WEAPON_SWITCH, ctx.ReadValue<Vector2>());
 
         //Shooting
-        inputManager.playerControls.Player.Shoot.performed += _ => EventBus.Publish(EventType.PLAYER_SHOOT);
+        inputManager.playerControls.Player.Shoot.performed += _ =>
+        {
+            if (_weaponIndex == _wrenchIndex)
+                EventBus.Publish(EventType.SWING_WRENCH);
+            else if (_weaponIndex == _laserIndex)
+                EventBus.Publish(EventType.PLAYER_SHOOT);
+            else if (_weaponIndex == _handsIndex)
+                EventBus.Publish(EventType.PUNCH_HANDS);
+        };
 
         //Reload
         inputManager.playerControls.Player.Reload.performed += _ => EventBus.Publish(EventType.PLAYER_RELOAD);
