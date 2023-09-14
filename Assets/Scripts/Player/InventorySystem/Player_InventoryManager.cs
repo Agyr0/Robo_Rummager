@@ -9,6 +9,9 @@ using UnityEngine.UI;
 public class Player_InventoryManager : MonoBehaviour
 {
     [SerializeField]
+    private float _pickupEventInterval = .1f;
+
+    [SerializeField]
     private GameObject _inventory_UI;
 
     [SerializeField]
@@ -46,6 +49,8 @@ public class Player_InventoryManager : MonoBehaviour
 
     [SerializeField]
     private GameObject _itemBlankPrefab;
+
+    private bool _isSendingPickupEvents = false;
 
     public Inventory_Slot[] Inventory_DataArray
     {
@@ -267,10 +272,30 @@ public class Player_InventoryManager : MonoBehaviour
         Inventory_ItemCullPickupList.Clear();
     }
 
+    IEnumerator SendPickupEvents()
+    {
+        while (_isSendingPickupEvents)
+        {
+            if (Inventory_ItemPickupList.Count == 0)
+            {
+                _isSendingPickupEvents = false;
+            }
+            /*
+            EventBus.Publish(EventType.INVENTORY_PICKUP);
+            */
+            yield return new WaitForSeconds(_pickupEventInterval);
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<Resource_Item>() != null)
         {
+            if (_isSendingPickupEvents == false)
+            {
+                _isSendingPickupEvents = true;
+                StartCoroutine(SendPickupEvents());
+            }
             EventBus.Publish<GameObject>(EventType.INVENTORY_ADDITEM, other.gameObject);
         }
     }

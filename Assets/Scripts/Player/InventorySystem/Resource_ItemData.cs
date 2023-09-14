@@ -6,17 +6,20 @@ using UnityEngine;
 public class Resource_ItemData : ScriptableObject
 {
     [SerializeField]
-    private Sprite _ResourceIcon;
+    private Sprite _resourceIcon;
 
     [SerializeField]
     private ResourceType _resourceName;
 
     [SerializeField]
-    private int _maxStackSize;
+    private Material _resourceMaterial;
+
+    [SerializeField]
+    private Mesh _resourceMesh;
 
     public Sprite ResourceIcon
     {
-        get { return _ResourceIcon; }
+        get { return _resourceIcon; }
     }
 
     public ResourceType ResourceName
@@ -24,9 +27,13 @@ public class Resource_ItemData : ScriptableObject
         get { return _resourceName; }
     }
 
-    public int MaxStackSize
+    public Material ResourceMaterial
     {
-        get { return _maxStackSize; }
+        get { return _resourceMaterial; }
     }
 
+    public Mesh ResourceMesh
+    {
+        get { return _resourceMesh; }
+    }
 }
