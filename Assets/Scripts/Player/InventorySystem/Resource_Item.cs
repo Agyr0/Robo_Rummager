@@ -10,6 +10,12 @@ public class Resource_Item : MonoBehaviour
     [SerializeField]
     private int _resourceAmount;
 
+    [SerializeField]
+    private bool _isReadyForPickup = false;
+
+    [SerializeField]
+    private int _pickupTimerCount = 0;
+
     public Resource_ItemData ItemData
     {
         get { return _itemData; }
@@ -22,4 +28,26 @@ public class Resource_Item : MonoBehaviour
         set { _resourceAmount = value; }
     }
 
+    public bool IsReadyForPickup
+    {
+        get { return _isReadyForPickup;}
+        set { _isReadyForPickup = value;}
+    }
+
+    public int PickupTimerCount
+    {
+        get { return _pickupTimerCount; }
+        set { _pickupTimerCount = value; }
+    }
+
+    private void OnEnable()
+    {
+        StartCoroutine(PickupCounter());
+    }
+
+    IEnumerator PickupCounter()
+    {
+        yield return new WaitForSeconds(PickupTimerCount);
+        IsReadyForPickup = true;
+    }
 }

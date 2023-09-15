@@ -54,12 +54,15 @@ public enum EventType
     INVENTORY_UPDATE,
     INVENTORY_SLOTUPDATED,
     INVENTORY_ITEMDROPPED,
+    PLAYER_CONTRACTUPDATE,
+    PLAYER_ADDCONTRACT,
 
     #endregion
 
     #region Bulletin Board
     BOARD_ADDCONTRACT,
-
+    BOARD_CONTRACTUPDATE,
+    CONTRACTACCEPTED,
     #endregion
 
     #region Testing Events

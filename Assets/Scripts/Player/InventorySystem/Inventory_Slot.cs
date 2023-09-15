@@ -12,10 +12,6 @@ public class Inventory_Slot
     [SerializeField]
     private Resource_ItemData _slotItemData;
 
-    private Inventory_Slot()
-    {
-    }
-
     private Inventory_Slot(Resource_ItemData itemData)
     {
         _slotItemData = itemData;

@@ -146,7 +146,8 @@ public class Player_InventoryManager : MonoBehaviour
         for (int i = 0; i < _inventorySlotCount; i++)
         {
             //checks for a zero amount resource
-            if (itemPicked.GetComponent<Resource_Item>().ResourceAmount != 0)
+            if (itemPicked.GetComponent<Resource_Item>().ResourceAmount != 0 &&
+                itemPicked.GetComponent<Resource_Item>().IsReadyForPickup == true)
             {
                 //Looks for an empty or matching resource slot
                 if (Inventory_DataArray[i].SlotItemData.ResourceName == ResourceType.Empty
