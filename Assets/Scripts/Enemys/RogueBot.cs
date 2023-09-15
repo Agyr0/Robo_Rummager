@@ -260,9 +260,9 @@ public class RogueBot : MonoBehaviour, IDamageable
         rogueBotAttackHitbox.SetActive(false);
     }
 
-    public void TakeDamage()
+    public void TakeDamage(float damage)
     {
-        health -= 25;
+        health -= damage;
         Debug.Log("Damage Taken, health at:" + health);
         if (health <= 0)
         {
