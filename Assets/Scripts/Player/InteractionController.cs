@@ -49,8 +49,12 @@ public class InteractionController : MonoBehaviour
             isShowing = true;
             EventBus.Publish(EventType.TOGGLE_INTERACT_HOVER);
         }
-        else if (!hittingInteractable)
+        else if (!hittingInteractable && isShowing)
+        {
+            EventBus.Publish(EventType.TOGGLE_INTERACT_HOVER);
             isShowing = false;
+
+        }
 
         return hit;
     }

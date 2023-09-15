@@ -10,7 +10,7 @@ public class DetectionController : MonoBehaviour
     [SerializeField]
     private Transform target;
     public bool send = false;
-    private float radius = 1f;
+    private float radius = 0f;
     private float VFXSize;
     private void OnEnable()
     {
@@ -40,18 +40,22 @@ public class DetectionController : MonoBehaviour
         Gizmos.DrawWireSphere(target.position, radius);
     }
 
+
     private IEnumerator Detect()
     {
-       // yield return new WaitForSeconds(1);
         while (true && send)
         {
             float t = 0f;
             float lifetime = scannerVFX.GetFloat("Lifetime");
             float startSize = scannerVFX.GetFloat("StartSize");
+            float rangeMultiplier = scannerVFX.GetFloat("RangeMultiplier");
+            scannerVFX.SendEvent(VisualEffectAsset.PlayEventID);
+
+            yield return new WaitForSeconds(scannerVFX.playRate + lifetime);
 
             while (t < lifetime && send)
             {
-                radius = scannerVFX.GetAnimationCurve("SizeMultiplier").Evaluate(t) * startSize;
+                radius = scannerVFX.GetAnimationCurve("SizeMultiplier").Evaluate(t) * startSize * rangeMultiplier;
                 t += Time.deltaTime;
                 Collider[] hits = Physics.OverlapSphere(target.position, radius);
 
@@ -63,7 +67,7 @@ public class DetectionController : MonoBehaviour
                 }
                 yield return null;
             }
-            radius = 1;
+            radius = 0;
         }
     }
 }

@@ -173,6 +173,8 @@ public class PlayerController : MonoBehaviour
         //ScannerGoggles
         inputManager.playerControls.Player.Scanner.performed += _ => EventBus.Publish(EventType.TOGGLE_SCANNER);
     }
+
+    #region Movement
     private void HandleMovement()
     {
 
@@ -226,6 +228,7 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(5f);
         isDashing = false;
     }
+    #endregion
 
     #region Handle Stamina
 
@@ -303,12 +306,12 @@ public class PlayerController : MonoBehaviour
         if(scannerActive)
         {
             scannerVFX.enabled = true;
-            scannerVFX.Play();
+            //scannerVFX.Play();
             EventBus.Publish(EventType.SEND_DETECTION_SPHERE);
         }
         else
         {
-            scannerVFX.Stop();
+            //scannerVFX.Stop();
             EventBus.Publish(EventType.SEND_DETECTION_SPHERE);
             scannerVFX.enabled = false;
         }
