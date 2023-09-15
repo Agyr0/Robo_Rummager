@@ -9,6 +9,9 @@ using UnityEngine.UI;
 public class Player_InventoryManager : MonoBehaviour
 {
     [SerializeField]
+    private float _pickupEventInterval = .1f;
+
+    [SerializeField]
     private GameObject _inventory_UI;
 
     [SerializeField]
@@ -46,6 +49,8 @@ public class Player_InventoryManager : MonoBehaviour
 
     [SerializeField]
     private GameObject _itemBlankPrefab;
+
+    private bool _isSendingPickupEvents = false;
 
     public Inventory_Slot[] Inventory_DataArray
     {
@@ -98,13 +103,10 @@ public class Player_InventoryManager : MonoBehaviour
     private void OnToggleInventory()
     {
         if (_inventory_UI.activeSelf)
-        {
             OnHideInventory();
-        }
+
         else
-        {
             OnDisplayInventory();
-        }
     }
 
     private void OnDisplayInventory()
@@ -144,7 +146,8 @@ public class Player_InventoryManager : MonoBehaviour
         for (int i = 0; i < _inventorySlotCount; i++)
         {
             //checks for a zero amount resource
-            if (itemPicked.GetComponent<Resource_Item>().ResourceAmount != 0)
+            if (itemPicked.GetComponent<Resource_Item>().ResourceAmount != 0 &&
+                itemPicked.GetComponent<Resource_Item>().IsReadyForPickup == true)
             {
                 //Looks for an empty or matching resource slot
                 if (Inventory_DataArray[i].SlotItemData.ResourceName == ResourceType.Empty
@@ -190,9 +193,7 @@ public class Player_InventoryManager : MonoBehaviour
     public void OnInventorySlotInteract(int slotNumber)
     {
         if (Inventory_DataArray[slotNumber].SlotItemData.ResourceName != ResourceType.Empty)
-        {
             _inventoryItemDropDialougeArray[slotNumber].SetActive(true);
-        }
     }
 
     public void OnItemPickup()
@@ -204,9 +205,8 @@ public class Player_InventoryManager : MonoBehaviour
             int temp_ListCount = Inventory_ItemPickupList.Count;
 
             for (int x = 0; x < temp_ListCount; x++)
-            {
                 EventBus.Publish<GameObject>(EventType.INVENTORY_SORTPICKUP, Inventory_ItemPickupList[x]);
-            }
+
         }
         EventBus.Publish(EventType.INVENTORY_REMOVEITEM);
     }
@@ -245,32 +245,46 @@ public class Player_InventoryManager : MonoBehaviour
     public void OnAddItem(GameObject item_GO)
     {
         if (!Inventory_ItemPickupList.Contains(item_GO))
-        {
             Inventory_ItemPickupList.Add(item_GO);
-        }
     }
 
     public void OnAddCullItem(GameObject item_GO)
     {
         if (!Inventory_ItemPickupList.Contains(item_GO))
-        {
             Inventory_ItemCullPickupList.Add(item_GO);
-        }
     }
 
     private void OnRemoveItem()
     {
         for (int i = 0; i < Inventory_ItemCullPickupList.Count; i++)
-        {
             Inventory_ItemPickupList.Remove(Inventory_ItemCullPickupList[i]);
-        }
+
         Inventory_ItemCullPickupList.Clear();
+    }
+
+    IEnumerator SendPickupEvents()
+    {
+        while (_isSendingPickupEvents)
+        {
+            if (Inventory_ItemPickupList.Count == 0)
+                _isSendingPickupEvents = false;
+
+            else
+                EventBus.Publish(EventType.INVENTORY_PICKUP);
+
+            yield return new WaitForSeconds(_pickupEventInterval);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<Resource_Item>() != null)
         {
+            if (_isSendingPickupEvents == false)
+            {
+                _isSendingPickupEvents = true;
+                StartCoroutine(SendPickupEvents());
+            }
             EventBus.Publish<GameObject>(EventType.INVENTORY_ADDITEM, other.gameObject);
         }
     }

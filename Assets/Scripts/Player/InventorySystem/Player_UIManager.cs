@@ -7,6 +7,8 @@ public class Player_UIManager : MonoBehaviour
     [SerializeField]
     private GameObject _inventory_UI;
     [SerializeField]
+    private GameObject _fannyPack_UI;
+    [SerializeField]
     private GameObject _contracts_UI;
     [SerializeField]
     private GameObject _options_UI;
@@ -28,6 +30,7 @@ public class Player_UIManager : MonoBehaviour
 
     public void OnDisplay_Inventory()
     {
+        _fannyPack_UI.SetActive(true);
         _inventory_UI.SetActive(true);
         _contracts_UI.SetActive(false);
         _options_UI.SetActive(false);
@@ -49,6 +52,7 @@ public class Player_UIManager : MonoBehaviour
 
     public void OnDisplay_PlayerHUD()
     {
+        _fannyPack_UI.SetActive(false);
         _inventory_UI.SetActive(false);
         _contracts_UI.SetActive(false);
         _options_UI.SetActive(false);
@@ -62,6 +66,7 @@ public class Player_UIManager : MonoBehaviour
         _contracts_UI.SetActive(false);
         _options_UI.SetActive(false);
         _playerHUD_UI.SetActive(false);
+        _fannyPack_UI.SetActive(false);
         _bulletinBoard_UI.SetActive(true);
     }
 
