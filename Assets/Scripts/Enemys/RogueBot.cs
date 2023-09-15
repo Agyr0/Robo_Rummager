@@ -9,22 +9,27 @@ public class RogueBot : MonoBehaviour
     private Transform playerTransform;
 
     [SerializeField]
-    private GameObject rogueBotAttackHitbox;
+    private GameObject detectedSprite;
+
     [SerializeField]
-    private LayerMask playerLayerMask;
+    private GameObject rogueBotAttackHitbox;
+
     [SerializeField]
     private Animator rogueBotTestAttackAnimator;
+
+    [SerializeField]
+    private LayerMask playerLayerMask;
 
     #region Patrolling
     private float patrolWaitTime;
     [Header("Patrol Settings")]
 
     [SerializeField]
-    [Tooltip("Speed of the RogueBot during charge state")]
+    [Tooltip("Speed of the RogueBot during patrol state.")]
     private float patrolSpeed;
 
     [SerializeField]
-    [Tooltip("Acceleration of the RogueBot during charge state")]
+    [Tooltip("Acceleration of the RogueBot during patrol state.")]
     private float patrolAcceleration;
 
     [SerializeField]
@@ -32,7 +37,7 @@ public class RogueBot : MonoBehaviour
     private float patrolRange;
 
     [SerializeField]
-    [Tooltip("Center Point that the Rogue Bot will patrol around.")]
+    [Tooltip("Center Point that the RogueBot will patrol around.")]
     private Transform patrolCenterPoint;
 
     [SerializeField]
@@ -40,34 +45,39 @@ public class RogueBot : MonoBehaviour
     private float minDistFromLastPoint;
 
     [SerializeField]
-    [Tooltip("Minimum time the Rogue Bot will wait at a location before moving to another.")]
+    [Tooltip("Minimum time the RogueBot will wait at a location before moving to another.")]
     private float minWaitTime;
 
     [SerializeField]
-    [Tooltip("Maximum time the Rogue Bot will wait at a location before moving to another.")]
+    [Tooltip("Maximum time the RogueBot will wait at a location before moving to another.")]
     private float maxWaitTime;
     #endregion
 
     #region Chasing
     private bool robotInLeashRange;
     private bool playerInChaseRange;
+    private bool hasPlayedDetectionSprite;
     [Header("Chase Settings")]
 
     [SerializeField]
-    [Tooltip("Speed of the RogueBot during chase state")]
+    [Tooltip("Speed of the RogueBot during chase state.")]
     private float chaseSpeed;
 
     [SerializeField]
-    [Tooltip("Acceleration of the RogueBot during chase state")]
+    [Tooltip("Acceleration of the RogueBot during chase state.")]
     private float chaseAcceleration;
 
     [SerializeField]
-    [Tooltip("Range that the Rogue Bot will detect the player and begin to chase them. Indicated by a blue wire sphere.")]
+    [Tooltip("Range that the RogueBot will detect the player and begin to chase them. Indicated by a blue wire sphere.")]
     private float chaseRange;
 
     [SerializeField]
-    [Tooltip("Range that the Rogue Bot will chase the player before giving up. Indicated by a yellow wire sphere.")]
+    [Tooltip("Range that the RogueBot will chase the player within. Indicated by a yellow wire sphere.")]
     private float leashRange;
+
+    [SerializeField]
+    [Tooltip("Length of time (in seconds) the detected sprite will exist for.")]
+    private float spriteFlashTime;
     #endregion
 
     #region Charging
@@ -76,29 +86,28 @@ public class RogueBot : MonoBehaviour
     [Header("Charge Settings")]
 
     [SerializeField]
-    [Tooltip("Speed of the RogueBot during charge state")]
+    [Tooltip("Speed of the RogueBot during charge state.")]
     private float chargeSpeed;
 
     [SerializeField]
-    [Tooltip("Acceleration of the RogueBot during charge state")]
+    [Tooltip("Acceleration of the RogueBot during charge state.")]
     private float chargeAcceleration;
 
     [SerializeField]
-    [Tooltip("Range that the Rogue Bot will attack the player. Indicated by a pink wire sphere.")]
+    [Tooltip("Range that the RogueBot will charge the player. Indicated by a red wire sphere.")]
     private float chargeRange;
 
     [SerializeField]
-    [Tooltip("The time between the Rogue Bot charging the player.")]
-    private float timeBetweenCharge;
-    #endregion
-
-    #region Attacking
-    private bool playerInAttackRange;
-    [Header("Attack Settings")]
+    [Tooltip("Range that the RogueBot will stop before the player when charging.")]
+    private float chargeStopRange;
 
     [SerializeField]
-    [Tooltip("Range that the Rogue Bot will attack the player. Indicated by a red wire sphere.")]
-    private float attackRange;
+    [Tooltip("The time (in seconds) that the RogueBot will wait before charging the player again.")]
+    private float timeBetweenCharge;
+
+    [SerializeField]
+    [Tooltip("The time (in seconds) that the RogueBot will pause in place after charging.")]
+    private float chargeEndLagTime;
     #endregion
 
     void Start()
@@ -109,9 +118,6 @@ public class RogueBot : MonoBehaviour
 
     void Update()
     {
-        // Check if player is in attack range
-        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayerMask);
-
         // Check if player is in charge range
         playerInChargeRange = Physics.CheckSphere(transform.position, chargeRange, playerLayerMask);
 
@@ -127,9 +133,7 @@ public class RogueBot : MonoBehaviour
 
 
         // State Handler
-        if (playerInAttackRange && robotInLeashRange)
-            RogueBotAttacking();
-        else if (playerInChargeRange && robotInLeashRange)
+        if (playerInChargeRange && robotInLeashRange)
             RogueBotCharging();
         else if (playerInChaseRange && robotInLeashRange)
             RogueBotChasing();
@@ -140,8 +144,10 @@ public class RogueBot : MonoBehaviour
     // Patrolling
     private void RogueBotPatrolling()
     {
+        hasPlayedDetectionSprite = false;
         agent.speed = patrolSpeed;
         agent.acceleration = patrolAcceleration;
+
         if (agent.remainingDistance <= agent.stoppingDistance) // Check if Rogue Bot has reached position
         {
             patrolWaitTime -= Time.deltaTime; // Countdown the wait timer
@@ -185,6 +191,10 @@ public class RogueBot : MonoBehaviour
     // Chasing
     private void RogueBotChasing()
     {
+        if (hasPlayedDetectionSprite == false)
+        {
+            StartCoroutine(FlashDetectedSprite());
+        }
         agent.speed = chaseSpeed;
         agent.acceleration = chaseAcceleration;
         agent.SetDestination(playerTransform.position);
@@ -193,46 +203,55 @@ public class RogueBot : MonoBehaviour
     // Charging
     private void RogueBotCharging()
     {
-        Debug.Log(agent.remainingDistance);
+        agent.speed = chargeSpeed;
+        agent.acceleration = chargeAcceleration;
         if (canCharge == true)
         {
-            agent.speed = chargeSpeed;
-            agent.acceleration = chargeAcceleration;
-            if (agent.remainingDistance <= agent.stoppingDistance)
+            if (agent.remainingDistance <= chargeStopRange)
             {
-                agent.speed = 0;
-                agent.isStopped = true;
-                StartCoroutine(ChargeAttack());
-                StartCoroutine(ResetRogueBotChargeCooldown());
+                agent.ResetPath();
+                StartCoroutine(ResetChargeAttackCooldown());
+                StartCoroutine(RogueBotAttacking());
                 canCharge = false;
             }
         }
+        else if (canCharge == false)
+        {
+            StartCoroutine(ChargeEndLag());
+        }
     }
 
-    // Attacking
-    private void RogueBotAttacking()
+    // Attacking Animation
+    IEnumerator RogueBotAttacking()
     {
-        agent.ResetPath();
         rogueBotTestAttackAnimator.Play("RogueBotTestAttack");
+        yield return null;
         StartCoroutine(ActivateHitbox());
     }
 
-    IEnumerator ResetRogueBotChargeCooldown()
+    IEnumerator FlashDetectedSprite()
+    {
+        detectedSprite.SetActive(true);
+        yield return new WaitForSeconds(spriteFlashTime);
+        detectedSprite.SetActive(false);
+        hasPlayedDetectionSprite = true;
+    }
+
+    IEnumerator ResetChargeAttackCooldown()
     {
         yield return new WaitForSeconds(timeBetweenCharge);
         canCharge = true;
     }
 
-    IEnumerator ChargeAttack()
+    IEnumerator ChargeEndLag()
     {
-        agent.speed = chargeSpeed;
-        agent.acceleration = chargeAcceleration;
-        yield return new WaitForSeconds(0.5f);
+        agent.velocity = Vector3.zero;
+        yield return new WaitForSeconds(chargeEndLagTime);
+        RogueBotChasing();
     }
 
     IEnumerator ActivateHitbox()
     {
-        yield return new WaitForSeconds(0.75f);
         rogueBotAttackHitbox.SetActive(true);
         yield return new WaitForSeconds(0.1f);
         rogueBotAttackHitbox.SetActive(false);
@@ -249,12 +268,8 @@ public class RogueBot : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, chaseRange);
 
         // Draw the Charge Range
-        Gizmos.color = UnityEngine.Color.magenta;
-        Gizmos.DrawWireSphere(transform.position, chargeRange);
-
-        // Draw the Attack Range
         Gizmos.color = UnityEngine.Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.DrawWireSphere(transform.position, chargeRange);
 
         // Draw the Leash Range
         Gizmos.color = UnityEngine.Color.yellow;

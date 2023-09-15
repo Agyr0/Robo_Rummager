@@ -524,7 +524,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AgentTypeID: 0
+  m_AgentTypeID: -1372625422
   m_CollectObjects: 0
   m_Size: {x: 10, y: 10, z: 10}
   m_Center: {x: 0, y: 2, z: 0}
@@ -21159,6 +21159,79 @@ Transform:
   m_Children: []
   m_Father: {fileID: 97721606}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &886116674
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 256434212732561887, guid: 36e3f4ab2b3ec90429eed71183e422f5,
+        type: 3}
+      propertyPath: patrolCenterPoint
+      value: 
+      objectReference: {fileID: 513048449}
+    - target: {fileID: 8449797914820790893, guid: 36e3f4ab2b3ec90429eed71183e422f5,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8449797914820790893, guid: 36e3f4ab2b3ec90429eed71183e422f5,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8449797914820790893, guid: 36e3f4ab2b3ec90429eed71183e422f5,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8449797914820790893, guid: 36e3f4ab2b3ec90429eed71183e422f5,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8449797914820790893, guid: 36e3f4ab2b3ec90429eed71183e422f5,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8449797914820790893, guid: 36e3f4ab2b3ec90429eed71183e422f5,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8449797914820790893, guid: 36e3f4ab2b3ec90429eed71183e422f5,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8449797914820790893, guid: 36e3f4ab2b3ec90429eed71183e422f5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8449797914820790893, guid: 36e3f4ab2b3ec90429eed71183e422f5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8449797914820790893, guid: 36e3f4ab2b3ec90429eed71183e422f5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8761696602667769251, guid: 36e3f4ab2b3ec90429eed71183e422f5,
+        type: 3}
+      propertyPath: m_Name
+      value: TestRogueBot (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 36e3f4ab2b3ec90429eed71183e422f5, type: 3}
 --- !u!1001 &967300768
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21169,73 +21242,23 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 256434212732561887, guid: 36e3f4ab2b3ec90429eed71183e422f5,
         type: 3}
-      propertyPath: chaseRange
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 256434212732561887, guid: 36e3f4ab2b3ec90429eed71183e422f5,
-        type: 3}
-      propertyPath: chaseSpeed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 256434212732561887, guid: 36e3f4ab2b3ec90429eed71183e422f5,
-        type: 3}
-      propertyPath: chargeRange
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 256434212732561887, guid: 36e3f4ab2b3ec90429eed71183e422f5,
-        type: 3}
-      propertyPath: chargeSpeed
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 256434212732561887, guid: 36e3f4ab2b3ec90429eed71183e422f5,
-        type: 3}
-      propertyPath: patrolSpeed
-      value: 3.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 256434212732561887, guid: 36e3f4ab2b3ec90429eed71183e422f5,
-        type: 3}
-      propertyPath: chaseAcceleration
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 256434212732561887, guid: 36e3f4ab2b3ec90429eed71183e422f5,
-        type: 3}
       propertyPath: patrolCenterPoint
       value: 
       objectReference: {fileID: 513048449}
-    - target: {fileID: 256434212732561887, guid: 36e3f4ab2b3ec90429eed71183e422f5,
-        type: 3}
-      propertyPath: timeBetweenCharge
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 256434212732561887, guid: 36e3f4ab2b3ec90429eed71183e422f5,
-        type: 3}
-      propertyPath: chargeAcceleration
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 256434212732561887, guid: 36e3f4ab2b3ec90429eed71183e422f5,
-        type: 3}
-      propertyPath: patrolAcceleration
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 310156567986636697, guid: 36e3f4ab2b3ec90429eed71183e422f5,
-        type: 3}
-      propertyPath: m_StoppingDistance
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 8449797914820790893, guid: 36e3f4ab2b3ec90429eed71183e422f5,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.3802357
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8449797914820790893, guid: 36e3f4ab2b3ec90429eed71183e422f5,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.924
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8449797914820790893, guid: 36e3f4ab2b3ec90429eed71183e422f5,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.3310432
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8449797914820790893, guid: 36e3f4ab2b3ec90429eed71183e422f5,
         type: 3}
@@ -21278,8 +21301,7 @@ PrefabInstance:
       value: TestRogueBot
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 8586822058977550544, guid: 36e3f4ab2b3ec90429eed71183e422f5, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 36e3f4ab2b3ec90429eed71183e422f5, type: 3}
@@ -21575,7 +21597,7 @@ GameObject:
   - component: {fileID: 1021671478}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22444,3 +22466,4 @@ SceneRoots:
   - {fileID: 1021671481}
   - {fileID: 513048449}
   - {fileID: 967300768}
+  - {fileID: 886116674}
