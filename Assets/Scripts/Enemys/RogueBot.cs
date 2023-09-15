@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class RogueBot : MonoBehaviour
+public class RogueBot : MonoBehaviour, IDamageable
 {
     private NavMeshAgent agent;
     private Transform playerTransform;
+    private float maxHealth = 75;
+    private float health;
 
     [SerializeField]
     private GameObject detectedSprite;
@@ -112,6 +114,7 @@ public class RogueBot : MonoBehaviour
 
     void Start()
     {
+        health = maxHealth;
         agent = GetComponent<NavMeshAgent>();
         playerTransform = GameObject.Find("Player").transform;
     }
@@ -255,6 +258,16 @@ public class RogueBot : MonoBehaviour
         rogueBotAttackHitbox.SetActive(true);
         yield return new WaitForSeconds(0.1f);
         rogueBotAttackHitbox.SetActive(false);
+    }
+
+    public void TakeDamage()
+    {
+        health -= 25;
+        Debug.Log("Damage Taken, health at:" + health);
+        if (health <= 0)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     private void OnDrawGizmos()
