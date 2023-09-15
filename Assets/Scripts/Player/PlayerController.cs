@@ -140,6 +140,7 @@ public class PlayerController : MonoBehaviour
         gameManager = GameManager.Instance;
         gameManager.playerController = this;
 
+        _health = _maxHealth;
         controller = GetComponent<CharacterController>();
         inputManager = InputManager.Instance;   
         CurSpeed = walkSpeed;

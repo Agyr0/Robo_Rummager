@@ -7,6 +7,9 @@ public class RogueBotAttackCollisionDetection : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
-            Debug.Log("Player Hit!.");
+        {
+            GameManager.Instance.playerController.Health -= 10;
+            Debug.Log(GameManager.Instance.playerController.Health);
+        }
     }
 }
