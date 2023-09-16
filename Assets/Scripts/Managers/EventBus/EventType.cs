@@ -37,7 +37,6 @@ public enum EventType
     //defaulting to the the inventory screen.
     INVENTORY_TOGGLE,
     BULLETINBOARD_INTERACT,
-    BULLETINBOARD_EXIT,
     TOGGLE_INTERACT_HOVER,
     #endregion
 

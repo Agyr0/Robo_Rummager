@@ -18,14 +18,14 @@ public class ContractBoard_Manager : MonoBehaviour
 
     private void OnEnable()
     {
-        EventBus.Subscribe<int,float, int>(EventType.BOARD_ADDCONTRACT, CreateContract);
+        EventBus.Subscribe<int,float>(EventType.BOARD_ADDCONTRACT, CreateContract);
     }
     private void OnDisable()
     {
-        EventBus.Unsubscribe<int, float, int>(EventType.BOARD_ADDCONTRACT, CreateContract);
+        EventBus.Unsubscribe<int, float>(EventType.BOARD_ADDCONTRACT, CreateContract);
     }
 
-    /*
+    
     public void CreateContract(int robot, float TimeCount)
     {
         
@@ -37,8 +37,8 @@ public class ContractBoard_Manager : MonoBehaviour
 
         EventBus.Publish(EventType.BOARD_CONTRACTUPDATE);
     }
-    */
-
+    
+    /*
     public void CreateContract(int robot, float timeCount, int contractPayment)
     {
         Contract_Data newContract = new Contract_Data(Robot_RecipeDataList[robot], timeCount, contractPayment);
@@ -49,4 +49,5 @@ public class ContractBoard_Manager : MonoBehaviour
 
         EventBus.Publish(EventType.BOARD_CONTRACTUPDATE);
     }
+    */
 }
