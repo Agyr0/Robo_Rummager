@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player_UIManager : MonoBehaviour
@@ -16,16 +17,18 @@ public class Player_UIManager : MonoBehaviour
     private GameObject _playerHUD_UI;
     [SerializeField]
     private GameObject _bulletinBoard_UI;
+    [SerializeField]
+    private GameObject _bulletinBoardInteract_UI;
 
     private void OnEnable()
     {
-        EventBus.Subscribe(EventType.BULLETINBOARD_INTERACT, OnDisplay_EnterBulletin);
-        EventBus.Subscribe(EventType.BULLETINBOARD_EXIT, OnDisplay_ExitBulletin);
+        EventBus.Subscribe(EventType.BULLETINBOARD_INTERACT, OnDisplayToggle_Bulletin);
+        EventBus.Subscribe(EventType.TOGGLE_INTERACT_HOVER, OnDisplayToggle_BulletinInteract);
     }
     private void OnDisable()
     {
-        EventBus.Unsubscribe(EventType.BULLETINBOARD_INTERACT, OnDisplay_EnterBulletin);
-        EventBus.Unsubscribe(EventType.BULLETINBOARD_EXIT, OnDisplay_ExitBulletin);
+        EventBus.Unsubscribe(EventType.BULLETINBOARD_INTERACT, OnDisplayToggle_Bulletin);
+        EventBus.Unsubscribe(EventType.TOGGLE_INTERACT_HOVER, OnDisplayToggle_BulletinInteract);
     }
 
     public void OnDisplay_Inventory()
@@ -58,6 +61,27 @@ public class Player_UIManager : MonoBehaviour
         _options_UI.SetActive(false);
         _playerHUD_UI.SetActive(true);
         _bulletinBoard_UI.SetActive(false);
+    }
+
+    public void OnDisplayToggle_BulletinInteract()
+    {
+        if (_bulletinBoardInteract_UI.activeSelf)
+            _bulletinBoardInteract_UI.SetActive(false);
+        else
+            _bulletinBoardInteract_UI.SetActive(true);
+    }
+
+    public void OnDisplayToggle_Bulletin()
+    {
+        if (_bulletinBoardInteract_UI.activeSelf ||
+            !_bulletinBoard_UI.activeSelf)
+        {
+            if (_bulletinBoard_UI.activeSelf)
+                OnDisplay_ExitBulletin();
+
+            else
+                OnDisplay_EnterBulletin();
+        }
     }
 
     public void OnDisplay_EnterBulletin()

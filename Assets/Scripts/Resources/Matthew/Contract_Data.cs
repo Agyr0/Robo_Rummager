@@ -42,7 +42,7 @@ public class Contract_Data
 
     public int Contract_PayOut
     {
-        get { return _contract_PayOut; }
+        get { return _robot_RecipeData.Value_Credit; }
     }
 
     /*
@@ -53,10 +53,10 @@ public class Contract_Data
     }
     */
 
-    public Contract_Data(Robot_RecipeData robot, float timerCount, int contractPayment)
+    public Contract_Data(Robot_RecipeData robot, float timerCount)
     {
         _robot_RecipeData = robot;
         _contract_TimerCount = timerCount;
-        _contract_PayOut = contractPayment;
+        //_contract_PayOut = contractPayment;
     }
 }
