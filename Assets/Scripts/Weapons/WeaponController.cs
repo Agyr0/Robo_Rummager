@@ -19,13 +19,17 @@ public class WeaponController : MonoBehaviour
     private const int _laserIndex = 1;
     private const int _handsIndex = 2;
     private bool canShoot = true;
+    private bool isSwinging = false;
+    [SerializeField]
+    private Animator _animator;
+
 
     private void Start()
     {
         gameManager = GameManager.Instance;
         _curWeapon = _availableWeapons[0];
         inputManager = InputManager.Instance;
-
+        _animator = GetComponent<Animator>();
         //Input Events
         SubscribeInputEvents();
 
@@ -35,6 +39,7 @@ public class WeaponController : MonoBehaviour
     private void OnEnable()
     {
         EventBus.Subscribe(EventType.PLAYER_SHOOT, ShootRifle);
+        EventBus.Subscribe(EventType.SWING_WRENCH, StartWrenchSwing);
         EventBus.Subscribe<Vector2>(EventType.WEAPON_SWITCH, SwitchWeapon);
         EventBus.Subscribe(EventType.DISPLAY_WEAPON, DisplayWeapon);
         EventBus.Subscribe(EventType.PLAYER_RELOAD, HandleReload);
@@ -45,11 +50,13 @@ public class WeaponController : MonoBehaviour
         EventBus.Unsubscribe<Vector2>(EventType.WEAPON_SWITCH, SwitchWeapon);
         EventBus.Unsubscribe(EventType.DISPLAY_WEAPON, DisplayWeapon);
         EventBus.Unsubscribe(EventType.PLAYER_RELOAD, HandleReload);
+        EventBus.Unsubscribe(EventType.SWING_WRENCH, StartWrenchSwing);
 
     }
     private void LateUpdate()
     {
-        PointWeapon();
+        if(!isSwinging)
+            PointWeapon();
     }
     private void InitializeWeapon()
     {
@@ -88,6 +95,38 @@ public class WeaponController : MonoBehaviour
         transform.rotation = gameManager.CameraTransform.rotation;
     }
 
+    private void StartWrenchSwing()
+    {
+        isSwinging = true;
+        _animator.SetTrigger("Attack");
+    }
+
+    public void PlayAttack()
+    {
+        StartCoroutine(AttackRaycast(20));
+    }
+    private IEnumerator AttackRaycast(int numHits)
+    {
+        //if(Physics.Raycast(_curWeapon.MuzzlePos.position, _curWeapon.MuzzlePos.forward, _curWeapon.Range))
+        //{
+
+        //}
+        while (numHits > 0)
+        {
+            Vector3 endPos = new Vector3(_curWeapon.MuzzlePos.position.x, _curWeapon.MuzzlePos.position.y, _curWeapon.MuzzlePos.position.z + _curWeapon.Range);
+            Debug.DrawRay(_curWeapon.MuzzlePos.position, _curWeapon.MuzzlePos.forward * _curWeapon.Range, Color.yellow, 1000f);
+            //Debug.DrawLine(_curWeapon.MuzzlePos.position, endPos, Color.yellow, 100);
+            yield return null;
+            numHits--;
+        }
+        //Extra ray just in case
+        //Ray ray = new Ray(gameManager.CameraTransform.position, gameManager.CameraTransform.forward);
+        Debug.DrawRay(gameManager.CameraTransform.position, gameManager.CameraTransform.forward * _curWeapon.Range * 2, Color.blue, 1000f);
+
+        isSwinging = false;
+    }
+
+    #region Rifle
     private void ShootRifle()
     {
         if (canShoot)
@@ -128,6 +167,8 @@ public class WeaponController : MonoBehaviour
             Debug.Log("Ammo: " + _curWeapon.CurAmmo);
         }
     }
+
+    #region Reloading
     private void HandleReload()
     {
         StartCoroutine(Reload());
@@ -142,9 +183,11 @@ public class WeaponController : MonoBehaviour
         _curWeapon.CurAmmo = _curWeapon.MagSize;
         Debug.Log("Reload complete\n" + "Ammo: " + _curWeapon.CurAmmo);
     }
+    #endregion
 
-    
+    #endregion
 
+    #region Weapon Switching
     private void SwitchWeapon(Vector2 index)
     {
         if (index.y > 0)
@@ -172,11 +215,11 @@ public class WeaponController : MonoBehaviour
         //if(_curWeapon != _availableWeapons[_weaponIndex])
         //    _curWeapon = _availableWeapons[_weaponIndex];
 
-        if (transform.childCount > 1)
+        if (playerHand.childCount > 0)
         {
-            for (int i = 1; i < transform.childCount; i++)
+            for (int i = 0; i < playerHand.childCount; i++)
             {
-                Destroy(transform.GetChild(i).gameObject);
+                Destroy(playerHand.GetChild(i).gameObject);
             }
         }
         _weaponPrefab = _curWeapon.WeaponPrefab;
@@ -184,11 +227,12 @@ public class WeaponController : MonoBehaviour
         if (_weaponPrefab != null)
         {
             //Spawn weapon in the playerhand
-            GameObject weaponInstance = Instantiate(_weaponPrefab, playerHand.position, transform.rotation, transform);
+            GameObject weaponInstance = Instantiate(_weaponPrefab, playerHand.position, transform.rotation, playerHand.transform);
 
             //Assign _curWeapon.MuzzlePos with the instanced muzzle pos if available
             if (weaponInstance.transform.childCount > 0)
                 _curWeapon.MuzzlePos = weaponInstance.transform.GetChild(0);
         }
     }
+    #endregion
 }
