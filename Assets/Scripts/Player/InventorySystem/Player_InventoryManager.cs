@@ -85,13 +85,13 @@ public class Player_InventoryManager : MonoBehaviour
         get { return _inventory_ItemPickupList; }
         set { _inventory_ItemPickupList = value; }
     }
-
+    
     public Resource_ItemData ResourceEmpty
     {
         get { return _resourceEmpty; }
         set { _resourceEmpty = value; }
     }
-
+    
     //Current method of keeping track of players inventory slot counts untill
     //a player data script is implemented.
 
@@ -171,10 +171,12 @@ public class Player_InventoryManager : MonoBehaviour
             if (itemPicked.GetComponent<Resource_Item>().ResourceAmount != 0 &&
                 itemPicked.GetComponent<Resource_Item>().IsReadyForPickup == true)
             {
+                Debug.Log("An item was picked up");
                 //Looks for an empty or matching resource slot
                 if (Inventory_DataArray[i].SlotItemData.ResourceName == ResourceType.Empty
                     || Inventory_DataArray[i].SlotItemData.ResourceName == itemPicked.GetComponent<Resource_Item>().ItemData.ResourceName)
                 {
+                    Debug.Log("A slot was found");
                     Inventory_DataArray[i].SlotItemData = itemPicked.GetComponent<Resource_Item>().ItemData;
                     if (Inventory_DataArray[i].AmountStored != 25)
                     {
@@ -230,7 +232,8 @@ public class Player_InventoryManager : MonoBehaviour
                 EventBus.Publish<GameObject>(EventType.INVENTORY_SORTPICKUP, Inventory_ItemPickupList[x]);
 
         }
-        EventBus.Publish(EventType.INVENTORY_REMOVEITEM);
+        else
+            EventBus.Publish(EventType.INVENTORY_REMOVEITEM);
     }
 
     public void OnItemDrop(int slotNumber)
