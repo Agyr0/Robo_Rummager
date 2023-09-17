@@ -13,6 +13,7 @@ public class WeaponData : ScriptableObject
     public float _curAmmo = Mathf.Infinity;
     public float _magSize = Mathf.Infinity;
     public int _wrenchLevel = 0;
+    public float _wrenchSpeed = 1f;
     public float _disassembleTime = 0;
     public Sprite _icon;
     public GameObject _laserBeam;
@@ -163,6 +164,17 @@ public class WeaponData : ScriptableObject
         {
             _muzzlePos = value;
         }
+    }
+
+    public float WrenchDelay
+    {
+        get { return _reloadTime; }
+        set { _reloadTime = value; }
+    }
+    public float WrenchSpeed
+    {
+        get { return _wrenchSpeed; }
+        set { _wrenchSpeed = value; }
     }
 }
 

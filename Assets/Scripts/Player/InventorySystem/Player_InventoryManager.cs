@@ -9,6 +9,9 @@ using UnityEngine.UI;
 public class Player_InventoryManager : MonoBehaviour
 {
     [SerializeField]
+    private int _creditPurse;
+
+    [SerializeField]
     private float _pickupEventInterval = .1f;
 
     [SerializeField]
@@ -36,6 +39,9 @@ public class Player_InventoryManager : MonoBehaviour
     private List<GameObject> _inventory_ItemCullPickupList;
 
     [SerializeField]
+    private Text _creditText;
+
+    [SerializeField]
     private int _slotStackLimit;
 
     [SerializeField]
@@ -51,6 +57,16 @@ public class Player_InventoryManager : MonoBehaviour
     private GameObject _itemBlankPrefab;
 
     private bool _isSendingPickupEvents = false;
+
+    public int CreditPurse
+    {
+        get { return _creditPurse; }
+        set 
+        { 
+            _creditPurse = value;
+            _creditText.text = "Credit: $" + _creditPurse;
+        }
+    }
 
     public Inventory_Slot[] Inventory_DataArray
     {
@@ -69,7 +85,13 @@ public class Player_InventoryManager : MonoBehaviour
         get { return _inventory_ItemPickupList; }
         set { _inventory_ItemPickupList = value; }
     }
-
+    
+    public Resource_ItemData ResourceEmpty
+    {
+        get { return _resourceEmpty; }
+        set { _resourceEmpty = value; }
+    }
+    
     //Current method of keeping track of players inventory slot counts untill
     //a player data script is implemented.
 
@@ -78,6 +100,8 @@ public class Player_InventoryManager : MonoBehaviour
 
     private void OnEnable()
     {
+        GameManager.Instance.inventoryManager = this;
+
         EventBus.Subscribe(EventType.INVENTORY_TOGGLE, OnToggleInventory);
         EventBus.Subscribe(EventType.INVENTORY_ADDSLOT, OnInventoryAddSlot);
         EventBus.Subscribe(EventType.INVENTORY_REMOVESLOT, OnInventoryRemoveSlot);
@@ -86,6 +110,7 @@ public class Player_InventoryManager : MonoBehaviour
         EventBus.Subscribe<GameObject>(EventType.INVENTORY_ADDITEM, OnAddItem);
         EventBus.Subscribe<GameObject>(EventType.INVENTORY_ADDITEMCULL, OnAddCullItem);
         EventBus.Subscribe(EventType.INVENTORY_REMOVEITEM, OnRemoveItem);
+        EventBus.Subscribe<int>(EventType.CONTRACT_COMPLETED, OnContractCompleation);
     }
 
     private void OnDisable()
@@ -98,6 +123,7 @@ public class Player_InventoryManager : MonoBehaviour
         EventBus.Unsubscribe<GameObject>(EventType.INVENTORY_ADDITEM, OnAddItem);
         EventBus.Unsubscribe<GameObject>(EventType.INVENTORY_ADDITEMCULL, OnAddCullItem);
         EventBus.Unsubscribe(EventType.INVENTORY_REMOVEITEM, OnRemoveItem);
+        EventBus.Unsubscribe<int>(EventType.CONTRACT_COMPLETED, OnContractCompleation);
     }
 
     private void OnToggleInventory()
@@ -149,10 +175,12 @@ public class Player_InventoryManager : MonoBehaviour
             if (itemPicked.GetComponent<Resource_Item>().ResourceAmount != 0 &&
                 itemPicked.GetComponent<Resource_Item>().IsReadyForPickup == true)
             {
+                Debug.Log("An item was picked up");
                 //Looks for an empty or matching resource slot
                 if (Inventory_DataArray[i].SlotItemData.ResourceName == ResourceType.Empty
                     || Inventory_DataArray[i].SlotItemData.ResourceName == itemPicked.GetComponent<Resource_Item>().ItemData.ResourceName)
                 {
+                    Debug.Log("A slot was found");
                     Inventory_DataArray[i].SlotItemData = itemPicked.GetComponent<Resource_Item>().ItemData;
                     if (Inventory_DataArray[i].AmountStored != 25)
                     {
@@ -262,17 +290,23 @@ public class Player_InventoryManager : MonoBehaviour
         Inventory_ItemCullPickupList.Clear();
     }
 
+    private void OnContractCompleation(int creditValue)
+    {
+        CreditPurse += creditValue;
+    }
+
     IEnumerator SendPickupEvents()
     {
         while (_isSendingPickupEvents)
         {
-            if (Inventory_ItemPickupList.Count == 0)
-                _isSendingPickupEvents = false;
-
-            else
-                EventBus.Publish(EventType.INVENTORY_PICKUP);
+            EventBus.Publish(EventType.INVENTORY_PICKUP);
 
             yield return new WaitForSeconds(_pickupEventInterval);
+
+            if (Inventory_ItemPickupList.Count == 0)
+            {
+                _isSendingPickupEvents = false;
+            }
         }
     }
 

@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     public float Health
     { 
         get { return _health; } 
-         set {_health = value; } 
+        set {_health = value; } 
     }
     #region Player Movement
     private CharacterController controller;
@@ -121,6 +121,9 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
+        gameManager = GameManager.Instance;
+        gameManager.playerController = this;
+
         EventBus.Subscribe(EventType.PLAYER_START_SPRINT, PlayerStartSprint);
         EventBus.Subscribe(EventType.PLAYER_STOP_SPRINT, PlayerStopSprint);
         EventBus.Subscribe(EventType.PLAYER_DASH, StartDash);
@@ -137,8 +140,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        gameManager = GameManager.Instance;
-        gameManager.playerController = this;
+        
 
         _health = _maxHealth;
         controller = GetComponent<CharacterController>();
@@ -163,6 +165,8 @@ public class PlayerController : MonoBehaviour
             HandleJump();
     }
 
+
+
     private void SubscribeInputEvents()
     {
         //Sprint and stamina
@@ -172,6 +176,8 @@ public class PlayerController : MonoBehaviour
         inputManager.playerControls.Player.Dash.performed += _ => EventBus.Publish(EventType.PLAYER_DASH);
         //ScannerGoggles
         inputManager.playerControls.Player.Scanner.performed += _ => EventBus.Publish(EventType.TOGGLE_SCANNER);
+
+        inputManager.playerControls.Player.Inventory.performed += _ => EventBus.Publish(EventType.INVENTORY_TOGGLE);
     }
 
     #region Movement

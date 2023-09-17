@@ -16,6 +16,8 @@ public class Player_UIManager : MonoBehaviour
     [SerializeField]
     private GameObject _playerHUD_UI;
     [SerializeField]
+    private GameObject _creditBox;
+    [SerializeField]
     private GameObject _bulletinBoard_UI;
     [SerializeField]
     private GameObject _bulletinBoardInteract_UI;
@@ -37,6 +39,7 @@ public class Player_UIManager : MonoBehaviour
         _inventory_UI.SetActive(true);
         _contracts_UI.SetActive(false);
         _options_UI.SetActive(false);
+        _creditBox.SetActive(true);
     }
 
     public void OnDisplay_Contacts()
@@ -61,10 +64,12 @@ public class Player_UIManager : MonoBehaviour
         _options_UI.SetActive(false);
         _playerHUD_UI.SetActive(true);
         _bulletinBoard_UI.SetActive(false);
+        _creditBox.SetActive(false);
     }
 
     public void OnDisplayToggle_BulletinInteract()
     {
+        Debug.Log("Toggle interact prompt");
         if (_bulletinBoardInteract_UI.activeSelf)
             _bulletinBoardInteract_UI.SetActive(false);
         else
@@ -92,6 +97,7 @@ public class Player_UIManager : MonoBehaviour
         _playerHUD_UI.SetActive(false);
         _fannyPack_UI.SetActive(false);
         _bulletinBoard_UI.SetActive(true);
+        _creditBox.SetActive(true);
     }
 
     public void OnDisplay_ExitBulletin()
@@ -101,5 +107,6 @@ public class Player_UIManager : MonoBehaviour
         _options_UI.SetActive(false);
         _playerHUD_UI.SetActive(true);
         _bulletinBoard_UI.SetActive(false);
+        _creditBox.SetActive(false);
     }
 }

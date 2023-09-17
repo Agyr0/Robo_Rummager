@@ -7,16 +7,18 @@ using UnityEngine.UI;
 public class WorkshopStorage
 {
     #region Storage fields
-    private float _creditCount;
+    private int _creditCount;
 
-    private float _motherBoardCount;
-    private float _wireCount;
-    private float _oilCount;
-    private float _metalScrapCount;
-    private float _sensorCount;
-    private float _zCrystalCount;
-    private float _radioactiveWasteCount;
-    private float _blackMatterCount;
+    private int _motherBoardCount;
+    private int _wireCount;
+    private int _oilCount;
+    private int _metalScrapCount;
+    private int _sensorCount;
+    private int _zCrystalCount;
+    private int _radioactiveWasteCount;
+    private int _blackMatterCount;
+    [SerializeField,Tooltip("This is more as a debug to see what you have in the storage"), NamedArray(new string[] { "Credits", "Mother Boards", "Wires", "Oil", "Metal Scrap", "Sensors", "Z Crystals", "Radioactive Waste", "Black Matter" })]
+    private int[] storage = new int[9];
 
     #endregion
 
@@ -43,94 +45,139 @@ public class WorkshopStorage
     #endregion
 
     #region Properties
-    public float CreditCount
+    public int CreditCount
     {
-        get { return _creditCount; }
+        get 
+        {
+            //_creditCount = storage[0];
+            return _creditCount; 
+        }
         set
         {
             if (_creditsText != null)
                 _creditsText.text = _creditCount.ToString();
             _creditCount = value;
+            storage[0] = _creditCount;
         }
     }
-    public float MotherBoardCount
+    public int MotherBoardCount
     {
-        get { return _motherBoardCount; }
+        get 
+        {
+            //_motherBoardCount = storage[1];
+            return _motherBoardCount; 
+        }
         set
         {
             if (_motherBoardText != null)
                 _motherBoardText.text = _motherBoardCount.ToString();
             _motherBoardCount = value;
+            storage[1] = _motherBoardCount;
         }
     }
-    public float WireCount
+    public int WireCount
     {
-        get { return _wireCount; }
+        get 
+        {
+            //_wireCount = storage[2];
+            return _wireCount; 
+        }
         set
         {
             if (_wiresText != null)
                 _wiresText.text = _wireCount.ToString();
             _wireCount = value;
+            storage[2] = _wireCount;
         }
     }
-    public float OilCount
+    public int OilCount
     {
-        get { return _oilCount; }
+        get 
+        {
+            //_oilCount = storage[3];
+            return _oilCount; 
+        }
         set
         {
             if (_oilText != null)
                 _oilText.text = _oilCount.ToString();
             _oilCount = value;
+            storage[3] = _oilCount;
         }
     }
-    public float MetalScrapCount
+    public int MetalScrapCount
     {
-        get { return _metalScrapCount; }
+        get 
+        {
+            //_metalScrapCount = storage[4];
+            return _metalScrapCount; 
+        }
         set
         {
             if (_metalScrapText != null)
                 _metalScrapText.text = _metalScrapCount.ToString();
             _metalScrapCount = value;
+            storage[4] = _metalScrapCount;
         }
     }
-    public float SensorCount
+    public int SensorCount
     {
-        get { return _sensorCount; }
+        get 
+        {
+            //_sensorCount = storage[5];
+            return _sensorCount; 
+        }
         set
         {
             if (_sensorsText != null)
                 _sensorsText.text = _sensorCount.ToString();
             _sensorCount = value;
+            storage[5] = _sensorCount;
         }
     }
-    public float ZCrystalCount
+    public int ZCrystalCount
     {
-        get { return _zCrystalCount; }
+        get 
+        {
+            //_zCrystalCount = storage[6];
+            return _zCrystalCount; 
+        }
         set
         {
             if (_zCrystalText != null)
                 _zCrystalText.text = _zCrystalCount.ToString();
             _zCrystalCount = value;
+            storage[6] = _zCrystalCount;
         }
     }
-    public float RadioactiveWasteCount
+    public int RadioactiveWasteCount
     {
-        get { return _radioactiveWasteCount; }
+        get 
+        {
+            //_radioactiveWasteCount = storage[7];    
+            return _radioactiveWasteCount; 
+        }
         set
         {
             if (_radioactiveWasteText != null)
                 _radioactiveWasteText.text = _radioactiveWasteCount.ToString();
             _radioactiveWasteCount = value;
+            storage[7] = _radioactiveWasteCount;
         }
     }
-    public float BlackMatterCount
+    public int BlackMatterCount
     {
-        get { return _blackMatterCount; }
+        get 
+        {
+            //_blackMatterCount = storage[8];
+            return _blackMatterCount; 
+        }
         set
         {
             if (_blackMatterText != null)
                 _blackMatterText.text = _blackMatterCount.ToString();
             _blackMatterCount = value;
+            storage[8] = _blackMatterCount;
         }
     }
 

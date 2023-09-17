@@ -15,6 +15,12 @@ public class Contract_Data
     [SerializeField]
     private int _contract_PayOut;
 
+    [SerializeField]
+    private bool _contract_IsTimed;
+
+    [SerializeField]
+    private ContractStatus _contract_Status;
+
     public Robot_RecipeData Robot_RecipeData
     {
         get { return _robot_RecipeData; }
@@ -38,25 +44,31 @@ public class Contract_Data
     public float Contract_TimerCount
     {
         get { return _contract_TimerCount; }
+        set { _contract_TimerCount = value; }
     }
 
-    public int Contract_PayOut
+    public bool Contract_IsTimed
     {
-        get { return _robot_RecipeData.Value_Credit; }
+        get { return _contract_IsTimed; }
     }
 
-    /*
-    public Contract_Data(Robot_RecipeData robot, float timerCount) 
+    public ContractStatus Contract_Status
     {
-        _robot_RecipeData = robot;
-        _contract_TimerCount = timerCount;
+        get { return _contract_Status;  }
+        set { _contract_Status = value; }
     }
-    */
 
     public Contract_Data(Robot_RecipeData robot, float timerCount)
     {
         _robot_RecipeData = robot;
         _contract_TimerCount = timerCount;
-        //_contract_PayOut = contractPayment;
+        _contract_PayOut = robot.Value_Credit;
+
+        if (timerCount == 0)
+            _contract_IsTimed = false;
+        else
+            _contract_IsTimed = true;
+
+        _contract_Status = ContractStatus.Unassigned;
     }
 }
