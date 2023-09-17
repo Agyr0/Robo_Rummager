@@ -234,8 +234,7 @@ public class Player_InventoryManager : MonoBehaviour
                 EventBus.Publish<GameObject>(EventType.INVENTORY_SORTPICKUP, Inventory_ItemPickupList[x]);
 
         }
-        else
-            EventBus.Publish(EventType.INVENTORY_REMOVEITEM);
+        EventBus.Publish(EventType.INVENTORY_REMOVEITEM);
     }
 
     public void OnItemDrop(int slotNumber)
@@ -293,13 +292,14 @@ public class Player_InventoryManager : MonoBehaviour
     {
         while (_isSendingPickupEvents)
         {
-            if (Inventory_ItemPickupList.Count == 0)
-                _isSendingPickupEvents = false;
-
-            else
-                EventBus.Publish(EventType.INVENTORY_PICKUP);
+            EventBus.Publish(EventType.INVENTORY_PICKUP);
 
             yield return new WaitForSeconds(_pickupEventInterval);
+
+            if (Inventory_ItemPickupList.Count == 0)
+            {
+                _isSendingPickupEvents = false;
+            }
         }
     }
 

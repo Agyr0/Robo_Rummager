@@ -30,6 +30,7 @@ public class ContractBoard_Manager : MonoBehaviour
     {
         
         Contract_Data newContract = new Contract_Data(Robot_RecipeDataList[robot], TimeCount);
+        newContract.Contract_Status = ContractStatus.Available;
         Contract_DataList.Add(newContract);
         
         GameObject Contract = Instantiate(_contract_BlankTemplate_Prefab, _bulletinBoard_Container.transform);

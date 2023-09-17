@@ -57,6 +57,7 @@ public enum EventType
     INVENTORY_ITEMDROPPED,
     PLAYER_CONTRACTUPDATE,
     PLAYER_ADDCONTRACT,
+    CONTRACT_TIMERTICK,
 
     #endregion
 
