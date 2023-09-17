@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     public float Health
     { 
         get { return _health; } 
-         set {_health = value; } 
+        set {_health = value; } 
     }
     #region Player Movement
     private CharacterController controller;

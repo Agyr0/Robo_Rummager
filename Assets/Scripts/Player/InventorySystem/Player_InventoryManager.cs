@@ -70,6 +70,12 @@ public class Player_InventoryManager : MonoBehaviour
         set { _inventory_ItemPickupList = value; }
     }
 
+    public Resource_ItemData ResourceEmpty
+    {
+        get { return _resourceEmpty; }
+        set { _resourceEmpty = value; }
+    }
+
     //Current method of keeping track of players inventory slot counts untill
     //a player data script is implemented.
 
