@@ -16,13 +16,20 @@ public class LootBag : MonoBehaviour
     private int _maxDrops = 10;
     private int _dropsLeft;
 
+    [SerializeField, Header("Drops Rigidbody Effects")]
+    private float _explosionForce = 2f;
+    [SerializeField]
+    private float _explosionRadius = 1f;
+    [SerializeField]
+    private float _upwardsModifier = 2f;
+
     public GameObject ResourceFullMesh
     {
         get 
         {
-            if (DropsLeft <= 0)
+            if (DropsLeft <= 0 && _resourceFullMesh != null)
                 _resourceFullMesh.SetActive(false);
-            else if (DropsLeft > 0 && !_resourceFullMesh.activeInHierarchy)
+            else if (DropsLeft > 0 && !_resourceFullMesh.activeInHierarchy && _resourceFullMesh != null)
                 _resourceFullMesh.SetActive(true);
 
             return _resourceFullMesh; 
@@ -46,7 +53,10 @@ public class LootBag : MonoBehaviour
     private void RefreshDrops()
     {
         DropsLeft = MaxDrops;
-        GameObject temp = ResourceFullMesh;
+        if(_resourceFullMesh != null)
+        {
+            GameObject temp = ResourceFullMesh;
+        }
 
     }
 
@@ -65,12 +75,15 @@ public class LootBag : MonoBehaviour
                 Rigidbody rb = drop.GetComponent<Rigidbody>();
                 if (rb != null)
                 {
-                    rb.AddExplosionForce(5f, hitPosition, 1f, 2f);
+                    rb.AddExplosionForce(_explosionForce, hitPosition, _explosionRadius, _upwardsModifier);
                 }
                     
             }
             DropsLeft--;
         }
-        GameObject temp = ResourceFullMesh;
+        if (_resourceFullMesh != null)
+        {
+            GameObject temp = ResourceFullMesh;
+        }
     }
 }

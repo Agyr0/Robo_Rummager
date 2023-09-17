@@ -307,17 +307,19 @@ public class PlayerController : MonoBehaviour
         //Toggle bool
         scannerActive = !scannerActive;
         //Toggle post process volume
-        scannerVolume.enabled = scannerActive;
+        //scannerVolume.enabled = scannerActive;
         //Handle VFX play and stop
         if(scannerActive)
         {
             scannerVFX.enabled = true;
+            gameManager.PlayerVCam.GetComponent<CinemachineVolumeSettings>().m_Profile = gameManager.scannerGogglesVolume;
             //scannerVFX.Play();
             EventBus.Publish(EventType.SEND_DETECTION_SPHERE);
         }
         else
         {
             //scannerVFX.Stop();
+            gameManager.PlayerVCam.GetComponent<CinemachineVolumeSettings>().m_Profile = gameManager.defaultVolume;
             EventBus.Publish(EventType.SEND_DETECTION_SPHERE);
             scannerVFX.enabled = false;
         }
