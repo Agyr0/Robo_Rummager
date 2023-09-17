@@ -128,7 +128,7 @@ public class PlayerContract_UI_Behavior : MonoBehaviour
 
     public void Set_Payout_Text()
     {
-        _contract_Payout_Text.text = "" + _contract_Data.Contract_PayOut;
+        _contract_Payout_Text.text = "" + _contract_Data.Value_Credit;
     }
 
     public void Set_CountTimer_Text()

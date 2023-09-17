@@ -47,14 +47,9 @@ public class Contract_Data
         set { _contract_TimerCount = value; }
     }
 
-    public int Contract_PayOut
-    {
-        get { return _robot_RecipeData.Value_Credit; }
-    }
-
     public bool Contract_IsTimed
     {
-        get { return Contract_IsTimed; }
+        get { return _contract_IsTimed; }
     }
 
     public ContractStatus Contract_Status
@@ -63,18 +58,11 @@ public class Contract_Data
         set { _contract_Status = value; }
     }
 
-    /*
-    public Contract_Data(Robot_RecipeData robot, float timerCount) 
-    {
-        _robot_RecipeData = robot;
-        _contract_TimerCount = timerCount;
-    }
-    */
-
     public Contract_Data(Robot_RecipeData robot, float timerCount)
     {
         _robot_RecipeData = robot;
         _contract_TimerCount = timerCount;
+        _contract_PayOut = robot.Value_Credit;
 
         if (timerCount == 0)
             _contract_IsTimed = false;
@@ -82,6 +70,5 @@ public class Contract_Data
             _contract_IsTimed = true;
 
         _contract_Status = ContractStatus.Unassigned;
-        //_contract_PayOut = contractPayment;
     }
 }

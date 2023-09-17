@@ -12,6 +12,7 @@ public class Player_Contract_Manager : MonoBehaviour
 
     [SerializeField]
     private List<Contract_Data> Contract_DataList;
+
     [SerializeField]
     private List<Contract_Data> Contract_DataCullList;
 
@@ -31,7 +32,7 @@ public class Player_Contract_Manager : MonoBehaviour
         EventBus.Unsubscribe<GameObject>(EventType.PLAYER_ADDCONTRACT, CreateContract);
         EventBus.Subscribe(EventType.CONTRACT_TIMERTICK, OnContractTimerTick);
     }
-
+    
     IEnumerator ContractTimerTickCoroutine()
     {
         while (Contract_DataList.Count != 0)
@@ -41,13 +42,16 @@ public class Player_Contract_Manager : MonoBehaviour
             yield return new WaitForSeconds(_contract_TimerTickRate);
         }
     }
-
+    
     private void OnContractTimerTick()
     {
+        
         for (int i = 0; i < Contract_DataList.Count; i++)
         {
+            
             if (Contract_DataList[i].Contract_IsTimed)
             {
+                
                 if (!isContractTimerActive)
                 {
                     isContractTimerActive = true;
@@ -55,15 +59,17 @@ public class Player_Contract_Manager : MonoBehaviour
                 }
 
                 Contract_DataList[i].Contract_TimerCount--;
-
-                if (Contract_DataList[i].Contract_TimerCount < 0)
+                if (Contract_DataList[i].Contract_TimerCount < 0 &&
+                    Contract_DataList[i].Contract_Status != ContractStatus.Completed)
                 {
                     Contract_DataList[i].Contract_Status = ContractStatus.Failed;
                     Contract_DataCullList.Add(Contract_DataList[i]);
                 }
+                
             }
+            
         }
-
+        
         if (Contract_DataCullList.Count > 0)
         {
             for (int i = 0; i < Contract_DataCullList.Count; i++)
@@ -72,7 +78,26 @@ public class Player_Contract_Manager : MonoBehaviour
             }
             Contract_DataCullList.Clear();
         }
+
+        EventBus.Publish(EventType.PLAYER_CONTRACTUPDATE);
+
     }
+
+    public void OnContractCheckForCompleation(GameObject robot)
+    {
+        for (int i = 0; i < Contract_DataList.Count; i++)
+        {
+            /*
+            if (Contract_DataList[i].Robot_RecipeData == robot.GetComponent<>)
+            {
+                EventBus.Publish(EventType.CONTRACT_COMPLETED, Contract_DataList[i].Value_Credit);
+                Contract_DataList[i].Contract_Status = ContractStatus.Completed;
+                Contract_DataCullList.Add(Contract_DataList[i]);
+            }
+            */
+        }
+    }
+    
 
     public void CreateContract(GameObject contract_DataHolder)
     {
@@ -80,6 +105,11 @@ public class Player_Contract_Manager : MonoBehaviour
         Contract_Data newContract = contract_DataHolder.GetComponent<BoardContract_UI_Behavior>().Contract_Data;
         newContract.Contract_Status = ContractStatus.InProgress;
         Contract_DataList.Add(newContract);
+
+        if (newContract.Contract_IsTimed)
+        {
+            EventBus.Publish(EventType.CONTRACT_TIMERTICK);
+        }
 
         GameObject Contract = Instantiate(_contract_BlankTemplate_Prefab, _playerContract_Container.transform);
         Contract.GetComponent<PlayerContract_UI_Behavior>().Contract_Data = newContract;

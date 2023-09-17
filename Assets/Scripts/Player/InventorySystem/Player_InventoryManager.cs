@@ -64,7 +64,7 @@ public class Player_InventoryManager : MonoBehaviour
         set 
         { 
             _creditPurse = value;
-            _creditText.text = "" + _creditPurse;
+            _creditText.text = "Credit: $" + _creditPurse;
         }
     }
 
@@ -110,6 +110,7 @@ public class Player_InventoryManager : MonoBehaviour
         EventBus.Subscribe<GameObject>(EventType.INVENTORY_ADDITEM, OnAddItem);
         EventBus.Subscribe<GameObject>(EventType.INVENTORY_ADDITEMCULL, OnAddCullItem);
         EventBus.Subscribe(EventType.INVENTORY_REMOVEITEM, OnRemoveItem);
+        EventBus.Subscribe<int>(EventType.CONTRACT_COMPLETED, OnContractCompleation);
     }
 
     private void OnDisable()
@@ -122,6 +123,7 @@ public class Player_InventoryManager : MonoBehaviour
         EventBus.Unsubscribe<GameObject>(EventType.INVENTORY_ADDITEM, OnAddItem);
         EventBus.Unsubscribe<GameObject>(EventType.INVENTORY_ADDITEMCULL, OnAddCullItem);
         EventBus.Unsubscribe(EventType.INVENTORY_REMOVEITEM, OnRemoveItem);
+        EventBus.Unsubscribe<int>(EventType.CONTRACT_COMPLETED, OnContractCompleation);
     }
 
     private void OnToggleInventory()
@@ -286,6 +288,11 @@ public class Player_InventoryManager : MonoBehaviour
             Inventory_ItemPickupList.Remove(Inventory_ItemCullPickupList[i]);
 
         Inventory_ItemCullPickupList.Clear();
+    }
+
+    private void OnContractCompleation(int creditValue)
+    {
+        CreditPurse += creditValue;
     }
 
     IEnumerator SendPickupEvents()
