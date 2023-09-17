@@ -11,6 +11,9 @@ public class GameManager : Singleton<GameManager>
     public WeaponController weaponController;
     [HideInInspector]
     public CinemachineInputProvider inputProvider;
+    [HideInInspector]
+    public Player_InventoryManager inventoryManager;
+
 
     private CinemachineVirtualCamera playerVCam;
     public CinemachineVirtualCamera PlayerVCam
@@ -78,7 +81,6 @@ public class GameManager : Singleton<GameManager>
 
         playerVCam = (CinemachineVirtualCamera)Camera.main.GetComponent<CinemachineBrain>().ActiveVirtualCamera;
         inputProvider = PlayerVCam.gameObject.GetComponent<CinemachineInputProvider>();
-
         EventBus.Publish(EventType.REFRESH_RESOURCES);
     }
 

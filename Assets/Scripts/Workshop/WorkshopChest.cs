@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class WorkshopChest : MonoBehaviour, IInteractable       
 {
-    public Player_InventoryManager inventoryManager;
-    public WorkshopManager workshopManager;
+    private Player_InventoryManager inventoryManager;
+    private WorkshopManager workshopManager;
 
     private void Start()
     {
         workshopManager = WorkshopManager.Instance;
+        inventoryManager = GameManager.Instance.inventoryManager;
     }
 
     public void HandleInteract()
     {
+        //Transfer all items in Inventory_DataArray into WorkshopStorage
         for (int i = 0; i < inventoryManager.Inventory_DataArray.Length; i++)
         {
             switch (inventoryManager.Inventory_DataArray[i].SlotItemData.ResourceName)
@@ -49,8 +51,12 @@ public class WorkshopChest : MonoBehaviour, IInteractable
             }
             //Clear out the Data Array
             inventoryManager.Inventory_DataArray[i].SlotItemData = inventoryManager.ResourceEmpty;
-            EventBus.Publish(EventType.INVENTORY_UPDATE);
+            inventoryManager.Inventory_DataArray[i].AmountStored = 0;
+            EventBus.Publish(EventType.INVENTORY_UPDATE, inventoryManager.gameObject);
         }
+        //Transfer credits and clear inventory credits
+        workshopManager.WorkshopStorage.CreditCount += inventoryManager.CreditPurse;
+        inventoryManager.CreditPurse = 0;
     }
 
 }

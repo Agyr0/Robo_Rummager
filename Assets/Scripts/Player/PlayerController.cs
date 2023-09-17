@@ -121,6 +121,9 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
+        gameManager = GameManager.Instance;
+        gameManager.playerController = this;
+
         EventBus.Subscribe(EventType.PLAYER_START_SPRINT, PlayerStartSprint);
         EventBus.Subscribe(EventType.PLAYER_STOP_SPRINT, PlayerStopSprint);
         EventBus.Subscribe(EventType.PLAYER_DASH, StartDash);
@@ -137,8 +140,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        gameManager = GameManager.Instance;
-        gameManager.playerController = this;
+        
 
         _health = _maxHealth;
         controller = GetComponent<CharacterController>();

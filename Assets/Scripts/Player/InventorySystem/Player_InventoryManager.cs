@@ -100,6 +100,8 @@ public class Player_InventoryManager : MonoBehaviour
 
     private void OnEnable()
     {
+        GameManager.Instance.inventoryManager = this;
+
         EventBus.Subscribe(EventType.INVENTORY_TOGGLE, OnToggleInventory);
         EventBus.Subscribe(EventType.INVENTORY_ADDSLOT, OnInventoryAddSlot);
         EventBus.Subscribe(EventType.INVENTORY_REMOVESLOT, OnInventoryRemoveSlot);
