@@ -66,6 +66,11 @@ public enum EventType
     CONTRACTACCEPTED,
     #endregion
 
+    #region Workshop
+    REFRESH_RESOURCES,
+
+    #endregion
+
     #region Testing Events
 
     TEST_EVENT_0,
@@ -73,4 +78,5 @@ public enum EventType
     TEST_EVENT_2
 
     #endregion
+
 }

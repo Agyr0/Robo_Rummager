@@ -27,6 +27,8 @@ public class WeaponController : MonoBehaviour
     private void Start()
     {
         gameManager = GameManager.Instance;
+        gameManager.weaponController = this;
+
         _curWeapon = _availableWeapons[0];
         inputManager = InputManager.Instance;
         _animator = GetComponent<Animator>();
@@ -77,7 +79,7 @@ public class WeaponController : MonoBehaviour
         //Shooting
         inputManager.playerControls.Player.Shoot.performed += _ =>
         {
-            if (_weaponIndex == _wrenchIndex)
+            if (_weaponIndex == _wrenchIndex && !isSwinging)
                 EventBus.Publish(EventType.SWING_WRENCH);
             else if (_weaponIndex == _laserIndex)
                 EventBus.Publish(EventType.PLAYER_SHOOT);
@@ -100,30 +102,34 @@ public class WeaponController : MonoBehaviour
         isSwinging = true;
         _animator.SetTrigger("Attack");
     }
+    public void StopWrenchSwing()
+    {
+        isSwinging = false;
+    }
 
     public void PlayAttack()
     {
-        StartCoroutine(AttackRaycast(20));
+        StartCoroutine(AttackRaycast(10));
     }
     private IEnumerator AttackRaycast(int numHits)
     {
-        //if(Physics.Raycast(_curWeapon.MuzzlePos.position, _curWeapon.MuzzlePos.forward, _curWeapon.Range))
-        //{
-
-        //}
         while (numHits > 0)
         {
-            Vector3 endPos = new Vector3(_curWeapon.MuzzlePos.position.x, _curWeapon.MuzzlePos.position.y, _curWeapon.MuzzlePos.position.z + _curWeapon.Range);
-            Debug.DrawRay(_curWeapon.MuzzlePos.position, _curWeapon.MuzzlePos.forward * _curWeapon.Range, Color.yellow, 1000f);
-            //Debug.DrawLine(_curWeapon.MuzzlePos.position, endPos, Color.yellow, 100);
+            if(Physics.Raycast(_curWeapon.MuzzlePos.position, _curWeapon.MuzzlePos.forward,out RaycastHit hit, _curWeapon.Range))
+            {
+                LootBag lootBag = hit.transform.gameObject.GetComponent<LootBag>();
+                //If I hit an item with a lootbag script run drop resource
+                if(lootBag != null)
+                {
+                    lootBag.DropResource(hit.point);
+                    break;
+                }
+            }
+            //debug ray for seeing where the swing is sending out detection 
+            //Debug.DrawRay(_curWeapon.MuzzlePos.position, _curWeapon.MuzzlePos.forward * _curWeapon.Range, Color.yellow, 1000f);
             yield return null;
             numHits--;
         }
-        //Extra ray just in case
-        //Ray ray = new Ray(gameManager.CameraTransform.position, gameManager.CameraTransform.forward);
-        Debug.DrawRay(gameManager.CameraTransform.position, gameManager.CameraTransform.forward * _curWeapon.Range * 2, Color.blue, 1000f);
-
-        isSwinging = false;
     }
 
     #region Rifle

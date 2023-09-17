@@ -163,6 +163,8 @@ public class PlayerController : MonoBehaviour
             HandleJump();
     }
 
+
+
     private void SubscribeInputEvents()
     {
         //Sprint and stamina
@@ -172,6 +174,8 @@ public class PlayerController : MonoBehaviour
         inputManager.playerControls.Player.Dash.performed += _ => EventBus.Publish(EventType.PLAYER_DASH);
         //ScannerGoggles
         inputManager.playerControls.Player.Scanner.performed += _ => EventBus.Publish(EventType.TOGGLE_SCANNER);
+
+        inputManager.playerControls.Player.Inventory.performed += _ => EventBus.Publish(EventType.INVENTORY_TOGGLE);
     }
 
     #region Movement
