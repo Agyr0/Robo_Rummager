@@ -9,6 +9,9 @@ using UnityEngine.UI;
 public class Player_InventoryManager : MonoBehaviour
 {
     [SerializeField]
+    private int _creditPurse;
+
+    [SerializeField]
     private float _pickupEventInterval = .1f;
 
     [SerializeField]
@@ -36,6 +39,9 @@ public class Player_InventoryManager : MonoBehaviour
     private List<GameObject> _inventory_ItemCullPickupList;
 
     [SerializeField]
+    private Text _creditText;
+
+    [SerializeField]
     private int _slotStackLimit;
 
     [SerializeField]
@@ -51,6 +57,16 @@ public class Player_InventoryManager : MonoBehaviour
     private GameObject _itemBlankPrefab;
 
     private bool _isSendingPickupEvents = false;
+
+    public int CreditPurse
+    {
+        get { return _creditPurse; }
+        set 
+        { 
+            _creditPurse = value;
+            _creditText.text = "" + _creditPurse;
+        }
+    }
 
     public Inventory_Slot[] Inventory_DataArray
     {
