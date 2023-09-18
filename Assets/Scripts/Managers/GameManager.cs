@@ -1,10 +1,15 @@
 using Cinemachine;
+using Cinemachine.PostFX;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class GameManager : Singleton<GameManager>
 {
+    public VolumeProfile scannerGogglesVolume;
+    public VolumeProfile defaultVolume;
+
     [HideInInspector]
     public PlayerController playerController;
     [HideInInspector]
