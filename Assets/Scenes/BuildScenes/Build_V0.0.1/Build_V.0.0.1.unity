@@ -6117,6 +6117,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 39.4507
       objectReference: {fileID: 0}
+    - target: {fileID: 2491762737834702555, guid: 0778fc2c62197d9428d1cfe6e564b263,
+        type: 3}
+      propertyPath: m_Text
+      value: Infi
+      objectReference: {fileID: 0}
     - target: {fileID: 2740399822351696982, guid: 0778fc2c62197d9428d1cfe6e564b263,
         type: 3}
       propertyPath: m_Pivot.y
@@ -10686,6 +10691,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1201229613}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1201566379 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2491762737834702555, guid: 0778fc2c62197d9428d1cfe6e564b263,
+    type: 3}
+  m_PrefabInstance: {fileID: 814240789}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1214114398
 GameObject:
   m_ObjectHideFlags: 0
@@ -18037,6 +18054,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 3632890964120253948, guid: e5a93fd82f3af56498d7decd4f92948b,
+        type: 3}
+      propertyPath: _curAmmo
+      value: 
+      objectReference: {fileID: 1201566379}
+    - target: {fileID: 3632890964120253948, guid: e5a93fd82f3af56498d7decd4f92948b,
+        type: 3}
+      propertyPath: _curAmmoText
+      value: 
+      objectReference: {fileID: 1201566379}
     - target: {fileID: 7678024097896363784, guid: e5a93fd82f3af56498d7decd4f92948b,
         type: 3}
       propertyPath: m_LocalPosition.x

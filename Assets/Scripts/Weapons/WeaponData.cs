@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "NewWeaponData", menuName = "Weapon Data")]
 public class WeaponData : ScriptableObject
@@ -19,7 +20,7 @@ public class WeaponData : ScriptableObject
     public GameObject _laserBeam;
     public GameObject _muzzleFlash;
     public Transform _muzzlePos;
-
+    private Text _curAmmoText;
 
 
     public WeaponType Weapon 
@@ -84,7 +85,7 @@ public class WeaponData : ScriptableObject
             return _curAmmo; 
         } 
         set 
-        { 
+        {
             _curAmmo = value; 
         } 
     }

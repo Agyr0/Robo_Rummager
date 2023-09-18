@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WeaponController : MonoBehaviour
 {
@@ -20,16 +21,38 @@ public class WeaponController : MonoBehaviour
     private const int _laserIndex = 1;
     private const int _handsIndex = 2;
     private bool canShoot = true;
-    private bool isSwinging = false;
+    private bool isSwinging, isReloading = false;
     [SerializeField]
     private Animator _animator;
+    [SerializeField]
+    private Text _curAmmoText;
 
+    public Text CurAmmoText
+    {
+        get
+        {
+            return _curAmmoText;
+        }
+        set
+        {
+            
+            if (_curWeapon.CurAmmo >= 0 && _curWeapon.CurAmmo < Mathf.Infinity)
+            {
+                _curAmmoText.text = _curWeapon.CurAmmo.ToString();
+                if (isReloading)
+                    _curAmmoText.text = "...";
+            }
+            else if (_curWeapon.CurAmmo >= Mathf.Infinity)
+                _curAmmoText.text = "\u221e";
+            _curAmmoText = value;
+        }
+    }
 
     private void Start()
     {
         gameManager = GameManager.Instance;
         gameManager.weaponController = this;
-
+        Debug.Log(Mathf.Infinity);
         _curWeapon = _availableWeapons[0];
         inputManager = InputManager.Instance;
         _animator = GetComponent<Animator>();
@@ -159,6 +182,8 @@ public class WeaponController : MonoBehaviour
                 }
             }
             _curWeapon.CurAmmo--;
+            CurAmmoText = CurAmmoText;
+
             if (_curWeapon.CurAmmo <= 0)
             {
                 canShoot = false;
@@ -181,11 +206,15 @@ public class WeaponController : MonoBehaviour
     private IEnumerator Reload()
     {
         Debug.Log("Reloading...");
-
+        isReloading = true;
         canShoot = false;
+        CurAmmoText = CurAmmoText;
         yield return new WaitForSeconds(_curWeapon.ReloadTime);
         canShoot = true;
         _curWeapon.CurAmmo = _curWeapon.MagSize;
+        isReloading = false;
+        CurAmmoText = CurAmmoText;
+
         Debug.Log("Reload complete\n" + "Ammo: " + _curWeapon.CurAmmo);
     }
     #endregion
@@ -211,7 +240,7 @@ public class WeaponController : MonoBehaviour
 
         //Assign curweapon and send event
         _curWeapon = _availableWeapons[_weaponIndex];
-
+        CurAmmoText.text = _curWeapon.CurAmmo.ToString();
         EventBus.Publish(EventType.DISPLAY_WEAPON);
     }
 
