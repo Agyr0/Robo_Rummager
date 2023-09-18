@@ -24,13 +24,39 @@ public class Player_UIManager : MonoBehaviour
 
     private void OnEnable()
     {
+        EventBus.Subscribe(EventType.INVENTORY_TOGGLE, OnToggleInventory);
         EventBus.Subscribe(EventType.BULLETINBOARD_INTERACT, OnDisplayToggle_Bulletin);
         EventBus.Subscribe(EventType.TOGGLE_INTERACT_HOVER, OnDisplayToggle_BulletinInteract);
     }
     private void OnDisable()
     {
+        EventBus.Unsubscribe(EventType.INVENTORY_TOGGLE, OnToggleInventory);
         EventBus.Unsubscribe(EventType.BULLETINBOARD_INTERACT, OnDisplayToggle_Bulletin);
         EventBus.Unsubscribe(EventType.TOGGLE_INTERACT_HOVER, OnDisplayToggle_BulletinInteract);
+    }
+
+    private void OnToggleInventory()
+    {
+        if (_inventory_UI.activeSelf)
+            OnHideInventory();
+
+        else
+            OnDisplayInventory();
+    }
+
+    private void OnDisplayInventory()
+    {
+        _inventory_UI.SetActive(true);
+        _fannyPack_UI.SetActive(true);
+        _playerHUD_UI.SetActive(false);
+        _creditBox.SetActive(true);
+    }
+
+    private void OnHideInventory()
+    {
+        _fannyPack_UI.SetActive(false);
+        _playerHUD_UI.SetActive(true);
+        _creditBox.SetActive(false);
     }
 
     public void OnDisplay_Inventory()
@@ -54,6 +80,7 @@ public class Player_UIManager : MonoBehaviour
         _inventory_UI.SetActive(false);
         _contracts_UI.SetActive(false);
         _options_UI.SetActive(true);
+        _creditBox.SetActive(false);
     }
 
     public void OnDisplay_PlayerHUD()
