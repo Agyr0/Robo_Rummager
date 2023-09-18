@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4609205703693568361}
   - component: {fileID: 8842908821498045645}
   - component: {fileID: 2918094335779107953}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 513
+  m_RenderingLayerMask: 1025
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 9f7fa8d324e6fff449e6403029c957c2, type: 2}
@@ -92,7 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6288069291798815697}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Muzzle_Pos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ Transform:
   m_GameObject: {fileID: 3816776108650364976}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.183, z: 0.5204}
+  m_LocalPosition: {x: 0, y: 0.183, z: -0.13}
   m_LocalScale: {x: 0.30039, y: 0.26939, z: 2.69504}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -123,7 +123,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1140793495130331070}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}

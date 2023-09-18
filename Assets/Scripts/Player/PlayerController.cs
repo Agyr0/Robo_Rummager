@@ -1,27 +1,37 @@
+using Cinemachine;
 using Cinemachine.PostFX;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Interactions;
 using UnityEngine.VFX;
-using UnityEngine.VFX.Utility;
 
 public class PlayerController : MonoBehaviour
 {
     private GameManager gameManager;
 
-    private float _health;
+    #region Health
+    public float _health;
     private float _maxHealth = 100f;
+    private bool _redScreenActive = false;
+    public CinemachineStoryboard _storyboard;
+    private float _fadeInTime = 0.5f;
+    private float _fadeOutTime = 1f;
 
     public float Health
     { 
         get { return _health; } 
-        set {_health = value; } 
+        set 
+        {
+            if(_storyboard == null)
+                _storyboard = gameManager.Storyboard;
+
+            if (value < Health)
+                StartCoroutine(FadeRedScreen());
+
+            _health = value; 
+        } 
     }
+    #endregion
+
     #region Player Movement
     private CharacterController controller;
     private Vector3 playerVelocity;
@@ -113,7 +123,6 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
-    private CinemachineVolumeSettings scannerVolume;
     [SerializeField]
     private GameObject scannerVFXPrefab;
     [HideInInspector]
@@ -154,7 +163,6 @@ public class PlayerController : MonoBehaviour
         //Input Events
         SubscribeInputEvents();
 
-        scannerVolume = gameManager.PlayerVCam.GetComponent<CinemachineVolumeSettings>();
     }
 
     private void Update()
@@ -307,7 +315,6 @@ public class PlayerController : MonoBehaviour
         //Toggle bool
         scannerActive = !scannerActive;
         //Toggle post process volume
-        //scannerVolume.enabled = scannerActive;
         //Handle VFX play and stop
         if(scannerActive)
         {
@@ -325,8 +332,40 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    
 
+
+    #endregion
+
+    #region Health
+    public IEnumerator FadeRedScreen()
+    {
+        if (!_redScreenActive)
+        {
+
+            _redScreenActive = !_redScreenActive;
+
+            float t = 0f;
+            //Fade in fast
+            while (t < _fadeInTime)
+            {
+                _storyboard.m_Alpha = Mathf.Lerp(0, 1, t / _fadeInTime);
+                t += Time.deltaTime;
+                yield return null;
+            }
+            _storyboard.m_Alpha = 1;
+            //Fade out slow
+            t = 0f;
+            while (t < _fadeOutTime)
+            {
+                _storyboard.m_Alpha = Mathf.Lerp(1, 0, t / _fadeOutTime);
+                t += Time.deltaTime;
+                yield return null;
+            }
+            _storyboard.m_Alpha = 0;
+            _redScreenActive = !_redScreenActive;
+
+        }
+    }
     #endregion
 }
 

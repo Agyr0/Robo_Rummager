@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WeaponController : MonoBehaviour
@@ -97,6 +98,7 @@ public class WeaponController : MonoBehaviour
         transform.rotation = gameManager.CameraTransform.rotation;
     }
 
+    #region Wrench
     private void StartWrenchSwing()
     {
         isSwinging = true;
@@ -131,6 +133,7 @@ public class WeaponController : MonoBehaviour
             numHits--;
         }
     }
+    #endregion
 
     #region Rifle
     private void ShootRifle()
@@ -149,16 +152,12 @@ public class WeaponController : MonoBehaviour
 
             if (Physics.Raycast(ray, out RaycastHit hit, _curWeapon.Range))
             {
-                //Handle Hit
-                if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+                IDamageable enemy = hit.transform.GetComponent<IDamageable>();
+                if (enemy != null)
                 {
-                    Debug.Log("Hit enemmy of type " + hit.transform.gameObject.layer);
+                    enemy.TakeDamage(_curWeapon.Damage);
                 }
-                else
-                    Debug.Log("Hit " + hit.transform.gameObject.layer);
-
             }
-
             _curWeapon.CurAmmo--;
             if (_curWeapon.CurAmmo <= 0)
             {

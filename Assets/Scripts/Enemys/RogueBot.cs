@@ -8,7 +8,7 @@ public class RogueBot : MonoBehaviour, IDamageable
     private NavMeshAgent agent;
     private Transform playerTransform;
     private float maxHealth = 75;
-    private float health;
+    public float health;
 
     [SerializeField]
     private GameObject detectedSprite;
