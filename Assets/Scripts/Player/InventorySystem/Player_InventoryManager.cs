@@ -15,12 +15,6 @@ public class Player_InventoryManager : MonoBehaviour
     private float _pickupEventInterval = .1f;
 
     [SerializeField]
-    private GameObject _inventory_UI;
-
-    [SerializeField]
-    private GameObject _inventory_HUD_UI;
-
-    [SerializeField]
     private Inventory_Slot[] _inventory_DataArray;
 
     [SerializeField]
@@ -100,9 +94,7 @@ public class Player_InventoryManager : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.Instance.inventoryManager = this;
-
-        EventBus.Subscribe(EventType.INVENTORY_TOGGLE, OnToggleInventory);
+        GameManager.Instance.inventoryManager = this;       
         EventBus.Subscribe(EventType.INVENTORY_ADDSLOT, OnInventoryAddSlot);
         EventBus.Subscribe(EventType.INVENTORY_REMOVESLOT, OnInventoryRemoveSlot);
         EventBus.Subscribe(EventType.INVENTORY_PICKUP, OnItemPickup);
@@ -115,7 +107,6 @@ public class Player_InventoryManager : MonoBehaviour
 
     private void OnDisable()
     {
-        EventBus.Unsubscribe(EventType.INVENTORY_TOGGLE, OnToggleInventory);
         EventBus.Unsubscribe(EventType.INVENTORY_ADDSLOT, OnInventoryAddSlot);
         EventBus.Unsubscribe(EventType.INVENTORY_REMOVESLOT, OnInventoryRemoveSlot);
         EventBus.Unsubscribe(EventType.INVENTORY_PICKUP, OnItemPickup);
@@ -126,26 +117,7 @@ public class Player_InventoryManager : MonoBehaviour
         EventBus.Unsubscribe<int>(EventType.CONTRACT_COMPLETED, OnContractCompleation);
     }
 
-    private void OnToggleInventory()
-    {
-        if (_inventory_UI.activeSelf)
-            OnHideInventory();
-
-        else
-            OnDisplayInventory();
-    }
-
-    private void OnDisplayInventory()
-    {
-        _inventory_UI.SetActive(true);
-        _inventory_HUD_UI.SetActive(false);
-    }
-
-    private void OnHideInventory()
-    {
-        _inventory_UI.SetActive(false);
-        _inventory_HUD_UI.SetActive(true);
-    }
+    
 
     private void OnInventoryAddSlot()
     {
