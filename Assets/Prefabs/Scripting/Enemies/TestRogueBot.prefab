@@ -582,7 +582,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16ead85bb05099445be190410ce4d835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dropTable: []
+  _dropTable:
+  - resource: {fileID: 2652622360622632555, guid: 7f7d96b6610083b41bf6b9018c6f9080,
+      type: 3}
+    dropChance: 50
+    _minDropCount: 1
+    _maxDropCount: 3
+    elementName: Blank Item
   _resourceFullMesh: {fileID: 0}
   _maxDrops: 10
   _explosionForce: 2

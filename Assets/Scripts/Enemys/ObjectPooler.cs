@@ -26,7 +26,7 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
-    public GameObject GetPooledRobots()
+    public GameObject GetPooledObject()
     {
         for (int i = 0; i < maxObjects; i++)
         {
