@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public float _health;
     private float _maxHealth = 100f;
     private bool _redScreenActive = false;
+    [HideInInspector]
     public CinemachineStoryboard _storyboard;
     private float _fadeInTime = 0.5f;
     private float _fadeOutTime = 1f;
