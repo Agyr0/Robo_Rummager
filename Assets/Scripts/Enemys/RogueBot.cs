@@ -266,6 +266,8 @@ public class RogueBot : MonoBehaviour, IDamageable
         Debug.Log("Damage Taken, health at:" + health);
         if (health <= 0)
         {
+            LootBag lootBag = this.gameObject.GetComponent<LootBag>();
+            lootBag.DropResource(this.gameObject.transform.position);
             Destroy(this.gameObject);
         }
     }
