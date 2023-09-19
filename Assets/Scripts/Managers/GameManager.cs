@@ -21,7 +21,7 @@ public class GameManager : Singleton<GameManager>
 
     private CinemachineStoryboard _storyboard;
     public CinemachineStoryboard Storyboard { get { return _storyboard; } }
-
+    [SerializeField]
     private CinemachineVirtualCamera playerVCam;
     public CinemachineVirtualCamera PlayerVCam
     {
@@ -44,7 +44,7 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    private bool _inUI = true;
+    private bool _inUI = false;
 
     public bool InUI 
     { 
@@ -78,6 +78,7 @@ public class GameManager : Singleton<GameManager>
     private void OnEnable()
     {
         
+        
         EventBus.Subscribe(EventType.INVENTORY_TOGGLE, ToggleInput);
         //EventBus.Subscribe(EventType.GAME_START, EnableInput);
     }
@@ -86,13 +87,17 @@ public class GameManager : Singleton<GameManager>
         EventBus.Unsubscribe(EventType.INVENTORY_TOGGLE, ToggleInput);
        // EventBus.Unsubscribe(EventType.GAME_START, EnableInput);
     }
-
+    public override void Awake()
+    {
+        base.Awake();
+        //playerVCam = (CinemachineVirtualCamera)Camera.main.GetComponent<CinemachineBrain>().ActiveVirtualCamera;
+        inputProvider = PlayerVCam.gameObject.GetComponent<CinemachineInputProvider>();
+        _storyboard = PlayerVCam.gameObject.GetComponent<CinemachineStoryboard>();
+    }
     private void Start()
     {
 
-        playerVCam = (CinemachineVirtualCamera)Camera.main.GetComponent<CinemachineBrain>().ActiveVirtualCamera;
-        inputProvider = PlayerVCam.gameObject.GetComponent<CinemachineInputProvider>();
-        _storyboard = PlayerVCam.gameObject.GetComponent<CinemachineStoryboard>();
+        
 
         inputProvider.enabled = false;
         weaponController.enabled = false;
