@@ -30,11 +30,11 @@ public class InteractionController : MonoBehaviour
     //Run HandleInteract on hit object
     private void SendInteract(RaycastHit _hit)
     {
-        if (_hit.transform.gameObject.GetComponent<IInteractable>() == null)
+        if (_hit.transform == null)
             return;
-
-        //Run HandleInteract on interactable object hit
-        _hit.transform.gameObject.GetComponent<IInteractable>().HandleInteract();   
+            //Run HandleInteract on interactable object hit
+        if (_hit.transform.gameObject.GetComponent<IInteractable>() != null)
+            _hit.transform.gameObject.GetComponent<IInteractable>().HandleInteract();
     }
 
     //Check and assign hit with what youre looking at

@@ -48,12 +48,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHand: {fileID: 6655270955267208993}
-  _curWeapon: {fileID: 0}
   _availableWeapons:
   - {fileID: 11400000, guid: 94843e16d91f170498613034d365d076, type: 2}
   - {fileID: 11400000, guid: 43f39ac35a86d234fa9de1cb7034ef6b, type: 2}
   - {fileID: 11400000, guid: 07539f10435df17468a2f41c62321433, type: 2}
-  _animator: {fileID: 0}
+  weaponCam: {fileID: 3412133713994499503}
+  baseFOV: 60
+  zoomFOV: 30
+  _animator: {fileID: 2227708760659251430}
   _curAmmoText: {fileID: 0}
 --- !u!95 &2227708760659251430
 Animator:
