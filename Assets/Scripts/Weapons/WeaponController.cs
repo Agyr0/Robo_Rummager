@@ -50,9 +50,6 @@ public class WeaponController : MonoBehaviour
 
     private void Start()
     {
-        gameManager = GameManager.Instance;
-        gameManager.weaponController = this;
-        Debug.Log(Mathf.Infinity);
         _curWeapon = _availableWeapons[0];
         inputManager = InputManager.Instance;
         _animator = GetComponent<Animator>();
@@ -64,6 +61,9 @@ public class WeaponController : MonoBehaviour
 
     private void OnEnable()
     {
+        gameManager = GameManager.Instance;
+        gameManager.weaponController = this;
+
         EventBus.Subscribe(EventType.PLAYER_SHOOT, ShootRifle);
         EventBus.Subscribe(EventType.SWING_WRENCH, StartWrenchSwing);
         EventBus.Subscribe<Vector2>(EventType.WEAPON_SWITCH, SwitchWeapon);

@@ -21,7 +21,7 @@ public class GameManager : Singleton<GameManager>
 
     private CinemachineStoryboard _storyboard;
     public CinemachineStoryboard Storyboard { get { return _storyboard; } }
-
+    [SerializeField]
     private CinemachineVirtualCamera playerVCam;
     public CinemachineVirtualCamera PlayerVCam
     {
@@ -54,6 +54,10 @@ public class GameManager : Singleton<GameManager>
             //toggle weapon controller and input provider
             weaponController.enabled = !value;
             inputProvider.enabled = !value;
+            playerController.CanMove = !value;
+            playerController.CanJump = !value;
+            playerController.CanSprint = !value;
+            playerController.CanDash = !value;
             _inUI = value;
             Debug.Log("Ran set for InUI");
             if(value)
@@ -74,24 +78,38 @@ public class GameManager : Singleton<GameManager>
     private void OnEnable()
     {
         
+        
         EventBus.Subscribe(EventType.INVENTORY_TOGGLE, ToggleInput);
+        //EventBus.Subscribe(EventType.GAME_START, EnableInput);
     }
     private void OnDisable()
     {
         EventBus.Unsubscribe(EventType.INVENTORY_TOGGLE, ToggleInput);
+       // EventBus.Unsubscribe(EventType.GAME_START, EnableInput);
     }
-
-    private void Start()
+    public override void Awake()
     {
-        Cursor.lockState = CursorLockMode.Locked;   
-        Cursor.visible = false;
-
-        playerVCam = (CinemachineVirtualCamera)Camera.main.GetComponent<CinemachineBrain>().ActiveVirtualCamera;
+        base.Awake();
+        //playerVCam = (CinemachineVirtualCamera)Camera.main.GetComponent<CinemachineBrain>().ActiveVirtualCamera;
         inputProvider = PlayerVCam.gameObject.GetComponent<CinemachineInputProvider>();
         _storyboard = PlayerVCam.gameObject.GetComponent<CinemachineStoryboard>();
+    }
+    private void Start()
+    {
+
+        
+
+        inputProvider.enabled = false;
+        weaponController.enabled = false;
         EventBus.Publish(EventType.REFRESH_RESOURCES);
     }
 
+    private void EnableInput()
+    {
+        inputProvider.enabled = true;
+        weaponController.enabled = true;
+        InUI = true;
+    }
     private void ToggleInput()
     {
         InUI = !InUI;

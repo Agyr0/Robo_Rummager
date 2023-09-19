@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public float _health;
     private float _maxHealth = 100f;
     private bool _redScreenActive = false;
+    [HideInInspector]
     public CinemachineStoryboard _storyboard;
     private float _fadeInTime = 0.5f;
     private float _fadeOutTime = 1f;
@@ -97,22 +98,22 @@ public class PlayerController : MonoBehaviour
     public bool CanMove
     {
         get { return _canMove; }
-        private set { _canMove = value; }
+         set { _canMove = value; }
     }
     public bool CanJump
     {
         get { return _canJump; }
-        private set { _canJump = value; }
+         set { _canJump = value; }
     }
     public bool CanSprint
     {
         get { return _canSprint; }
-        private set { _canSprint = value; }
+         set { _canSprint = value; }
     }
     public bool CanDash
     {
         get { return _canDash; }
-        private set { _canDash = value; }
+         set { _canDash = value; }
     }
     #endregion
 
@@ -173,8 +174,7 @@ public class PlayerController : MonoBehaviour
             HandleJump();
     }
 
-
-
+    
     private void SubscribeInputEvents()
     {
         //Sprint and stamina
@@ -185,7 +185,7 @@ public class PlayerController : MonoBehaviour
         //ScannerGoggles
         inputManager.playerControls.Player.Scanner.performed += _ => EventBus.Publish(EventType.TOGGLE_SCANNER);
 
-        inputManager.playerControls.Player.Inventory.performed += _ => EventBus.Publish(EventType.INVENTORY_TOGGLE);
+        inputManager.playerControls.Player.Inventory.performed += _ => EventBus.Publish(EventType.INVENTORYDISPLAY_TOGGLE);
     }
 
     #region Movement
