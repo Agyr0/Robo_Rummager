@@ -413,6 +413,7 @@ GameObject:
   - component: {fileID: 7817623757992143288}
   - component: {fileID: 310156567986636697}
   - component: {fileID: 256434212732561887}
+  - component: {fileID: -8232066980085452331}
   m_Layer: 0
   m_Name: TestRogueBot
   m_TagString: Untagged
@@ -544,6 +545,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b07b07e9a316f9540b958e2a36f36fd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 0
   detectedSprite: {fileID: 3305098252801450733}
   rogueBotAttackHitbox: {fileID: 5193366065072689499}
   rogueBotTestAttackAnimator: {fileID: 5225240938638434950}
@@ -568,3 +570,21 @@ MonoBehaviour:
   chargeStopRange: 2
   timeBetweenCharge: 5
   chargeEndLagTime: 0
+--- !u!114 &-8232066980085452331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8761696602667769251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ead85bb05099445be190410ce4d835, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dropTable: []
+  _resourceFullMesh: {fileID: 0}
+  _maxDrops: 10
+  _explosionForce: 2
+  _explosionRadius: 1
+  _upwardsModifier: 2
