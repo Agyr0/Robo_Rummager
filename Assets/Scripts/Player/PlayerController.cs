@@ -80,13 +80,13 @@ public class PlayerController : MonoBehaviour
     [Space(10)]
     [Header("Restrictions")]
     [SerializeField]
-    private bool _canMove = false;
+    private bool _canMove = true;
     [SerializeField]
-    private bool _canJump = false;
+    private bool _canJump = true;
     [SerializeField]
-    private bool _canSprint = false;
+    private bool _canSprint = true;
     [SerializeField]
-    private bool _canDash = false;
+    private bool _canDash = true;
 
     private bool isSprinting, isDashing, scannerActive = false;
     private Coroutine startSprint;
@@ -97,22 +97,22 @@ public class PlayerController : MonoBehaviour
     public bool CanMove
     {
         get { return _canMove; }
-        private set { _canMove = value; }
+         set { _canMove = value; }
     }
     public bool CanJump
     {
         get { return _canJump; }
-        private set { _canJump = value; }
+         set { _canJump = value; }
     }
     public bool CanSprint
     {
         get { return _canSprint; }
-        private set { _canSprint = value; }
+         set { _canSprint = value; }
     }
     public bool CanDash
     {
         get { return _canDash; }
-        private set { _canDash = value; }
+         set { _canDash = value; }
     }
     #endregion
 
@@ -137,7 +137,6 @@ public class PlayerController : MonoBehaviour
         EventBus.Subscribe(EventType.PLAYER_STOP_SPRINT, PlayerStopSprint);
         EventBus.Subscribe(EventType.PLAYER_DASH, StartDash);
         EventBus.Subscribe(EventType.TOGGLE_SCANNER, ToggleScanner);
-        EventBus.Subscribe(EventType.GAME_START, EnableInput);
     }
     private void OnDisable()
     {
@@ -145,7 +144,6 @@ public class PlayerController : MonoBehaviour
         EventBus.Unsubscribe(EventType.PLAYER_STOP_SPRINT, PlayerStopSprint);
         EventBus.Unsubscribe(EventType.PLAYER_DASH, StartDash);
         EventBus.Unsubscribe(EventType.TOGGLE_SCANNER, ToggleScanner);
-        EventBus.Unsubscribe(EventType.GAME_START, EnableInput);
 
     }
 
@@ -175,14 +173,7 @@ public class PlayerController : MonoBehaviour
             HandleJump();
     }
 
-    private void EnableInput()
-    {
-        CanMove = true;
-        CanJump = true;
-        CanDash = true;
-        CanSprint = true;
-    }
-
+    
     private void SubscribeInputEvents()
     {
         //Sprint and stamina

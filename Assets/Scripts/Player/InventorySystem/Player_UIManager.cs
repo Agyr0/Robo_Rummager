@@ -56,7 +56,6 @@ public class Player_UIManager : MonoBehaviour
             _startMenu_UI.SetActive(false);
             _playerHUD_UI.SetActive(true);
             EventBus.Publish(EventType.INVENTORY_TOGGLE);
-            EventBus.Publish(EventType.GAME_START);
         }
         else
         {

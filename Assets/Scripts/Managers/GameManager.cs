@@ -44,7 +44,7 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    private bool _inUI = false;
+    private bool _inUI = true;
 
     public bool InUI 
     { 
@@ -54,6 +54,10 @@ public class GameManager : Singleton<GameManager>
             //toggle weapon controller and input provider
             weaponController.enabled = !value;
             inputProvider.enabled = !value;
+            playerController.CanMove = !value;
+            playerController.CanJump = !value;
+            playerController.CanSprint = !value;
+            playerController.CanDash = !value;
             _inUI = value;
             Debug.Log("Ran set for InUI");
             if(value)
