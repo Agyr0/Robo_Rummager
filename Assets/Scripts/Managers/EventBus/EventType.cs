@@ -36,6 +36,7 @@ public enum EventType
     //Togles the visibility of the players fanny pack UI,
     //defaulting to the the inventory screen.
     INVENTORY_TOGGLE,
+    INVENTORYDISPLAY_TOGGLE,
     BULLETINBOARD_INTERACT,
     TOGGLE_INTERACT_HOVER,
     #endregion

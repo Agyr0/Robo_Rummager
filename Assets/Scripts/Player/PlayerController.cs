@@ -185,7 +185,7 @@ public class PlayerController : MonoBehaviour
         //ScannerGoggles
         inputManager.playerControls.Player.Scanner.performed += _ => EventBus.Publish(EventType.TOGGLE_SCANNER);
 
-        inputManager.playerControls.Player.Inventory.performed += _ => EventBus.Publish(EventType.INVENTORY_TOGGLE);
+        inputManager.playerControls.Player.Inventory.performed += _ => EventBus.Publish(EventType.INVENTORYDISPLAY_TOGGLE);
     }
 
     #region Movement

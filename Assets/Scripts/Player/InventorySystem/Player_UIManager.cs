@@ -5,6 +5,15 @@ using UnityEngine;
 
 public class Player_UIManager : MonoBehaviour
 {
+    [Header("Feedback Form URL")]
+    [SerializeField]
+    private string _feedbackForm_URL;
+    [SerializeField]
+    private GameObject _startMenu_UI;
+    [SerializeField]
+    private GameObject _startMenu_QUIT_UI;
+    [SerializeField]
+    private GameObject _optionMenu_QUIT_UI;
     [SerializeField]
     private GameObject _inventory_UI;
     [SerializeField]
@@ -24,20 +33,41 @@ public class Player_UIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        EventBus.Subscribe(EventType.INVENTORY_TOGGLE, OnToggleInventory);
+        EventBus.Subscribe(EventType.INVENTORYDISPLAY_TOGGLE, OnToggleDisplayInventory);
         EventBus.Subscribe(EventType.BULLETINBOARD_INTERACT, OnDisplayToggle_Bulletin);
         EventBus.Subscribe(EventType.TOGGLE_INTERACT_HOVER, OnDisplayToggle_BulletinInteract);
     }
     private void OnDisable()
     {
-        EventBus.Unsubscribe(EventType.INVENTORY_TOGGLE, OnToggleInventory);
+        EventBus.Unsubscribe(EventType.INVENTORYDISPLAY_TOGGLE, OnToggleDisplayInventory);
         EventBus.Unsubscribe(EventType.BULLETINBOARD_INTERACT, OnDisplayToggle_Bulletin);
         EventBus.Unsubscribe(EventType.TOGGLE_INTERACT_HOVER, OnDisplayToggle_BulletinInteract);
     }
 
-    private void OnToggleInventory()
+    private void Start()
     {
-        if (_inventory_UI.activeSelf)
+        OnStartMenu();
+    }
+
+    public void OnStartMenu()
+    {
+        if (_startMenu_UI.activeSelf)
+        {
+            _startMenu_UI.SetActive(false);
+            _playerHUD_UI.SetActive(true);
+            EventBus.Publish(EventType.INVENTORY_TOGGLE);
+        }
+        else
+        {
+            _startMenu_UI.SetActive(true);
+            _playerHUD_UI.SetActive(false);
+            EventBus.Publish(EventType.INVENTORY_TOGGLE);
+        }
+    }
+
+    private void OnToggleDisplayInventory()
+    {
+        if (_fannyPack_UI.activeSelf)
             OnHideInventory();
 
         else
@@ -49,7 +79,8 @@ public class Player_UIManager : MonoBehaviour
         _inventory_UI.SetActive(true);
         _fannyPack_UI.SetActive(true);
         _playerHUD_UI.SetActive(false);
-        _creditBox.SetActive(true);
+        _creditBox.SetActive(false);
+        EventBus.Publish(EventType.INVENTORY_TOGGLE);
     }
 
     private void OnHideInventory()
@@ -57,6 +88,7 @@ public class Player_UIManager : MonoBehaviour
         _fannyPack_UI.SetActive(false);
         _playerHUD_UI.SetActive(true);
         _creditBox.SetActive(false);
+        EventBus.Publish(EventType.INVENTORY_TOGGLE);
     }
 
     public void OnDisplay_Inventory()
@@ -65,7 +97,7 @@ public class Player_UIManager : MonoBehaviour
         _inventory_UI.SetActive(true);
         _contracts_UI.SetActive(false);
         _options_UI.SetActive(false);
-        _creditBox.SetActive(true);
+        _creditBox.SetActive(false);
     }
 
     public void OnDisplay_Contacts()
@@ -73,6 +105,7 @@ public class Player_UIManager : MonoBehaviour
         _inventory_UI.SetActive(false);
         _contracts_UI.SetActive(true);
         _options_UI.SetActive(false);
+        _creditBox.SetActive(true);
     }
 
     public void OnDisplay_Options()
@@ -135,5 +168,39 @@ public class Player_UIManager : MonoBehaviour
         _playerHUD_UI.SetActive(true);
         _bulletinBoard_UI.SetActive(false);
         _creditBox.SetActive(false);
+    }
+
+    public void doFeedBackForm()
+    {
+        Application.OpenURL(_feedbackForm_URL);
+    }
+
+    public void OnStartMenuQuitToggle()
+    {
+        if (_startMenu_QUIT_UI.activeSelf)
+        {
+            _startMenu_QUIT_UI.SetActive(false);
+        }
+        else
+        {
+            _startMenu_QUIT_UI.SetActive(true);
+        }
+    }
+
+    public void OnOptionMenuQuitToggle()
+    {
+        if (_optionMenu_QUIT_UI.activeSelf)
+        {
+            _optionMenu_QUIT_UI.SetActive(false);
+        }
+        else
+        {
+            _optionMenu_QUIT_UI.SetActive(true);
+        }
+    }
+
+    public void doExitGame()
+    {
+        Application.Quit();
     }
 }
