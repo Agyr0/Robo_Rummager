@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,10 +13,20 @@ public class WeaponController : MonoBehaviour
     [SerializeField]
     private Transform playerHand;
 
-    [SerializeField]
     private WeaponData _curWeapon;
     private GameObject _weaponPrefab;
     public WeaponData[] _availableWeapons;
+
+    [SerializeField]
+    private Camera weaponCam;
+    [SerializeField]
+    private float baseFOV = 60f;
+    [SerializeField]
+    private float zoomFOV = 30f;
+    private float curZoom, targetZoom;
+    private bool isZoomed = false;
+    private Coroutine lerpZoom;
+
     private int _weaponIndex = 0;
     private const int _wrenchIndex = 0;
     private const int _laserIndex = 1;
@@ -69,6 +80,7 @@ public class WeaponController : MonoBehaviour
         EventBus.Subscribe<Vector2>(EventType.WEAPON_SWITCH, SwitchWeapon);
         EventBus.Subscribe(EventType.DISPLAY_WEAPON, DisplayWeapon);
         EventBus.Subscribe(EventType.PLAYER_RELOAD, HandleReload);
+        EventBus.Subscribe(EventType.PLAYER_ZOOM, ToggleZoom);
     }
     private void OnDisable()
     {
@@ -77,6 +89,7 @@ public class WeaponController : MonoBehaviour
         EventBus.Unsubscribe(EventType.DISPLAY_WEAPON, DisplayWeapon);
         EventBus.Unsubscribe(EventType.PLAYER_RELOAD, HandleReload);
         EventBus.Unsubscribe(EventType.SWING_WRENCH, StartWrenchSwing);
+        EventBus.Unsubscribe(EventType.PLAYER_ZOOM, ToggleZoom);
 
     }
     private void LateUpdate()
@@ -110,7 +123,9 @@ public class WeaponController : MonoBehaviour
             else if (_weaponIndex == _handsIndex)
                 EventBus.Publish(EventType.PUNCH_HANDS);
         };
-
+        //Zoom
+        inputManager.playerControls.Player.Aim.performed += _ => EventBus.Publish(EventType.PLAYER_ZOOM);
+        inputManager.playerControls.Player.Aim.canceled += _ => EventBus.Publish(EventType.PLAYER_ZOOM);
         //Reload
         inputManager.playerControls.Player.Reload.performed += _ => EventBus.Publish(EventType.PLAYER_RELOAD);
     }
@@ -267,6 +282,43 @@ public class WeaponController : MonoBehaviour
             if (weaponInstance.transform.childCount > 0)
                 _curWeapon.MuzzlePos = weaponInstance.transform.GetChild(0);
         }
+    }
+    #endregion
+
+    #region Zoom
+    private void ToggleZoom()
+    {
+        isZoomed = !isZoomed;
+        curZoom = gameManager.PlayerVCam.m_Lens.FieldOfView;
+        targetZoom = isZoomed ? zoomFOV : baseFOV;
+
+        if (lerpZoom != null)
+            StopCoroutine(lerpZoom);
+        lerpZoom = StartCoroutine(LerpZoom());
+        
+    }
+
+    //Lerp camera FOV for zooming with easing
+    private IEnumerator LerpZoom()
+    {
+
+        float duration = 1f;
+        float time = 0f;
+        float t;
+        while (time < duration)
+        {
+            t = time / duration;
+            t = t * t * (3 - 2 * t);
+            time += Time.deltaTime;
+            gameManager.PlayerVCam.m_Lens.FieldOfView = Mathf.Lerp(curZoom, targetZoom, t);
+            weaponCam.fieldOfView = gameManager.PlayerVCam.m_Lens.FieldOfView;
+
+            yield return null;
+
+        }
+
+        gameManager.PlayerVCam.m_Lens.FieldOfView = targetZoom;
+
     }
     #endregion
 }
