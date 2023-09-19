@@ -80,13 +80,13 @@ public class PlayerController : MonoBehaviour
     [Space(10)]
     [Header("Restrictions")]
     [SerializeField]
-    private bool _canMove = true;
+    private bool _canMove = false;
     [SerializeField]
-    private bool _canJump = true;
+    private bool _canJump = false;
     [SerializeField]
-    private bool _canSprint = true;
+    private bool _canSprint = false;
     [SerializeField]
-    private bool _canDash = true;
+    private bool _canDash = false;
 
     private bool isSprinting, isDashing, scannerActive = false;
     private Coroutine startSprint;
@@ -137,6 +137,7 @@ public class PlayerController : MonoBehaviour
         EventBus.Subscribe(EventType.PLAYER_STOP_SPRINT, PlayerStopSprint);
         EventBus.Subscribe(EventType.PLAYER_DASH, StartDash);
         EventBus.Subscribe(EventType.TOGGLE_SCANNER, ToggleScanner);
+        EventBus.Subscribe(EventType.GAME_START, EnableInput);
     }
     private void OnDisable()
     {
@@ -144,6 +145,7 @@ public class PlayerController : MonoBehaviour
         EventBus.Unsubscribe(EventType.PLAYER_STOP_SPRINT, PlayerStopSprint);
         EventBus.Unsubscribe(EventType.PLAYER_DASH, StartDash);
         EventBus.Unsubscribe(EventType.TOGGLE_SCANNER, ToggleScanner);
+        EventBus.Unsubscribe(EventType.GAME_START, EnableInput);
 
     }
 
@@ -173,7 +175,13 @@ public class PlayerController : MonoBehaviour
             HandleJump();
     }
 
-
+    private void EnableInput()
+    {
+        CanMove = true;
+        CanJump = true;
+        CanDash = true;
+        CanSprint = true;
+    }
 
     private void SubscribeInputEvents()
     {

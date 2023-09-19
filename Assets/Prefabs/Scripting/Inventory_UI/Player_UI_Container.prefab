@@ -1754,8 +1754,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _creditPurse: 0
   _pickupEventInterval: 0.1
-  _inventory_UI: {fileID: 1717862641108057612}
-  _inventory_HUD_UI: {fileID: 3320383533382182080}
   _inventory_DataArray:
   - _amountStored: 0
     _slotItemData: {fileID: 11400000, guid: 35e3f447c8ddc134f9dc33bc6f4206e8, type: 2}
@@ -1822,6 +1820,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85fe0d0f2a3e532438ed29a2783bd94b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _feedbackForm_URL: https://forms.gle/VfPz9JPBVJXS86rb8
+  _startMenu_UI: {fileID: 0}
+  _startMenu_QUIT_UI: {fileID: 0}
+  _optionMenu_QUIT_UI: {fileID: 0}
   _inventory_UI: {fileID: 8764325064429297509}
   _fannyPack_UI: {fileID: 1717862641108057612}
   _contracts_UI: {fileID: 5581987455574481586}

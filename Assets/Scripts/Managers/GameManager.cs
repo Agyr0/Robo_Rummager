@@ -75,10 +75,12 @@ public class GameManager : Singleton<GameManager>
     {
         
         EventBus.Subscribe(EventType.INVENTORY_TOGGLE, ToggleInput);
+        EventBus.Subscribe(EventType.GAME_START, EnableInput);
     }
     private void OnDisable()
     {
         EventBus.Unsubscribe(EventType.INVENTORY_TOGGLE, ToggleInput);
+        EventBus.Unsubscribe(EventType.GAME_START, EnableInput);
     }
 
     private void Start()
@@ -89,9 +91,17 @@ public class GameManager : Singleton<GameManager>
         playerVCam = (CinemachineVirtualCamera)Camera.main.GetComponent<CinemachineBrain>().ActiveVirtualCamera;
         inputProvider = PlayerVCam.gameObject.GetComponent<CinemachineInputProvider>();
         _storyboard = PlayerVCam.gameObject.GetComponent<CinemachineStoryboard>();
+
+        inputProvider.enabled = false;
+        weaponController.enabled = false;
         EventBus.Publish(EventType.REFRESH_RESOURCES);
     }
 
+    private void EnableInput()
+    {
+        inputProvider.enabled = true;
+        weaponController.enabled = true;
+    }
     private void ToggleInput()
     {
         InUI = !InUI;
