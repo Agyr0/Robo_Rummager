@@ -18,6 +18,7 @@ public enum EventType
     PLAYER_DASH,
     TOGGLE_SCANNER,
     SEND_DETECTION_SPHERE,
+    PLAYER_ZOOM,
     #endregion
 
     #region Shooting

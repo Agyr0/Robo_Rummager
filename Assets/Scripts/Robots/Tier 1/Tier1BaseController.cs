@@ -6,36 +6,65 @@ using UnityEngine;
 public class Tier1BaseController : MonoBehaviour, IInteractable
 {
     private bool pickedUp = false;
-
+    [SerializeField]
+    private Vector3 offSet;
+    private Rigidbody rb;
     public void HandleInteract()
     {
         if(!pickedUp)
         {
             pickedUp = true;
-            transform.position = GameManager.Instance.playerController.handTransform.position;
             transform.parent = GameManager.Instance.playerController.handTransform;
-            StartCoroutine(LerpRotation(-GameManager.Instance.playerController.handTransform.forward));
+            transform.localPosition = new Vector3(GameManager.Instance.playerController.handTransform.localPosition.x * offSet.x, 
+                GameManager.Instance.playerController.handTransform.localPosition.y * offSet.y, 
+                GameManager.Instance.playerController.handTransform.localPosition.z * offSet.z);
+            if (rb == null)
+                rb = GetComponent<Rigidbody>();
+
+            rb.isKinematic = true;
+
+            StartCoroutine(LerpRotation(true));
         }
         else
         {
             pickedUp = false;
             transform.parent = null;
-            StartCoroutine(LerpRotation(GameManager.Instance.playerController.handTransform.forward));
+            if (rb == null)
+                rb = GetComponent<Rigidbody>();
+
+            rb.isKinematic = false;
+
+            StartCoroutine(LerpRotation(false));
 
         }
     }
 
-    private IEnumerator LerpRotation(Vector3 directionToFace)
+    private IEnumerator LerpRotation(bool towards)
     {
-        float duration = 5f;
+        float duration = 1f;
         float time = 0;
-        Vector3 startPos = transform.position;
-        while(time < duration)
+        Quaternion rotation = transform.rotation;
+        Quaternion startPos = transform.rotation;
+        if (towards)
+            while (time < duration)
+            {
+                rotation =
+                    Quaternion.LookRotation(-GameManager.Instance.playerController.handTransform.forward, GameManager.Instance.playerController.handTransform.up);
+                transform.rotation = Quaternion.Lerp(startPos, rotation, time / duration);
+                time += Time.deltaTime;
+                yield return null;
+            }
+        else
         {
-            transform.forward = Vector3.Lerp(startPos, directionToFace, time / duration);
-            time += Time.deltaTime;
-            yield return null;
+            rotation =
+                Quaternion.LookRotation(GameManager.Instance.playerController.handTransform.forward, GameManager.Instance.playerController.handTransform.up);
+            while (time < duration)
+            {
+                transform.rotation = Quaternion.Lerp(startPos, rotation, time / duration);
+                time += Time.deltaTime;
+                yield return null;
+            }
         }
-        transform.position = directionToFace;
+        transform.rotation = rotation;
     }
 }
