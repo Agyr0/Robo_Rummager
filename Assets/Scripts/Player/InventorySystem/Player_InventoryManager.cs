@@ -188,6 +188,7 @@ public class Player_InventoryManager : MonoBehaviour
             EventBus.Publish<GameObject>(EventType.INVENTORY_ADDITEMCULL, itemPicked);
             itemPicked.gameObject.SetActive(false);
         }
+        EventBus.Publish(EventType.INVENTORY_UPDATE, this.gameObject);
     }
 
     public void OnInventorySlotInteract(int slotNumber)
