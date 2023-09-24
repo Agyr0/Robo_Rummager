@@ -9,11 +9,6 @@ public class ObjectPooler : MonoBehaviour
     public GameObject objectPrefab;
     public int maxObjects;
 
-    void Awake()
-    {
-        SharedInstance = this;
-    }
-
     void Start()
     {
         pooledObjects = new List<GameObject>();
