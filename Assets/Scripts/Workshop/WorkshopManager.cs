@@ -2,16 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WorkshopManager : Singleton<WorkshopManager>
+namespace Agyr.Workshop
 {
-    [SerializeField]
-    private WorkshopStorage workshopStorage;
-
-    
-    public WorkshopStorage WorkshopStorage 
+    public class WorkshopManager : Singleton<WorkshopManager>
     {
-        get { return workshopStorage; } 
-        set { workshopStorage = value; } 
-    }
+        [SerializeField]
+        private WorkshopStorage workshopStorage;
 
+
+        public WorkshopStorage WorkshopStorage
+        {
+            get { return workshopStorage; }
+            set { workshopStorage = value; }
+        }
+
+    }
 }
