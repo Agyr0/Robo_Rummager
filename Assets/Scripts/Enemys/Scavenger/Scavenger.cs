@@ -7,6 +7,7 @@ public class Scavenger : MonoBehaviour
 {
     private NavMeshAgent agent;
     private Animator animator;
+    private ScavengerSensor scavengerSensor;
 
     #region Patrolling
     private int destPoint;
@@ -29,6 +30,11 @@ public class Scavenger : MonoBehaviour
     private float maxWaitTime;
     #endregion
 
+    private void Awake()
+    {
+        scavengerSensor = this.gameObject.GetComponent<ScavengerSensor>();
+    }
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -38,14 +44,18 @@ public class Scavenger : MonoBehaviour
     void Update()
     {
         animator.SetFloat("Speed", agent.velocity.magnitude);
-        Debug.Log("Agent Velocity: " + agent.velocity.magnitude);
-        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        if (scavengerSensor.players.Count > 0)
+        {
+            ScavengerApproaching();
+        }
+        else if (!agent.pathPending)
             ScavengerPatrolling();
     }
 
     // Patrolling
     private void ScavengerPatrolling()
     {
+        agent.speed = 3.5f;
         if (scavengerPatrolPoints.Length == 0)
             return;
 
@@ -66,5 +76,10 @@ public class Scavenger : MonoBehaviour
             if (patrolWaitTime <= 0)
                 patrolWaitTime = Random.Range(minWaitTime, maxWaitTime);  // If timer hits 0 and not within stopping distance reset timer for next point
         }
+    }
+
+    private void ScavengerApproaching()
+    {
+        agent.speed = 0;
     }
 }
