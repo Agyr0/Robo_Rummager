@@ -45,6 +45,7 @@ public enum EventType
     #region Player Inventory
     PLAYER_SAVEGAME,
     PLAYER_LOADGAME,
+    ONLOAD,
     //Enables an available inventory slot.
     INVENTORY_ADDSLOT,
     //Disables the last enabled inventory slot.

@@ -92,6 +92,11 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
     [SerializeField]
     private int _inventorySlotCount;
 
+    public int InventorySlotCount
+    {
+        get { return _inventorySlotCount; }
+    }
+
     private void OnEnable()
     {
         GameManager.Instance.inventoryManager = this;       
@@ -103,6 +108,7 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
         EventBus.Subscribe<GameObject>(EventType.INVENTORY_ADDITEMCULL, OnAddCullItem);
         EventBus.Subscribe(EventType.INVENTORY_REMOVEITEM, OnRemoveItem);
         EventBus.Subscribe<int>(EventType.CONTRACT_COMPLETED, OnContractCompleation);
+        EventBus.Subscribe(EventType.ONLOAD, OnLoad);
     }
 
     private void OnDisable()
@@ -137,6 +143,11 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
             _inventory_SlotArray[_inventorySlotCount-1].SetActive(false);
             _inventorySlotCount--;
         }
+    }
+
+    public void OnLoad()
+    {
+        EventBus.Publish(EventType.INVENTORY_UPDATE, this.gameObject);
     }
 
     private void OnItemSortPickup(GameObject itemPicked)
