@@ -2,6 +2,7 @@ using SaveLoadSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Agyr.Workshop;
 
 public class SaveGameManager : Singleton<SaveGameManager>
 {
