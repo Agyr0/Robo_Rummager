@@ -8,6 +8,7 @@ public class Scavenger : MonoBehaviour
     private NavMeshAgent agent;
     private Animator animator;
     private ScavengerSensor scavengerSensor;
+    private ScavengerWeaponIK scavengerWeaponIK;
 
     #region Patrolling
     private int destPoint;
@@ -33,6 +34,7 @@ public class Scavenger : MonoBehaviour
     private void Awake()
     {
         scavengerSensor = this.gameObject.GetComponent<ScavengerSensor>();
+        scavengerWeaponIK = this.gameObject.GetComponent<ScavengerWeaponIK>();
     }
 
     void Start()
@@ -56,6 +58,9 @@ public class Scavenger : MonoBehaviour
     private void ScavengerPatrolling()
     {
         agent.speed = 3.5f;
+        scavengerWeaponIK.enabled = false;
+        
+
         if (scavengerPatrolPoints.Length == 0)
             return;
 
@@ -80,6 +85,7 @@ public class Scavenger : MonoBehaviour
 
     private void ScavengerApproaching()
     {
+        scavengerWeaponIK.enabled = true;
         agent.speed = 0;
     }
 }
