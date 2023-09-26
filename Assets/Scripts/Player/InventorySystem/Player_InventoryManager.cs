@@ -6,7 +6,7 @@ using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Player_InventoryManager : Singleton<Player_InventoryManager>
+public class Player_InventoryManager : MonoBehaviour
 {
     [SerializeField]
     private int _creditPurse;
