@@ -6,7 +6,7 @@ using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Player_InventoryManager : MonoBehaviour
+public class Player_InventoryManager : Singleton<Player_InventoryManager>
 {
     [SerializeField]
     private int _creditPurse;
@@ -188,6 +188,7 @@ public class Player_InventoryManager : MonoBehaviour
             EventBus.Publish<GameObject>(EventType.INVENTORY_ADDITEMCULL, itemPicked);
             itemPicked.gameObject.SetActive(false);
         }
+        EventBus.Publish(EventType.INVENTORY_UPDATE, this.gameObject);
     }
 
     public void OnInventorySlotInteract(int slotNumber)

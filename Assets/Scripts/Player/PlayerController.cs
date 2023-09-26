@@ -330,7 +330,9 @@ public class PlayerController : MonoBehaviour
             EventBus.Publish(EventType.SEND_DETECTION_SPHERE);
             scannerVFX.enabled = false;
         }
+
     }
+
 
 
 
