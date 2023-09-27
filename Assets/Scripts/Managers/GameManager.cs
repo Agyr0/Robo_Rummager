@@ -29,6 +29,18 @@ public class GameManager : Singleton<GameManager>
         set { playerVCam = value; }
     }
 
+
+    [SerializeField]
+    private CinemachineStateDrivenCamera _stateDrivenCamera;
+    public CinemachineStateDrivenCamera StateDrivenCamera
+    {
+        get { return _stateDrivenCamera; }
+        set { _stateDrivenCamera = value; }
+    }
+
+    private Animator _camAnimator;
+    private bool isPlayerCam = true;
+
     private Transform _cameraTransform;
     public Transform CameraTransform
     {
@@ -75,17 +87,25 @@ public class GameManager : Singleton<GameManager>
         } 
     }
 
+
+
+
+
+
     private void OnEnable()
     {
         
         
         EventBus.Subscribe(EventType.INVENTORY_TOGGLE, ToggleInput);
+        EventBus.Subscribe(EventType.TOGGLE_WORKBENCH_CAM_BLEND, SwitchWorkbenchCam);
+
         //EventBus.Subscribe(EventType.GAME_START, EnableInput);
     }
     private void OnDisable()
     {
         EventBus.Unsubscribe(EventType.INVENTORY_TOGGLE, ToggleInput);
-       // EventBus.Unsubscribe(EventType.GAME_START, EnableInput);
+        EventBus.Unsubscribe(EventType.TOGGLE_WORKBENCH_CAM_BLEND, SwitchWorkbenchCam);
+        // EventBus.Unsubscribe(EventType.GAME_START, EnableInput);
     }
     public override void Awake()
     {
@@ -93,6 +113,8 @@ public class GameManager : Singleton<GameManager>
         //playerVCam = (CinemachineVirtualCamera)Camera.main.GetComponent<CinemachineBrain>().ActiveVirtualCamera;
         inputProvider = PlayerVCam.gameObject.GetComponent<CinemachineInputProvider>();
         _storyboard = PlayerVCam.gameObject.GetComponent<CinemachineStoryboard>();
+        _camAnimator = StateDrivenCamera.gameObject.GetComponent<Animator>();
+
     }
     private void Start()
     {
@@ -115,4 +137,14 @@ public class GameManager : Singleton<GameManager>
         InUI = !InUI;
     }
 
+    private void SwitchWorkbenchCam()
+    {
+        isPlayerCam = !isPlayerCam;
+
+        if (isPlayerCam)
+            _camAnimator.Play("PlayerCam");
+        else if(!isPlayerCam)
+            _camAnimator.Play("WorkbenchCam");
+
+    }
 }
