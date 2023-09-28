@@ -14,7 +14,7 @@ public class ContractBoard_Manager : Singleton<ContractBoard_Manager>
     private List<Robot_RecipeData> _robot_RecipeDataList;
 
     [SerializeField]
-    private List<Contract_Data> _contract_DataList;
+    private List<Contract_Data> _contract_Board_DataList;
 
     public List<Robot_RecipeData> Robot_RecipeDataList
     {
@@ -24,14 +24,15 @@ public class ContractBoard_Manager : Singleton<ContractBoard_Manager>
 
     public List<Contract_Data> Contract_DataList
     {
-        get { return _contract_DataList; }
-        set { _contract_DataList = value; }
+        get { return _contract_Board_DataList; }
+        set { _contract_Board_DataList = value; }
     }
 
     private void OnEnable()
     {
         EventBus.Subscribe<int,float>(EventType.BOARD_ADDCONTRACT, CreateContract);
-        EventBus.Subscribe(EventType.ONLOAD, OnLoad);
+        EventBus.Subscribe<Robot_RecipeData, float>(EventType.BOARD_ADDLOADCONTRACT, CreateContract);
+        //EventBus.Subscribe(EventType.ONLOAD, OnLoad);
     }
     private void OnDisable()
     {
@@ -64,25 +65,4 @@ public class ContractBoard_Manager : Singleton<ContractBoard_Manager>
 
         EventBus.Publish(EventType.BOARD_CONTRACTUPDATE);
     }
-
-    public void OnLoad()
-    {
-        for (int i = 0; i < _contract_DataList.Count; i++)
-        {
-            CreateContract(_contract_DataList[i].Robot_RecipeData, _contract_DataList[i].Contract_TimerCount);
-        }
-    }
-    
-    /*
-    public void CreateContract(int robot, float timeCount, int contractPayment)
-    {
-        Contract_Data newContract = new Contract_Data(Robot_RecipeDataList[robot], timeCount, contractPayment);
-        Contract_DataList.Add(newContract);
-
-        GameObject Contract = Instantiate(_contract_BlankTemplate_Prefab, _bulletinBoard_Container.transform);
-        Contract.GetComponent<BoardContract_UI_Behavior>().Contract_Data = newContract;
-
-        EventBus.Publish(EventType.BOARD_CONTRACTUPDATE);
-    }
-    */
 }

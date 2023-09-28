@@ -72,6 +72,7 @@ public enum EventType
 
     #region Bulletin Board
     BOARD_ADDCONTRACT,
+    BOARD_ADDLOADCONTRACT,
     BOARD_CONTRACTUPDATE,
     CONTRACTACCEPTED,
     #endregion

@@ -12,7 +12,7 @@ public class Player_Contract_Manager : Singleton<Player_Contract_Manager>
     private GameObject _playerContract_Container;
 
     [SerializeField]
-    private List<Contract_Data> _contract_DataList;
+    private List<Contract_Data> _contract_Player_DataList;
 
     [SerializeField]
     private List<Contract_Data> _contract_DataCullList;
@@ -25,8 +25,8 @@ public class Player_Contract_Manager : Singleton<Player_Contract_Manager>
 
     public List<Contract_Data> Contract_DataList
     {
-        get { return _contract_DataList; }
-        set { _contract_DataList = value; }
+        get { return _contract_Player_DataList; }
+        set { _contract_Player_DataList = value; }
     }
 
     private void OnEnable()
@@ -145,11 +145,11 @@ public class Player_Contract_Manager : Singleton<Player_Contract_Manager>
 
     public void OnLoad()
     {
-        if (_contract_DataList.Count != 0)
+        if (_contract_Player_DataList.Count != 0)
         {
-            for (int i = 0; i < _contract_DataList.Count; i++)
+            for (int i = 0; i < _contract_Player_DataList.Count; i++)
             {
-                CreateContract(_contract_DataList[i]);
+                CreateContract(_contract_Player_DataList[i]);
             }
         }
     }

@@ -33,6 +33,9 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
     private List<GameObject> _inventory_ItemCullPickupList;
 
     [SerializeField]
+    private List<Resource_ItemData> _resourceList;
+
+    [SerializeField]
     private Text _creditText;
 
     [SerializeField]
@@ -122,8 +125,6 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
         EventBus.Unsubscribe(EventType.INVENTORY_REMOVEITEM, OnRemoveItem);
         EventBus.Unsubscribe<int>(EventType.CONTRACT_COMPLETED, OnContractCompleation);
     }
-
-    
 
     private void OnInventoryAddSlot()
     {
