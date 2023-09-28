@@ -31,6 +31,10 @@ using UnityEngine.UI;
         private Coroutine lerpZoom;
 
         private int _weaponIndex = 0;
+        public int WeaponIndex
+        {
+            get { return _weaponIndex; }
+        }
         private const int _wrenchIndex = 0;
         private const int _laserIndex = 1;
         private const int _handsIndex = 2;
@@ -261,8 +265,26 @@ using UnityEngine.UI;
             CurAmmoText.text = _curWeapon.CurAmmo.ToString();
             EventBus.Publish(EventType.DISPLAY_WEAPON);
         }
+    public void SwitchWeapon(int index)
+    {
+        _weaponIndex = index;
 
-        private void DisplayWeapon()
+        if (_weaponIndex > _availableWeapons.Length - 1)
+        {
+            _weaponIndex = 0;
+        }
+        else if (_weaponIndex < 0)
+        {
+            _weaponIndex = _availableWeapons.Length - 1;
+        }
+
+        //Assign curweapon and send event
+        _curWeapon = _availableWeapons[_weaponIndex];
+        CurAmmoText.text = _curWeapon.CurAmmo.ToString();
+        EventBus.Publish(EventType.DISPLAY_WEAPON);
+    }
+
+    private void DisplayWeapon()
         {
             //if(_curWeapon != _availableWeapons[_weaponIndex])
             //    _curWeapon = _availableWeapons[_weaponIndex];

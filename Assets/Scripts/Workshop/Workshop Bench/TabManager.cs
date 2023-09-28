@@ -79,13 +79,15 @@ namespace Agyr.Workshop
             //Check for locked
             for (int i = 0; i < myTabs.Count; i++)
             {
-                if(i == 0)
+                myTabs[i].myContent.SetActive(false);
+                myTabs[i].backgroundImage.color = inactiveColor;
+
+                if (i == 0)
                 {
                     myTabs[i].backgroundImage.color = activeColor;
                     myTabs[i].myContent.SetActive(true);
                 }
 
-                myTabs[i].myContent.SetActive(false);
 
                 if (!myTabs[i].CheckUnlock())
                 {
@@ -138,7 +140,6 @@ namespace Agyr.Workshop
 
         private void AssignData(WorkshopStorage workshopStorage)
         {
-            myIcons.creditIcon.sprite = workshopStorage.creditIcon;
             myIcons.motherBoardIcon.sprite = workshopStorage.motherBoardIcon;
             myIcons.wireIcon.sprite = workshopStorage.wireIcon;
             myIcons.oilIcon.sprite = workshopStorage.oilIcon;
@@ -148,7 +149,6 @@ namespace Agyr.Workshop
             myIcons.radioactiveWasteIcon.sprite = workshopStorage.radioactiveWasteIcon;
             myIcons.blackMatterIcon.sprite = workshopStorage.blackMatterIcon;
 
-            myIcons.creditCost.text = myCost.creditCost.ToString();
             myIcons.motherBoardCost.text = myCost.motherBoardCost.ToString();
             myIcons.wireCost.text = myCost.wireCost.ToString();
             myIcons.oilCost.text = myCost.oilCost.ToString();
@@ -178,8 +178,7 @@ namespace Agyr.Workshop
     [System.Serializable]
     public struct RoboIcons
     {
-        public Image creditIcon;
-        public Text creditCost;
+        public Image previewIcon;
         [Space(10)]
         public Image motherBoardIcon;
         public Text motherBoardCost;
@@ -210,7 +209,6 @@ namespace Agyr.Workshop
     [System.Serializable]
     public struct RobotCost
     {
-        public int creditCost;
         public int motherBoardCost;
         public int wireCost;
         public int oilCost;

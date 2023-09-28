@@ -14,7 +14,7 @@ public class BilboardScaler : MonoBehaviour
 
     [SerializeField]
     private float minDistance = 2f;
-    private float maxDistance;
+    private float maxDistance = 0;
     private float minScale = 0f;
     [SerializeField]
     private float maxScale = 4f;
@@ -35,7 +35,8 @@ public class BilboardScaler : MonoBehaviour
         originalRot = transform.GetChild(0).localRotation;
         //transform.localScale = originalScale;
         playerController = GameManager.Instance.playerController;
-        maxDistance = GetComponent<SphereCollider>().radius;
+        if(GetComponent<SphereCollider>() != null)
+            maxDistance = GetComponent<SphereCollider>().radius;
         transform.GetChild(0).localScale = new Vector3(minScale, minScale, minScale);
     }
 

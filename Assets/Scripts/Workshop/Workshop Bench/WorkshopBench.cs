@@ -11,7 +11,7 @@ namespace Agyr.Workshop
         [SerializeField]
         private GameObject selectionCanvas;
         private BilboardScaler scaler;
-        
+        private int originalWeaponIndex;
         
         private Coroutine handleUI;
 
@@ -20,12 +20,27 @@ namespace Agyr.Workshop
 
         public void HandleInteract()
         {
+            if (!isOn)
+                originalWeaponIndex = GameManager.Instance.weaponController.WeaponIndex;
             isOn = !isOn;
-            GameManager.Instance.InUI = !GameManager.Instance.InUI;
+            //Force Weapon switch to hands
+            if (isOn)
+            {
+                GameManager.Instance.weaponController.SwitchWeapon(isOn ? 2 : originalWeaponIndex);
+                GameManager.Instance.InUI = !GameManager.Instance.InUI;
+            }
+            else if (!isOn)
+            {
+                GameManager.Instance.InUI = !GameManager.Instance.InUI;
+                GameManager.Instance.weaponController.SwitchWeapon(isOn ? 2 : originalWeaponIndex);
+            }
+
             if(scaler == null)
             {
                 scaler = GetComponentInChildren<BilboardScaler>();
             }
+
+
 
             if (isOn)
                 handleUI = StartCoroutine(scaler.HandleUI());
