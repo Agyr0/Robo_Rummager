@@ -142,7 +142,7 @@ public class BoardContract_UI_Behavior : MonoBehaviour
         {
             EventBus.Publish(EventType.PLAYER_ADDCONTRACT, this.gameObject);
             EventBus.Publish(EventType.PLAYER_CONTRACTUPDATE);
-            this.gameObject.SetActive(false);
+            Destroy(this.gameObject);
         }
         else
         {

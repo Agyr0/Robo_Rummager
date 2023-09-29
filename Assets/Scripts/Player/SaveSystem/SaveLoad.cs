@@ -36,12 +36,12 @@ public static class SaveLoad
         SaveData data = new SaveData();
         
 
-        if (!File.Exists(fullPath)) 
+        if (File.Exists(fullPath)) 
         { 
             string json = File.ReadAllText(fullPath);
             data = JsonUtility.FromJson<SaveData>(json);
 
-            EventBus.Publish(EventType.PLAYER_LOADGAME);
+            //EventBus.Publish(EventType.PLAYER_LOADGAME);
 
             Debug.Log("Load");
         }
