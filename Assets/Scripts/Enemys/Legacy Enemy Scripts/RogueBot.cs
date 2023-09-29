@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -113,14 +114,17 @@ public class RogueBot : MonoBehaviour, IDamageable
     private float chargeEndLagTime;
     #endregion
 
-    void Start()
+    private void Awake()
+    {
+        playerTransform = GameObject.Find("Player").transform;
+        agent = GetComponent<NavMeshAgent>();
+    }
+    private void Start()
     {
         health = maxHealth;
-        agent = GetComponent<NavMeshAgent>();
-        playerTransform = GameObject.Find("Player").transform;
     }
 
-    void Update()
+    private void Update()
     {
         // Check if player is in charge range
         playerInChargeRange = Physics.CheckSphere(transform.position, chargeRange, playerLayerMask);
