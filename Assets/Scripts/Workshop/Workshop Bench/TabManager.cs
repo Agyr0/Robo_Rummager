@@ -53,6 +53,7 @@ namespace Agyr.Workshop
         private void SpawnRobotHologram(TierController controller)
         {
             GameObject go = Instantiate(controller.hologramPrefab, prefabSpawnPopint.position, prefabSpawnPopint.rotation);
+            go.GetComponent<PetBuildingController>().myTab = controller.selectedTab;
             Debug.Log("Spawned hologram");
         }
 
@@ -101,6 +102,8 @@ namespace Agyr.Workshop
         public GameObject tabGroup;
         [HideInInspector]
         public GameObject hologramPrefab;
+        [HideInInspector]
+        public TabButtonHeader selectedTab;
 
 #if UNITY_EDITOR
         [ArrayElementTitle("elementName")]
@@ -175,7 +178,11 @@ namespace Agyr.Workshop
                     if (myTabs[i].CheckResourceCount(workshopStorage))
                     {
                         hologramPrefab = myTabs[i].hologramPrefab;
+                        selectedTab = myTabs[i];
                         EventBus.Publish(EventType.SPAWN_HOLOGRAM, this);
+                        myTabs[i].selectButton.interactable = false;
+                        myTabs[i].ButtonText.Value = "Already Building";
+                        myTabs[i].hasPurchased = true;
                     }
                     return;
                 }
@@ -228,6 +235,7 @@ namespace Agyr.Workshop
 
 
         public bool isLocked = true;
+        public bool hasPurchased = false;
         [Space(10)]
         public string elementName = "ChangeMe";
 
@@ -309,7 +317,7 @@ namespace Agyr.Workshop
                 myCost.sensorCost <= workshopStorage.SensorCount &&
                 myCost.zCrystalCost <= workshopStorage.ZCrystalCount &&
                 myCost.radioactiveWasteCost <= workshopStorage.RadioactiveWasteCount &&
-                myCost.blackMatterCost <= workshopStorage.BlackMatterCount)
+                myCost.blackMatterCost <= workshopStorage.BlackMatterCount && !hasPurchased)
             {
 
                 workshopStorage.MotherBoardCount -= myCost.motherBoardCost;
@@ -330,12 +338,15 @@ namespace Agyr.Workshop
 
                 ButtonText.Value = "Select";
                 selectButton.interactable = true;
-
                 return true;
             }
+            else if (!hasPurchased)
+            {
 
-            selectButton.interactable = false;
-            ButtonText.Value = "Not Enough Resources";
+                selectButton.interactable = false;
+                ButtonText.Value = "Not Enough Resources";
+                return false;
+            }
             return false;
         }
 

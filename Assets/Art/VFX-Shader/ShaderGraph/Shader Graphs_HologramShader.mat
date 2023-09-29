@@ -28,6 +28,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 9f8015871d71a9f4eba919f5b1409af7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _ProgressShader:
+        m_Texture: {fileID: 2800000, guid: b14f3edc8e41b944881c7182f5258cc2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -42,16 +46,20 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _FresnelPower: 6.66
+    - _FresnelPower: 2.53
+    - _HeadThickness: 0.01
+    - _Progress: 1
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ScrollSpeed: 0.1
     - _Speed: 1
     m_Colors:
-    - _BaseColor: {r: 0, g: 0.6517038, b: 1, a: 0}
-    - _FresnelColor: {r: 1.0666485, g: 1.1486983, b: 0, a: 0}
+    - _BaseColor: {r: 0.039159775, g: 0.418995, b: 0.6226415, a: 0}
+    - _FresnelColor: {r: 2.7954397, g: 1.3977365, b: 0, a: 0}
+    - _HeadColor: {r: 3.6985583, g: 0, b: 166.92719, a: 0}
     - _HologramTiling: {r: 1, g: 0.75, b: 0, a: 0}
     - _Tiling: {r: 1, g: 1, b: 0, a: 0}
+    - _Vector2: {r: 0, g: 0.82, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &1371262434979504604
 MonoBehaviour:
