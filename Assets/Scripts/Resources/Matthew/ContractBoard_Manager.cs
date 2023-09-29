@@ -11,6 +11,9 @@ public class ContractBoard_Manager : Singleton<ContractBoard_Manager>
     private GameObject _bulletinBoard_Container;
 
     [SerializeField]
+    private List<GameObject> _purgeContractList;
+
+    [SerializeField]
     private List<Robot_RecipeData> _robot_RecipeDataList;
 
     [SerializeField]
@@ -32,11 +35,31 @@ public class ContractBoard_Manager : Singleton<ContractBoard_Manager>
     {
         EventBus.Subscribe<int,float>(EventType.BOARD_ADDCONTRACT, CreateContract);
         EventBus.Subscribe<Robot_RecipeData, float>(EventType.BOARD_ADDLOADCONTRACT, CreateContract);
-        //EventBus.Subscribe(EventType.ONLOAD, OnLoad);
+        EventBus.Subscribe(EventType.SAVECONTRACTPURGE, PurgeContracts);
+        EventBus.Subscribe<GameObject>(EventType.PLAYER_ADDCONTRACT, PurgeContract);
     }
     private void OnDisable()
     {
+        EventBus.Unsubscribe<GameObject>(EventType.PLAYER_ADDCONTRACT, PurgeContract);
         EventBus.Unsubscribe<int, float>(EventType.BOARD_ADDCONTRACT, CreateContract);
+    }
+
+    public void PurgeContract(GameObject contractToRemove)
+    {
+        _contract_Board_DataList.Remove(contractToRemove.GetComponent<BoardContract_UI_Behavior>().Contract_Data);
+    }
+
+    public void PurgeContracts()
+    {
+        foreach (Transform contract in _bulletinBoard_Container.GetComponentInChildren<Transform>())
+        {
+            _purgeContractList.Add(contract.gameObject);
+        }
+        List<GameObject> tempList = _purgeContractList;
+        for (int i = 0; i < _purgeContractList.Count; i++)
+        {
+            Destroy(tempList[i].gameObject);
+        }
     }
 
     

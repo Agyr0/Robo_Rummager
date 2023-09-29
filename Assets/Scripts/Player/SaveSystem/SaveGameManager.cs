@@ -24,7 +24,6 @@ public class SaveGameManager : Singleton<SaveGameManager>
         EventBus.Subscribe(EventType.PLAYER_SAVEGAME, SavePlayerContract);
         EventBus.Subscribe(EventType.PLAYER_SAVEGAME, SaveBoardContract);
 
-        EventBus.Subscribe<SaveData>(EventType.PLAYER_LOADGAME, LoadData);
         EventBus.Subscribe<SaveData>(EventType.PLAYER_LOADGAME, LoadWorkshopStorage);
         EventBus.Subscribe<SaveData>(EventType.PLAYER_LOADGAME, LoadPlayerContracts);
         EventBus.Subscribe<SaveData>(EventType.PLAYER_LOADGAME, LoadBoardContracts);
@@ -40,23 +39,16 @@ public class SaveGameManager : Singleton<SaveGameManager>
         var saveData = data;
 
         SaveLoad.Save(saveData);
-        data.save_PlayerContracts.Clear();
-        data.save_BoardContracts.Clear();
-        data._robot_BoardTypeList.Clear();
-        data._robot_PlayerTypeList.Clear();
-    }
-
-    public static void LoadData(SaveData _data)
-    {
-        data = _data;
-        SaveGameManager.Instance.LoadPlayerInventory(data);
     }
 
     public static void TryLoadData()
     {
         data = SaveLoad.Load();
+        SaveGameManager.Instance.LoadPlayerInventory(data);
+
+        EventBus.Publish(EventType.SAVECONTRACTPURGE);
         EventBus.Publish(EventType.PLAYER_LOADGAME,data);
-        //EventBus.Publish(EventType.ONLOAD);
+        EventBus.Publish(EventType.ONLOAD);
     }
 
     private void SaveWorkshopStorage()
@@ -66,44 +58,56 @@ public class SaveGameManager : Singleton<SaveGameManager>
 
     private void SavePlayerInventory()
     {
-        for (int i = 0; i < data.save_Inventory_SlotAmounts.Length; i++)
+        for (int i = 0; i < Player_InventoryManager.Instance.Inventory_DataArray.Length; i++)
         {
             data.save_Inventory_SlotAmounts[i] = Player_InventoryManager.Instance.Inventory_DataArray[i].AmountStored;
             data.save_Inventory_SlotResources[i] = Player_InventoryManager.Instance.Inventory_DataArray[i].SlotItemData.ResourceName;
         }
+        data.save_Player_CreditPurse = Player_InventoryManager.Instance.CreditPurse;
+        data.save_Player_SlotCount = Player_InventoryManager.Instance.InventorySlotCount;
     }
 
     private void SavePlayerContract()
     {
+        data._robot_PlayerTypeList.Clear();
         SaveGameManager.data.save_PlayerContracts = Player_Contract_Manager.Instance.Contract_DataList;
-        if(data.save_BoardContracts.Count != 0)
-            {
-            for (int i = 0; i < data.save_BoardContracts.Count; i++)
+        if (data.save_PlayerContracts.Count != 0)
+        {
+            for (int i = 0; i < data.save_PlayerContracts.Count; i++)
             {
                 data._robot_PlayerTypeList.Add(Player_Contract_Manager.Instance.Contract_DataList[i].RobotType);
             }
         }
+        
     }
 
     private void SaveBoardContract()
     {
+        data._robot_BoardTypeList.Clear();
         SaveGameManager.data.save_BoardContracts = ContractBoard_Manager.Instance.Contract_DataList;
-        Debug.Log("How many contracts were saved: " + SaveGameManager.data.save_BoardContracts.Count);
         if (data.save_BoardContracts.Count != 0)
         {
             for (int i = 0; i < data.save_BoardContracts.Count; i++)
             {
+                Debug.Log(ContractBoard_Manager.Instance.Contract_DataList[i].RobotType);
+                
                 data._robot_BoardTypeList.Add(ContractBoard_Manager.Instance.Contract_DataList[i].RobotType);
+                Debug.Log(data._robot_BoardTypeList[i]);
             }
         }
+        
     }
 
     private void LoadPlayerInventory(SaveData data)
     {
         for (int i = 0; i < data.save_Inventory_SlotAmounts.Length; i++)
         {
+            Player_InventoryManager.Instance.Inventory_DataArray[i].AmountStored = data.save_Inventory_SlotAmounts[i];
             switch (data.save_Inventory_SlotResources[i])
             {
+                case ResourceType.Empty:
+                    Player_InventoryManager.Instance.Inventory_DataArray[i].SlotItemData = _resourceList[0];
+                    break;
                 case ResourceType.MotherBoard:
                     Player_InventoryManager.Instance.Inventory_DataArray[i].SlotItemData = _resourceList[1];
                     break;
@@ -128,8 +132,57 @@ public class SaveGameManager : Singleton<SaveGameManager>
                 case ResourceType.Black_Matter:
                     Player_InventoryManager.Instance.Inventory_DataArray[i].SlotItemData = _resourceList[8];
                     break;
-                case ResourceType.Empty:
-                    Player_InventoryManager.Instance.Inventory_DataArray[i].SlotItemData = _resourceList[0];
+                default:
+                    break;
+            }
+        }
+        Player_InventoryManager.Instance.CreditPurse = data.save_Player_CreditPurse;
+        Player_InventoryManager.Instance.InventorySlotCount = data.save_Player_SlotCount;
+    }
+
+    private void LoadWorkshopStorage(SaveData data)
+    {
+        WorkshopManager.Instance.WorkshopStorage = data.save_WorkShopStorage;
+    }
+
+    private void LoadPlayerContracts(SaveData data)
+    {
+        Player_Contract_Manager.Instance.Contract_DataList.Clear();
+        for (int i = 0; i < data.save_PlayerContracts.Count; i++)
+        {
+            switch (data._robot_PlayerTypeList[i])
+            {
+                case RobotType.Dog:
+                    EventBus.Publish(EventType.PLAYER_LOADCONTRACT, _robot_RecipeDataList[0], data.save_PlayerContracts[i].Contract_TimerCount);
+                    break;
+                case RobotType.Cat:
+                    EventBus.Publish(EventType.PLAYER_LOADCONTRACT, _robot_RecipeDataList[1], data.save_PlayerContracts[i].Contract_TimerCount);
+                    break;
+                case RobotType.Rabbit:
+                    break;
+                case RobotType.Turtle:
+                    break;
+                case RobotType.GuinneaPig:
+                    break;
+                case RobotType.HouseKeep:
+                    break;
+                case RobotType.ElderCare:
+                    break;
+                case RobotType.YardMaintenance:
+                    break;
+                case RobotType.Nurse:
+                    break;
+                case RobotType.Retail:
+                    break;
+                case RobotType.BodyGuard:
+                    break;
+                case RobotType.HouseProtector:
+                    break;
+                case RobotType.PoliceBot:
+                    break;
+                case RobotType.MilitaryBot:
+                    break;
+                case RobotType.FootBall:
                     break;
                 default:
                     break;
@@ -137,27 +190,11 @@ public class SaveGameManager : Singleton<SaveGameManager>
         }
     }
 
-    private void LoadWorkshopStorage(SaveData data)
-    {
-        Debug.Log("Workshop");
-        WorkshopManager.Instance.WorkshopStorage = data.save_WorkShopStorage;
-    }
-
-    private void LoadPlayerContracts(SaveData data)
-    {
-        Debug.Log("ContractP");
-        Player_Contract_Manager.Instance.Contract_DataList = data.save_PlayerContracts;
-    }
-
     private void LoadBoardContracts(SaveData data)
     {
-        Debug.Log("ContractB");
-        ContractBoard_Manager.Instance.Contract_DataList = data.save_BoardContracts;
+        ContractBoard_Manager.Instance.Contract_DataList.Clear();
         for (int i = 0; i < data.save_BoardContracts.Count; i++)
         {
-            Debug.Log(_robot_RecipeDataList[i]);
-            Debug.Log(data.save_BoardContracts[i].Contract_TimerCount);
-            Debug.Log("How many contracts am I loading: " + data.save_BoardContracts.Count);
             switch (data._robot_BoardTypeList[i])
             {
                 case RobotType.Dog:

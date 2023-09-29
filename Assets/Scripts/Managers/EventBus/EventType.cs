@@ -62,6 +62,7 @@ public enum EventType
     INVENTORY_ITEMDROPPED,
     PLAYER_CONTRACTUPDATE,
     PLAYER_ADDCONTRACT,
+    PLAYER_LOADCONTRACT,
     CONTRACT_TIMERTICK,
     //Check should be called when a robot is sumbmitted,
     //will use the gameobject's Robot_Data to check aganist contracts
@@ -75,6 +76,7 @@ public enum EventType
     BOARD_ADDLOADCONTRACT,
     BOARD_CONTRACTUPDATE,
     CONTRACTACCEPTED,
+    SAVECONTRACTPURGE,
     #endregion
 
     #region Workshop

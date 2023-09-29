@@ -33,9 +33,6 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
     private List<GameObject> _inventory_ItemCullPickupList;
 
     [SerializeField]
-    private List<Resource_ItemData> _resourceList;
-
-    [SerializeField]
     private Text _creditText;
 
     [SerializeField]
@@ -98,6 +95,14 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
     public int InventorySlotCount
     {
         get { return _inventorySlotCount; }
+        set
+        {
+            _inventorySlotCount = value;
+            if (_inventorySlotCount > 2)
+            {
+                OnInventoryLoadSlots(_inventorySlotCount - 2);
+            }
+        }
     }
 
     private void OnEnable()
@@ -126,6 +131,15 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
         EventBus.Unsubscribe<int>(EventType.CONTRACT_COMPLETED, OnContractCompleation);
     }
 
+    private void OnInventoryLoadSlots(int slotsToAdd)
+    {
+        for (int i = 0; i < slotsToAdd; i++)
+        {
+            _inventoryHUD_SlotArray[i+2].SetActive(true);
+            _inventory_SlotArray[i+2].SetActive(true);
+        }
+    }
+
     private void OnInventoryAddSlot()
     {
         if (_inventorySlotCount <= _inventorySlotMax)
@@ -148,6 +162,7 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
 
     public void OnLoad()
     {
+        Debug.Log("Ah gees Rick, I guess I need to update the inventory display");
         EventBus.Publish(EventType.INVENTORY_UPDATE, this.gameObject);
     }
 
@@ -219,6 +234,7 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
                 EventBus.Publish<GameObject>(EventType.INVENTORY_SORTPICKUP, Inventory_ItemPickupList[x]);
 
         }
+        EventBus.Publish(EventType.INVENTORY_UPDATE, this.gameObject);
         //EventBus.Publish(EventType.INVENTORY_REMOVEITEM);
     }
 
@@ -246,6 +262,7 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
         tempItemBlank = Instantiate(_itemBlankPrefab, this.transform.position, this.transform.rotation);
         tempItemBlank.GetComponent<Resource_Item>().ItemData = ItemData.SlotItemData;
         tempItemBlank.GetComponent<Resource_Item>().ResourceAmount = ItemData.AmountStored;
+        EventBus.Publish(EventType.INVENTORY_UPDATE, this.gameObject);
     }
 
     public void OnItemDropCancelled(int slotNumber)
@@ -271,6 +288,7 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
             Inventory_ItemPickupList.Remove(Inventory_ItemCullPickupList[i]);
 
         Inventory_ItemCullPickupList.Clear();
+        EventBus.Publish(EventType.INVENTORY_UPDATE, this.gameObject);
     }
 
     private void OnContractCompleation(int creditValue)

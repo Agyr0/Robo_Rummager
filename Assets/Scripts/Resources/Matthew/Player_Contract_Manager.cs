@@ -1,6 +1,7 @@
 using SaveLoadSystem;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class Player_Contract_Manager : Singleton<Player_Contract_Manager>
@@ -10,6 +11,9 @@ public class Player_Contract_Manager : Singleton<Player_Contract_Manager>
 
     [SerializeField]
     private GameObject _playerContract_Container;
+
+    [SerializeField]
+    private List<GameObject> _purgeContractList;
 
     [SerializeField]
     private List<Contract_Data> _contract_Player_DataList;
@@ -31,16 +35,32 @@ public class Player_Contract_Manager : Singleton<Player_Contract_Manager>
 
     private void OnEnable()
     {
+        EventBus.Subscribe<Robot_RecipeData, float>(EventType.PLAYER_LOADCONTRACT, CreateContract);
         EventBus.Subscribe<GameObject>(EventType.PLAYER_ADDCONTRACT, CreateContract);
         EventBus.Subscribe(EventType.CONTRACT_TIMERTICK, OnContractTimerTick);
-        EventBus.Subscribe(EventType.ONLOAD, OnLoad);
+        EventBus.Subscribe(EventType.SAVECONTRACTPURGE, PurgeContracts);
     }
     private void OnDisable()
     {
+        EventBus.Unsubscribe<Robot_RecipeData, float>(EventType.PLAYER_LOADCONTRACT, CreateContract);
         EventBus.Unsubscribe<GameObject>(EventType.PLAYER_ADDCONTRACT, CreateContract);
-        EventBus.Subscribe(EventType.CONTRACT_TIMERTICK, OnContractTimerTick);
+        EventBus.Unsubscribe(EventType.CONTRACT_TIMERTICK, OnContractTimerTick);
+        EventBus.Unsubscribe(EventType.SAVECONTRACTPURGE, PurgeContracts);
     }
-    
+
+    public void PurgeContracts()
+    {
+        foreach (Transform contract in _playerContract_Container.GetComponentInChildren<Transform>())
+        {
+            _purgeContractList.Add(contract.gameObject);
+        }
+        List<GameObject> tempList = _purgeContractList;
+        for (int i = 0; i < _purgeContractList.Count; i++)
+        {
+            Destroy(tempList[i].gameObject);
+        }
+    }
+
     IEnumerator ContractTimerTickCoroutine()
     {
         while (Contract_DataList.Count != 0)
@@ -82,6 +102,7 @@ public class Player_Contract_Manager : Singleton<Player_Contract_Manager>
         {
             for (int i = 0; i < _contract_DataCullList.Count; i++)
             {
+                Contract_DataList.Contains(_contract_DataCullList[i]);
                 Contract_DataList.Remove(_contract_DataCullList[i]);
             }
             _contract_DataCullList.Clear();
@@ -125,10 +146,9 @@ public class Player_Contract_Manager : Singleton<Player_Contract_Manager>
         EventBus.Publish(EventType.PLAYER_CONTRACTUPDATE);
     }
 
-    public void CreateContract(Contract_Data contract_Data)
+    public void CreateContract(Robot_RecipeData robot, float TimeCount)
     {
-        Debug.Log("Ading contract");
-        Contract_Data newContract = contract_Data;
+        Contract_Data newContract = new Contract_Data(robot, TimeCount);
         newContract.Contract_Status = ContractStatus.InProgress;
         Contract_DataList.Add(newContract);
 
@@ -141,16 +161,5 @@ public class Player_Contract_Manager : Singleton<Player_Contract_Manager>
         Contract.GetComponent<PlayerContract_UI_Behavior>().Contract_Data = newContract;
 
         EventBus.Publish(EventType.PLAYER_CONTRACTUPDATE);
-    }
-
-    public void OnLoad()
-    {
-        if (_contract_Player_DataList.Count != 0)
-        {
-            for (int i = 0; i < _contract_Player_DataList.Count; i++)
-            {
-                CreateContract(_contract_Player_DataList[i]);
-            }
-        }
     }
 }
