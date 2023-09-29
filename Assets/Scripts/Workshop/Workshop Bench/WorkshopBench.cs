@@ -15,24 +15,33 @@ namespace Agyr.Workshop
         
         private Coroutine handleUI;
 
+        public TabManager tabManager;
+
         private bool isOn = false;
 
+        private void Start()
+        {
+            tabManager = GetComponentInChildren<TabManager>();
+        }
 
         public void HandleInteract()
         {
             if (!isOn)
                 originalWeaponIndex = GameManager.Instance.weaponController.WeaponIndex;
             isOn = !isOn;
+
+            
             //Force Weapon switch to hands
             if (isOn)
             {
-                GameManager.Instance.weaponController.SwitchWeapon(isOn ? 2 : originalWeaponIndex);
+                tabManager.FindActiveTab().CheckResourceCount(WorkshopManager.Instance.WorkshopStorage);
+                GameManager.Instance.weaponController.SwitchWeapon(2);
                 GameManager.Instance.InUI = !GameManager.Instance.InUI;
             }
             else if (!isOn)
             {
                 GameManager.Instance.InUI = !GameManager.Instance.InUI;
-                GameManager.Instance.weaponController.SwitchWeapon(isOn ? 2 : originalWeaponIndex);
+                GameManager.Instance.weaponController.SwitchWeapon(originalWeaponIndex);
             }
 
             if(scaler == null)

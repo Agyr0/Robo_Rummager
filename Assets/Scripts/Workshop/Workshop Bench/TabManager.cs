@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,15 +13,23 @@ namespace Agyr.Workshop
         public TierController tier2Controller;
         public TierController tier3Controller;
 
+        [SerializeField]
+        private Transform prefabSpawnPopint;
+
 
         private void OnEnable()
         {
             //EventBus.Subscribe(EventType.TIER_1_ROBOTS, EnableTier1);
             //EventBus.Subscribe(EventType.TIER_2_ROBOTS, EnableTier2);
-            //EventBus.Subscribe(EventType.TIER_3_ROBOTS, EnableTier3);
+            EventBus.Subscribe<TierController>(EventType.SPAWN_HOLOGRAM, SpawnRobotHologram);
 
             tier1Controller.AssignData();
 
+        }
+
+        private void OnDisable()
+        {
+            EventBus.Unsubscribe<TierController>(EventType.SPAWN_HOLOGRAM, SpawnRobotHologram);
         }
 
         #region Enable Tabs
@@ -31,10 +40,55 @@ namespace Agyr.Workshop
         #endregion
 
 
-        #region Select Robots
+        #region Select Tabs
         public void SelectTier1Tab(Button button) => tier1Controller.TabSelected(button);
 
         #endregion
+
+        #region Select Robots
+        public void SelectTier1Robot(Button button) => tier1Controller.SelectRobot(button);
+
+        #endregion
+
+        private void SpawnRobotHologram(TierController controller)
+        {
+            GameObject go = Instantiate(controller.hologramPrefab, prefabSpawnPopint.position, prefabSpawnPopint.rotation);
+            Debug.Log("Spawned hologram");
+        }
+
+        public TabButtonHeader FindActiveTab()
+        {
+            if (tier1Controller.tabGroup.activeInHierarchy)
+            {
+                for (int i = 0; i < tier1Controller.myTabs.Count; i++)
+                {
+                    if (tier1Controller.myTabs[i].backgroundImage.color == tier1Controller.activeColor)
+                        return tier1Controller.myTabs[i];
+
+                }
+            }
+            else if (tier2Controller.tabGroup.activeInHierarchy)
+            {
+                for (int i = 0; i < tier2Controller.myTabs.Count; i++)
+                {
+                    if (tier2Controller.myTabs[i].backgroundImage.color == tier2Controller.activeColor)
+                        return tier2Controller.myTabs[i];
+
+                }
+            }
+            else if (tier3Controller.tabGroup.activeInHierarchy)
+            {
+                for (int i = 0; i < tier3Controller.myTabs.Count; i++)
+                {
+                    if (tier3Controller.myTabs[i].backgroundImage.color == tier3Controller.activeColor)
+                        return tier3Controller.myTabs[i];
+
+                }
+            }
+
+            return null;
+
+        }
     }
 
 
@@ -43,23 +97,22 @@ namespace Agyr.Workshop
     public class TierController
     {
 
-        [SerializeField]
-        private GameObject tabGroup;
 
-        [SerializeField]
-        #if UNITY_EDITOR
+        public GameObject tabGroup;
+        [HideInInspector]
+        public GameObject hologramPrefab;
+
+#if UNITY_EDITOR
         [ArrayElementTitle("elementName")]
-        #endif
-        private List<TabButtonHeader> myTabs = new List<TabButtonHeader>();
+#endif
+        public List<TabButtonHeader> myTabs = new List<TabButtonHeader>();
 
         private WorkshopStorage workshopStorage;
 
-        [SerializeField]
-        private Color inactiveColor;
-        [SerializeField]
-        private Color activeColor;
-        [SerializeField]
-        private Color lockedColor;
+        public Color inactiveColor;
+        public Color activeColor;
+        public Color lockedColor;
+
 
 
         public void AssignData()
@@ -92,7 +145,7 @@ namespace Agyr.Workshop
                 if (!myTabs[i].CheckUnlock())
                 {
                     myTabs[i].buttonImage.color = lockedColor;
-                }    
+                }
             }
         }
 
@@ -112,25 +165,86 @@ namespace Agyr.Workshop
                 }
             }
         }
-    }
 
+        public void SelectRobot(Button button)
+        {
+            for (int i = 0; i < myTabs.Count; i++)
+            {
+                if (myTabs[i].selectButton == button)
+                {
+                    if (myTabs[i].CheckResourceCount(workshopStorage))
+                    {
+                        hologramPrefab = myTabs[i].hologramPrefab;
+                        EventBus.Publish(EventType.SPAWN_HOLOGRAM, this);
+                    }
+                    return;
+                }
+            }
+        }
+
+
+
+
+
+    }
 
 
     [System.Serializable]
     public class TabButtonHeader
     {
-        public Button myButton;
-        public GameObject myContent;
-        public Image backgroundImage;
-        public Image buttonImage;
+        public TabHeader myTab;
+
+        public Button myButton
+        {
+            get { return myTab.myButton; }
+            set { myTab.myButton = value; }
+        }
+        public Image buttonImage
+        {
+            get { return myTab.buttonImage; }
+            set { myTab.buttonImage = value; }
+        }
+        public GameObject myContent
+        {
+            get { return myTab.myContent; }
+            set { myTab.myContent = value; }
+        }
+        public Button selectButton
+        {
+            get { return myTab.selectButton; }
+            set { myTab.selectButton = value; }
+        }
+        public Image backgroundImage
+        {
+            get { return myTab.backgroundImage; }
+            set { myTab.backgroundImage = value; }
+        }
+        public GameObject hologramPrefab
+        {
+            get { return myTab.hologramPrefab; }
+            set { myTab.hologramPrefab = value; }
+        }
+
+
+
         public bool isLocked = true;
         [Space(10)]
         public string elementName = "ChangeMe";
 
-        [Space(10)]
-        public RobotCost myCost;
 
-        public RoboIcons myIcons;
+        public Property<string> ButtonText;
+
+        public RobotCost myCost
+        {
+            get { return myTab.myCost; }
+            set { myTab.myCost = value; }
+        }
+
+        public RoboIcons myIcons
+        {
+            get { return myTab.myIcons; }
+            set { myTab.myIcons = value; }
+        }
 
         public void InitializeMe(WorkshopStorage workshopStorage)
         {
@@ -140,6 +254,18 @@ namespace Agyr.Workshop
 
         private void AssignData(WorkshopStorage workshopStorage)
         {
+            myButton = myTab.myButton;
+            buttonImage = myTab.buttonImage;
+            myContent = myTab.myContent;
+            selectButton = myTab.selectButton;
+            backgroundImage = myTab.backgroundImage;
+            hologramPrefab = myTab.hologramPrefab;
+            myCost = myTab.myCost;
+            myIcons = myTab.myIcons;
+
+
+            ButtonText.Value = "Not Enough Resources";
+
             myIcons.motherBoardIcon.sprite = workshopStorage.motherBoardIcon;
             myIcons.wireIcon.sprite = workshopStorage.wireIcon;
             myIcons.oilIcon.sprite = workshopStorage.oilIcon;
@@ -157,11 +283,14 @@ namespace Agyr.Workshop
             myIcons.zCrystalCost.text = myCost.zCrystalCost.ToString();
             myIcons.radioactiveWasteCost.text = myCost.radioactiveWasteCost.ToString();
             myIcons.blackMatterCost.text = myCost.blackMatterCost.ToString();
+
+            RuntimeBindingExtensions.BindProperty(selectButton.gameObject.GetComponentInChildren<Text>(), ButtonText);
+
         }
 
         public bool CheckUnlock()
         {
-            if(isLocked)
+            if (isLocked)
             {
                 myButton.interactable = false;
                 return false;
@@ -170,7 +299,46 @@ namespace Agyr.Workshop
             myButton.interactable = true;
             return true;
         }
-        
+
+        public bool CheckResourceCount(WorkshopStorage workshopStorage)
+        {
+            if (myCost.motherBoardCost <= workshopStorage.MotherBoardCount &&
+                myCost.wireCost <= workshopStorage.WireCount &&
+                myCost.oilCost <= workshopStorage.OilCount &&
+                myCost.metalScrapCost <= workshopStorage.MetalScrapCount &&
+                myCost.sensorCost <= workshopStorage.SensorCount &&
+                myCost.zCrystalCost <= workshopStorage.ZCrystalCount &&
+                myCost.radioactiveWasteCost <= workshopStorage.RadioactiveWasteCount &&
+                myCost.blackMatterCost <= workshopStorage.BlackMatterCount)
+            {
+
+                workshopStorage.MotherBoardCount -= myCost.motherBoardCost;
+
+                workshopStorage.WireCount -= myCost.wireCost;
+
+                workshopStorage.OilCount -= myCost.oilCost;
+
+                workshopStorage.MetalScrapCount -= myCost.metalScrapCost;
+
+                workshopStorage.SensorCount -= myCost.sensorCost;
+
+                workshopStorage.ZCrystalCount -= myCost.zCrystalCost;
+
+                workshopStorage.RadioactiveWasteCount -= myCost.radioactiveWasteCost;
+
+                workshopStorage.BlackMatterCount -= myCost.blackMatterCost;
+
+                ButtonText.Value = "Select";
+                selectButton.interactable = true;
+
+                return true;
+            }
+
+            selectButton.interactable = false;
+            ButtonText.Value = "Not Enough Resources";
+            return false;
+        }
+
     }
 
 
