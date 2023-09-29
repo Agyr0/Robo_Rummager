@@ -20,6 +20,7 @@ public class RogueBotPatrolState : RogueBotState
         Debug.Log("Patrol State");
         agent.navMeshAgent.speed = agent.config.patrolSpeed;
         agent.navMeshAgent.acceleration = agent.config.patrolAcceleration;
+        agent.navMeshAgent.angularSpeed = agent.config.patrolAngularSpeed;
     }
 
     public void Update(RogueBotAgent agent)
@@ -84,5 +85,13 @@ public class RogueBotPatrolState : RogueBotState
 
     public void Exit(RogueBotAgent agent)
     {
+        agent.StartCoroutine(DetectedIcon(agent));
+    }
+
+    IEnumerator DetectedIcon(RogueBotAgent agent)
+    {
+        agent.detectedIcon.SetActive(true);
+        yield return new WaitForSeconds(agent.config.spriteFlashTime);
+        agent.detectedIcon.SetActive(false);
     }
 }

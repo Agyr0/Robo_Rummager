@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
-using UnityEngine.InputSystem.Android;
-using UnityEngine.Polybrush;
 
 public class RogueBotChargeState : RogueBotState
 {
-    private Rigidbody rb;
+    private Transform playerTransform;
 
     public RogueBotStateId GetId()
     {
@@ -16,14 +15,15 @@ public class RogueBotChargeState : RogueBotState
     public void Enter(RogueBotAgent agent)
     {
         Debug.Log("Charge State");
-        rb = agent.GetComponent<Rigidbody>();
-        rb.isKinematic = false;
-        agent.navMeshAgent.velocity = Vector3.zero;
+        agent.navMeshAgent.speed = agent.config.chargeSpeed;
+        agent.navMeshAgent.acceleration = agent.config.chargeAcceleration;
+        agent.navMeshAgent.angularSpeed = agent.config.chargeAngularSpeed;
+
         agent.StartCoroutine(PauseBeforeCharge(agent));
-        rb.AddForce(agent.navMeshAgent.velocity * 100);
+        agent.chargeHitbox.SetActive(true);
         agent.StartCoroutine(ExitChargeState(agent));
     }
-
+    
     public void Update(RogueBotAgent agent)
     {
     }
@@ -41,8 +41,8 @@ public class RogueBotChargeState : RogueBotState
 
     IEnumerator ExitChargeState(RogueBotAgent agent)
     {
-        rb.isKinematic = true;
         yield return new WaitForSeconds(agent.config.chargeDuration);
+        agent.chargeHitbox.SetActive(false);
         RogueBotChaseState chaseState = agent.stateMachine.GetState(RogueBotStateId.Chase) as RogueBotChaseState;
         agent.stateMachine.ChangeState(RogueBotStateId.Chase);
     }

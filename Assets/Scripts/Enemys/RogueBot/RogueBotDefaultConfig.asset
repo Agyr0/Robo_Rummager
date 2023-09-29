@@ -18,17 +18,20 @@ MonoBehaviour:
     m_Bits: 64
   patrolSpeed: 3.5
   patrolAcceleration: 8
-  patrolAngularAcceleration: 360
+  patrolAngularSpeed: 120
   patrolRange: 20
-  patrolCenterPoint: {x: -1.0558271, y: 0.5, z: 2.75884}
+  patrolCenterPoint: {x: -0.83219194, y: 0.5, z: 2.099576}
   minDistFromLastPoint: 5
   minWaitTime: 0.5
   maxWaitTime: 3.5
   chaseSpeed: 5
-  chaseAcceleration: 360
-  chaseAngularAcceleration: 480
+  chaseAcceleration: 8
+  chaseAngularSpeed: 360
   chaseRange: 15
   spriteFlashTime: 1
-  chargeRange: 7.5
-  pauseBeforeChargeTime: 0.5
+  chargeSpeed: 100
+  chargeAcceleration: 40
+  chargeAngularSpeed: 720
+  chargeRange: 10
+  pauseBeforeChargeTime: 0.25
   chargeDuration: 3

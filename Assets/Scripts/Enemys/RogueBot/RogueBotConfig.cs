@@ -20,8 +20,8 @@ public class RogueBotConfig : ScriptableObject
     [Tooltip("Acceleration of the RogueBot while patrolling.")]
     public float patrolAcceleration;
 
-    [Tooltip("Angular Acceleration of the RogueBot while patrolling.")]
-    public float patrolAngularAcceleration;
+    [Tooltip("Angular Speed of the RogueBot while patrolling.")]
+    public float patrolAngularSpeed;
 
     [Tooltip("Range of the RogueBot's patrol radius.")] 
     public float patrolRange;
@@ -47,8 +47,8 @@ public class RogueBotConfig : ScriptableObject
     [Tooltip("Acceleration of the RogueBot during chase state.")]
     public float chaseAcceleration;
 
-    [Tooltip("Angular Acceleration of the RogueBot while chasing.")]
-    public float chaseAngularAcceleration;
+    [Tooltip("Angular Speed of the RogueBot while chasing.")]
+    public float chaseAngularSpeed;
 
     [Tooltip("Range that the RogueBot will detect the player and begin to chase them. Indicated by a blue wire sphere.")]
     public float chaseRange;
@@ -59,13 +59,22 @@ public class RogueBotConfig : ScriptableObject
 
     #region Charge
     [Header("Charge Stats")]
+    [Tooltip("Speed of the RogueBot during charge state.")]
+    public float chargeSpeed;
+
+    [Tooltip("Acceleration of the RogueBot during charge state.")]
+    public float chargeAcceleration;
+
+    [Tooltip("Speed of the RogueBot while turning during charge state.")]
+    public float chargeAngularSpeed;
+
     [Tooltip("Range that the RogueBot will charge the player. Indicated by a red wire sphere.")]
     public float chargeRange;
 
     [Tooltip("The time (in seconds) that the RogueBot will pause in place before charging.")]
     public float pauseBeforeChargeTime;
 
-    [Tooltip("The time (in seconds) that the RogueBot will be chargin for.")]
+    [Tooltip("The time (in seconds) that the RogueBot will be charging for.")]
     public float chargeDuration;
     #endregion
 }
