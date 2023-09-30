@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Scavenger : MonoBehaviour
 {
     private NavMeshAgent agent;
+    private Transform playerTransform;
     private Animator animator;
     private ScavengerSensor scavengerSensor;
     private ScavengerWeaponIK scavengerWeaponIK;
@@ -33,17 +35,14 @@ public class Scavenger : MonoBehaviour
 
     private void Awake()
     {
+        agent = GetComponent<NavMeshAgent>();
+        playerTransform = GameObject.Find("Player").transform;
+        animator = GetComponent<Animator>();
         scavengerSensor = this.gameObject.GetComponent<ScavengerSensor>();
         scavengerWeaponIK = this.gameObject.GetComponent<ScavengerWeaponIK>();
     }
 
-    void Start()
-    {
-        agent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
-    }
-
-    void Update()
+    private void Update()
     {
         animator.SetFloat("Speed", agent.velocity.magnitude);
         if (scavengerSensor.players.Count > 0)
