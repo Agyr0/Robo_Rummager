@@ -46,7 +46,13 @@ public class Player_UIManager : MonoBehaviour
 
     private void Start()
     {
-        OnStartMenu();
+        if (!_startMenu_UI.activeSelf)
+        {
+            _startMenu_UI.SetActive(true);
+            _playerHUD_UI.SetActive(false);
+            //EventBus.Publish(EventType.INVENTORY_TOGGLE);
+            EventBus.Publish(EventType.INVENTORY_UPDATE, this.gameObject);
+        }
     }
 
     public void OnStartMenu()
@@ -55,14 +61,7 @@ public class Player_UIManager : MonoBehaviour
         {
             _startMenu_UI.SetActive(false);
             _playerHUD_UI.SetActive(true);
-            EventBus.Publish(EventType.INVENTORY_TOGGLE);
-            EventBus.Publish(EventType.INVENTORY_UPDATE, this.gameObject);
-        }
-        else
-        {
-            _startMenu_UI.SetActive(true);
-            _playerHUD_UI.SetActive(false);
-            EventBus.Publish(EventType.INVENTORY_TOGGLE);
+            //EventBus.Publish(EventType.INVENTORY_TOGGLE);
             EventBus.Publish(EventType.INVENTORY_UPDATE, this.gameObject);
         }
     }
