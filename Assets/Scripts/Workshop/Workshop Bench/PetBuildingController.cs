@@ -11,6 +11,10 @@ public class PetBuildingController : MonoBehaviour
     [SerializeField]
     private GameObject completedEffect;
     [SerializeField]
+    private GameObject combinedMesh;
+    [SerializeField]
+    private GameObject seperatedMesh;
+    [SerializeField]
     private GameObject aiPrefab;
     private float progress;
 
@@ -28,12 +32,12 @@ public class PetBuildingController : MonoBehaviour
         {
             progress += Time.deltaTime / timeToComplete;
 
-            foreach (RobotPartPairs partPairs in myParts)
-            {
-                partPairs.hologramPart.GetComponent<MeshRenderer>().material.SetFloat("_Progress", progress);
-            }
+            combinedMesh.GetComponent<MeshRenderer>().material.SetFloat("_Progress", progress);
+            
             yield return null;
         }
+        seperatedMesh.SetActive(true);
+        combinedMesh.SetActive(false);
     }
     public void BuildPiece()
     {
