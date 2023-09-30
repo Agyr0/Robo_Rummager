@@ -85,6 +85,7 @@ public enum EventType
     TIER_2_ROBOTS,
     TIER_3_ROBOTS,
     TOGGLE_WORKBENCH_CAM_BLEND,
+    SPAWN_HOLOGRAM,
     #endregion
 
     #region Testing Events
