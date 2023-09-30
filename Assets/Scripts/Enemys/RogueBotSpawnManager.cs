@@ -34,6 +34,7 @@ public class RogueBotSpawnManager : MonoBehaviour
                 robot.transform.rotation = randomSpawnPoint.transform.rotation;
                 robot.SetActive(true);
             }
+            spawnPoints.Remove(randomSpawnPoint);
         }
     }
 }
