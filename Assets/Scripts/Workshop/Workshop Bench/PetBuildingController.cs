@@ -2,6 +2,7 @@ using Agyr.Workshop;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class PetBuildingController : MonoBehaviour
 {
@@ -9,7 +10,9 @@ public class PetBuildingController : MonoBehaviour
     public TabButtonHeader myTab;
 
     [SerializeField]
-    private GameObject completedEffect;
+    private VisualEffect completedEffect;
+    [SerializeField]
+    private Animator animator;
     [SerializeField]
     private GameObject combinedMesh;
     [SerializeField]
@@ -17,6 +20,9 @@ public class PetBuildingController : MonoBehaviour
     [SerializeField]
     private GameObject aiPrefab;
     private float progress;
+
+    private int numActive = 0;
+    
 
     [SerializeField]
     private List<RobotPartPairs> myParts = new List<RobotPartPairs>();
@@ -50,24 +56,37 @@ public class PetBuildingController : MonoBehaviour
         else
             Invoke("BuildPiece",0);
 
-        if(SpawnAIPrefab())
+        if (CheckBuildStage())
         {
-            gameObject.SetActive(false);
+            StartCoroutine(BuildCompleteEffect());
+            
         }
     }
 
-    private bool SpawnAIPrefab()
+    private bool CheckBuildStage()
     {
-        int numActive = 0;
+        numActive = 0;
         for (int i = 0; i < myParts.Count; i++)
         {
             if (myParts[i].realPart.activeInHierarchy)
                 numActive++;
         }
-
-        if(numActive == myParts.Count)
+        if (numActive == myParts.Count)
         {
-            GameObject go = Instantiate(aiPrefab, transform.position, transform.rotation);
+            return true;
+        }
+        return false;
+    }
+
+    private bool SpawnAIPrefab()
+    {
+        if(CheckBuildStage())
+        {
+            GameObject go = null;
+
+            if (aiPrefab != null)
+                go = Instantiate(aiPrefab, transform.position, transform.rotation);
+            
             for (int i = 0;i < myParts.Count;i++)
             {
                 myParts[i].ResetParts();
@@ -76,6 +95,25 @@ public class PetBuildingController : MonoBehaviour
         }
 
         return false;
+    }
+
+    private IEnumerator BuildCompleteEffect()
+    {
+       
+
+            animator.SetTrigger("Play");
+
+            if (completedEffect != null)
+                completedEffect.Play();
+
+
+            
+        
+        yield return new WaitForSeconds(3f);
+        if (SpawnAIPrefab())
+        {
+            gameObject.SetActive(false);
+        }
     }
 }
 
