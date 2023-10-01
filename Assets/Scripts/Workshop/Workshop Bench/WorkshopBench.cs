@@ -15,6 +15,7 @@ namespace Agyr.Workshop
         
         private Coroutine handleUI;
 
+        [HideInInspector]
         public TabManager tabManager;
 
         private bool isOn = false;

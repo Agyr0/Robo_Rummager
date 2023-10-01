@@ -31,6 +31,12 @@ public class PetBuildingController : MonoBehaviour
     {
         StartCoroutine(DisplayHologram());
     }
+
+    public void ResetRobot()
+    {
+        Destroy(this.gameObject);
+    }
+
     public IEnumerator DisplayHologram()
     {
         float timeToComplete = 3f;

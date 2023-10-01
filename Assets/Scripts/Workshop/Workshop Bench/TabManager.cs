@@ -47,6 +47,7 @@ namespace Agyr.Workshop
 
         #region Select Robots
         public void SelectTier1Robot(Button button) => tier1Controller.SelectRobot(button);
+        //public void CancelTier1Robot(Button button) => tier1Controller.CancelRobot(button);
 
         #endregion
 
@@ -190,6 +191,24 @@ namespace Agyr.Workshop
         }
 
 
+        public void CancelRobot(Button button, GameObject hologram)
+        {
+            for (int i = 0; i < myTabs.Count; i++)
+            {
+                if (myTabs[i].selectButton == button)
+                {
+                    myTabs[i].RefundResources(workshopStorage);
+
+                }
+            }
+
+
+            PetBuildingController petController = hologram.GetComponent<PetBuildingController>();
+
+            petController.ResetRobot();
+        }
+        
+
 
 
 
@@ -238,7 +257,7 @@ namespace Agyr.Workshop
         public bool hasPurchased = false;
         [Space(10)]
         public string elementName = "ChangeMe";
-
+        private bool cancelActive = false;
 
         public Property<string> ButtonText;
 
@@ -348,6 +367,25 @@ namespace Agyr.Workshop
                 return false;
             }
             return false;
+        }
+
+        private void ToggleCancelButton()
+        {
+            cancelActive = !cancelActive;
+
+            myTab.cancelButton.gameObject.SetActive(cancelActive);
+        }
+
+        public void RefundResources(WorkshopStorage workshopStorage)
+        {
+            workshopStorage.MotherBoardCount += myCost.motherBoardCost;
+            workshopStorage.WireCount += myCost.wireCost;
+            workshopStorage.OilCount += myCost.oilCost;
+            workshopStorage.MetalScrapCount += myCost.metalScrapCost;
+            workshopStorage.SensorCount += myCost.sensorCost;
+            workshopStorage.ZCrystalCount += myCost.zCrystalCost;
+            workshopStorage.RadioactiveWasteCount += myCost.radioactiveWasteCost;
+            workshopStorage.BlackMatterCount += myCost.blackMatterCost;
         }
 
     }

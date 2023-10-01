@@ -12,6 +12,7 @@ public class TabHeader : MonoBehaviour
     public GameObject myContent;
     public Button selectButton;
     public Image backgroundImage;
+    public Button cancelButton;
     public GameObject hologramPrefab;
 
     [Space(10)]
