@@ -58,10 +58,6 @@ namespace Agyr.Workshop
                 StopCoroutine(handleUI);
 
             EventBus.Publish(EventType.TOGGLE_WORKBENCH_CAM_BLEND);
-            
-            //selectionCanvas.SetActive(!selectionCanvas.activeInHierarchy);
-
-
         }
     }
 }

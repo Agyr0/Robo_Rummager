@@ -16,6 +16,7 @@ namespace Agyr.Workshop
         [SerializeField]
         private Transform prefabSpawnPopint;
 
+        private GameObject hologramInstance;
 
         private void OnEnable()
         {
@@ -47,14 +48,14 @@ namespace Agyr.Workshop
 
         #region Select Robots
         public void SelectTier1Robot(Button button) => tier1Controller.SelectRobot(button);
-        //public void CancelTier1Robot(Button button) => tier1Controller.CancelRobot(button);
+        public void CancelTier1Robot(Button button) => tier1Controller.CancelRobot(button, hologramInstance);
 
         #endregion
 
         private void SpawnRobotHologram(TierController controller)
         {
-            GameObject go = Instantiate(controller.hologramPrefab, prefabSpawnPopint.position, prefabSpawnPopint.rotation);
-            go.GetComponent<PetBuildingController>().myTab = controller.selectedTab;
+            hologramInstance = Instantiate(controller.hologramPrefab, prefabSpawnPopint.position, prefabSpawnPopint.rotation);
+            hologramInstance.GetComponent<PetBuildingController>().myTab = controller.selectedTab;
             Debug.Log("Spawned hologram");
         }
 
@@ -178,12 +179,14 @@ namespace Agyr.Workshop
                 {
                     if (myTabs[i].CheckResourceCount(workshopStorage))
                     {
+                        myTabs[i].BuyRobot(workshopStorage);
                         hologramPrefab = myTabs[i].hologramPrefab;
                         selectedTab = myTabs[i];
                         EventBus.Publish(EventType.SPAWN_HOLOGRAM, this);
                         myTabs[i].selectButton.interactable = false;
                         myTabs[i].ButtonText.Value = "Already Building";
                         myTabs[i].hasPurchased = true;
+                        myTabs[i].ToggleCancelButton();
                     }
                     return;
                 }
@@ -195,9 +198,10 @@ namespace Agyr.Workshop
         {
             for (int i = 0; i < myTabs.Count; i++)
             {
-                if (myTabs[i].selectButton == button)
+                if (myTabs[i].myTab.cancelButton == button)
                 {
                     myTabs[i].RefundResources(workshopStorage);
+                    myTabs[i].ToggleCancelButton();
 
                 }
             }
@@ -338,30 +342,12 @@ namespace Agyr.Workshop
                 myCost.radioactiveWasteCost <= workshopStorage.RadioactiveWasteCount &&
                 myCost.blackMatterCost <= workshopStorage.BlackMatterCount && !hasPurchased)
             {
-
-                workshopStorage.MotherBoardCount -= myCost.motherBoardCost;
-
-                workshopStorage.WireCount -= myCost.wireCost;
-
-                workshopStorage.OilCount -= myCost.oilCost;
-
-                workshopStorage.MetalScrapCount -= myCost.metalScrapCost;
-
-                workshopStorage.SensorCount -= myCost.sensorCost;
-
-                workshopStorage.ZCrystalCount -= myCost.zCrystalCost;
-
-                workshopStorage.RadioactiveWasteCount -= myCost.radioactiveWasteCost;
-
-                workshopStorage.BlackMatterCount -= myCost.blackMatterCost;
-
                 ButtonText.Value = "Select";
                 selectButton.interactable = true;
                 return true;
             }
             else if (!hasPurchased)
             {
-
                 selectButton.interactable = false;
                 ButtonText.Value = "Not Enough Resources";
                 return false;
@@ -369,13 +355,29 @@ namespace Agyr.Workshop
             return false;
         }
 
-        private void ToggleCancelButton()
+        public void ToggleCancelButton()
         {
             cancelActive = !cancelActive;
-
             myTab.cancelButton.gameObject.SetActive(cancelActive);
         }
+        public void BuyRobot(WorkshopStorage workshopStorage)
+        {
+            workshopStorage.MotherBoardCount -= myCost.motherBoardCost;
 
+            workshopStorage.WireCount -= myCost.wireCost;
+
+            workshopStorage.OilCount -= myCost.oilCost;
+
+            workshopStorage.MetalScrapCount -= myCost.metalScrapCost;
+
+            workshopStorage.SensorCount -= myCost.sensorCost;
+
+            workshopStorage.ZCrystalCount -= myCost.zCrystalCost;
+
+            workshopStorage.RadioactiveWasteCount -= myCost.radioactiveWasteCost;
+
+            workshopStorage.BlackMatterCount -= myCost.blackMatterCost;
+        }
         public void RefundResources(WorkshopStorage workshopStorage)
         {
             workshopStorage.MotherBoardCount += myCost.motherBoardCost;
@@ -386,6 +388,10 @@ namespace Agyr.Workshop
             workshopStorage.ZCrystalCount += myCost.zCrystalCost;
             workshopStorage.RadioactiveWasteCount += myCost.radioactiveWasteCost;
             workshopStorage.BlackMatterCount += myCost.blackMatterCost;
+
+            hasPurchased = false;
+            selectButton.interactable = true;
+            ButtonText.Value = "Select";
         }
 
     }

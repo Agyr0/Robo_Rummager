@@ -56,7 +56,7 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    private bool _inUI = false;
+    private bool _inUI = true;
 
     public bool InUI 
     { 
@@ -93,19 +93,14 @@ public class GameManager : Singleton<GameManager>
 
 
     private void OnEnable()
-    {
-        
-        
+    {        
         EventBus.Subscribe(EventType.INVENTORY_TOGGLE, ToggleInput);
         EventBus.Subscribe(EventType.TOGGLE_WORKBENCH_CAM_BLEND, SwitchWorkbenchCam);
-
-        //EventBus.Subscribe(EventType.GAME_START, EnableInput);
     }
     private void OnDisable()
     {
         EventBus.Unsubscribe(EventType.INVENTORY_TOGGLE, ToggleInput);
         EventBus.Unsubscribe(EventType.TOGGLE_WORKBENCH_CAM_BLEND, SwitchWorkbenchCam);
-        // EventBus.Unsubscribe(EventType.GAME_START, EnableInput);
     }
     public override void Awake()
     {
@@ -118,20 +113,11 @@ public class GameManager : Singleton<GameManager>
     }
     private void Start()
     {
-
-        
-
         inputProvider.enabled = false;
         weaponController.enabled = false;
         EventBus.Publish(EventType.REFRESH_RESOURCES);
     }
 
-    private void EnableInput()
-    {
-        inputProvider.enabled = true;
-        weaponController.enabled = true;
-        InUI = true;
-    }
     private void ToggleInput()
     {
         InUI = !InUI;

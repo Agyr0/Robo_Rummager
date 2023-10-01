@@ -77,7 +77,7 @@ namespace Agyr.Workshop
             {
                 
                 _motherBoardCount = value;
-                MotherBoardProp = (Property<int>)_motherBoardCount;
+                MotherBoardProp.Value = value;
                 storage[1] = _motherBoardCount;
             }
         }
@@ -91,7 +91,7 @@ namespace Agyr.Workshop
             set
             {
                 _wireCount = value;
-                MotherBoardProp.Value = value;
+                WireProp.Value = value;
                 storage[2] = _wireCount;
             }
         }
@@ -174,7 +174,7 @@ namespace Agyr.Workshop
         {
             get
             {
-                //_blackMatterCount = storage[8];
+               // _blackMatterCount = storage[8];
                 return _blackMatterCount;
             }
             set
