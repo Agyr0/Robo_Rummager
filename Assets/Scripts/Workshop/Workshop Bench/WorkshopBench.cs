@@ -11,21 +11,46 @@ namespace Agyr.Workshop
         [SerializeField]
         private GameObject selectionCanvas;
         private BilboardScaler scaler;
-        
+        private int originalWeaponIndex;
         
         private Coroutine handleUI;
 
+        [HideInInspector]
+        public TabManager tabManager;
+
         private bool isOn = false;
 
+        private void Start()
+        {
+            tabManager = GetComponentInChildren<TabManager>();
+        }
 
         public void HandleInteract()
         {
+            if (!isOn)
+                originalWeaponIndex = GameManager.Instance.weaponController.WeaponIndex;
             isOn = !isOn;
-            GameManager.Instance.InUI = !GameManager.Instance.InUI;
+
+            
+            //Force Weapon switch to hands
+            if (isOn)
+            {
+                tabManager.FindActiveTab().CheckResourceCount(WorkshopManager.Instance.WorkshopStorage);
+                GameManager.Instance.weaponController.SwitchWeapon(2);
+                GameManager.Instance.InUI = !GameManager.Instance.InUI;
+            }
+            else if (!isOn)
+            {
+                GameManager.Instance.InUI = !GameManager.Instance.InUI;
+                GameManager.Instance.weaponController.SwitchWeapon(originalWeaponIndex);
+            }
+
             if(scaler == null)
             {
                 scaler = GetComponentInChildren<BilboardScaler>();
             }
+
+
 
             if (isOn)
                 handleUI = StartCoroutine(scaler.HandleUI());
@@ -33,10 +58,6 @@ namespace Agyr.Workshop
                 StopCoroutine(handleUI);
 
             EventBus.Publish(EventType.TOGGLE_WORKBENCH_CAM_BLEND);
-            
-            //selectionCanvas.SetActive(!selectionCanvas.activeInHierarchy);
-
-
         }
     }
 }

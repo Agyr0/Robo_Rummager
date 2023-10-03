@@ -6,7 +6,8 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class ItemGlowController : MonoBehaviour
 {
-    private DecalProjector decalProjector;
+    [SerializeField]
+    private Animator m_Animator;
     [SerializeField]
     private float fadeIn = .25f;
     [SerializeField]
@@ -17,11 +18,7 @@ public class ItemGlowController : MonoBehaviour
 
     public bool running, toggle = false;
 
-    private void Start()
-    {
-        decalProjector = gameObject.transform.GetComponentInChildren<DecalProjector>();
-    }
-
+   
     private void OnEnable()
     {
         EventBus.Subscribe(EventType.TOGGLE_SCANNER, ToggleGlow);
@@ -37,39 +34,18 @@ public class ItemGlowController : MonoBehaviour
         toggle = !toggle;
         if(!toggle)
         {
-            StopCoroutine(FadeGlow());
-            decalProjector.fadeFactor = endVal;
+            m_Animator.ResetTrigger("Play");
+            m_Animator.ResetTrigger("StopPlay");
+            m_Animator.SetTrigger("StopPlay");
         }
-
     }
 
-    public IEnumerator FadeGlow()
+    public void PlayGlow()
     {
-        if (!running)
-        {
-
-            running = !running;
-
-            float t = 0f;
-            //Fade in fast
-            while (t < fadeIn && toggle)
-            {
-                decalProjector.fadeFactor = Mathf.Lerp(startVal, midVal, t / fadeIn);
-                t += Time.deltaTime;
-                yield return null;
-            }
-            decalProjector.fadeFactor = midVal;
-            //Fade out slow
-            t = 0f;
-            while (t < fadeOut && toggle)
-            {
-                decalProjector.fadeFactor = Mathf.Lerp(midVal, endVal, t / fadeOut);
-                t += Time.deltaTime;
-                yield return null;
-            }
-            decalProjector.fadeFactor = endVal;
-            running = !running;
-
-        }
+        m_Animator.ResetTrigger("StopPlay");
+        m_Animator.ResetTrigger("Play");
+        m_Animator.SetTrigger("Play");
     }
+
+
 }

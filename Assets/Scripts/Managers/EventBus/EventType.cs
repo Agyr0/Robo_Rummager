@@ -45,6 +45,7 @@ public enum EventType
     #region Player Inventory
     PLAYER_SAVEGAME,
     PLAYER_LOADGAME,
+    ONLOAD,
     //Enables an available inventory slot.
     INVENTORY_ADDSLOT,
     //Disables the last enabled inventory slot.
@@ -61,6 +62,7 @@ public enum EventType
     INVENTORY_ITEMDROPPED,
     PLAYER_CONTRACTUPDATE,
     PLAYER_ADDCONTRACT,
+    PLAYER_LOADCONTRACT,
     CONTRACT_TIMERTICK,
     //Check should be called when a robot is sumbmitted,
     //will use the gameobject's Robot_Data to check aganist contracts
@@ -71,8 +73,10 @@ public enum EventType
 
     #region Bulletin Board
     BOARD_ADDCONTRACT,
+    BOARD_ADDLOADCONTRACT,
     BOARD_CONTRACTUPDATE,
     CONTRACTACCEPTED,
+    SAVECONTRACTPURGE,
     #endregion
 
     #region Workshop
@@ -81,6 +85,7 @@ public enum EventType
     TIER_2_ROBOTS,
     TIER_3_ROBOTS,
     TOGGLE_WORKBENCH_CAM_BLEND,
+    SPAWN_HOLOGRAM,
     #endregion
 
     #region Testing Events

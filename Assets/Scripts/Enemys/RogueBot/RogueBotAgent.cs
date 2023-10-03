@@ -25,12 +25,13 @@ public class RogueBotAgent : MonoBehaviour, IDamageable
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
+        
+        config = RogueBotConfig.Instantiate(config);
         stateMachine = new RogueBotStateMachine(this);
         stateMachine.RegisterState(new RogueBotPatrolState());
         stateMachine.RegisterState(new RogueBotChaseState());
         stateMachine.RegisterState(new RogueBotChargeState());
         stateMachine.ChangeState(initialState);
-        config.patrolCenterPoint = this.transform.position;
         rogueBotHealth = rogueBotMaxHealth;
     }
 

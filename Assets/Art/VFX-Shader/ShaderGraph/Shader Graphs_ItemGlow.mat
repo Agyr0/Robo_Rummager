@@ -8,19 +8,26 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Shader Graphs_ItemGlow
-  m_Shader: {fileID: -6465566751694194690, guid: 745a3cab574c80c4ca5898e117253ef0,
+  m_Shader: {fileID: -6465566751694194690, guid: 44958e885d8cc974a9f64571c1aa57ca,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _ALPHAPREMULTIPLY_ON
+  - _RECEIVE_SHADOWS_OFF
+  - _SPECULAR_SETUP
+  - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords: []
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 1950
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
+  m_CustomRenderQueue: 3000
+  stringTagMap:
+    RenderType: Transparent
+  disabledShaderPasses:
+  - DepthOnly
+  - SHADOWCASTER
+  m_LockedProperties: _EmissionColor
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -38,21 +45,29 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DecalAngleFadeSupported: 1
-    - _DecalMeshBiasType: 1
-    - _DecalMeshDepthBias: 0
-    - _DecalMeshViewBias: 0
-    - _DrawOrder: -50
+    - _Alpha: 0
+    - _AlphaClip: 0
+    - _AlphaToMask: 0
+    - _Blend: 0
+    - _BlendModePreserveSpecular: 1
+    - _CastShadows: 0
+    - _Cull: 2
+    - _DstBlend: 10
     - _GlowValue: 1
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _ReceiveShadows: 0
+    - _SrcBlend: 1
+    - _Surface: 1
+    - _WorkflowMode: 0
+    - _ZTest: 4
+    - _ZWrite: 0
+    - _ZWriteControl: 0
     m_Colors:
-    - _BaseColor: {r: 24.251453, g: 0, b: 17.129051, a: 1}
-    - _Color: {r: 766.9961, g: 0, b: 72.75877, a: 1}
-    - _Color_1: {r: 183.90111, g: 975.6981, b: 0, a: 1}
-    - _EmissionColor: {r: 0, g: 3.545327, b: 8.574187, a: 1}
+    - _BaseColor: {r: 0, g: 51.377884, b: 0.051655903, a: 0}
+    - _EmissionColor: {r: 0, g: 17.255623, b: 41.73182, a: 0}
   m_BuildTextureStacks: []
---- !u!114 &4654805935278714189
+--- !u!114 &6368296944134264267
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

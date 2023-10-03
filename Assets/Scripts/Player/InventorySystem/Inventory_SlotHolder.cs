@@ -30,12 +30,12 @@ public class Inventory_SlotHolder : MonoBehaviour
     {
         EventBus.Subscribe<GameObject>(EventType.INVENTORY_UPDATE, OnUpdateInventorySlot);
     }
-
+    
     private void OnDisable()
     {
         EventBus.Unsubscribe<GameObject>(EventType.INVENTORY_UPDATE, OnUpdateInventorySlot);
     }
-
+    
     private void OnUpdateInventorySlot(GameObject inventoryContainer)
     {
         SlotIconSprite.sprite = inventoryContainer.GetComponent<Player_InventoryManager>().Inventory_DataArray[_slotOrderNumber].SlotItemData.ResourceIcon;

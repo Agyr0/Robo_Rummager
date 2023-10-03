@@ -46,7 +46,13 @@ public class Player_UIManager : MonoBehaviour
 
     private void Start()
     {
-        OnStartMenu();
+        if (!_startMenu_UI.activeSelf)
+        {
+            _startMenu_UI.SetActive(true);
+            _playerHUD_UI.SetActive(false);
+            //EventBus.Publish(EventType.INVENTORY_TOGGLE);
+            EventBus.Publish(EventType.INVENTORY_UPDATE, this.gameObject);
+        }
     }
 
     public void OnStartMenu()
@@ -56,48 +62,46 @@ public class Player_UIManager : MonoBehaviour
             _startMenu_UI.SetActive(false);
             _playerHUD_UI.SetActive(true);
             EventBus.Publish(EventType.INVENTORY_TOGGLE);
-        }
-        else
-        {
-            _startMenu_UI.SetActive(true);
-            _playerHUD_UI.SetActive(false);
-            EventBus.Publish(EventType.INVENTORY_TOGGLE);
+            EventBus.Publish(EventType.INVENTORY_UPDATE, this.gameObject);
         }
     }
 
     private void OnToggleDisplayInventory()
     {
         if (_fannyPack_UI.activeSelf)
+        {
             OnHideInventory();
+            EventBus.Publish(EventType.INVENTORY_TOGGLE);
+        }
 
         else
+        {
             OnDisplayInventory();
+            EventBus.Publish(EventType.INVENTORY_TOGGLE);
+        }
     }
 
-    private void OnDisplayInventory()
+    public void OnDisplayInventory()
     {
         _inventory_UI.SetActive(true);
         _fannyPack_UI.SetActive(true);
         _playerHUD_UI.SetActive(false);
-        _creditBox.SetActive(false);
-        EventBus.Publish(EventType.INVENTORY_TOGGLE);
-    }
-
-    private void OnHideInventory()
-    {
-        _fannyPack_UI.SetActive(false);
-        _playerHUD_UI.SetActive(true);
-        _creditBox.SetActive(false);
-        EventBus.Publish(EventType.INVENTORY_TOGGLE);
-    }
-
-    public void OnDisplay_Inventory()
-    {
-        _fannyPack_UI.SetActive(true);
-        _inventory_UI.SetActive(true);
         _contracts_UI.SetActive(false);
         _options_UI.SetActive(false);
         _creditBox.SetActive(false);
+        EventBus.Publish(EventType.INVENTORY_UPDATE, this.gameObject);
+        //EventBus.Publish(EventType.INVENTORY_TOGGLE);
+    }
+
+    public void OnHideInventory()
+    {
+        _contracts_UI.SetActive(false);
+        _fannyPack_UI.SetActive(false);
+        _playerHUD_UI.SetActive(true);
+        _options_UI.SetActive(false);
+        _creditBox.SetActive(false);
+        EventBus.Publish(EventType.INVENTORY_UPDATE, this.gameObject);
+        //EventBus.Publish(EventType.INVENTORY_TOGGLE);
     }
 
     public void OnDisplay_Contacts()

@@ -62,7 +62,7 @@ public class DetectionController : MonoBehaviour
                 for (int i = 0; i < hits.Length; i++)
                 {
                     if (hits[i].GetComponentInChildren<ItemGlowController>() != null)
-                        StartCoroutine(hits[i].GetComponentInChildren<ItemGlowController>().FadeGlow());
+                        hits[i].GetComponentInChildren<ItemGlowController>().PlayGlow();
 
                 }
                 yield return null;
