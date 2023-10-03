@@ -6,7 +6,7 @@ using UnityEngine;
 public class RogueBotConfig : ScriptableObject
 {
     // Currently used for settting the path during chase state and checking if the player is within the various unit spheres for patrolling/chasing/charging
-    [Tooltip("Number of ticks (in seconds) that the Rogue Bot updates on")]
+    [Tooltip("How often various RogueBot actions will be checked. Measured in seconds.")]
     public float tickRate;
 
     [Tooltip("The Layer the player is tagged under.")]
@@ -29,13 +29,13 @@ public class RogueBotConfig : ScriptableObject
     [Tooltip("Center point of the RogueBot's patrol radius.")] 
     public Vector3 patrolCenterPoint;
 
-    [Tooltip("Minium distance between patrol points.")] 
+    [Tooltip("Minimum distance between patrol points.")] 
     public float minDistFromLastPoint;
 
-    [Tooltip("Minium wait time at a patrol point.")] 
+    [Tooltip("Minimum time the RogueBot will wait at a patrol point.")] 
     public float minWaitTime;
 
-    [Tooltip("Maximum wait time at a patrol point.")] 
+    [Tooltip("Maximum time the RogueBot will wait at a patrol point.")] 
     public float maxWaitTime;
     #endregion
 
