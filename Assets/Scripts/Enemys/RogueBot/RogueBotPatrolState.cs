@@ -17,7 +17,7 @@ public class RogueBotPatrolState : RogueBotState
 
     public void Enter(RogueBotAgent agent)
     {
-        Debug.Log("Patrol State");
+        Debug.Log("RogueBot Entered: Patrol State");
         agent.navMeshAgent.speed = agent.config.patrolSpeed;
         agent.navMeshAgent.acceleration = agent.config.patrolAcceleration;
         agent.navMeshAgent.angularSpeed = agent.config.patrolAngularSpeed;

@@ -25,5 +25,11 @@ public class ScavengerConfig : ScriptableObject
 
     [Tooltip("Maximum time the Scavenger will wait at a patrol point.")]
     public float maxWaitTime;
+
+    [Tooltip("The points that the Scavenger will patrol around, should be grabbed from the children of the ScavengerSpawnPoint.")]
+    public List<GameObject> scavengerPatrolPoints;
+
+    [Tooltip("Should the agent patrol randomly(true) or should they go in order of the points (false).")]
+    public bool randomPatrol;
     #endregion
 }
