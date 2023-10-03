@@ -160,7 +160,7 @@ public class WeaponController : MonoBehaviour
     }
     private IEnumerator AttackRaycast(int numHits)
     {
-        Ray ray = new Ray(gameManager.CameraTransform.position, gameManager.CameraTransform.forward + _curWeapon.MuzzlePos.forward);
+        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward + _curWeapon.MuzzlePos.forward);
 
         while (numHits > 0)
         {
@@ -172,6 +172,7 @@ public class WeaponController : MonoBehaviour
                 if (lootBag != null)
                 {
                     lootBag.DropResource(hit.point);
+                    Debug.Log("Hit resource");
                     break;
                 }
                 if (petBuildingController != null)
@@ -182,7 +183,7 @@ public class WeaponController : MonoBehaviour
 
             }
             //debug ray for seeing where the swing is sending out detection 
-            Debug.DrawRay(gameManager.CameraTransform.position, (gameManager.CameraTransform.forward + _curWeapon.MuzzlePos.forward) * _curWeapon.Range, Color.yellow, 1000f);
+            Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward + _curWeapon.MuzzlePos.forward * _curWeapon.Range, Color.yellow, 1000f);
             yield return null;
             numHits--;
         }
@@ -194,7 +195,7 @@ public class WeaponController : MonoBehaviour
     {
         if (canShoot)
         {
-            Ray ray = new Ray(gameManager.CameraTransform.position, gameManager.CameraTransform.forward);
+            Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 
 
             //Handle VFX

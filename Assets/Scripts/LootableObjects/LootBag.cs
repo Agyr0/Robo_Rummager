@@ -2,72 +2,76 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-    [System.Serializable]
-    public class LootBag : MonoBehaviour
-    {
+[System.Serializable]
+public class LootBag : MonoBehaviour
+{
 #if UNITY_EDITOR
-        [ArrayElementTitle("elementName")]
+    [ArrayElementTitle("elementName")]
 #endif
-        public List<DropTableItem> _dropTable = new List<DropTableItem>();
+    public List<DropTableItem> _dropTable = new List<DropTableItem>();
 
-        [SerializeField]
-        private GameObject _resourceFullMesh;
-        [SerializeField, Tooltip("Number of times this lootable item can drop something")]
-        private int _maxDrops = 10;
-        private int _dropsLeft;
+    [SerializeField]
+    private GameObject _resourceFullMesh;
+    [SerializeField, Tooltip("Number of times this lootable item can drop something")]
+    private int _maxDrops = 10;
+    [SerializeField]
+    private int _dropsLeft;
 
-        [SerializeField, Header("Drops Rigidbody Effects")]
-        private float _explosionForce = 2f;
-        [SerializeField]
-        private float _explosionRadius = 1f;
-        [SerializeField]
-        private float _upwardsModifier = 2f;
+    [SerializeField, Header("Drops Rigidbody Effects")]
+    private float _explosionForce = 2f;
+    [SerializeField]
+    private float _explosionRadius = 1f;
+    [SerializeField]
+    private float _upwardsModifier = 2f;
 
-        public GameObject ResourceFullMesh
+    public GameObject ResourceFullMesh
+    {
+        get
         {
-            get
-            {
-                if (DropsLeft <= 0 && _resourceFullMesh != null)
-                    _resourceFullMesh.SetActive(false);
-                else if (DropsLeft > 0 && !_resourceFullMesh.activeInHierarchy && _resourceFullMesh != null)
-                    _resourceFullMesh.SetActive(true);
+            if (DropsLeft <= 0 && _resourceFullMesh != null)
+                _resourceFullMesh.SetActive(false);
+            else if (DropsLeft > 0 && !_resourceFullMesh.activeInHierarchy && _resourceFullMesh != null)
+                _resourceFullMesh.SetActive(true);
 
-                return _resourceFullMesh;
-            }
+            return _resourceFullMesh;
         }
-        public int MaxDrops
-        { get { return _maxDrops; } set { _maxDrops = value; } }
-        public int DropsLeft
-        { get { return _dropsLeft; } set { _dropsLeft = value; } }
+    }
+    public int MaxDrops
+    { get { return _maxDrops; } set { _maxDrops = value; } }
+    public int DropsLeft
+    { get { return _dropsLeft; } set { _dropsLeft = value; } }
 
 
-        private void OnEnable()
+    private void OnEnable()
+    {
+        EventBus.Subscribe(EventType.REFRESH_RESOURCES, RefreshDrops);
+    }
+    private void OnDisable()
+    {
+        EventBus.Unsubscribe(EventType.REFRESH_RESOURCES, RefreshDrops);
+    }
+
+    private void RefreshDrops()
+    {
+        DropsLeft = MaxDrops;
+        if (_resourceFullMesh != null)
         {
-            EventBus.Subscribe(EventType.REFRESH_RESOURCES, RefreshDrops);
+            GameObject temp = ResourceFullMesh;
         }
-        private void OnDisable()
+
+    }
+
+
+
+    public void DropResource(Vector3 hitPosition)
+    {
+        //Pick a random item in the drop table to drop
+        int itemToDrop = Random.Range(0, _dropTable.Count);
+
+        if (DropsLeft > 0)
         {
-            EventBus.Unsubscribe(EventType.REFRESH_RESOURCES, RefreshDrops);
-        }
 
-        private void RefreshDrops()
-        {
-            DropsLeft = MaxDrops;
-            if (_resourceFullMesh != null)
-            {
-                GameObject temp = ResourceFullMesh;
-            }
-
-        }
-
-
-
-        public void DropResource(Vector3 hitPosition)
-        {
-            //Pick a random item in the drop table to drop
-            int itemToDrop = Random.Range(0, _dropTable.Count);
-
-            for (int i = 0; i < DropsLeft; i++)
+            for (int i = 0; i < _dropTable.Count; i++)
             {
                 if (_dropTable[itemToDrop].CheckDrop())
                 {
@@ -78,8 +82,8 @@ using UnityEngine;
                         rb.AddExplosionForce(_explosionForce, hitPosition, _explosionRadius, _upwardsModifier);
                     }
 
+                    DropsLeft--;
                 }
-                DropsLeft--;
             }
             if (_resourceFullMesh != null)
             {
@@ -87,3 +91,4 @@ using UnityEngine;
             }
         }
     }
+}

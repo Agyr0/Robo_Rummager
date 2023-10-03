@@ -21,6 +21,7 @@ public class RogueBotPatrolState : RogueBotState
         agent.navMeshAgent.speed = agent.config.patrolSpeed;
         agent.navMeshAgent.acceleration = agent.config.patrolAcceleration;
         agent.navMeshAgent.angularSpeed = agent.config.patrolAngularSpeed;
+        agent.config.patrolCenterPoint = agent.transform.position;
     }
 
     public void Update(RogueBotAgent agent)
