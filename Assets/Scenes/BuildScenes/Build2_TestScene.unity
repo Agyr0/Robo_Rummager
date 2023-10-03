@@ -8705,12 +8705,12 @@ PrefabInstance:
     - target: {fileID: 9178901786724497085, guid: 0368150dd7c34b84ba911e34ee920875,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.06973751
+      value: 0.069737524
       objectReference: {fileID: 0}
     - target: {fileID: 9178901786724497085, guid: 0368150dd7c34b84ba911e34ee920875,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.034193784
+      value: 0.034193788
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -22582,6 +22582,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 338594301284185927, guid: 0778fc2c62197d9428d1cfe6e564b263,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 609.66
+      objectReference: {fileID: 0}
     - target: {fileID: 670747399938623738, guid: 0778fc2c62197d9428d1cfe6e564b263,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -22727,6 +22732,44 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2911122970867158404, guid: 0778fc2c62197d9428d1cfe6e564b263,
+        type: 3}
+      propertyPath: m_text
+      value: 'Objective:
+
+        Venture forwards into the waste to collect resources.
+
+
+        Scanner
+        Goggles - Used to help locate resource nodes.
+
+
+        Wrench - Can harvest
+        resources from nodes.
+
+
+        Storage - Deposit resources on the gray cube
+        in the workshop by interacting with ''E''
+
+
+        Workbench - Collect resources
+        and build pet robots by smacking the hologram with the wrench'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2911122970867158404, guid: 0778fc2c62197d9428d1cfe6e564b263,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 26.57
+      objectReference: {fileID: 0}
+    - target: {fileID: 2911122970867158404, guid: 0778fc2c62197d9428d1cfe6e564b263,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 26.57
+      objectReference: {fileID: 0}
+    - target: {fileID: 3224024056466296307, guid: 0778fc2c62197d9428d1cfe6e564b263,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3415339116452632512, guid: 0778fc2c62197d9428d1cfe6e564b263,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -22757,11 +22800,111 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3638415517753798452, guid: 0778fc2c62197d9428d1cfe6e564b263,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1407.8135
+      objectReference: {fileID: 0}
+    - target: {fileID: 3638415517753798452, guid: 0778fc2c62197d9428d1cfe6e564b263,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 200.9767
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512606492029635759, guid: 0778fc2c62197d9428d1cfe6e564b263,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 394.113
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512606492029635759, guid: 0778fc2c62197d9428d1cfe6e564b263,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 594.2893
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512606492029635759, guid: 0778fc2c62197d9428d1cfe6e564b263,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.000061035156
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512606492029635759, guid: 0778fc2c62197d9428d1cfe6e564b263,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512606492029635759, guid: 0778fc2c62197d9428d1cfe6e564b263,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -18
+      objectReference: {fileID: 0}
     - target: {fileID: 5319434352604094948, guid: 0778fc2c62197d9428d1cfe6e564b263,
         type: 3}
       propertyPath: handTransform
       value: 
       objectReference: {fileID: 1537636957}
+    - target: {fileID: 5596537600282809322, guid: 0778fc2c62197d9428d1cfe6e564b263,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 631.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5596537600282809322, guid: 0778fc2c62197d9428d1cfe6e564b263,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5596537600282809322, guid: 0778fc2c62197d9428d1cfe6e564b263,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5596537600282809322, guid: 0778fc2c62197d9428d1cfe6e564b263,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5596537600282809322, guid: 0778fc2c62197d9428d1cfe6e564b263,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5596537600282809322, guid: 0778fc2c62197d9428d1cfe6e564b263,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -158.86
+      objectReference: {fileID: 0}
+    - target: {fileID: 5963577989102714359, guid: 0778fc2c62197d9428d1cfe6e564b263,
+        type: 3}
+      propertyPath: _feedbackForm_URL
+      value: https://docs.google.com/forms/d/e/1FAIpQLSfa8y1_cyqHa0C_xkaxLU0LUcL0P2ZbPFsUHwNTCETRWWnVKg/viewform
+      objectReference: {fileID: 0}
+    - target: {fileID: 6079096369611657739, guid: 0778fc2c62197d9428d1cfe6e564b263,
+        type: 3}
+      propertyPath: m_text
+      value: 'TAB----Inventory
+
+        SHIFT----Sprint
+
+        SPACE----Jump
+
+        LMB----ATTACK
+
+        E----Interact
+
+        SCROLL----Swap
+        Tool
+
+        Q----Scanner Goggles
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6079096369611657739, guid: 0778fc2c62197d9428d1cfe6e564b263,
+        type: 3}
+      propertyPath: m_lineSpacing
+      value: 123
+      objectReference: {fileID: 0}
+    - target: {fileID: 6079096369611657739, guid: 0778fc2c62197d9428d1cfe6e564b263,
+        type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 7154654266881707746, guid: 0778fc2c62197d9428d1cfe6e564b263,
         type: 3}
       propertyPath: _contract_Player_DataList.Array.size
@@ -22771,6 +22914,21 @@ PrefabInstance:
         type: 3}
       propertyPath: _contract_Player_DataList.Array.data[0]._contract_IsTimed
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7568708233016189926, guid: 0778fc2c62197d9428d1cfe6e564b263,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8519836069288394862, guid: 0778fc2c62197d9428d1cfe6e564b263,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 631.7075
+      objectReference: {fileID: 0}
+    - target: {fileID: 8519836069288394862, guid: 0778fc2c62197d9428d1cfe6e564b263,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -158.85376
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
