@@ -8,10 +8,9 @@ using UnityEngine;
 public static class SaveLoad
 {
     private static string directory = "/SaveData/";
-    private static string fileName = "SaveGame";
-    private static string fileExtension = ".save";
+    private static string fileName = "SaveGame.save";
 
-    public static bool Save(SaveData data, string saveID)
+    public static bool Save(SaveData data)
     {
         EventBus.Publish(EventType.PLAYER_SAVEGAME);
 
@@ -24,16 +23,16 @@ public static class SaveLoad
         }
 
         string Json = JsonUtility.ToJson(data, prettyPrint:true);
-        File.WriteAllText(path:dir + fileName + saveID + fileExtension, contents:Json);
+        File.WriteAllText(path:dir + fileName, contents:Json);
         Debug.Log(dir);
         Debug.Log("Saving Game");
 
         return true;
     }
 
-    public static SaveData Load(string saveID)
+    public static SaveData Load()
     {
-        string fullPath = Application.persistentDataPath + directory + fileName + saveID + fileExtension;
+        string fullPath = Application.persistentDataPath + directory + fileName;
         SaveData data = new SaveData();
         
 
@@ -54,9 +53,9 @@ public static class SaveLoad
         return data;
     }
 
-    public static void DeleteSaveData(string saveID)
+    public static void DeleteSaveData()
     {
-        string fullPath = Application.persistentDataPath + directory + fileName + saveID + fileExtension;
+        string fullPath = Application.persistentDataPath + directory + fileName;
 
         if (!File.Exists(fullPath)) 
         {
