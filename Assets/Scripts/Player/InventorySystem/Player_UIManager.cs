@@ -23,6 +23,10 @@ public class Player_UIManager : MonoBehaviour
     [SerializeField]
     private GameObject _options_UI;
     [SerializeField]
+    private GameObject _saveMenu_UI;
+    [SerializeField]
+    private GameObject _loadMenu_UI;
+    [SerializeField]
     private GameObject _playerHUD_UI;
     [SerializeField]
     private GameObject _creditBox;
@@ -66,7 +70,7 @@ public class Player_UIManager : MonoBehaviour
         }
     }
 
-    private void OnToggleDisplayInventory()
+    public void OnToggleDisplayInventory()
     {
         if (_fannyPack_UI.activeSelf)
         {
@@ -100,6 +104,8 @@ public class Player_UIManager : MonoBehaviour
         _playerHUD_UI.SetActive(true);
         _options_UI.SetActive(false);
         _creditBox.SetActive(false);
+        OnLoadMenuClose();
+        OnSaveMenuClose();
         EventBus.Publish(EventType.INVENTORY_UPDATE, this.gameObject);
         //EventBus.Publish(EventType.INVENTORY_TOGGLE);
     }
@@ -129,6 +135,8 @@ public class Player_UIManager : MonoBehaviour
         _playerHUD_UI.SetActive(true);
         _bulletinBoard_UI.SetActive(false);
         _creditBox.SetActive(false);
+        OnLoadMenuClose();
+        OnSaveMenuClose();
     }
 
     public void OnDisplayToggle_BulletinInteract()
@@ -201,6 +209,26 @@ public class Player_UIManager : MonoBehaviour
         {
             _optionMenu_QUIT_UI.SetActive(true);
         }
+    }
+
+    public void OnSaveMenuDisplay()
+    {
+        _saveMenu_UI.SetActive(true);
+    }
+
+    public void OnLoadMenuDisplay()
+    {
+        _loadMenu_UI.SetActive(true);
+    }
+
+    public void OnSaveMenuClose()
+    {
+        _saveMenu_UI.SetActive(false);
+    }
+
+    public void OnLoadMenuClose()
+    {
+        _loadMenu_UI.SetActive(false);
     }
 
     public void doExitGame()
