@@ -30,21 +30,21 @@ public class SaveGameManager : Singleton<SaveGameManager>
         EventBus.Subscribe<SaveData>(EventType.PLAYER_LOADGAME, LoadBoardContracts);
     }
 
-    public void DeleteData()
+    public void DeleteData(string saveID)
     {
-        SaveLoad.DeleteSaveData();
+        SaveLoad.DeleteSaveData(saveID);
     }
 
-    public static void SaveData()
+    public static void SaveData(string saveID)
     {
         var saveData = data;
 
-        SaveLoad.Save(saveData);
+        SaveLoad.Save(saveData, saveID);
     }
 
-    public static void TryLoadData()
+    public static void TryLoadData(string saveID)
     {
-        data = SaveLoad.Load();
+        data = SaveLoad.Load(saveID);
         SaveGameManager.Instance.LoadPlayerInventory(data);
 
         EventBus.Publish(EventType.SAVECONTRACTPURGE);

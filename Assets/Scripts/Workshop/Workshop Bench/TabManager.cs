@@ -92,6 +92,8 @@ namespace Agyr.Workshop
             return null;
 
         }
+
+        public void RefreshWorkbenchUI() => FindActiveTab().CheckResourceCount(WorkshopManager.Instance.WorkshopStorage);
     }
 
 
