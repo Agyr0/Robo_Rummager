@@ -24,7 +24,8 @@ namespace Agyr.Workshop
             //EventBus.Subscribe(EventType.TIER_1_ROBOTS, EnableTier1);
             //EventBus.Subscribe(EventType.TIER_2_ROBOTS, EnableTier2);
             EventBus.Subscribe<TierController>(EventType.SPAWN_HOLOGRAM, SpawnRobotHologram);
-            //EventBus.Subscribe(EventType.ROBOT_TAKEN_OFF_WORKBENCH);
+            EventBus.Subscribe(EventType.ROBOT_TAKEN_OFF_WORKBENCH, ResetTab);
+            EventBus.Subscribe(EventType.ROBOT_BUILT, RobotBuilt);
 
             tier1Controller.AssignData();
 
@@ -33,6 +34,8 @@ namespace Agyr.Workshop
         private void OnDisable()
         {
             EventBus.Unsubscribe<TierController>(EventType.SPAWN_HOLOGRAM, SpawnRobotHologram);
+            EventBus.Unsubscribe(EventType.ROBOT_TAKEN_OFF_WORKBENCH, ResetTab);
+            EventBus.Unsubscribe(EventType.ROBOT_BUILT, RobotBuilt);
         }
 
         #region Enable Tabs
@@ -51,6 +54,13 @@ namespace Agyr.Workshop
         #region Select Robots
         public void SelectTier1Robot(Button button) => tier1Controller.SelectRobot(button, robotParent, hologramInstance);
         public void CancelTier1Robot(Button button) => tier1Controller.CancelRobot(button, hologramInstance);
+
+        #endregion
+
+        private void RobotBuilt() => FindActiveTab().ToggleCancelButton();
+
+        #region Reset Tabs
+        private void ResetTab() => FindActiveTab().ResetTab(WorkshopManager.Instance.WorkshopStorage);
 
         #endregion
 
@@ -403,11 +413,10 @@ namespace Agyr.Workshop
             ButtonText.Value = "Select";
         }
 
-        public void ResetTab()
+        public void ResetTab(WorkshopStorage workshopStorage)
         {
             hasPurchased = false;
-            selectButton.interactable = true;
-            ButtonText.Value = "Select";
+            CheckResourceCount(workshopStorage);
         }
     }
 

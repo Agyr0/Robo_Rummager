@@ -12,12 +12,12 @@ public class BaseRobotPetController : PickUpObject, IInteractable
     
     public override void HandleInteract()
     {
-        base.HandleInteract();
 
         if(transform.parent == WorkshopBench.Instance.tabManager.robotParent)
         {
             EventBus.Publish(EventType.ROBOT_TAKEN_OFF_WORKBENCH);
         }
+        base.HandleInteract();
     }
 
     public bool CheckContract(Player_Contract_Manager player_Contract_Manager)

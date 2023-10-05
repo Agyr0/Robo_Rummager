@@ -117,8 +117,8 @@ public class PetBuildingController : MonoBehaviour
 
 
 
-
         yield return new WaitForSeconds(3f);
+        EventBus.Publish(EventType.ROBOT_BUILT);
 
         if(SpawnAIPrefab())
             ResetRobot();
