@@ -59,6 +59,9 @@ namespace Agyr.Workshop
             //Transfer credits and clear inventory credits
             workshopManager.WorkshopStorage.CreditCount += inventoryManager.CreditPurse;
             inventoryManager.CreditPurse = 0;
+
+
+            WorkshopBench.Instance.tabManager.RefreshWorkbenchUI();
         }
 
     }
