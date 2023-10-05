@@ -91,7 +91,10 @@ public class PetBuildingController : MonoBehaviour
             GameObject go = null;
 
             if (aiPrefab != null)
-                go = Instantiate(aiPrefab, transform.position, transform.rotation);
+            {
+                go = Instantiate(aiPrefab, transform.position, transform.rotation, WorkshopBench.Instance.tabManager.robotParent);
+
+            }
             
             for (int i = 0;i < myParts.Count;i++)
             {
@@ -105,21 +108,21 @@ public class PetBuildingController : MonoBehaviour
 
     private IEnumerator BuildCompleteEffect()
     {
-       
-
-            animator.SetTrigger("Play");
-
-            if (completedEffect != null)
-                completedEffect.Play();
 
 
-            
-        
+        animator.SetTrigger("Play");
+
+        if (completedEffect != null)
+            completedEffect.Play();
+
+
+
+
         yield return new WaitForSeconds(3f);
-        if (SpawnAIPrefab())
-        {
-            gameObject.SetActive(false);
-        }
+
+        if(SpawnAIPrefab())
+            ResetRobot();
+
     }
 }
 
