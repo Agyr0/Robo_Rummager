@@ -5,7 +5,7 @@ using UnityEngine;
 public enum ScavengerStateId
 {
     Patrol,
-    Approach,
+    Detection,
     Shoot,
 }
 
