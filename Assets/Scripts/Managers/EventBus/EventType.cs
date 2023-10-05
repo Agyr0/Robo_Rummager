@@ -86,6 +86,8 @@ public enum EventType
     TIER_3_ROBOTS,
     TOGGLE_WORKBENCH_CAM_BLEND,
     SPAWN_HOLOGRAM,
+    ROBOT_BUILT,
+    ROBOT_TAKEN_OFF_WORKBENCH,
     ROBOT_SOLD,
     #endregion
 
