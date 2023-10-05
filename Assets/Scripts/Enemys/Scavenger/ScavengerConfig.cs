@@ -32,4 +32,16 @@ public class ScavengerConfig : ScriptableObject
     [Tooltip("Should the agent patrol randomly(true) or should they go in order of the points (false).")]
     public bool randomPatrol;
     #endregion
+
+    #region Detection
+    [Header("Detection Stats")]
+    [Tooltip("Speed of the Scavenger while in detection state.")]
+    public float detectionSpeed;
+
+    [Tooltip("Acceleration of the Scavenger while in detection state.")]
+    public float detectionAcceleration;
+
+    [Tooltip("Angular Speed of the Scavenger while in detecction state.")]
+    public float detectionAngularSpeed;
+    #endregion
 }

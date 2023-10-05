@@ -132,7 +132,7 @@ public class ScavengerSensor : MonoBehaviour
         }
     }
 
-    private bool IsInSight(GameObject obj)
+    public bool IsInSight(GameObject obj)
     {
         Vector3 origin = transform.position;
         Vector3 dest = obj.transform.position;
