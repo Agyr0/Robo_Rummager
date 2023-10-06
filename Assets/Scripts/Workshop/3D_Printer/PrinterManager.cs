@@ -1,3 +1,4 @@
+using Agyr.Workshop;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine.UI;
 
 public class PrinterManager : MonoBehaviour
 {
-    public bool isPrinting = false;
+    private PrinterState printerState = PrinterState.Available;
     public int clock_PrintTime = 0;
 
     private List<Image> ResourceImageList;
@@ -19,10 +20,10 @@ public class PrinterManager : MonoBehaviour
     
     public void StartPrintOrder(int order)
     {
-        if (isPrinting == false)
+        if (printerState == PrinterState.Available)
         {
-            isPrinting = true;
-
+            printerState = PrinterState.Printing;
+            clock_PrintTime = 10;
             switch (order)
             {
                 case 0:
@@ -44,10 +45,45 @@ public class PrinterManager : MonoBehaviour
                     StartCoroutine(PrintOrder(ResourceType.Black_Matter, ResourceImageList[5]));
                     break;
                 case 6:
-                    StartCoroutine(PrintOrder(ResourceType.Z_Crystal));
+                    StartCoroutine(PrintOrder(ResourceType.Z_Crystal, ResourceImageList[5]));
                     break;
                 case 7:
-                    StartCoroutine(PrintOrder(ResourceType.Radioactive_Waste));
+                    StartCoroutine(PrintOrder(ResourceType.Radioactive_Waste, ResourceImageList[5]));
+                    break;
+            }
+        }
+    }
+
+    public void CollectPrint(ResourceType printResource)
+    {
+        if (printerState == PrinterState.Completed)
+        {
+            
+            switch (printResource)
+            {
+                case 0:
+                    WorkshopManager.Instance.WorkshopStorage.RadioactiveWasteCount++;
+                    break;
+                case 1:
+                    WorkshopManager.Instance.WorkshopStorage.RadioactiveWasteCount++;
+                    break;
+                case 2:
+                    WorkshopManager.Instance.WorkshopStorage.RadioactiveWasteCount++;
+                    break;
+                case 3:
+                    WorkshopManager.Instance.WorkshopStorage.RadioactiveWasteCount++;
+                    break;
+                case 4:
+                    WorkshopManager.Instance.WorkshopStorage.RadioactiveWasteCount++;
+                    break;
+                case 5:
+                    WorkshopManager.Instance.WorkshopStorage.RadioactiveWasteCount++;
+                    break;
+                case 6:
+                    WorkshopManager.Instance.WorkshopStorage.RadioactiveWasteCount++;
+                    break;
+                case 7:
+                    WorkshopManager.Instance.WorkshopStorage.RadioactiveWasteCount++;
                     break;
             }
         }
@@ -56,18 +92,23 @@ public class PrinterManager : MonoBehaviour
 
     public IEnumerator PrintOrder(ResourceType printResource, Image resourceImage)
     {
-        
-        clock_PrintTime = printTime;
-        while (isPrinting == true)
+        while (printerState == PrinterState.Printing)
         {
             printerResourceImage.sprite = resourceImage.sprite;
             if (clock_PrintTime == 0)
             {
-                isPrinting = false;
+                printerState = PrinterState.Completed;
             }
             clock_PrintTime--;
             yield return new WaitForSeconds(1);
         }
+    }
+
+    enum PrinterState
+    {
+        Available,
+        Printing,
+        Completed
     }
     
 }
