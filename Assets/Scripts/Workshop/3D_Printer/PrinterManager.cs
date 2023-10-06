@@ -11,11 +11,13 @@ public class PrinterManager : MonoBehaviour, IInteractable
 {
     [SerializeField]
     private PrinterState _printerState = PrinterState.Available;
+
     public int clock_PrintTime = 0;
 
     public List<Sprite> ResourceImageList;
 
     public List<Resource_ItemData> ResourceDataList;
+
     [SerializeField]
     private GameObject _itemPrefab;
     [SerializeField]
