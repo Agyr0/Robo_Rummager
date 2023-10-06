@@ -14,7 +14,8 @@ namespace Agyr.Workshop
         public TierController tier3Controller;
 
         [SerializeField]
-        private Transform prefabSpawnPopint;
+        private Transform prefabSpawnPoint;
+        public Transform robotParent;
 
         private GameObject hologramInstance;
 
@@ -23,6 +24,8 @@ namespace Agyr.Workshop
             //EventBus.Subscribe(EventType.TIER_1_ROBOTS, EnableTier1);
             //EventBus.Subscribe(EventType.TIER_2_ROBOTS, EnableTier2);
             EventBus.Subscribe<TierController>(EventType.SPAWN_HOLOGRAM, SpawnRobotHologram);
+            EventBus.Subscribe(EventType.ROBOT_TAKEN_OFF_WORKBENCH, ResetTab);
+            EventBus.Subscribe(EventType.ROBOT_BUILT, RobotBuilt);
 
             tier1Controller.AssignData();
 
@@ -31,6 +34,8 @@ namespace Agyr.Workshop
         private void OnDisable()
         {
             EventBus.Unsubscribe<TierController>(EventType.SPAWN_HOLOGRAM, SpawnRobotHologram);
+            EventBus.Unsubscribe(EventType.ROBOT_TAKEN_OFF_WORKBENCH, ResetTab);
+            EventBus.Unsubscribe(EventType.ROBOT_BUILT, RobotBuilt);
         }
 
         #region Enable Tabs
@@ -47,15 +52,24 @@ namespace Agyr.Workshop
         #endregion
 
         #region Select Robots
-        public void SelectTier1Robot(Button button) => tier1Controller.SelectRobot(button);
+        public void SelectTier1Robot(Button button) => tier1Controller.SelectRobot(button, robotParent, hologramInstance);
         public void CancelTier1Robot(Button button) => tier1Controller.CancelRobot(button, hologramInstance);
+
+        #endregion
+
+        private void RobotBuilt() => FindActiveTab().ToggleCancelButton();
+
+        #region Reset Tabs
+        private void ResetTab() => FindActiveTab().ResetTab(WorkshopManager.Instance.WorkshopStorage);
 
         #endregion
 
         private void SpawnRobotHologram(TierController controller)
         {
-            hologramInstance = Instantiate(controller.hologramPrefab, prefabSpawnPopint.position, prefabSpawnPopint.rotation);
+            hologramInstance = Instantiate(controller.hologramPrefab, prefabSpawnPoint.position, prefabSpawnPoint.rotation, robotParent);
             hologramInstance.GetComponent<PetBuildingController>().myTab = controller.selectedTab;
+            
+
             Debug.Log("Spawned hologram");
         }
 
@@ -173,13 +187,13 @@ namespace Agyr.Workshop
             }
         }
 
-        public void SelectRobot(Button button)
+        public void SelectRobot(Button button, Transform robotParent, GameObject hologram)
         {
             for (int i = 0; i < myTabs.Count; i++)
             {
                 if (myTabs[i].selectButton == button)
                 {
-                    if (myTabs[i].CheckResourceCount(workshopStorage))
+                    if (myTabs[i].CheckResourceCount(workshopStorage) && robotParent.childCount == 0)
                     {
                         myTabs[i].BuyRobot(workshopStorage);
                         hologramPrefab = myTabs[i].hologramPrefab;
@@ -189,11 +203,14 @@ namespace Agyr.Workshop
                         myTabs[i].ButtonText.Value = "Already Building";
                         myTabs[i].hasPurchased = true;
                         myTabs[i].ToggleCancelButton();
+                        
                     }
                     return;
                 }
             }
         }
+
+        
 
 
         public void CancelRobot(Button button, GameObject hologram)
@@ -396,6 +413,11 @@ namespace Agyr.Workshop
             ButtonText.Value = "Select";
         }
 
+        public void ResetTab(WorkshopStorage workshopStorage)
+        {
+            hasPurchased = false;
+            CheckResourceCount(workshopStorage);
+        }
     }
 
 
