@@ -9,15 +9,20 @@ public class PrinterManager : MonoBehaviour
     private PrinterState printerState = PrinterState.Available;
     public int clock_PrintTime = 0;
 
-    private List<Image> ResourceImageList;
+    public List<Sprite> ResourceImageList;
 
     [SerializeField]
     private GameObject printMenuUI;
     [SerializeField]
-    private GameObject printerUI;
+    private GameObject printerTimerUI;
+    [SerializeField]
+    private GameObject printerCompleteUI;
     [SerializeField]
     private Image printerResourceImage;
-    
+
+    private ResourceType printingResource;
+
+
     public void StartPrintOrder(int order)
     {
         if (printerState == PrinterState.Available)
@@ -45,44 +50,43 @@ public class PrinterManager : MonoBehaviour
                     StartCoroutine(PrintOrder(ResourceType.Black_Matter, ResourceImageList[5]));
                     break;
                 case 6:
-                    StartCoroutine(PrintOrder(ResourceType.Z_Crystal, ResourceImageList[5]));
+                    StartCoroutine(PrintOrder(ResourceType.Z_Crystal, ResourceImageList[6]));
                     break;
                 case 7:
-                    StartCoroutine(PrintOrder(ResourceType.Radioactive_Waste, ResourceImageList[5]));
+                    StartCoroutine(PrintOrder(ResourceType.Radioactive_Waste, ResourceImageList[7]));
                     break;
             }
         }
     }
 
-    public void CollectPrint(ResourceType printResource)
+    public void CollectPrint()
     {
         if (printerState == PrinterState.Completed)
         {
-            
-            switch (printResource)
+            switch (printingResource)
             {
-                case 0:
-                    WorkshopManager.Instance.WorkshopStorage.RadioactiveWasteCount++;
+                case ResourceType.Metal_Scrap:
+                    WorkshopManager.Instance.WorkshopStorage.MetalScrapCount++;
                     break;
-                case 1:
-                    WorkshopManager.Instance.WorkshopStorage.RadioactiveWasteCount++;
+                case ResourceType.Oil:
+                    WorkshopManager.Instance.WorkshopStorage.OilCount++;
                     break;
-                case 2:
-                    WorkshopManager.Instance.WorkshopStorage.RadioactiveWasteCount++;
+                case ResourceType.Advanced_Sensors:
+                    WorkshopManager.Instance.WorkshopStorage.SensorCount++;
                     break;
-                case 3:
-                    WorkshopManager.Instance.WorkshopStorage.RadioactiveWasteCount++;
+                case ResourceType.Wire:
+                    WorkshopManager.Instance.WorkshopStorage.WireCount++;
                     break;
-                case 4:
-                    WorkshopManager.Instance.WorkshopStorage.RadioactiveWasteCount++;
+                case ResourceType.MotherBoard:
+                    WorkshopManager.Instance.WorkshopStorage.MotherBoardCount++;
                     break;
-                case 5:
-                    WorkshopManager.Instance.WorkshopStorage.RadioactiveWasteCount++;
+                case ResourceType.Black_Matter:
+                    WorkshopManager.Instance.WorkshopStorage.BlackMatterCount++;
                     break;
-                case 6:
-                    WorkshopManager.Instance.WorkshopStorage.RadioactiveWasteCount++;
+                case ResourceType.Z_Crystal:
+                    WorkshopManager.Instance.WorkshopStorage.ZCrystalCount++;
                     break;
-                case 7:
+                case ResourceType.Radioactive_Waste:
                     WorkshopManager.Instance.WorkshopStorage.RadioactiveWasteCount++;
                     break;
             }
@@ -90,11 +94,12 @@ public class PrinterManager : MonoBehaviour
     }
     
 
-    public IEnumerator PrintOrder(ResourceType printResource, Image resourceImage)
+    public IEnumerator PrintOrder(ResourceType printResource, Sprite resourceImage)
     {
+        printingResource = printResource;
         while (printerState == PrinterState.Printing)
         {
-            printerResourceImage.sprite = resourceImage.sprite;
+            printerResourceImage.sprite = resourceImage;
             if (clock_PrintTime == 0)
             {
                 printerState = PrinterState.Completed;
