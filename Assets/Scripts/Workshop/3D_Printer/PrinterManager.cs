@@ -1,34 +1,74 @@
 using Agyr.Workshop;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Image = UnityEngine.UI.Image;
 
-public class PrinterManager : MonoBehaviour
+public class PrinterManager : MonoBehaviour, IInteractable
 {
-    private PrinterState printerState = PrinterState.Available;
+    [SerializeField]
+    private PrinterState _printerState = PrinterState.Available;
     public int clock_PrintTime = 0;
 
     public List<Sprite> ResourceImageList;
+
+    public List<Resource_ItemData> ResourceDataList;
+    [SerializeField]
+    private GameObject _itemPrefab;
+    [SerializeField]
+    private GameObject _itemSpawnLocation;
 
     [SerializeField]
     private GameObject printMenuUI;
     [SerializeField]
     private GameObject printerTimerUI;
     [SerializeField]
+    private GameObject printerTimerTextUI;
+    [SerializeField]
     private GameObject printerCompleteUI;
     [SerializeField]
     private Image printerResourceImage;
+    [SerializeField]
+    private TextMeshProUGUI printerTime_Text;
+
+    [SerializeField]
+    private GameObject selectionCanvas;
+    private BilboardScaler scaler;
+    private int originalWeaponIndex;
 
     private ResourceType printingResource;
 
+    private Coroutine handleUI;
+
+    private bool isOn = false;
+
+    public int Clock_PrintTime
+    {
+        get 
+        { 
+            return clock_PrintTime; 
+        }
+        set 
+        {
+            clock_PrintTime = value;
+            printerTime_Text.text = clock_PrintTime.ToString();
+        }
+    }
 
     public void StartPrintOrder(int order)
     {
-        if (printerState == PrinterState.Available)
+        if (_printerState == PrinterState.Available)
         {
-            printerState = PrinterState.Printing;
-            clock_PrintTime = 10;
+            printMenuUI.SetActive(false);
+            printerTimerUI.SetActive(true);
+            printerTimerTextUI.SetActive(true);
+            printerCompleteUI.SetActive(false);
+
+            _printerState = PrinterState.Printing;
+            Clock_PrintTime = 10;
             switch (order)
             {
                 case 0:
@@ -61,7 +101,7 @@ public class PrinterManager : MonoBehaviour
 
     public void CollectPrint()
     {
-        if (printerState == PrinterState.Completed)
+        if (_printerState == PrinterState.Completed)
         {
             switch (printingResource)
             {
@@ -90,6 +130,12 @@ public class PrinterManager : MonoBehaviour
                     WorkshopManager.Instance.WorkshopStorage.RadioactiveWasteCount++;
                     break;
             }
+            printMenuUI.SetActive(true);
+            printerTimerUI.SetActive(false);
+            printerTimerTextUI.SetActive(false);
+            printerCompleteUI.SetActive(false);
+
+            _printerState = PrinterState.Available;
         }
     }
     
@@ -97,16 +143,55 @@ public class PrinterManager : MonoBehaviour
     public IEnumerator PrintOrder(ResourceType printResource, Sprite resourceImage)
     {
         printingResource = printResource;
-        while (printerState == PrinterState.Printing)
+        while (_printerState == PrinterState.Printing)
         {
             printerResourceImage.sprite = resourceImage;
-            if (clock_PrintTime == 0)
+            if (Clock_PrintTime == 0)
             {
-                printerState = PrinterState.Completed;
+                printMenuUI.SetActive(false);
+                printerTimerUI.SetActive(true);
+                printerTimerTextUI.SetActive(false);
+                printerCompleteUI.SetActive(true);
+
+                _printerState = PrinterState.Completed;
             }
-            clock_PrintTime--;
+            Clock_PrintTime--;
             yield return new WaitForSeconds(1);
         }
+    }
+
+    public void HandleInteract()
+    {
+        if (!isOn)
+            originalWeaponIndex = GameManager.Instance.weaponController.WeaponIndex;
+        isOn = !isOn;
+
+
+        //Force Weapon switch to hands
+        if (isOn)
+        {
+            GameManager.Instance.weaponController.SwitchWeapon(2);
+            GameManager.Instance.InUI = !GameManager.Instance.InUI;
+        }
+        else if (!isOn)
+        {
+            GameManager.Instance.InUI = !GameManager.Instance.InUI;
+            GameManager.Instance.weaponController.SwitchWeapon(originalWeaponIndex);
+        }
+
+        if (scaler == null)
+        {
+            scaler = GetComponentInChildren<BilboardScaler>();
+        }
+
+
+
+        if (isOn)
+            handleUI = StartCoroutine(scaler.HandleUI());
+        else if (handleUI != null)
+            StopCoroutine(handleUI);
+
+        EventBus.Publish(EventType.TOGGLE_WORKBENCH_CAM_BLEND);
     }
 
     enum PrinterState
