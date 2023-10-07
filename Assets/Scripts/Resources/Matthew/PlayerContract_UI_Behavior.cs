@@ -39,7 +39,8 @@ public class PlayerContract_UI_Behavior : MonoBehaviour
 
     private void OnDisplayUpdate_Contract()
     {
-        if (_contract_Data.Contract_Status != ContractStatus.Failed)
+        if (_contract_Data.Contract_Status != ContractStatus.Failed
+            || _contract_Data.Contract_Status != ContractStatus.Completed)
         {
             Set_RobotTier_Text(_contract_Data.RobotTier);
             Set_RobotType_Text(_contract_Data.RobotType);
@@ -48,7 +49,7 @@ public class PlayerContract_UI_Behavior : MonoBehaviour
         }
         else
         {
-            this.gameObject.SetActive(false);
+            Destroy(this.gameObject);
         }
     }
 

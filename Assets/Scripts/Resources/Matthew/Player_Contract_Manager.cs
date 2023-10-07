@@ -39,6 +39,7 @@ public class Player_Contract_Manager : Singleton<Player_Contract_Manager>
         EventBus.Subscribe<GameObject>(EventType.PLAYER_ADDCONTRACT, CreateContract);
         EventBus.Subscribe(EventType.CONTRACT_TIMERTICK, OnContractTimerTick);
         EventBus.Subscribe(EventType.SAVECONTRACTPURGE, PurgeContracts);
+        EventBus.Subscribe<Robot_RecipeData>(EventType.ROBOT_SOLD, OnContractCheckForCompleation);
     }
     private void OnDisable()
     {
@@ -46,6 +47,7 @@ public class Player_Contract_Manager : Singleton<Player_Contract_Manager>
         EventBus.Unsubscribe<GameObject>(EventType.PLAYER_ADDCONTRACT, CreateContract);
         EventBus.Unsubscribe(EventType.CONTRACT_TIMERTICK, OnContractTimerTick);
         EventBus.Unsubscribe(EventType.SAVECONTRACTPURGE, PurgeContracts);
+        EventBus.Unsubscribe<Robot_RecipeData>(EventType.ROBOT_SOLD, OnContractCheckForCompleation);
     }
 
     public void PurgeContracts()
@@ -112,18 +114,28 @@ public class Player_Contract_Manager : Singleton<Player_Contract_Manager>
 
     }
 
-    public void OnContractCheckForCompleation(GameObject robot)
+    public void OnContractCheckForCompleation(Robot_RecipeData robot)
     {
         for (int i = 0; i < Contract_DataList.Count; i++)
         {
-            /*
-            if (Contract_DataList[i].Robot_RecipeData == robot.GetComponent<>)
+            if (Contract_DataList[i].Robot_RecipeData == robot)
             {
-                EventBus.Publish(EventType.CONTRACT_COMPLETED, Contract_DataList[i].Value_Credit);
+                //EventBus.Publish(EventType.CONTRACT_COMPLETED, Contract_DataList[i].Value_Credit);
                 Contract_DataList[i].Contract_Status = ContractStatus.Completed;
-                Contract_DataCullList.Add(Contract_DataList[i]);
+                _contract_DataCullList.Add(Contract_DataList[i]);
+                EventBus.Publish(EventType.PLAYER_CONTRACTUPDATE);
+                return;
             }
-            */
+        }
+
+        if (_contract_DataCullList.Count > 0)
+        {
+            for (int i = 0; i < _contract_DataCullList.Count; i++)
+            {
+                Contract_DataList.Contains(_contract_DataCullList[i]);
+                Contract_DataList.Remove(_contract_DataCullList[i]);
+            }
+            _contract_DataCullList.Clear();
         }
     }
     
