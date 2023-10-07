@@ -105,33 +105,76 @@ public class PrinterManager : MonoBehaviour, IInteractable
     {
         if (_printerState == PrinterState.Completed)
         {
+            GameObject tempResource = Instantiate(_itemPrefab, _itemSpawnLocation.transform.position, _itemSpawnLocation.transform.rotation);
+            
             switch (printingResource)
             {
                 case ResourceType.Metal_Scrap:
-                    WorkshopManager.Instance.WorkshopStorage.MetalScrapCount++;
+                    //WorkshopManager.Instance.WorkshopStorage.MetalScrapCount++;
+                    tempResource.GetComponent<Resource_Item>().ItemData = ResourceDataList[0];
+                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 2;
+                    tempResource.GetComponent<Resource_Item>().ResourceAmount = 1;
+                    tempResource.GetComponent<MeshRenderer>().material = ResourceDataList[0].ResourceMaterial;
+                    tempResource.GetComponent<MeshFilter>().mesh = ResourceDataList[0].ResourceMesh;
                     break;
                 case ResourceType.Oil:
-                    WorkshopManager.Instance.WorkshopStorage.OilCount++;
+                    //WorkshopManager.Instance.WorkshopStorage.OilCount++;
+                    tempResource.GetComponent<Resource_Item>().ItemData = ResourceDataList[1];
+                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 2;
+                    tempResource.GetComponent<Resource_Item>().ResourceAmount = 1;
+                    tempResource.GetComponent<MeshRenderer>().material = ResourceDataList[1].ResourceMaterial;
+                    tempResource.GetComponent<MeshFilter>().mesh = ResourceDataList[1].ResourceMesh;
                     break;
                 case ResourceType.Advanced_Sensors:
-                    WorkshopManager.Instance.WorkshopStorage.SensorCount++;
+                    //WorkshopManager.Instance.WorkshopStorage.SensorCount++;
+                    tempResource.GetComponent<Resource_Item>().ItemData = ResourceDataList[2];
+                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 2;
+                    tempResource.GetComponent<Resource_Item>().ResourceAmount = 1;
+                    tempResource.GetComponent<MeshRenderer>().material = ResourceDataList[2].ResourceMaterial;
+                    tempResource.GetComponent<MeshFilter>().mesh = ResourceDataList[2].ResourceMesh;
                     break;
                 case ResourceType.Wire:
-                    WorkshopManager.Instance.WorkshopStorage.WireCount++;
+                    //WorkshopManager.Instance.WorkshopStorage.WireCount++;
+                    tempResource.GetComponent<Resource_Item>().ItemData = ResourceDataList[3];
+                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 2;
+                    tempResource.GetComponent<Resource_Item>().ResourceAmount = 1;
+                    tempResource.GetComponent<MeshRenderer>().material = ResourceDataList[3].ResourceMaterial;
+                    tempResource.GetComponent<MeshFilter>().mesh = ResourceDataList[3].ResourceMesh;
                     break;
                 case ResourceType.MotherBoard:
-                    WorkshopManager.Instance.WorkshopStorage.MotherBoardCount++;
+                    //WorkshopManager.Instance.WorkshopStorage.MotherBoardCount++;
+                    tempResource.GetComponent<Resource_Item>().ItemData = ResourceDataList[4];
+                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 2;
+                    tempResource.GetComponent<Resource_Item>().ResourceAmount = 1;
+                    tempResource.GetComponent<MeshRenderer>().material = ResourceDataList[4].ResourceMaterial;
+                    tempResource.GetComponent<MeshFilter>().mesh = ResourceDataList[4].ResourceMesh;
                     break;
                 case ResourceType.Black_Matter:
-                    WorkshopManager.Instance.WorkshopStorage.BlackMatterCount++;
+                    //WorkshopManager.Instance.WorkshopStorage.BlackMatterCount++;
+                    tempResource.GetComponent<Resource_Item>().ItemData = ResourceDataList[5];
+                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 2;
+                    tempResource.GetComponent<Resource_Item>().ResourceAmount = 1;
+                    tempResource.GetComponent<MeshRenderer>().material = ResourceDataList[5].ResourceMaterial;
+                    tempResource.GetComponent<MeshFilter>().mesh = ResourceDataList[5].ResourceMesh;
                     break;
                 case ResourceType.Z_Crystal:
-                    WorkshopManager.Instance.WorkshopStorage.ZCrystalCount++;
+                    //WorkshopManager.Instance.WorkshopStorage.ZCrystalCount++;
+                    tempResource.GetComponent<Resource_Item>().ItemData = ResourceDataList[6];
+                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 2;
+                    tempResource.GetComponent<Resource_Item>().ResourceAmount = 1;
+                    tempResource.GetComponent<MeshRenderer>().material = ResourceDataList[6].ResourceMaterial;
+                    tempResource.GetComponent<MeshFilter>().mesh = ResourceDataList[6].ResourceMesh;
                     break;
                 case ResourceType.Radioactive_Waste:
-                    WorkshopManager.Instance.WorkshopStorage.RadioactiveWasteCount++;
+                    //WorkshopManager.Instance.WorkshopStorage.RadioactiveWasteCount++;
+                    tempResource.GetComponent<Resource_Item>().ItemData = ResourceDataList[7];
+                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 2;
+                    tempResource.GetComponent<Resource_Item>().ResourceAmount = 1;
+                    tempResource.GetComponent<MeshRenderer>().material = ResourceDataList[7].ResourceMaterial;
+                    tempResource.GetComponent<MeshFilter>().mesh = ResourceDataList[7].ResourceMesh;
                     break;
             }
+     
             printMenuUI.SetActive(true);
             printerTimerUI.SetActive(false);
             printerTimerTextUI.SetActive(false);
