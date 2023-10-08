@@ -31,20 +31,16 @@ public class Player_UIManager : MonoBehaviour
     [SerializeField]
     private GameObject _creditBox;
     [SerializeField]
-    private GameObject _bulletinBoard_UI;
-    [SerializeField]
     private GameObject _bulletinBoardInteract_UI;
 
     private void OnEnable()
     {
         EventBus.Subscribe(EventType.INVENTORYDISPLAY_TOGGLE, OnToggleDisplayInventory);
-        EventBus.Subscribe(EventType.BULLETINBOARD_INTERACT, OnDisplayToggle_Bulletin);
         EventBus.Subscribe(EventType.TOGGLE_INTERACT_HOVER, OnDisplayToggle_BulletinInteract);
     }
     private void OnDisable()
     {
         EventBus.Unsubscribe(EventType.INVENTORYDISPLAY_TOGGLE, OnToggleDisplayInventory);
-        EventBus.Unsubscribe(EventType.BULLETINBOARD_INTERACT, OnDisplayToggle_Bulletin);
         EventBus.Unsubscribe(EventType.TOGGLE_INTERACT_HOVER, OnDisplayToggle_BulletinInteract);
     }
 
@@ -133,7 +129,6 @@ public class Player_UIManager : MonoBehaviour
         _contracts_UI.SetActive(false);
         _options_UI.SetActive(false);
         _playerHUD_UI.SetActive(true);
-        _bulletinBoard_UI.SetActive(false);
         _creditBox.SetActive(false);
         OnLoadMenuClose();
         OnSaveMenuClose();
@@ -147,7 +142,7 @@ public class Player_UIManager : MonoBehaviour
         else
             _bulletinBoardInteract_UI.SetActive(true);
     }
-
+/*
     public void OnDisplayToggle_Bulletin()
     {
         if (_bulletinBoardInteract_UI.activeSelf ||
@@ -160,7 +155,7 @@ public class Player_UIManager : MonoBehaviour
                 OnDisplay_EnterBulletin();
         }
     }
-
+*/
     public void OnDisplay_EnterBulletin()
     {
         _inventory_UI.SetActive(false);
@@ -168,7 +163,6 @@ public class Player_UIManager : MonoBehaviour
         _options_UI.SetActive(false);
         _playerHUD_UI.SetActive(false);
         _fannyPack_UI.SetActive(false);
-        _bulletinBoard_UI.SetActive(true);
         _creditBox.SetActive(true);
     }
 
@@ -178,7 +172,6 @@ public class Player_UIManager : MonoBehaviour
         _contracts_UI.SetActive(false);
         _options_UI.SetActive(false);
         _playerHUD_UI.SetActive(true);
-        _bulletinBoard_UI.SetActive(false);
         _creditBox.SetActive(false);
     }
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ContractBoard_Manager : Singleton<ContractBoard_Manager>
+public class ContractBoard_Manager : Singleton<ContractBoard_Manager>, IInteractable
 {
     [SerializeField]
     private GameObject _contract_BlankTemplate_Prefab;
@@ -18,6 +18,15 @@ public class ContractBoard_Manager : Singleton<ContractBoard_Manager>
 
     [SerializeField]
     private List<Contract_Data> _contract_Board_DataList;
+
+    [SerializeField]
+    private GameObject selectionCanvas;
+    private BilboardScaler scaler;
+    private int originalWeaponIndex;
+
+    private Coroutine handleUI;
+
+    private bool isOn = false;
 
     public List<Robot_RecipeData> Robot_RecipeDataList
     {
@@ -87,5 +96,39 @@ public class ContractBoard_Manager : Singleton<ContractBoard_Manager>
         Contract.GetComponent<BoardContract_UI_Behavior>().Contract_Data = newContract;
 
         EventBus.Publish(EventType.BOARD_CONTRACTUPDATE);
+    }
+
+    public void HandleInteract()
+    {
+        if (!isOn)
+            originalWeaponIndex = GameManager.Instance.weaponController.WeaponIndex;
+        isOn = !isOn;
+
+
+        //Force Weapon switch to hands
+        if (isOn)
+        {
+            GameManager.Instance.weaponController.SwitchWeapon(2);
+            GameManager.Instance.InUI = !GameManager.Instance.InUI;
+        }
+        else if (!isOn)
+        {
+            GameManager.Instance.InUI = !GameManager.Instance.InUI;
+            GameManager.Instance.weaponController.SwitchWeapon(originalWeaponIndex);
+        }
+
+        if (scaler == null)
+        {
+            scaler = GetComponentInChildren<BilboardScaler>();
+        }
+
+
+
+        if (isOn)
+            handleUI = StartCoroutine(scaler.HandleUI());
+        else if (handleUI != null)
+            StopCoroutine(handleUI);
+
+        EventBus.Publish(EventType.TOGGLE_WORKBENCH_CAM_BLEND);
     }
 }

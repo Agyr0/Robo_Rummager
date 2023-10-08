@@ -2798,7 +2798,7 @@ PrefabInstance:
     - target: {fileID: 252010775265938117, guid: 5cb30e9969d20194186023f7ec1c8732,
         type: 3}
       propertyPath: _contract_Player_DataList.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 252010775265938117, guid: 5cb30e9969d20194186023f7ec1c8732,
         type: 3}
@@ -2806,6 +2806,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: be1a9ca0bc57671439cec7c0e7395266,
         type: 2}
+    - target: {fileID: 1130715252843763863, guid: 5cb30e9969d20194186023f7ec1c8732,
+        type: 3}
+      propertyPath: _bulletinBoard_Container
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1856561426003526304, guid: 5cb30e9969d20194186023f7ec1c8732,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -2846,6 +2851,31 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -155
       objectReference: {fileID: 0}
+    - target: {fileID: 2863309296878444565, guid: 5cb30e9969d20194186023f7ec1c8732,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2863309296878444565, guid: 5cb30e9969d20194186023f7ec1c8732,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2863309296878444565, guid: 5cb30e9969d20194186023f7ec1c8732,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3672615972305746384, guid: 5cb30e9969d20194186023f7ec1c8732,
+        type: 3}
+      propertyPath: _loadMenu_UI
+      value: 
+      objectReference: {fileID: 2207574592785736463}
+    - target: {fileID: 3672615972305746384, guid: 5cb30e9969d20194186023f7ec1c8732,
+        type: 3}
+      propertyPath: _saveMenu_UI
+      value: 
+      objectReference: {fileID: 4453048936554694902}
     - target: {fileID: 3941723452482704708, guid: 5cb30e9969d20194186023f7ec1c8732,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -3071,8 +3101,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -250
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedComponents:
+    - {fileID: 1130715252843763863, guid: 5cb30e9969d20194186023f7ec1c8732, type: 3}
+    m_RemovedGameObjects:
+    - {fileID: 2526153047063050810, guid: 5cb30e9969d20194186023f7ec1c8732, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 8338776730576929195, guid: 5cb30e9969d20194186023f7ec1c8732,
         type: 3}

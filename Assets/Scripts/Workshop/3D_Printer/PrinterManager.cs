@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using UnityEngine.VFX;
 using Image = UnityEngine.UI.Image;
 
 public class PrinterManager : MonoBehaviour, IInteractable
@@ -17,6 +18,8 @@ public class PrinterManager : MonoBehaviour, IInteractable
     public List<Sprite> ResourceImageList;
 
     public List<Resource_ItemData> ResourceDataList;
+    [SerializeField]
+    private VisualEffect _printingEffect_VFX;
 
     [SerializeField]
     private GameObject _itemPrefab;
@@ -75,27 +78,35 @@ public class PrinterManager : MonoBehaviour, IInteractable
             {
                 case 0:
                     StartCoroutine(PrintOrder(ResourceType.Metal_Scrap, ResourceImageList[0]));
+                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[0].ResourceMesh);
                     break;
                 case 1:
                     StartCoroutine(PrintOrder(ResourceType.Oil, ResourceImageList[1]));
+                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[1].ResourceMesh);
                     break;
                 case 2:
                     StartCoroutine(PrintOrder(ResourceType.Advanced_Sensors, ResourceImageList[2]));
+                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[2].ResourceMesh);
                     break;
                 case 3:
                     StartCoroutine(PrintOrder(ResourceType.Wire, ResourceImageList[3]));
+                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[3].ResourceMesh);
                     break;
                 case 4:
                     StartCoroutine(PrintOrder(ResourceType.MotherBoard, ResourceImageList[4]));
+                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[4].ResourceMesh);
                     break;
                 case 5:
                     StartCoroutine(PrintOrder(ResourceType.Black_Matter, ResourceImageList[5]));
+                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[5].ResourceMesh);
                     break;
                 case 6:
                     StartCoroutine(PrintOrder(ResourceType.Z_Crystal, ResourceImageList[6]));
+                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[6].ResourceMesh);
                     break;
                 case 7:
                     StartCoroutine(PrintOrder(ResourceType.Radioactive_Waste, ResourceImageList[7]));
+                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[7].ResourceMesh);
                     break;
             }
         }
@@ -188,6 +199,7 @@ public class PrinterManager : MonoBehaviour, IInteractable
     public IEnumerator PrintOrder(ResourceType printResource, Sprite resourceImage)
     {
         printingResource = printResource;
+        _printingEffect_VFX.Play();
         while (_printerState == PrinterState.Printing)
         {
             printerResourceImage.sprite = resourceImage;
