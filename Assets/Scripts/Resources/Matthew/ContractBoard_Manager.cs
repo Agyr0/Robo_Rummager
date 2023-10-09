@@ -129,6 +129,6 @@ public class ContractBoard_Manager : Singleton<ContractBoard_Manager>, IInteract
         else if (handleUI != null)
             StopCoroutine(handleUI);
 
-        EventBus.Publish(EventType.TOGGLE_WORKBENCH_CAM_BLEND);
+        EventBus.Publish(EventType.TOGGLE_BULLETIN_CAM_BLEND);
     }
 }

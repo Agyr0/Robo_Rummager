@@ -40,6 +40,7 @@ public class GameManager : Singleton<GameManager>
 
     private Animator _camAnimator;
     private bool isPlayerCam = true;
+    private bool isWorkbenchCam, isBulletinCam = false;
 
     private Transform _cameraTransform;
     public Transform CameraTransform
@@ -96,11 +97,13 @@ public class GameManager : Singleton<GameManager>
     {        
         EventBus.Subscribe(EventType.INVENTORY_TOGGLE, ToggleInput);
         EventBus.Subscribe(EventType.TOGGLE_WORKBENCH_CAM_BLEND, SwitchWorkbenchCam);
+        EventBus.Subscribe(EventType.TOGGLE_BULLETIN_CAM_BLEND, SwitchBulletinCam);
     }
     private void OnDisable()
     {
         EventBus.Unsubscribe(EventType.INVENTORY_TOGGLE, ToggleInput);
         EventBus.Unsubscribe(EventType.TOGGLE_WORKBENCH_CAM_BLEND, SwitchWorkbenchCam);
+        EventBus.Unsubscribe(EventType.TOGGLE_BULLETIN_CAM_BLEND, SwitchBulletinCam);
     }
     public override void Awake()
     {
@@ -125,12 +128,24 @@ public class GameManager : Singleton<GameManager>
 
     private void SwitchWorkbenchCam()
     {
-        isPlayerCam = !isPlayerCam;
+        isWorkbenchCam = !isWorkbenchCam;
+        isPlayerCam = !isWorkbenchCam;
 
         if (isPlayerCam)
             _camAnimator.Play("PlayerCam");
-        else if(!isPlayerCam)
+        else if(isWorkbenchCam)
             _camAnimator.Play("WorkbenchCam");
+
+    }
+    private void SwitchBulletinCam()
+    {
+        isBulletinCam = !isBulletinCam;
+        isPlayerCam = !isBulletinCam;
+
+        if (isPlayerCam)
+            _camAnimator.Play("PlayerCam");
+        else if (isBulletinCam)
+            _camAnimator.Play("BulletinBoardCam");
 
     }
 }
