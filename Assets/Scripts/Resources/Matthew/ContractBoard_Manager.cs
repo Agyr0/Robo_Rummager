@@ -53,6 +53,24 @@ public class ContractBoard_Manager : Singleton<ContractBoard_Manager>, IInteract
         EventBus.Unsubscribe<int, float>(EventType.BOARD_ADDCONTRACT, CreateContract);
     }
 
+    private void Start()
+    {
+        StartCoroutine(MakeContracts());
+    }
+
+    IEnumerator MakeContracts()
+    {
+        while (true)
+        {
+            if (_contract_Board_DataList.Count < 9)
+            {
+                EventBus.Publish(EventType.BOARD_ADDCONTRACT, Random.Range(0,2), 0f);
+            }
+            yield return new WaitForSeconds(5f);
+        }
+    }
+
+
     public void PurgeContract(GameObject contractToRemove)
     {
         _contract_Board_DataList.Remove(contractToRemove.GetComponent<BoardContract_UI_Behavior>().Contract_Data);
