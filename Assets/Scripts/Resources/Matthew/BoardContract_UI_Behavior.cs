@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,16 +14,19 @@ public class BoardContract_UI_Behavior : MonoBehaviour
     private GameObject _contract_Button_Promt;
 
     [SerializeField]
-    private Text _contract_RobotTier_Text;
+    private GameObject _contract_Information_Promt;
 
     [SerializeField]
-    private Text _contract_RobotType_Text;
+    private TextMeshPro _contract_RobotTier_Text;
 
     [SerializeField]
-    private Text _contract_CountTimer_Text;
+    private TextMeshPro _contract_RobotType_Text;
 
     [SerializeField]
-    private Text _contract_Payout_Text;
+    private TextMeshPro _contract_CountTimer_Text;
+
+    [SerializeField]
+    private TextMeshPro _contract_Payout_Text;
 
 
     public Contract_Data Contract_Data
@@ -134,6 +138,7 @@ public class BoardContract_UI_Behavior : MonoBehaviour
     public void OnContractButtonPress()
     {
         _contract_Button_Promt.SetActive(true);
+        _contract_Information_Promt.SetActive(false);
     }
 
     public void OnButtonPromtPress(bool isContractAccepted)
@@ -147,6 +152,7 @@ public class BoardContract_UI_Behavior : MonoBehaviour
         else
         {
             _contract_Button_Promt.SetActive(false);
+            _contract_Information_Promt.SetActive(true);
         }
     }
 }
