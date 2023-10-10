@@ -108,6 +108,7 @@ public class Player_UIManager : MonoBehaviour
 
     public void OnDisplay_Contacts()
     {
+        EventBus.Publish(EventType.PLAYER_CONTRACTUPDATE);
         _inventory_UI.SetActive(false);
         _contracts_UI.SetActive(true);
         _options_UI.SetActive(false);
