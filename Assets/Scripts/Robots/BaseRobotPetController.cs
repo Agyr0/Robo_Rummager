@@ -9,7 +9,10 @@ public class BaseRobotPetController : PickUpObject, IInteractable
     protected Robot_RecipeData recipieData;
     [SerializeField]
     private int creditProfit = 0;
-    
+
+    public Animator animator;
+
+
     public override void HandleInteract()
     {
 
@@ -40,4 +43,5 @@ public class BaseRobotPetController : PickUpObject, IInteractable
 
         WorkshopManager.Instance.WorkshopStorage.CreditCount += creditProfit;
     }
+
 }
