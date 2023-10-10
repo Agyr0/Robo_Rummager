@@ -6,6 +6,12 @@ using UnityEngine;
 public class Robot_RecipeData : ScriptableObject
 {
     [SerializeField]
+    private Sprite _robotSprite;
+
+    [SerializeField]
+    private Mesh _robotMesh;
+
+    [SerializeField]
     private RobotType _robot;
 
     [SerializeField]
@@ -37,6 +43,16 @@ public class Robot_RecipeData : ScriptableObject
 
     [SerializeField]
     private int _value_Credit;
+
+    public Sprite RobotSprite
+    {
+        get { return _robotSprite; }
+    }
+
+    public Mesh RobotMesh
+    {
+        get { return _robotMesh; }
+    }
 
     public RobotType Robot
     {
