@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DebugDrawLine : MonoBehaviour
+public class DebugDrawline : MonoBehaviour
 {
     private void OnDrawGizmos()
     {

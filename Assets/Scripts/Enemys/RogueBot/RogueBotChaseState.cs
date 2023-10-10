@@ -18,10 +18,11 @@ public class RogueBotChaseState : RogueBotState
 
     public void Enter(RogueBotAgent agent)
     {
-        Debug.Log("Chase State");
+        Debug.Log("RogueBot Entered: Chase State");
         agent.navMeshAgent.speed = agent.config.chaseSpeed;
         agent.navMeshAgent.acceleration = agent.config.chaseAcceleration;
         agent.navMeshAgent.angularSpeed = agent.config.chaseAngularSpeed;
+
         playerTransform = GameObject.Find("Player").transform;
     }
 

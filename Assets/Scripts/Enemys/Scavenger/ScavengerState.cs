@@ -6,7 +6,7 @@ public enum ScavengerStateId
 {
     Patrol,
     Detection,
-    Shoot,
+    Shooting,
 }
 
 public interface ScavengerState

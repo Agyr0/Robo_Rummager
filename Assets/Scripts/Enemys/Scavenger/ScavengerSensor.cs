@@ -137,17 +137,21 @@ public class ScavengerSensor : MonoBehaviour
         Vector3 origin = transform.position;
         Vector3 dest = obj.transform.position;
         Vector3 direction = dest - origin;
-        if (direction.y < -0.1f || direction.y > height)
-        {
-            Debug.Log("fail 1");
-            return false;
-        }
+
+        // Commenting out the vertical axis check because it was causing problems due having to offset
+        // the navmesh agents height to fit animations. Will fix later when level design requires
+        // They are ranged enemies, do they even need a limit on how high/low they can look??
+
+        //if (direction.y < 0 || direction.y > height)
+        //{
+            //Debug.Log("fail 1");
+            //return false;
+        //}
 
         direction.y = 0;
         float deltaAngle = Vector3.Angle(direction, transform.forward);
         if (deltaAngle > angle)
         {
-            Debug.Log("fail 2");
             return false;
         }
 
@@ -155,7 +159,6 @@ public class ScavengerSensor : MonoBehaviour
         dest.y = origin.y;
         if (Physics.Linecast(origin, dest, occlusionLayer))
         {
-            Debug.Log("fail 3");
             return false;
         }
 

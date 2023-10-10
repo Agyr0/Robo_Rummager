@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 using UnityEngine.Rendering.Universal;
 
 public class ScavengerWeaponIK : MonoBehaviour
@@ -9,16 +10,18 @@ public class ScavengerWeaponIK : MonoBehaviour
     public Transform aimTransform;
     public Transform bone;
     public int iterations = 10;
+    [Range(0, 1)]
+    public float weight = 1.0f;
 
     public float angleLimit = 90.0f;
     public float distanceLimit = 1.5f;
 
     private void LateUpdate()
     {
-        Vector3 targetPosition = targetTransform.position + (Vector3.up * 2);
+        Vector3 targetPosition = targetTransform.position + (Vector3.up * 1.5f);
         for (int i = 0; i < iterations; i++)
         {
-            AimAtTarget(bone, targetPosition);
+            AimAtTarget(bone, targetPosition, weight);
         }
     }
 
@@ -38,11 +41,12 @@ public class ScavengerWeaponIK : MonoBehaviour
         return aimTransform.position + direciton;
     }
 
-    private void AimAtTarget(Transform bone, Vector3 targetPosition)
+    private void AimAtTarget(Transform bone, Vector3 targetPosition, float weight)
     {
         Vector3 aimDirection = aimTransform.forward;
         Vector3 targetDirection = targetPosition - aimTransform.position;
         Quaternion aimTowards = Quaternion.FromToRotation(aimDirection, targetDirection);
-        bone.rotation = aimTowards * bone.rotation;
+        Quaternion blendedRotation = Quaternion.Slerp(Quaternion.identity, aimTowards, weight);
+        bone.rotation = blendedRotation * bone.rotation;
     }
 }

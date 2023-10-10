@@ -22,6 +22,11 @@ MonoBehaviour:
   scavengerPatrolPoints:
   - {fileID: 0}
   randomPatrol: 0
-  detectionSpeed: 0
-  detectionAcceleration: 0
-  detectionAngularSpeed: 0
+  detectionSpeed: 2
+  detectionAcceleration: 8
+  detectionAngularSpeed: 720
+  detectionStateMaxTime: 15
+  shootDistance: 500
+  shootingSpeed: 0
+  shootingAcceleration: 0
+  shootingAngularSpeed: 720

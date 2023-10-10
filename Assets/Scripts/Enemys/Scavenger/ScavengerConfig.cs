@@ -46,5 +46,14 @@ public class ScavengerConfig : ScriptableObject
 
     [Tooltip("Angular Speed of the Scavenger while in detecction state.")]
     public float detectionAngularSpeed;
+
+    [Tooltip("The time in seconds that the scavenger will chase the player before giving up and returing to the patrol state.")]
+    public float detectionStateMaxTime;
+    #endregion
+
+    #region Shooting
+    [Header("Shooting Stats")]
+    [Tooltip("The distance that the scavenger will stop from the player and begin to shoot.")]
+    public float shootDistance;
     #endregion
 }

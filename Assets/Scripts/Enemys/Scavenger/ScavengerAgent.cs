@@ -10,20 +10,19 @@ public class ScavengerAgent : MonoBehaviour, IDamageable
     public NavMeshAgent navMeshAgent;
     public ScavengerConfig config;
     public ScavengerSensor scavengerSensor;
-    private Animator animator;
+    public Animator animator;
 
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
-
-        scavengerSensor = this.gameObject.GetComponent<ScavengerSensor>();
+        scavengerSensor = GetComponent<ScavengerSensor>();
+        animator = GetComponent<Animator>();
         config = ScavengerConfig.Instantiate(config);
         stateMachine = new ScavengerStateMachine(this);
         stateMachine.RegisterState(new ScavengerPatrolState());
         stateMachine.RegisterState(new ScavengerDetectionState());
+        stateMachine.RegisterState(new ScavengerShootingState());
         stateMachine.ChangeState(initialState);
-
-        animator = GetComponent<Animator>();
 
         // Temp Code to setup pathing for scavenger patrol
         // TODO: Create a spawn manager for scavengers that will properly assign a scavengerPatrolPath

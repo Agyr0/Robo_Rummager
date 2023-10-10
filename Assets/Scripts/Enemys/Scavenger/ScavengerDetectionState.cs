@@ -5,8 +5,9 @@ using UnityEngine;
 public class ScavengerDetectionState : ScavengerState
 {
     private float timer = 0.0f;
+    private float detectionStateTimer;
     private Transform playerTransform;
-    private GameObject playerGameObject;
+    private ScavengerWeaponIK weaponIK;
 
     public ScavengerStateId GetId()
     {
@@ -19,25 +20,35 @@ public class ScavengerDetectionState : ScavengerState
         agent.navMeshAgent.speed = agent.config.detectionSpeed;
         agent.navMeshAgent.acceleration = agent.config.detectionAcceleration;
         agent.navMeshAgent.angularSpeed = agent.config.detectionAngularSpeed;
+
         playerTransform = GameObject.Find("Player").transform;
-        playerGameObject = GameObject.Find("Player");
+        detectionStateTimer = agent.config.detectionStateMaxTime;
+        weaponIK = agent.GetComponent<ScavengerWeaponIK>();
+        weaponIK.enabled = true;
     }
 
     public void Update(ScavengerAgent agent)
     {
+        detectionStateTimer -= Time.deltaTime;
         timer -= Time.deltaTime;
-        if (timer < 0.0f)
+
+        float distanceFromPlayer = playerTransform.position.sqrMagnitude - agent.transform.position.sqrMagnitude;
+        if (distanceFromPlayer <= agent.config.shootDistance)
         {
-            // Keep checking whether or not the player is within the "Shoot" vision cone, change state if so
-            //if (agent.scavengerShootingSensor.IsInSight(playerGameObject) == true)
-            //    {
-            //        //Swap States
-            //    }
+            Debug.Log("Stop to shoot");
+            agent.stateMachine.ChangeState(ScavengerStateId.Shooting);
         }
-        else
+
+        if (detectionStateTimer < 0.0f)
+        {
+            agent.stateMachine.ChangeState(ScavengerStateId.Patrol);
+        }
+
+        if (timer < 0.0f)
         {
             // Sets the agents desitination equal to the players destination
             // TODO: need to swap the animations to the gun being raised 
+            // Chasing Logic
             agent.navMeshAgent.SetDestination(playerTransform.position);
             timer = agent.config.tickRate;
         }
@@ -45,5 +56,8 @@ public class ScavengerDetectionState : ScavengerState
 
     public void Exit(ScavengerAgent agent)
     {
+        agent.navMeshAgent.ResetPath();
+        agent.navMeshAgent.velocity = Vector3.zero;
+        weaponIK.enabled = false;
     }
 }
