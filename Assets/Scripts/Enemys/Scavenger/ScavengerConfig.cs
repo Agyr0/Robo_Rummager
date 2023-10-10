@@ -26,10 +26,34 @@ public class ScavengerConfig : ScriptableObject
     [Tooltip("Maximum time the Scavenger will wait at a patrol point.")]
     public float maxWaitTime;
 
+    [Tooltip("The gameobject that contains the points for the scavengers patrolling path.")]
+    public GameObject scavengerPatrolPath;
+
     [Tooltip("The points that the Scavenger will patrol around, should be grabbed from the children of the ScavengerSpawnPoint.")]
-    public List<GameObject> scavengerPatrolPoints;
+    public List<Transform> scavengerPatrolPoints;
 
     [Tooltip("Should the agent patrol randomly(true) or should they go in order of the points (false).")]
     public bool randomPatrol;
+    #endregion
+
+    #region Detection
+    [Header("Detection Stats")]
+    [Tooltip("Speed of the Scavenger while in detection state.")]
+    public float detectionSpeed;
+
+    [Tooltip("Acceleration of the Scavenger while in detection state.")]
+    public float detectionAcceleration;
+
+    [Tooltip("Angular Speed of the Scavenger while in detecction state.")]
+    public float detectionAngularSpeed;
+
+    [Tooltip("The time in seconds that the scavenger will chase the player before giving up and returing to the patrol state.")]
+    public float detectionStateMaxTime;
+    #endregion
+
+    #region Shooting
+    [Header("Shooting Stats")]
+    [Tooltip("The distance that the scavenger will stop from the player and begin to shoot.")]
+    public float shootDistance;
     #endregion
 }

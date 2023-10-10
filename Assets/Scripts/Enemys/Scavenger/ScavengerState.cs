@@ -5,8 +5,8 @@ using UnityEngine;
 public enum ScavengerStateId
 {
     Patrol,
-    Approach,
-    Shoot,
+    Detection,
+    Shooting,
 }
 
 public interface ScavengerState
