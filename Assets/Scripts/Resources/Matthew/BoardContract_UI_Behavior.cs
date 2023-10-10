@@ -58,13 +58,13 @@ public class BoardContract_UI_Behavior : MonoBehaviour
         switch (robotTier)
         {
             case RobotTier.I:
-                _contract_RobotTier_Text.text = "Tier I";
+                _contract_RobotTier_Text.text = "I";
                 break;
             case RobotTier.II:
-                _contract_RobotTier_Text.text = "Tier II";
+                _contract_RobotTier_Text.text = "II";
                 break;
             case RobotTier.III:
-                _contract_RobotTier_Text.text = "Tier III";
+                _contract_RobotTier_Text.text = "III";
                 break;
             default:
                 break;
