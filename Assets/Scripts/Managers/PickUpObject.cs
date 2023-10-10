@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
 public class PickUpObject : MonoBehaviour, IInteractable
 {
-    private bool pickedUp = false;
+    private bool pickedUp = true;
     [SerializeField]
     private Vector3 offSet;
     private Rigidbody rb;
@@ -14,9 +14,10 @@ public class PickUpObject : MonoBehaviour, IInteractable
 
     public virtual void HandleInteract()
     {
+        pickedUp = !pickedUp;
+
         if (!pickedUp)
         {
-            pickedUp = true;
             transform.parent = GameManager.Instance.playerController.handTransform;
             transform.localPosition = new Vector3(GameManager.Instance.playerController.handTransform.localPosition.x * offSet.x,
                 GameManager.Instance.playerController.handTransform.localPosition.y * offSet.y,
@@ -30,7 +31,6 @@ public class PickUpObject : MonoBehaviour, IInteractable
         }
         else
         {
-            pickedUp = false;
             transform.parent = null;
             if (rb == null)
                 rb = GetComponent<Rigidbody>();
