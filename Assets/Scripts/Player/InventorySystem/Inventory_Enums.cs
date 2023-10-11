@@ -1,5 +1,6 @@
 public enum ResourceType
 {
+    Empty,
     MotherBoard,
     Wire,
     Oil,
@@ -8,5 +9,5 @@ public enum ResourceType
     Radioactive_Waste,
     Z_Crystal,
     Black_Matter,
-    Empty
+    Credit
 }
