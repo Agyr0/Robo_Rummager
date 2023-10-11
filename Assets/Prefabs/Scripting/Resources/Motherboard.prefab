@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1892134693477626963}
   - component: {fileID: 3764277745542253634}
   m_Layer: 0
-  m_Name: Sensor
+  m_Name: Motherboard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -68,7 +68,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7af45ebeb223eb844a41e0918e71e8d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemData: {fileID: 11400000, guid: da031076755bee24da94e311a92931d9, type: 2}
+  _itemData: {fileID: 11400000, guid: 2ca590749dc0b68449a38e98b8fd0582, type: 2}
   _resourceAmount: 1
   _isReadyForPickup: 0
   _pickupTimerCount: 2
@@ -107,6 +107,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1386726043144223690}
     m_Modifications:
+    - target: {fileID: 6913324588039523511, guid: da2b704f98cdf704983af6ca93eff61c,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -8252866308230523833, guid: 3c400b1ec0f2a154b9c47cfbc5d5f57b,
+        type: 3}
     - target: {fileID: 7139642661193816488, guid: da2b704f98cdf704983af6ca93eff61c,
         type: 3}
       propertyPath: m_Name
@@ -162,6 +168,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8653076643348297853, guid: da2b704f98cdf704983af6ca93eff61c,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c1e0b971a847b7847b64b308eb2cd3ae, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

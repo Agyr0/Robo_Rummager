@@ -26,6 +26,11 @@ public class Contract_Data
         get { return _robot_RecipeData; }
     }
 
+    public Sprite RobotSprite
+    {
+        get { return _robot_RecipeData.RobotSprite; }
+    }
+
     public RobotTier RobotTier
     {
         get {  return _robot_RecipeData.RobotTier;}
