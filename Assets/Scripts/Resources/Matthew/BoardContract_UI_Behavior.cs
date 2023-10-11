@@ -17,16 +17,19 @@ public class BoardContract_UI_Behavior : MonoBehaviour
     private GameObject _contract_Information_Promt;
 
     [SerializeField]
-    private TextMeshPro _contract_RobotTier_Text;
+    private TextMeshProUGUI _contract_RobotTier_Text;
 
     [SerializeField]
-    private TextMeshPro _contract_RobotType_Text;
+    private TextMeshProUGUI _contract_RobotType_Text;
 
     [SerializeField]
-    private TextMeshPro _contract_CountTimer_Text;
+    private TextMeshProUGUI _contract_CountTimer_Text;
 
     [SerializeField]
-    private TextMeshPro _contract_Payout_Text;
+    private TextMeshProUGUI _contract_Payout_Text;
+
+    [SerializeField]
+    private Image _contract_Image;
 
 
     public Contract_Data Contract_Data
@@ -51,6 +54,12 @@ public class BoardContract_UI_Behavior : MonoBehaviour
         Set_RobotType_Text(_contract_Data.RobotType);
         Set_Payout_Text();
         Set_CountTimer_Text();
+        Set_RobotImage(_contract_Data.RobotSprite);
+    }
+
+    public void Set_RobotImage(Sprite robotSprite)
+    {
+        _contract_Image.sprite = robotSprite;
     }
 
     public void Set_RobotTier_Text(RobotTier robotTier)
