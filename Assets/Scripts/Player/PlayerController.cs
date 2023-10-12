@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     private GameManager gameManager;
 
     #region Health
+    [SerializeField]
+    private HealthBarManager _healthBar;
     public float _health;
     private float _maxHealth = 100f;
     private bool _redScreenActive = false;
@@ -25,8 +27,11 @@ public class PlayerController : MonoBehaviour
             if(_storyboard == null)
                 _storyboard = gameManager.Storyboard;
 
-            if (value < Health)
-                StartCoroutine(FadeRedScreen());
+            //if (value < Health)
+            //    StartCoroutine(FadeRedScreen());
+
+
+            _healthBar.SetHealth(value);
 
             _health = value; 
         } 
@@ -153,6 +158,7 @@ public class PlayerController : MonoBehaviour
         
 
         _health = _maxHealth;
+        _healthBar.SetMaxHealth(_maxHealth);
         controller = GetComponent<CharacterController>();
         inputManager = InputManager.Instance;   
         CurSpeed = walkSpeed;
@@ -368,6 +374,18 @@ public class PlayerController : MonoBehaviour
 
         }
     }
+
+    //private IEnumerator RegenHealth()
+    //{
+    //    float curHealth = Health;
+    //    float regenTime = 1 / (_maxHealth - Health);
+    //    float time = 0;
+
+    //    while (curHealth >= Health && Health < _maxHealth)
+    //    {
+    //        Health
+    //    }
+    //}
     #endregion
 }
 

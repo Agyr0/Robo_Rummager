@@ -7,7 +7,7 @@ public class PickUpObject : MonoBehaviour, IInteractable
 {
     private bool pickedUp = true;
     [SerializeField]
-    private Vector3 offSet;
+    private Vector3 offSet = new Vector3(-1, 0, 1);
     private Rigidbody rb;
 
 
