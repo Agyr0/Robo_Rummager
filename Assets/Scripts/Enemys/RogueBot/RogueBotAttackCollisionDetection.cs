@@ -8,7 +8,7 @@ public class RogueBotAttackCollisionDetection : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            GameManager.Instance.playerController.Health -= 10;
+            GameManager.Instance.playerController.TakeDamage(10);
             Debug.Log(GameManager.Instance.playerController.Health);
         }
     }
