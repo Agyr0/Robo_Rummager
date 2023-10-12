@@ -381,7 +381,7 @@ public class PlayerController : MonoBehaviour
     {
         float curHealth = Health;
         float regenWaitTime = 3f;
-        float regenTime = 1 / (Health - _maxHealth);
+        float regenTime = 2f;
         float time = 0;
         Debug.Log("<color=green>Starting regen coroutine</color>");
         //Make sure player hasnt been hit for regenWaitTime
@@ -389,7 +389,6 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("<color=yellow>Waiting to regen</color>");
             time += Time.deltaTime;
-            Debug.Log("<color=red>" + time + "</color>");
             if (curHealth > Health)
             {
                 regenningHealth = false;
@@ -398,12 +397,17 @@ public class PlayerController : MonoBehaviour
             }
             yield return null;
         }
-        Debug.Log("<color=yellow>Corourtine took: " + time + " seconds</color>");
         time = 0f;
-        while (curHealth >= Health && Health < _maxHealth && time < regenTime)
+        while (Health < _maxHealth && time < regenTime)
         {
             Health = Mathf.Lerp(curHealth, _maxHealth, time / regenTime);
             time += Time.deltaTime;
+            if (curHealth > Health)
+            {
+                regenningHealth = false;
+                Debug.Log("<color=red>Player Got Hit again, stopping regen</color>");
+                yield break;
+            }
             yield return null;
 
         }
