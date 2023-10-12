@@ -256,6 +256,7 @@ public class WeaponController : MonoBehaviour
     #region Weapon Switching
     private void SwitchWeapon(Vector2 index)
     {
+        
         if (index.y > 0)
             _weaponIndex++;
         else if (index.y < 0)
@@ -275,6 +276,8 @@ public class WeaponController : MonoBehaviour
         CurAmmoText.text = _curWeapon.CurAmmo.ToString();
         EventBus.Publish(EventType.DISPLAY_WEAPON);
     }
+
+    //Used in workbench to force a weapon switch
     public void SwitchWeapon(int index)
     {
         _weaponIndex = index;
@@ -301,9 +304,15 @@ public class WeaponController : MonoBehaviour
 
         if (playerHand.childCount > 0)
         {
+            
             for (int i = 0; i < playerHand.childCount; i++)
             {
-                Destroy(playerHand.GetChild(i).gameObject);
+                if(playerHand.GetChild(i).GetComponent<IRobotPet>() != null)
+                {
+                    playerHand.GetChild(i).GetComponent<BaseRobotPetController>().HandleInteract();
+                }
+                else
+                    Destroy(playerHand.GetChild(i).gameObject);
             }
         }
         _weaponPrefab = _curWeapon.WeaponPrefab;

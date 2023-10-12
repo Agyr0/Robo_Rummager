@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,16 +14,22 @@ public class BoardContract_UI_Behavior : MonoBehaviour
     private GameObject _contract_Button_Promt;
 
     [SerializeField]
-    private Text _contract_RobotTier_Text;
+    private GameObject _contract_Information_Promt;
 
     [SerializeField]
-    private Text _contract_RobotType_Text;
+    private TextMeshProUGUI _contract_RobotTier_Text;
 
     [SerializeField]
-    private Text _contract_CountTimer_Text;
+    private TextMeshProUGUI _contract_RobotType_Text;
 
     [SerializeField]
-    private Text _contract_Payout_Text;
+    private TextMeshProUGUI _contract_CountTimer_Text;
+
+    [SerializeField]
+    private TextMeshProUGUI _contract_Payout_Text;
+
+    [SerializeField]
+    private Image _contract_Image;
 
 
     public Contract_Data Contract_Data
@@ -47,6 +54,12 @@ public class BoardContract_UI_Behavior : MonoBehaviour
         Set_RobotType_Text(_contract_Data.RobotType);
         Set_Payout_Text();
         Set_CountTimer_Text();
+        Set_RobotImage(_contract_Data.RobotSprite);
+    }
+
+    public void Set_RobotImage(Sprite robotSprite)
+    {
+        _contract_Image.sprite = robotSprite;
     }
 
     public void Set_RobotTier_Text(RobotTier robotTier)
@@ -54,13 +67,13 @@ public class BoardContract_UI_Behavior : MonoBehaviour
         switch (robotTier)
         {
             case RobotTier.I:
-                _contract_RobotTier_Text.text = "Tier I";
+                _contract_RobotTier_Text.text = "I";
                 break;
             case RobotTier.II:
-                _contract_RobotTier_Text.text = "Tier II";
+                _contract_RobotTier_Text.text = "II";
                 break;
             case RobotTier.III:
-                _contract_RobotTier_Text.text = "Tier III";
+                _contract_RobotTier_Text.text = "III";
                 break;
             default:
                 break;
@@ -134,6 +147,7 @@ public class BoardContract_UI_Behavior : MonoBehaviour
     public void OnContractButtonPress()
     {
         _contract_Button_Promt.SetActive(true);
+        _contract_Information_Promt.SetActive(false);
     }
 
     public void OnButtonPromtPress(bool isContractAccepted)
@@ -147,6 +161,7 @@ public class BoardContract_UI_Behavior : MonoBehaviour
         else
         {
             _contract_Button_Promt.SetActive(false);
+            _contract_Information_Promt.SetActive(true);
         }
     }
 }

@@ -45,7 +45,6 @@ public class BilboardScaler : MonoBehaviour
         if(other.tag == "Player")
         {
             handleUI = StartCoroutine(HandleUI());
-            Debug.LogWarning("Started Coroutine");
         }
     }
     private void OnTriggerExit(Collider other)
@@ -57,7 +56,6 @@ public class BilboardScaler : MonoBehaviour
 
 
             transform.GetChild(0).localRotation = originalRot;
-            Debug.LogWarning("Stopped Coroutine");
 
         }
     }

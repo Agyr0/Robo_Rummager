@@ -20,6 +20,9 @@ public class PlayerContract_UI_Behavior : MonoBehaviour
     [SerializeField]
     private Text _contract_Payout_Text;
 
+    [SerializeField]
+    private Image _contract_Image;
+
 
     public Contract_Data Contract_Data
     {
@@ -39,20 +42,25 @@ public class PlayerContract_UI_Behavior : MonoBehaviour
 
     private void OnDisplayUpdate_Contract()
     {
-        if (_contract_Data.Contract_Status != ContractStatus.Failed)
+        if (_contract_Data.Contract_Status != ContractStatus.Failed
+            || _contract_Data.Contract_Status != ContractStatus.Completed)
         {
             Set_RobotTier_Text(_contract_Data.RobotTier);
             Set_RobotType_Text(_contract_Data.RobotType);
             Set_Payout_Text();
             Set_CountTimer_Text();
+            Set_RobotImage(_contract_Data.RobotSprite);
         }
         else
         {
-            this.gameObject.SetActive(false);
+            Destroy(this.gameObject);
         }
     }
 
-    
+    public void Set_RobotImage(Sprite robotSprite)
+    {
+        _contract_Image.sprite = robotSprite;
+    }
 
     public void Set_RobotTier_Text(RobotTier robotTier)
     {

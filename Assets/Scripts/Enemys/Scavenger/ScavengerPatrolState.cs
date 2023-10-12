@@ -15,20 +15,20 @@ public class ScavengerPatrolState : ScavengerState
     
     public void Enter(ScavengerAgent agent)
     {
-        playerGameObject = GameObject.Find("Player");
         Debug.Log("Scavenger Entered: Patrol State");
         agent.navMeshAgent.speed = agent.config.patrolSpeed;
         agent.navMeshAgent.acceleration = agent.config.patrolAcceleration;
         agent.navMeshAgent.angularSpeed = agent.config.patrolAngularSpeed;
+
+        playerGameObject = GameObject.Find("Player");
     }
 
     public void Update(ScavengerAgent agent)
     {
-        // Check if player is in vision cone to determine if agent should swap to detection state,
-        // could put within the tick system but the sensor has its own adjustable tickrate
+        // Check if player is in vision cone to determine if agent should swap to detection state
         if(agent.scavengerSensor.IsInSight(playerGameObject) == true)
         {
-            //Swap States
+            agent.stateMachine.ChangeState(ScavengerStateId.Detection);
         }
 
         // Safety net in case there are no patrol points for some reason
@@ -62,5 +62,7 @@ public class ScavengerPatrolState : ScavengerState
 
     public void Exit(ScavengerAgent agent)
     {
+        agent.navMeshAgent.ResetPath();
+        agent.navMeshAgent.velocity = Vector3.zero;
     }
 }

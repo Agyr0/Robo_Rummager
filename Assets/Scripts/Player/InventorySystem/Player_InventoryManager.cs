@@ -174,38 +174,46 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
             if (itemPicked.GetComponent<Resource_Item>().ResourceAmount != 0 &&
                 itemPicked.GetComponent<Resource_Item>().IsReadyForPickup == true)
             {
-                Debug.Log("An item was picked up");
-                //Looks for an empty or matching resource slot
-                if (Inventory_DataArray[i].SlotItemData.ResourceName == ResourceType.Empty
-                    || Inventory_DataArray[i].SlotItemData.ResourceName == itemPicked.GetComponent<Resource_Item>().ItemData.ResourceName)
+                if (itemPicked.GetComponent<Resource_Item>().ItemData.ResourceName != ResourceType.Credit)
                 {
-                    Debug.Log("A slot was found");
-                    Inventory_DataArray[i].SlotItemData = itemPicked.GetComponent<Resource_Item>().ItemData;
-                    if (Inventory_DataArray[i].AmountStored != 25)
+                    Debug.Log("An item was picked up");
+                    //Looks for an empty or matching resource slot
+                    if (Inventory_DataArray[i].SlotItemData.ResourceName == ResourceType.Empty
+                        || Inventory_DataArray[i].SlotItemData.ResourceName == itemPicked.GetComponent<Resource_Item>().ItemData.ResourceName)
                     {
-                        //checks if adding the resource amount would exceed the slot stack limit
-                        if (Inventory_DataArray[i].AmountStored +
-                            itemPicked.GetComponent<Resource_Item>().ResourceAmount > _slotStackLimit)
+                        Debug.Log("A slot was found");
+                        Inventory_DataArray[i].SlotItemData = itemPicked.GetComponent<Resource_Item>().ItemData;
+                        if (Inventory_DataArray[i].AmountStored != 25)
                         {
-                            itemPicked.GetComponent<Resource_Item>().ResourceAmount = (Inventory_DataArray[i].AmountStored +
-                            itemPicked.GetComponent<Resource_Item>().ResourceAmount) - _slotStackLimit;
+                            //checks if adding the resource amount would exceed the slot stack limit
+                            if (Inventory_DataArray[i].AmountStored +
+                                itemPicked.GetComponent<Resource_Item>().ResourceAmount > _slotStackLimit)
+                            {
+                                itemPicked.GetComponent<Resource_Item>().ResourceAmount = (Inventory_DataArray[i].AmountStored +
+                                itemPicked.GetComponent<Resource_Item>().ResourceAmount) - _slotStackLimit;
 
-                            Inventory_DataArray[i].SlotItemData = itemPicked.GetComponent<Resource_Item>().ItemData;
-                            Inventory_DataArray[i].AmountStored = _slotStackLimit;
+                                Inventory_DataArray[i].SlotItemData = itemPicked.GetComponent<Resource_Item>().ItemData;
+                                Inventory_DataArray[i].AmountStored = _slotStackLimit;
 
-                            EventBus.Publish<GameObject>(EventType.INVENTORY_UPDATE, this.gameObject);
-                        }
-                        else
-                        {
-                            Inventory_DataArray[i].AmountStored += itemPicked.GetComponent<Resource_Item>().ResourceAmount;
-                            Inventory_DataArray[i].SlotItemData = itemPicked.GetComponent<Resource_Item>().ItemData;
+                                EventBus.Publish<GameObject>(EventType.INVENTORY_UPDATE, this.gameObject);
+                            }
+                            else
+                            {
+                                Inventory_DataArray[i].AmountStored += itemPicked.GetComponent<Resource_Item>().ResourceAmount;
+                                Inventory_DataArray[i].SlotItemData = itemPicked.GetComponent<Resource_Item>().ItemData;
 
-                            itemPicked.GetComponent<Resource_Item>().ResourceAmount = 0;
+                                itemPicked.GetComponent<Resource_Item>().ResourceAmount = 0;
 
-                            EventBus.Publish<GameObject>(EventType.INVENTORY_UPDATE, this.gameObject);
-                            break;
+                                EventBus.Publish<GameObject>(EventType.INVENTORY_UPDATE, this.gameObject);
+                                break;
+                            }
                         }
                     }
+                }
+                else
+                {
+                    CreditPurse += itemPicked.GetComponent<Resource_Item>().ResourceAmount;
+                    itemPicked.GetComponent<Resource_Item>().ResourceAmount = 0;
                 }
             }
         }
