@@ -375,17 +375,54 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //private IEnumerator RegenHealth()
-    //{
-    //    float curHealth = Health;
-    //    float regenTime = 1 / (_maxHealth - Health);
-    //    float time = 0;
+    private bool regenningHealth = false;
 
-    //    while (curHealth >= Health && Health < _maxHealth)
-    //    {
-    //        Health
-    //    }
-    //}
+    private IEnumerator RegenHealth()
+    {
+        float curHealth = Health;
+        float regenWaitTime = 3f;
+        float regenTime = 1 / (Health - _maxHealth);
+        float time = 0;
+        Debug.Log("<color=green>Starting regen coroutine</color>");
+        //Make sure player hasnt been hit for regenWaitTime
+        while(time < regenWaitTime)
+        {
+            Debug.Log("<color=yellow>Waiting to regen</color>");
+            time += Time.deltaTime;
+            Debug.Log("<color=red>" + time + "</color>");
+            if (curHealth > Health)
+            {
+                regenningHealth = false;
+                Debug.Log("<color=red>Player Got Hit again, stopping regen</color>");
+                yield break;
+            }
+            yield return null;
+        }
+        Debug.Log("<color=yellow>Corourtine took: " + time + " seconds</color>");
+        time = 0f;
+        while (curHealth >= Health && Health < _maxHealth && time < regenTime)
+        {
+            Health = Mathf.Lerp(curHealth, _maxHealth, time / regenTime);
+            time += Time.deltaTime;
+            yield return null;
+
+        }
+        Health = _maxHealth;
+        regenningHealth = false;
+        yield return null;
+
+    }
+
+    public void TakeDamage(float damage)
+    {
+        Health -= damage;
+        if(!regenningHealth)
+        {
+            regenningHealth = true;
+
+            StartCoroutine(RegenHealth());
+        }
+    }
     #endregion
 }
 
