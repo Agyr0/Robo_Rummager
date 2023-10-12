@@ -43,7 +43,7 @@ public class Contract_Data
 
     public int Value_Credit
     {
-        get { return _robot_RecipeData.Value_Credit;  }
+        get { return _contract_PayOut;  }
     }
 
     public float Contract_TimerCount
@@ -67,12 +67,17 @@ public class Contract_Data
     {
         _robot_RecipeData = robot;
         _contract_TimerCount = timerCount;
-        _contract_PayOut = robot.Value_Credit;
-
+     
         if (timerCount == 0)
+        {
             _contract_IsTimed = false;
+            _contract_PayOut = robot.Value_Credit;
+        }
         else
+        {
             _contract_IsTimed = true;
+            _contract_PayOut = robot.Value_Credit * 2;
+        }
 
         _contract_Status = ContractStatus.Unassigned;
     }
