@@ -21110,18 +21110,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4254cb0ffc18efc49b95d8f228c5a777, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 30
-  angle: 45
+  detectionDistance: 30
+  shootingDistance: 12.5
+  detectionAngle: 30
+  shootingAngle: 2.5
   height: 2
   scanFrequency: 30
-  meshColor: {r: 1, g: 0, b: 0, a: 0.90588236}
+  detectionMeshColor: {r: 0, g: 0, b: 1, a: 0.74509805}
+  shootingMeshColor: {r: 1, g: 0, b: 0, a: 0.74509805}
   playerLayer:
     serializedVersion: 2
     m_Bits: 64
   occlusionLayer:
     serializedVersion: 2
     m_Bits: 8
-  players: []
+  playersDetected: []
+  playersShooting: []
 --- !u!195 &796054386
 NavMeshAgent:
   m_ObjectHideFlags: 0

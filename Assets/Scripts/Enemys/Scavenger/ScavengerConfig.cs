@@ -52,8 +52,5 @@ public class ScavengerConfig : ScriptableObject
     #endregion
 
     #region Shooting
-    [Header("Shooting Stats")]
-    [Tooltip("The distance that the scavenger will stop from the player and begin to shoot.")]
-    public float shootDistance;
     #endregion
 }

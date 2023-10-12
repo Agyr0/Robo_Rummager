@@ -6,7 +6,7 @@ public class ScavengerDetectionState : ScavengerState
 {
     private float timer = 0.0f;
     private float detectionStateTimer;
-    private Transform playerTransform;
+    private GameObject playerGameObject;
     private ScavengerWeaponIK weaponIK;
 
     public ScavengerStateId GetId()
@@ -21,7 +21,7 @@ public class ScavengerDetectionState : ScavengerState
         agent.navMeshAgent.acceleration = agent.config.detectionAcceleration;
         agent.navMeshAgent.angularSpeed = agent.config.detectionAngularSpeed;
 
-        playerTransform = GameObject.Find("Player").transform;
+        playerGameObject = GameObject.Find("Player");
         detectionStateTimer = agent.config.detectionStateMaxTime;
         weaponIK = agent.GetComponent<ScavengerWeaponIK>();
         weaponIK.enabled = true;
@@ -32,10 +32,9 @@ public class ScavengerDetectionState : ScavengerState
         detectionStateTimer -= Time.deltaTime;
         timer -= Time.deltaTime;
 
-        float distanceFromPlayer = playerTransform.position.sqrMagnitude - agent.transform.position.sqrMagnitude;
-        if (distanceFromPlayer <= agent.config.shootDistance)
+        // Check if player is in shooting cone to determine if agent should swap to detection state
+        if (agent.scavengerSensor.playersShooting.Count >= 1)
         {
-            Debug.Log("Stop to shoot");
             agent.stateMachine.ChangeState(ScavengerStateId.Shooting);
         }
 
@@ -49,7 +48,7 @@ public class ScavengerDetectionState : ScavengerState
             // Sets the agents desitination equal to the players destination
             // TODO: need to swap the animations to the gun being raised 
             // Chasing Logic
-            agent.navMeshAgent.SetDestination(playerTransform.position);
+            agent.navMeshAgent.SetDestination(playerGameObject.transform.position);
             timer = agent.config.tickRate;
         }
     }
