@@ -20,6 +20,9 @@ public class ContractBoard_Manager : Singleton<ContractBoard_Manager>, IInteract
     private List<Contract_Data> _contract_Board_DataList;
 
     [SerializeField]
+    private int _timedContractChance;
+
+    [SerializeField]
     private GameObject selectionCanvas;
     private BilboardScaler scaler;
     private int originalWeaponIndex;
@@ -62,9 +65,18 @@ public class ContractBoard_Manager : Singleton<ContractBoard_Manager>, IInteract
     {
         while (true)
         {
-            if (_contract_Board_DataList.Count < 9)
+            if (Player_Contract_Manager.Instance.Contract_DataList.Count < 2 &&
+                Contract_DataList.Count < 3)
             {
-                EventBus.Publish(EventType.BOARD_ADDCONTRACT, Random.Range(0,2), 0f);
+                int tempChance = Random.Range(0, _timedContractChance);
+                if (tempChance == 0)
+                {
+                    EventBus.Publish(EventType.BOARD_ADDCONTRACT, Random.Range(0, _robot_RecipeDataList.Count), 380f);
+                }
+                else
+                {
+                    EventBus.Publish(EventType.BOARD_ADDCONTRACT, Random.Range(0, _robot_RecipeDataList.Count), 0f);
+                }
             }
             yield return new WaitForSeconds(5f);
         }
