@@ -3328,7 +3328,7 @@ PrefabInstance:
     - target: {fileID: 4779623248929188627, guid: 0368150dd7c34b84ba911e34ee920875,
         type: 3}
       propertyPath: m_ChildCameras.Array.size
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4878046678947873020, guid: 0368150dd7c34b84ba911e34ee920875,
         type: 3}
@@ -3345,6 +3345,36 @@ PrefabInstance:
       propertyPath: m_LookAt
       value: 
       objectReference: {fileID: 477378552}
+    - target: {fileID: 5765294860506835876, guid: 0368150dd7c34b84ba911e34ee920875,
+        type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5765294860506835876, guid: 0368150dd7c34b84ba911e34ee920875,
+        type: 3}
+      propertyPath: m_Image
+      value: 
+      objectReference: {fileID: 2800000, guid: 49e6b3062313c5943802b0a667b9ec1a, type: 3}
+    - target: {fileID: 5765294860506835876, guid: 0368150dd7c34b84ba911e34ee920875,
+        type: 3}
+      propertyPath: m_Aspect
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5765294860506835876, guid: 0368150dd7c34b84ba911e34ee920875,
+        type: 3}
+      propertyPath: m_ShowImage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5765294860506835876, guid: 0368150dd7c34b84ba911e34ee920875,
+        type: 3}
+      propertyPath: m_MuteCamera
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5765294860506835876, guid: 0368150dd7c34b84ba911e34ee920875,
+        type: 3}
+      propertyPath: m_PlaneDistance
+      value: 0.16
+      objectReference: {fileID: 0}
     - target: {fileID: 7125138409795605343, guid: 0368150dd7c34b84ba911e34ee920875,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3510,6 +3540,7 @@ SceneRoots:
   - {fileID: 1503991539465892091}
   - {fileID: 3699657054499369515}
   - {fileID: 6331735353132187393}
+  - {fileID: 8701614183910123446}
   - {fileID: 2032295742}
   - {fileID: 21233484}
   - {fileID: 906524134}
@@ -3517,7 +3548,6 @@ SceneRoots:
   - {fileID: 4526406328629585855}
   - {fileID: 1073385756332499159}
   - {fileID: 5649095544096302802}
-  - {fileID: 8701614183910123446}
   - {fileID: 1904599580}
   - {fileID: 214025590}
   - {fileID: 2125092558}

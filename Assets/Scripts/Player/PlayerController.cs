@@ -30,6 +30,9 @@ public class PlayerController : MonoBehaviour
             //if (value < Health)
             //    StartCoroutine(FadeRedScreen());
 
+            if(value <= 0)
+                StartCoroutine(FadeBlack());    
+
 
             _healthBar.SetHealth(value);
 
@@ -379,6 +382,8 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator RegenHealth()
     {
+        regenningHealth = true;
+
         float curHealth = Health;
         float regenWaitTime = 3f;
         float regenTime = 2f;
@@ -417,16 +422,51 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    Coroutine regenHealth;
     public void TakeDamage(float damage)
     {
         Health -= damage;
-        if(!regenningHealth)
+        if (regenningHealth)
         {
-            regenningHealth = true;
-
-            StartCoroutine(RegenHealth());
+            StopCoroutine(regenHealth);
+            regenHealth = StartCoroutine(RegenHealth());
+        }
+        else if (!regenningHealth)
+        {
+            regenHealth = StartCoroutine(RegenHealth());
         }
     }
+    #endregion
+
+    #region Respawning
+
+    private IEnumerator FadeBlack()
+    {
+        float fadeOutTime = 2f;
+        float fadeWaitTime = 2f;
+        float fadeInTime = 2f;
+        float time = 0f;
+
+        while (time < fadeOutTime)
+        {
+            _storyboard.m_Alpha = Mathf.Lerp(0, 1, time / fadeOutTime);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        time = 0f;
+        _storyboard.m_Alpha = 1;
+
+        yield return new WaitForSeconds(fadeWaitTime);
+        while (time < fadeInTime)
+        {
+            _storyboard.m_Alpha = Mathf.Lerp(1, 0, time / fadeInTime);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        _storyboard.m_Alpha = 0;
+
+    }
+
     #endregion
 }
 

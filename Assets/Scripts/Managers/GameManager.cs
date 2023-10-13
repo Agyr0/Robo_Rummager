@@ -72,7 +72,6 @@ public class GameManager : Singleton<GameManager>
             playerController.CanSprint = !value;
             playerController.CanDash = !value;
             _inUI = value;
-            Debug.Log("Ran set for InUI");
             if(value)
             {
                 //Set cursor to visible
@@ -89,7 +88,7 @@ public class GameManager : Singleton<GameManager>
     }
 
 
-
+    public Transform playerSpawnPoint;
 
 
 
