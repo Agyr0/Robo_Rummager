@@ -111,6 +111,7 @@ public class GameManager : Singleton<GameManager>
         inputProvider = PlayerVCam.gameObject.GetComponent<CinemachineInputProvider>();
         _storyboard = PlayerVCam.gameObject.GetComponent<CinemachineStoryboard>();
         _camAnimator = StateDrivenCamera.gameObject.GetComponent<Animator>();
+        _storyboard.m_Alpha = 0f;
 
     }
     private void Start()
