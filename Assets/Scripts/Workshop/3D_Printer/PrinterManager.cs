@@ -231,7 +231,7 @@ public class PrinterManager : MonoBehaviour, IInteractable
         else if (handleUI != null)
             StopCoroutine(handleUI);
 
-        EventBus.Publish(EventType.TOGGLE_WORKBENCH_CAM_BLEND);
+        EventBus.Publish(EventType.TOGGLE_PRINTER_CAM_BLEND);
     }
 
     enum PrinterState
