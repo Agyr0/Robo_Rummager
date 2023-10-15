@@ -62,7 +62,7 @@ public class PrinterManager : MonoBehaviour, IInteractable
             clock_PrintTime = value;
             string mintutes = ((float)clock_PrintTime / 60).ToString().Split('.')[0];
             string seconds = (clock_PrintTime % 60).ToString();
-            printerTime_Text.text = "Timer: " + mintutes + ':' + seconds;
+            printerTime_Text.text = mintutes + ':' + seconds;
         }
     }
 
@@ -79,34 +79,35 @@ public class PrinterManager : MonoBehaviour, IInteractable
             switch (order)
             {
                 case 0:
+                    Clock_PrintTime = ResourceDataList[order].ResourcePrintTime;
                     StartCoroutine(PrintOrder(ResourceType.Metal_Scrap, ResourceImageList[order]));
                     _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].ResourceMesh);
-                    Clock_PrintTime = ResourceDataList[order].ResourcePrintTime;
+                    
                     break;
                 case 1:
+                    Clock_PrintTime = ResourceDataList[order].ResourcePrintTime;
                     StartCoroutine(PrintOrder(ResourceType.Metal_Scrap, ResourceImageList[order]));
                     _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].ResourceMesh);
-                    Clock_PrintTime = ResourceDataList[order].ResourcePrintTime;
                     break;
                 case 2:
+                    Clock_PrintTime = ResourceDataList[order].ResourcePrintTime;
                     StartCoroutine(PrintOrder(ResourceType.Metal_Scrap, ResourceImageList[order]));
                     _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].ResourceMesh);
-                    Clock_PrintTime = ResourceDataList[order].ResourcePrintTime;
                     break;
                 case 3:
+                    Clock_PrintTime = ResourceDataList[order].ResourcePrintTime;
                     StartCoroutine(PrintOrder(ResourceType.Metal_Scrap, ResourceImageList[order]));
                     _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].ResourceMesh);
-                    Clock_PrintTime = ResourceDataList[order].ResourcePrintTime;
                     break;
                 case 4:
+                    Clock_PrintTime = ResourceDataList[order].ResourcePrintTime;
                     StartCoroutine(PrintOrder(ResourceType.Metal_Scrap, ResourceImageList[order]));
                     _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].ResourceMesh);
-                    Clock_PrintTime = ResourceDataList[order].ResourcePrintTime;
                     break;
                 case 5:
+                    Clock_PrintTime = ResourceDataList[order].ResourcePrintTime;
                     StartCoroutine(PrintOrder(ResourceType.Metal_Scrap, ResourceImageList[order]));
                     _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].ResourceMesh);
-                    Clock_PrintTime = ResourceDataList[order].ResourcePrintTime;
                     break;
             }
         }
@@ -230,7 +231,7 @@ public class PrinterManager : MonoBehaviour, IInteractable
         else if (handleUI != null)
             StopCoroutine(handleUI);
 
-        EventBus.Publish(EventType.TOGGLE_WORKBENCH_CAM_BLEND);
+        EventBus.Publish(EventType.TOGGLE_PRINTER_CAM_BLEND);
     }
 
     enum PrinterState
