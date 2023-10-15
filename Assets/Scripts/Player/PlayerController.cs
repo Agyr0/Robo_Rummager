@@ -3,15 +3,19 @@ using Cinemachine.PostFX;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.VFX;
+using static UnityEngine.Rendering.DebugUI;
 
 public class PlayerController : MonoBehaviour
 {
     private GameManager gameManager;
-
+    private Vector2 startLookDirection;
     #region Health
+    [SerializeField]
+    private HealthBarManager _healthBar;
     public float _health;
     private float _maxHealth = 100f;
     private bool _redScreenActive = false;
+    private bool _canBeDamaged = true;
     [HideInInspector]
     public CinemachineStoryboard _storyboard;
     private float _fadeInTime = 0.5f;
@@ -25,8 +29,12 @@ public class PlayerController : MonoBehaviour
             if(_storyboard == null)
                 _storyboard = gameManager.Storyboard;
 
-            if (value < Health)
-                StartCoroutine(FadeRedScreen());
+            //if (value < Health)
+            //    StartCoroutine(FadeRedScreen());
+
+            
+
+            _healthBar.SetHealth(value);
 
             _health = value; 
         } 
@@ -115,6 +123,20 @@ public class PlayerController : MonoBehaviour
         get { return _canDash; }
          set { _canDash = value; }
     }
+
+    public bool PlayerControls
+    {
+        get { return CanMove && CanJump && CanSprint && CanDash && gameManager.inputProvider.enabled && gameManager.weaponController.enabled; }
+        set
+        {
+            CanMove = value;
+            CanJump = value;
+            CanSprint = value;
+            CanDash = value;
+            gameManager.inputProvider.enabled = value;
+            gameManager.weaponController.enabled = value;
+        }
+    }
     #endregion
 
     #region Holding Robots
@@ -153,6 +175,7 @@ public class PlayerController : MonoBehaviour
         
 
         _health = _maxHealth;
+        _healthBar.SetMaxHealth(_maxHealth);
         controller = GetComponent<CharacterController>();
         inputManager = InputManager.Instance;   
         CurSpeed = walkSpeed;
@@ -161,6 +184,8 @@ public class PlayerController : MonoBehaviour
         CurStamina = staminaMax;
         staminaRegen = staminaDrain * 2f;
 
+        startLookDirection = new Vector2(gameManager.PlayerVCam.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.Value,
+            gameManager.PlayerVCam.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.Value);
         //Input Events
         SubscribeInputEvents();
 
@@ -368,6 +393,133 @@ public class PlayerController : MonoBehaviour
 
         }
     }
+
+    private bool regenningHealth = false;
+
+    private IEnumerator RegenHealth()
+    {
+        regenningHealth = true;
+
+        float curHealth = Health;
+        float regenWaitTime = 3f;
+        float regenTime = 2f;
+        float time = 0;
+        Debug.Log("<color=green>Starting regen coroutine</color>");
+        //Make sure player hasnt been hit for regenWaitTime
+        while(time < regenWaitTime)
+        {
+            Debug.Log("<color=yellow>Waiting to regen</color>");
+            time += Time.deltaTime;
+            if (curHealth > Health)
+            {
+                regenningHealth = false;
+                Debug.Log("<color=red>Player Got Hit again, stopping regen</color>");
+                yield break;
+            }
+            yield return null;
+        }
+        time = 0f;
+        while (Health < _maxHealth && time < regenTime)
+        {
+            Health = Mathf.Lerp(curHealth, _maxHealth, time / regenTime);
+            time += Time.deltaTime;
+            if (curHealth > Health)
+            {
+                regenningHealth = false;
+                Debug.Log("<color=red>Player Got Hit again, stopping regen</color>");
+                yield break;
+            }
+            yield return null;
+
+        }
+        Health = _maxHealth;
+        regenningHealth = false;
+        yield return null;
+
+    }
+
+    Coroutine regenHealth;
+    public void TakeDamage(float damage)
+    {
+        if (_canBeDamaged)
+        {
+            Health -= damage;
+            if (Health <= 0)
+            {
+                StartCoroutine(FadeBlack());
+                _canBeDamaged = false;
+                return;
+            }
+
+            if (regenningHealth)
+            {
+                StopCoroutine(regenHealth);
+                regenHealth = StartCoroutine(RegenHealth());
+            }
+            else if (!regenningHealth)
+            {
+                regenHealth = StartCoroutine(RegenHealth());
+            }
+        }
+    }
+    #endregion
+
+    #region Respawning
+
+    private IEnumerator FadeBlack()
+    {
+        float fadeOutTime = 2f;
+        float fadeWaitTime = 2f;
+        float fadeInTime = 2f;
+        float time = 0f;
+
+        PlayerControls = false;
+        while (time < fadeOutTime)
+        {
+            _storyboard.m_Alpha = Mathf.Lerp(0, 1, time / fadeOutTime);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        time = 0f;
+        _storyboard.m_Alpha = 1;
+
+        Respawn();
+        yield return new WaitForSeconds(fadeWaitTime);
+
+        while (time < fadeInTime)
+        {
+            _storyboard.m_Alpha = Mathf.Lerp(1, 0, time / fadeInTime);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        _storyboard.m_Alpha = 0;
+
+        controller.enabled = true;
+        PlayerControls = true;
+        _canBeDamaged = true;
+    }
+
+    private void Respawn()
+    {
+        //Health
+        Health = _maxHealth;
+        _healthBar.SetHealth(Health);
+        //Moving player
+        controller.enabled = false;
+        transform.position = gameManager.playerSpawnPoint.position;
+        //Allign look direction to what it was at start
+        gameManager.PlayerVCam.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.Value = startLookDirection.x;
+        gameManager.PlayerVCam.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.Value = startLookDirection.y;
+        //Empty Inventory 
+        for (int i = 0; i < gameManager.inventoryManager.Inventory_DataArray.Length; i++)
+        {
+            gameManager.inventoryManager.Inventory_DataArray[i].SlotItemData = gameManager.inventoryManager.ResourceEmpty;
+            gameManager.inventoryManager.Inventory_DataArray[i].AmountStored = 0;
+        }
+        gameManager.inventoryManager.CreditPurse = 0;
+        EventBus.Publish(EventType.INVENTORY_UPDATE, gameManager.inventoryManager.gameObject);
+    }
+
     #endregion
 }
 

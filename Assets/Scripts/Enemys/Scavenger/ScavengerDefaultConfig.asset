@@ -15,6 +15,18 @@ MonoBehaviour:
   tickRate: 0.5
   patrolSpeed: 3.5
   patrolAcceleration: 8
-  patrolAngularSpeed: 360
-  minWaitTime: 0.5
-  maxWaitTime: 3.5
+  patrolAngularSpeed: 720
+  minWaitTime: 3
+  maxWaitTime: 7
+  scavengerPatrolPath: {fileID: 0}
+  scavengerPatrolPoints:
+  - {fileID: 0}
+  randomPatrol: 0
+  detectionSpeed: 2
+  detectionAcceleration: 8
+  detectionAngularSpeed: 720
+  detectionStateMaxTime: 15
+  shootDistance: 500
+  shootingSpeed: 0
+  shootingAcceleration: 0
+  shootingAngularSpeed: 720

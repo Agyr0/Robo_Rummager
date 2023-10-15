@@ -308,7 +308,7 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
     {
         while (_isSendingPickupEvents)
         {
-            Debug.Log("Checking for pickups");
+            //Debug.Log("Checking for pickups");
             EventBus.Publish(EventType.INVENTORY_PICKUP);
 
             yield return new WaitForSeconds(_pickupEventInterval);
