@@ -49,6 +49,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dropTable:
+  - resource: {fileID: 2652622360622632555, guid: 6ccdceb36497005498250b22a2a1ef20,
+      type: 3}
+    dropChance: 75
+    _minDropCount: 5
+    _maxDropCount: 7
+    elementName: Credits
   - resource: {fileID: 2652622360622632555, guid: 7f7d96b6610083b41bf6b9018c6f9080,
       type: 3}
     dropChance: 75
@@ -75,6 +81,7 @@ MonoBehaviour:
     elementName: Sensor
   _resourceFullMesh: {fileID: 5074760048808330748}
   _maxDrops: 15
+  _dropsLeft: 0
   _explosionForce: 2
   _explosionRadius: 1
   _upwardsModifier: 2
