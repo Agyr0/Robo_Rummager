@@ -24,6 +24,8 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
     private TextMeshProUGUI _textHealthButton;
     [SerializeField]
     private Button _buttonHealth;
+    [SerializeField]
+    private GameObject _textHealthSold;
 
     [SerializeField]
     private int _upgradeCountCurrentStamina;
@@ -41,6 +43,8 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
     private TextMeshProUGUI _textStaminaButton;
     [SerializeField]
     private Button _buttonStamina;
+    [SerializeField]
+    private GameObject _textStaminaSold;
 
     [SerializeField]
     private int _upgradeCountCurrentDamage;
@@ -58,6 +62,8 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
     private TextMeshProUGUI _textDamageButton;
     [SerializeField]
     private Button _buttonDamage;
+    [SerializeField]
+    private GameObject _textDamageSold;
 
     [SerializeField]
     private int _upgradeCountCurrentInventorySlot;
@@ -75,6 +81,8 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
     private TextMeshProUGUI _textInventorySlotButton;
     [SerializeField]
     private Button _buttonInventorySlot;
+    [SerializeField]
+    private GameObject _textInventorySlotSold;
 
     [SerializeField]
     private int _upgradeCountCurrentStackSize;
@@ -92,6 +100,8 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
     private TextMeshProUGUI _textStackSizeButton;
     [SerializeField]
     private Button _buttonStackSize;
+    [SerializeField]
+    private GameObject _textStackSizeSold;
 
 
     [SerializeField]
@@ -176,6 +186,7 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
             {
                 WorkshopManager.Instance.WorkshopStorage.CreditCount -= _upgradeCostHealth;
                 _upgradeCountCurrentHealth++;
+                EventBus.Publish(EventType.UPGRADE_HEALTH, 5);
                 _textHealthCost.text = "Cost: " + _upgradeCostHealth;
                 _textHealthDesc.text = "+25 to Max Health";
                 _textHealthLevel.text = "Level " + _upgradeCountCurrentHealth + " of " + _upgradeCountMaxHealth;
@@ -184,6 +195,7 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
             if (_upgradeCountCurrentHealth == _upgradeCountMaxHealth)
             {
                 _buttonHealth.interactable = false;
+                _textHealthSold.SetActive(true);
             }
         }
     }
@@ -195,6 +207,7 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
             {
                 WorkshopManager.Instance.WorkshopStorage.CreditCount -= _upgradeCostStamina;
                 _upgradeCountCurrentStamina++;
+                EventBus.Publish(EventType.UPGRADE_STAMINA, 5);
                 _textStaminaCost.text = "Cost: " + _upgradeCostStamina;
                 _textStaminaDesc.text = "+25 to Max Stamina";
                 _textStaminaLevel.text = "Level " + _upgradeCountCurrentStamina + " of " + _upgradeCountMaxStamina;
@@ -203,6 +216,7 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
             if (_upgradeCountCurrentStamina == _upgradeCountMaxStamina)
             {
                 _buttonStamina.interactable = false;
+                _textStaminaSold.SetActive(true);
             }
         }
     }
@@ -223,6 +237,7 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
             if (_upgradeCountCurrentDamage == _upgradeCountMaxDamage)
             {
                 _buttonDamage.interactable = false;
+                _textDamageSold.SetActive(true);
             }
         }
     }
@@ -244,6 +259,7 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
             if (_upgradeCountCurrentInventorySlot == _upgradeCountMaxInventorySlot)
             {
                 _buttonInventorySlot.interactable = false;
+                _textInventorySlotSold.SetActive(true);
             }
         }
     }
@@ -264,6 +280,7 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
             if (_upgradeCountCurrentStackSize == _upgradeCountMaxStackSize)
             {
                 _buttonStackSize.interactable = false;
+                _textStackSizeSold.SetActive(true);
             }
         }
     }

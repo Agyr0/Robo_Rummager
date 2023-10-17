@@ -160,6 +160,8 @@ public class PlayerController : MonoBehaviour
         EventBus.Subscribe(EventType.PLAYER_STOP_SPRINT, PlayerStopSprint);
         EventBus.Subscribe(EventType.PLAYER_DASH, StartDash);
         EventBus.Subscribe(EventType.TOGGLE_SCANNER, ToggleScanner);
+        EventBus.Subscribe<float>(EventType.UPGRADE_HEALTH, AdjustMaxHealth);
+        EventBus.Subscribe<float>(EventType.UPGRADE_STAMINA, AdjustMaxStamina);
     }
     private void OnDisable()
     {
@@ -167,6 +169,8 @@ public class PlayerController : MonoBehaviour
         EventBus.Unsubscribe(EventType.PLAYER_STOP_SPRINT, PlayerStopSprint);
         EventBus.Unsubscribe(EventType.PLAYER_DASH, StartDash);
         EventBus.Unsubscribe(EventType.TOGGLE_SCANNER, ToggleScanner);
+        EventBus.Unsubscribe<float>(EventType.UPGRADE_HEALTH, AdjustMaxHealth);
+        EventBus.Unsubscribe<float>(EventType.UPGRADE_STAMINA, AdjustMaxStamina);
 
     }
 
@@ -323,6 +327,12 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
     }
+
+    public void AdjustMaxStamina(float stamina)
+    {
+        staminaMax += stamina;
+    }
+
     #endregion
 
     #region Scanner Goggles
@@ -364,6 +374,12 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Health
+
+    public void AdjustMaxHealth(float health)
+    {
+        _maxHealth += health;
+    }
+
     public IEnumerator FadeRedScreen()
     {
         if (!_redScreenActive)

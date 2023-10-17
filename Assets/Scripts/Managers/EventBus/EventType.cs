@@ -68,6 +68,8 @@ public enum EventType
     //will use the gameobject's Robot_Data to check aganist contracts
     CONTRACT_CHECK,
     CONTRACT_COMPLETED,
+    UPGRADE_HEALTH,
+    UPGRADE_STAMINA,
 
     #endregion
 
