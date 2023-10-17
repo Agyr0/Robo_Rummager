@@ -150,6 +150,11 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
         }
     }
 
+    public void OnUpgradeStackSize(int size)
+    {
+        _slotStackLimit += size;
+    }
+
     private void OnInventoryRemoveSlot()
     {
         if (_inventorySlotCount > _inventorySlotMin)
@@ -183,7 +188,7 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
                     {
                         Debug.Log("A slot was found");
                         Inventory_DataArray[i].SlotItemData = itemPicked.GetComponent<Resource_Item>().ItemData;
-                        if (Inventory_DataArray[i].AmountStored != 25)
+                        if (Inventory_DataArray[i].AmountStored != _slotStackLimit)
                         {
                             //checks if adding the resource amount would exceed the slot stack limit
                             if (Inventory_DataArray[i].AmountStored +
