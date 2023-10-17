@@ -61,10 +61,10 @@ public class DetectionController : MonoBehaviour
 
                 for (int i = 0; i < hits.Length; i++)
                 {
-                    if (hits[i].GetComponent<ItemGlowController>() == null)
-                        yield break;
+                    if (hits[i].GetComponent<ItemGlowController>() != null)
+                        hits[i].GetComponent<ItemGlowController>().PlayGlow();
+                        
 
-                    hits[i].GetComponent<ItemGlowController>().PlayGlow();
 
                 }
                 yield return null;
