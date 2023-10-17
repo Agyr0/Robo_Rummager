@@ -1029,16 +1029,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2579876511891725288, guid: 02d1c8480d661f04a925a4fbfd5c1e33,
         type: 3}
-      propertyPath: myCost.oilCost
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 2579876511891725288, guid: 02d1c8480d661f04a925a4fbfd5c1e33,
-        type: 3}
-      propertyPath: myCost.wireCost
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 2579876511891725288, guid: 02d1c8480d661f04a925a4fbfd5c1e33,
-        type: 3}
       propertyPath: myCost.sensorCost
       value: 5
       objectReference: {fileID: 0}
@@ -1201,6 +1191,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0.238
+      objectReference: {fileID: 0}
+    - target: {fileID: 5055165907688119314, guid: 02d1c8480d661f04a925a4fbfd5c1e33,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.596
       objectReference: {fileID: 0}
     - target: {fileID: 5059995127660475825, guid: 02d1c8480d661f04a925a4fbfd5c1e33,
         type: 3}
@@ -7443,6 +7438,11 @@ PrefabInstance:
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 1080310381}
+    - target: {fileID: 4340764269067426543, guid: 0368150dd7c34b84ba911e34ee920875,
+        type: 3}
+      propertyPath: m_Lens.FieldOfView
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 4779623248929188627, guid: 0368150dd7c34b84ba911e34ee920875,
         type: 3}
       propertyPath: m_ChildCameras.Array.size
@@ -7577,32 +7577,32 @@ PrefabInstance:
     - target: {fileID: 9178901786724497085, guid: 0368150dd7c34b84ba911e34ee920875,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.637
+      value: 2.77
       objectReference: {fileID: 0}
     - target: {fileID: 9178901786724497085, guid: 0368150dd7c34b84ba911e34ee920875,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.418
+      value: 1.362
       objectReference: {fileID: 0}
     - target: {fileID: 9178901786724497085, guid: 0368150dd7c34b84ba911e34ee920875,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.99990445
+      value: 0.99999917
       objectReference: {fileID: 0}
     - target: {fileID: 9178901786724497085, guid: 0368150dd7c34b84ba911e34ee920875,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.013761568
+      value: -0.00021667278
       objectReference: {fileID: 0}
     - target: {fileID: 9178901786724497085, guid: 0368150dd7c34b84ba911e34ee920875,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.0013320196
+      value: 0.0012998065
       objectReference: {fileID: 0}
     - target: {fileID: 9178901786724497085, guid: 0368150dd7c34b84ba911e34ee920875,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000018332428
+      value: 0.00000028163294
       objectReference: {fileID: 0}
     - target: {fileID: 9178901786724497085, guid: 0368150dd7c34b84ba911e34ee920875,
         type: 3}
@@ -18682,6 +18682,11 @@ PrefabInstance:
     - target: {fileID: 1631348986596326913, guid: 4813fd5bd5265d142ae1b89d160398fd,
         type: 3}
       propertyPath: maxScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1650873818910859793, guid: 4813fd5bd5265d142ae1b89d160398fd,
+        type: 3}
+      propertyPath: _robot_RecipeDataList.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4097819085265743464, guid: 4813fd5bd5265d142ae1b89d160398fd,
@@ -35013,6 +35018,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8502652411267698695, guid: e5a93fd82f3af56498d7decd4f92948b,
+        type: 3}
+      propertyPath: field of view
+      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
