@@ -25,6 +25,9 @@ public class PlayerContract_UI_Behavior : MonoBehaviour
     [SerializeField]
     private Image _contract_Image;
 
+    [SerializeField]
+    private GameObject _contract_Failed;
+
 
     public Contract_Data Contract_Data
     {
@@ -32,20 +35,14 @@ public class PlayerContract_UI_Behavior : MonoBehaviour
         set { _contract_Data = value; }
     }
 
-    private void OnEnable()
+    private void Start()
     {
         EventBus.Subscribe(EventType.PLAYER_CONTRACTUPDATE, OnDisplayUpdate_Contract);
     }
 
-    private void OnDisable()
-    {
-        EventBus.Unsubscribe(EventType.PLAYER_CONTRACTUPDATE, OnDisplayUpdate_Contract);
-    }
-
     private void OnDisplayUpdate_Contract()
     {
-        if (_contract_Data.Contract_Status != ContractStatus.Failed
-            || _contract_Data.Contract_Status != ContractStatus.Completed)
+        if (_contract_Data.Contract_Status != ContractStatus.Completed)
         {
             Set_RobotTier_Text(_contract_Data.RobotTier);
             Set_RobotType_Text(_contract_Data.RobotType);
@@ -53,10 +50,19 @@ public class PlayerContract_UI_Behavior : MonoBehaviour
             Set_CountTimer_Text();
             Set_RobotImage(_contract_Data.RobotSprite);
         }
+        else if(_contract_Data.Contract_Status != ContractStatus.Failed)
+        {
+            _contract_Failed.SetActive(true);
+        }
         else
         {
             Destroy(this.gameObject);
         }
+    }
+
+    public void DeleteContract()
+    {
+        Destroy(this.gameObject);
     }
 
     public void Set_RobotImage(Sprite robotSprite)

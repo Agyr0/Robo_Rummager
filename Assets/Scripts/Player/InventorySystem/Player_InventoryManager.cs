@@ -116,6 +116,7 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
         EventBus.Subscribe<GameObject>(EventType.INVENTORY_ADDITEMCULL, OnAddCullItem);
         EventBus.Subscribe(EventType.INVENTORY_REMOVEITEM, OnRemoveItem);
         EventBus.Subscribe<int>(EventType.CONTRACT_COMPLETED, OnContractCompleation);
+        EventBus.Subscribe<int>(EventType.UPGRADE_STACKSIZE, OnUpgradeStackSize);
         EventBus.Subscribe(EventType.ONLOAD, OnLoad);
     }
 
@@ -129,6 +130,7 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
         EventBus.Unsubscribe<GameObject>(EventType.INVENTORY_ADDITEMCULL, OnAddCullItem);
         EventBus.Unsubscribe(EventType.INVENTORY_REMOVEITEM, OnRemoveItem);
         EventBus.Unsubscribe<int>(EventType.CONTRACT_COMPLETED, OnContractCompleation);
+        EventBus.Unsubscribe<int>(EventType.UPGRADE_STACKSIZE, OnUpgradeStackSize);
     }
 
     private void OnInventoryLoadSlots(int slotsToAdd)
