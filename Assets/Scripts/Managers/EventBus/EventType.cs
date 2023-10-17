@@ -68,6 +68,8 @@ public enum EventType
     //will use the gameobject's Robot_Data to check aganist contracts
     CONTRACT_CHECK,
     CONTRACT_COMPLETED,
+    UPGRADE_HEALTH,
+    UPGRADE_STAMINA,
 
     #endregion
 
@@ -86,6 +88,8 @@ public enum EventType
     TIER_3_ROBOTS,
     TOGGLE_WORKBENCH_CAM_BLEND,
     TOGGLE_BULLETIN_CAM_BLEND,
+    TOGGLE_PRINTER_CAM_BLEND,
+    TOGGLE_DARKPC_CAM_BLEND,
     SPAWN_HOLOGRAM,
     ROBOT_BUILT,
     ROBOT_TAKEN_OFF_WORKBENCH,

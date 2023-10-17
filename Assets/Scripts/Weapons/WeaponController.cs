@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Linq.Expressions;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,8 +14,11 @@ public class WeaponController : MonoBehaviour
     private GameManager gameManager;
     private InputManager inputManager;
 
+    private ObjectPooler weaponPooler;
+
     [SerializeField]
     private Transform playerHand;
+    private Transform playerHandStartTransform;
 
     private WeaponData _curWeapon;
     private GameObject _weaponPrefab;
@@ -71,10 +75,17 @@ public class WeaponController : MonoBehaviour
         _curWeapon = _availableWeapons[0];
         inputManager = InputManager.Instance;
         _animator = GetComponent<Animator>();
+
+        playerHandStartTransform = playerHand.transform;
+
         //Input Events
         SubscribeInputEvents();
 
         InitializeWeapon();
+
+
+
+        weaponPooler = Camera.main.gameObject.GetComponentInChildren<ObjectPooler>();
     }
 
     private void OnEnable()
@@ -148,15 +159,44 @@ public class WeaponController : MonoBehaviour
     {
         isSwinging = true;
         _animator.SetTrigger("Attack");
+        if (isSwinging)
+        {
+            Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+            RaycastHit hit = new RaycastHit();
+
+       
+
+            if (Physics.Raycast(ray, out hit, _curWeapon.Range))
+            {
+
+                LootBag lootBag = hit.transform.gameObject.GetComponent<LootBag>();
+                PetBuildingController petBuildingController = hit.transform.gameObject.GetComponent<PetBuildingController>();
+                //If I hit an item with a lootbag script run drop resource
+                if (lootBag != null)
+                {
+                    lootBag.DropResource(hit.point);
+                    Debug.Log("Hit resource");
+                    return;
+                }
+                if (petBuildingController != null)
+                {
+                    petBuildingController.BuildPiece();
+                    return;
+                }
+            }
+
+        }
     }
+
     public void StopWrenchSwing()
     {
         isSwinging = false;
     }
 
+    /* Depricated
     public void PlayAttack()
     {
-        StartCoroutine(AttackRaycast(10));
+        //StartCoroutine(AttackRaycast(10));
     }
     private IEnumerator AttackRaycast(int numHits)
     {
@@ -188,6 +228,10 @@ public class WeaponController : MonoBehaviour
             numHits--;
         }
     }
+
+    */
+
+
     #endregion
 
     #region Rifle
@@ -196,23 +240,28 @@ public class WeaponController : MonoBehaviour
         if (canShoot)
         {
             Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
-
+            RaycastHit hit = new RaycastHit();
 
             //Handle VFX
             //Spawn Laser Bullet
-            GameObject laser = Instantiate(_curWeapon.LaserBeam, _curWeapon.MuzzlePos.position, transform.rotation);
+            // GameObject laser = Instantiate(_curWeapon.LaserBeam, _curWeapon.MuzzlePos.position, transform.rotation);
             //Spawn Muzzle Flash
             //GameObject muzzleFlash = Instantiate(_curWeapon.MuzzleFlash, transform.position, Quaternion.FromToRotation(transform.position, transform.forward));
 
+            TrailRenderer trail = weaponPooler.GetPooledObject().GetComponent<TrailRenderer>();
 
-            if (Physics.Raycast(ray, out RaycastHit hit, _curWeapon.Range))
+            if (Physics.Raycast(ray, out hit, _curWeapon.Range))
             {
+
                 IDamageable enemy = hit.transform.GetComponent<IDamageable>();
                 if (enemy != null)
                 {
                     enemy.TakeDamage(_curWeapon.Damage);
                 }
             }
+            StartCoroutine(ShootTrail(trail, hit));
+            
+            
             _curWeapon.CurAmmo--;
             CurAmmoText = CurAmmoText;
 
@@ -228,6 +277,29 @@ public class WeaponController : MonoBehaviour
             }
             Debug.Log("Ammo: " + _curWeapon.CurAmmo);
         }
+    }
+
+    private IEnumerator ShootTrail(TrailRenderer trail, RaycastHit hit)
+    {
+        float time = 0;
+        trail.transform.position = _curWeapon.MuzzlePos.position;
+        Vector3 startPos = trail.transform.position;
+        trail.gameObject.SetActive(true);
+
+        if(hit.point == Vector3.zero)
+        {
+            hit.point = new Ray(Camera.main.transform.position, Camera.main.transform.forward).GetPoint(100);
+        }
+
+        while (time < trail.time)
+        {
+            trail.transform.position = Vector3.Lerp(startPos, hit.point, time / trail.time);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        trail.transform.position = hit.point;
+        yield return new WaitForSeconds(trail.time);
+        trail.gameObject.SetActive(false);
     }
 
     #region Reloading
@@ -326,6 +398,9 @@ public class WeaponController : MonoBehaviour
             if (weaponInstance.transform.childCount > 0)
                 _curWeapon.MuzzlePos = weaponInstance.transform.GetChild(0);
         }
+
+        //playerHand.transform.position = playerHandStartTransform.position;
+        //playerHand.transform.rotation = playerHandStartTransform.rotation;
     }
     #endregion
 

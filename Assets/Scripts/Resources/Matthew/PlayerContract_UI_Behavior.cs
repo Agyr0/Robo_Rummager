@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using Unity.VisualScripting;
 
 public class PlayerContract_UI_Behavior : MonoBehaviour
 {
@@ -9,16 +11,16 @@ public class PlayerContract_UI_Behavior : MonoBehaviour
     private Contract_Data _contract_Data;
 
     [SerializeField]
-    private Text _contract_RobotTier_Text;
+    private TextMeshProUGUI _contract_RobotTier_Text;
 
     [SerializeField]
-    private Text _contract_RobotType_Text;
+    private TextMeshProUGUI _contract_RobotType_Text;
 
     [SerializeField]
-    private Text _contract_CountTimer_Text;
+    private TextMeshProUGUI _contract_CountTimer_Text;
 
     [SerializeField]
-    private Text _contract_Payout_Text;
+    private TextMeshProUGUI _contract_Payout_Text;
 
     [SerializeField]
     private Image _contract_Image;
@@ -141,6 +143,15 @@ public class PlayerContract_UI_Behavior : MonoBehaviour
 
     public void Set_CountTimer_Text()
     {
-        _contract_CountTimer_Text.text = "" + _contract_Data.Contract_TimerCount;
+        if (_contract_Data.Contract_TimerCount > 0)
+        {
+            string mintutes = ((float)_contract_Data.Contract_TimerCount / 60).ToString().Split('.')[0];
+            string seconds = (_contract_Data.Contract_TimerCount % 60).ToString();
+            _contract_CountTimer_Text.text = "Timer: " + mintutes + ':' + seconds;
+        }
+        else
+        {
+            _contract_CountTimer_Text.text = "";
+        }
     }
 }

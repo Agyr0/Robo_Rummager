@@ -14,9 +14,10 @@ public class ObjectPooler : MonoBehaviour
     {
         pooledObjects = new List<GameObject>();
         GameObject tmp;
+        GameObject parent = new GameObject(objectPrefab.name + " Pooled Container");
         for (int i = 0; i < maxObjects; i++)
         {
-            tmp = Instantiate(objectPrefab);
+            tmp = Instantiate(objectPrefab, parent.transform);
             tmp.SetActive(false);
             pooledObjects.Add(tmp);
         }

@@ -67,13 +67,13 @@ public class BoardContract_UI_Behavior : MonoBehaviour
         switch (robotTier)
         {
             case RobotTier.I:
-                _contract_RobotTier_Text.text = "I";
+                _contract_RobotTier_Text.text = "Tier: I";
                 break;
             case RobotTier.II:
-                _contract_RobotTier_Text.text = "II";
+                _contract_RobotTier_Text.text = "Tier: II";
                 break;
             case RobotTier.III:
-                _contract_RobotTier_Text.text = "III";
+                _contract_RobotTier_Text.text = "Tier: III";
                 break;
             default:
                 break;
@@ -136,12 +136,21 @@ public class BoardContract_UI_Behavior : MonoBehaviour
 
     public void Set_Payout_Text()
     {
-        _contract_Payout_Text.text = "" + _contract_Data.Value_Credit;
+        _contract_Payout_Text.text = "Credit: " + _contract_Data.Value_Credit;
     }
 
     public void Set_CountTimer_Text()
     {
-        _contract_CountTimer_Text.text = "" + _contract_Data.Contract_TimerCount;
+        if (_contract_Data.Contract_TimerCount > 0)
+        {
+            string mintutes = ((float)_contract_Data.Contract_TimerCount / 60).ToString().Split('.')[0];
+            string seconds = (_contract_Data.Contract_TimerCount % 60).ToString();
+            _contract_CountTimer_Text.text = "Timer: " + mintutes + ':' + seconds;
+        }
+        else
+        {
+            _contract_CountTimer_Text.text = "";
+        }
     }
 
     public void OnContractButtonPress()

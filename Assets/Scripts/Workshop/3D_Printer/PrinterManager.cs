@@ -18,6 +18,7 @@ public class PrinterManager : MonoBehaviour, IInteractable
     public List<Sprite> ResourceImageList;
 
     public List<Resource_ItemData> ResourceDataList;
+
     [SerializeField]
     private VisualEffect _printingEffect_VFX;
 
@@ -59,7 +60,9 @@ public class PrinterManager : MonoBehaviour, IInteractable
         set 
         {
             clock_PrintTime = value;
-            printerTime_Text.text = clock_PrintTime.ToString();
+            string mintutes = ((float)clock_PrintTime / 60).ToString().Split('.')[0];
+            string seconds = (clock_PrintTime % 60).ToString();
+            printerTime_Text.text = mintutes + ':' + seconds;
         }
     }
 
@@ -73,40 +76,38 @@ public class PrinterManager : MonoBehaviour, IInteractable
             printerCompleteUI.SetActive(false);
 
             _printerState = PrinterState.Printing;
-            Clock_PrintTime = 10;
             switch (order)
             {
                 case 0:
-                    StartCoroutine(PrintOrder(ResourceType.Metal_Scrap, ResourceImageList[0]));
-                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[0].ResourceMesh);
+                    Clock_PrintTime = ResourceDataList[order].ResourcePrintTime;
+                    StartCoroutine(PrintOrder(ResourceType.Metal_Scrap, ResourceImageList[order]));
+                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].ResourceMesh);
+                    
                     break;
                 case 1:
-                    StartCoroutine(PrintOrder(ResourceType.Oil, ResourceImageList[1]));
-                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[1].ResourceMesh);
+                    Clock_PrintTime = ResourceDataList[order].ResourcePrintTime;
+                    StartCoroutine(PrintOrder(ResourceType.Metal_Scrap, ResourceImageList[order]));
+                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].ResourceMesh);
                     break;
                 case 2:
-                    StartCoroutine(PrintOrder(ResourceType.Advanced_Sensors, ResourceImageList[2]));
-                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[2].ResourceMesh);
+                    Clock_PrintTime = ResourceDataList[order].ResourcePrintTime;
+                    StartCoroutine(PrintOrder(ResourceType.Metal_Scrap, ResourceImageList[order]));
+                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].ResourceMesh);
                     break;
                 case 3:
-                    StartCoroutine(PrintOrder(ResourceType.Wire, ResourceImageList[3]));
-                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[3].ResourceMesh);
+                    Clock_PrintTime = ResourceDataList[order].ResourcePrintTime;
+                    StartCoroutine(PrintOrder(ResourceType.Metal_Scrap, ResourceImageList[order]));
+                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].ResourceMesh);
                     break;
                 case 4:
-                    StartCoroutine(PrintOrder(ResourceType.MotherBoard, ResourceImageList[4]));
-                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[4].ResourceMesh);
+                    Clock_PrintTime = ResourceDataList[order].ResourcePrintTime;
+                    StartCoroutine(PrintOrder(ResourceType.Metal_Scrap, ResourceImageList[order]));
+                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].ResourceMesh);
                     break;
                 case 5:
-                    StartCoroutine(PrintOrder(ResourceType.Black_Matter, ResourceImageList[5]));
-                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[5].ResourceMesh);
-                    break;
-                case 6:
-                    StartCoroutine(PrintOrder(ResourceType.Z_Crystal, ResourceImageList[6]));
-                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[6].ResourceMesh);
-                    break;
-                case 7:
-                    StartCoroutine(PrintOrder(ResourceType.Radioactive_Waste, ResourceImageList[7]));
-                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[7].ResourceMesh);
+                    Clock_PrintTime = ResourceDataList[order].ResourcePrintTime;
+                    StartCoroutine(PrintOrder(ResourceType.Metal_Scrap, ResourceImageList[order]));
+                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].ResourceMesh);
                     break;
             }
         }
@@ -120,14 +121,6 @@ public class PrinterManager : MonoBehaviour, IInteractable
             
             switch (printingResource)
             {
-                case ResourceType.Metal_Scrap:
-                    //WorkshopManager.Instance.WorkshopStorage.MetalScrapCount++;
-                    tempResource.GetComponent<Resource_Item>().ItemData = ResourceDataList[0];
-                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 2;
-                    tempResource.GetComponent<Resource_Item>().ResourceAmount = 1;
-                    tempResource.GetComponent<MeshRenderer>().material = ResourceDataList[0].ResourceMaterial;
-                    tempResource.GetComponent<MeshFilter>().mesh = ResourceDataList[0].ResourceMesh;
-                    break;
                 case ResourceType.Oil:
                     //WorkshopManager.Instance.WorkshopStorage.OilCount++;
                     tempResource.GetComponent<Resource_Item>().ItemData = ResourceDataList[1];
@@ -143,14 +136,6 @@ public class PrinterManager : MonoBehaviour, IInteractable
                     tempResource.GetComponent<Resource_Item>().ResourceAmount = 1;
                     tempResource.GetComponent<MeshRenderer>().material = ResourceDataList[2].ResourceMaterial;
                     tempResource.GetComponent<MeshFilter>().mesh = ResourceDataList[2].ResourceMesh;
-                    break;
-                case ResourceType.Wire:
-                    //WorkshopManager.Instance.WorkshopStorage.WireCount++;
-                    tempResource.GetComponent<Resource_Item>().ItemData = ResourceDataList[3];
-                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 2;
-                    tempResource.GetComponent<Resource_Item>().ResourceAmount = 1;
-                    tempResource.GetComponent<MeshRenderer>().material = ResourceDataList[3].ResourceMaterial;
-                    tempResource.GetComponent<MeshFilter>().mesh = ResourceDataList[3].ResourceMesh;
                     break;
                 case ResourceType.MotherBoard:
                     //WorkshopManager.Instance.WorkshopStorage.MotherBoardCount++;
@@ -241,14 +226,12 @@ public class PrinterManager : MonoBehaviour, IInteractable
             scaler = GetComponentInChildren<BilboardScaler>();
         }
 
-
-
         if (isOn)
             handleUI = StartCoroutine(scaler.HandleUI());
         else if (handleUI != null)
             StopCoroutine(handleUI);
 
-        EventBus.Publish(EventType.TOGGLE_WORKBENCH_CAM_BLEND);
+        EventBus.Publish(EventType.TOGGLE_PRINTER_CAM_BLEND);
     }
 
     enum PrinterState

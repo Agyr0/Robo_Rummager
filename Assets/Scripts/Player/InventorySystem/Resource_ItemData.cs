@@ -17,6 +17,9 @@ public class Resource_ItemData : ScriptableObject
     [SerializeField]
     private Mesh _resourceMesh;
 
+    [SerializeField]
+    private int _resourcePrintTime;
+
     public Sprite ResourceIcon
     {
         get { return _resourceIcon; }
@@ -35,5 +38,10 @@ public class Resource_ItemData : ScriptableObject
     public Mesh ResourceMesh
     {
         get { return _resourceMesh; }
+    }
+
+    public int ResourcePrintTime
+    {
+        get { return _resourcePrintTime; }
     }
 }
