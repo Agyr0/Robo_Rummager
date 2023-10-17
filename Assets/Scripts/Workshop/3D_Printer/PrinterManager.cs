@@ -62,7 +62,16 @@ public class PrinterManager : MonoBehaviour, IInteractable
             clock_PrintTime = value;
             string mintutes = ((float)clock_PrintTime / 60).ToString().Split('.')[0];
             string seconds = (clock_PrintTime % 60).ToString();
-            printerTime_Text.text = mintutes + ':' + seconds;
+
+            if (seconds.Length == 2)
+            {
+                printerTime_Text.text = mintutes + ':' + seconds;
+            }
+            else
+            {
+                printerTime_Text.text = mintutes + ":0" + seconds;
+            }
+            
         }
     }
 
@@ -82,32 +91,38 @@ public class PrinterManager : MonoBehaviour, IInteractable
                     Clock_PrintTime = ResourceDataList[order].ResourcePrintTime;
                     StartCoroutine(PrintOrder(ResourceType.Metal_Scrap, ResourceImageList[order]));
                     _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].ResourceMesh);
+                    _printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].ResourcePrintTime);
                     
                     break;
                 case 1:
                     Clock_PrintTime = ResourceDataList[order].ResourcePrintTime;
                     StartCoroutine(PrintOrder(ResourceType.Metal_Scrap, ResourceImageList[order]));
                     _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].ResourceMesh);
+                    _printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].ResourcePrintTime);
                     break;
                 case 2:
                     Clock_PrintTime = ResourceDataList[order].ResourcePrintTime;
                     StartCoroutine(PrintOrder(ResourceType.Metal_Scrap, ResourceImageList[order]));
                     _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].ResourceMesh);
+                    _printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].ResourcePrintTime);
                     break;
                 case 3:
                     Clock_PrintTime = ResourceDataList[order].ResourcePrintTime;
                     StartCoroutine(PrintOrder(ResourceType.Metal_Scrap, ResourceImageList[order]));
                     _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].ResourceMesh);
+                    _printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].ResourcePrintTime);
                     break;
                 case 4:
                     Clock_PrintTime = ResourceDataList[order].ResourcePrintTime;
                     StartCoroutine(PrintOrder(ResourceType.Metal_Scrap, ResourceImageList[order]));
                     _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].ResourceMesh);
+                    _printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].ResourcePrintTime);
                     break;
                 case 5:
                     Clock_PrintTime = ResourceDataList[order].ResourcePrintTime;
                     StartCoroutine(PrintOrder(ResourceType.Metal_Scrap, ResourceImageList[order]));
                     _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].ResourceMesh);
+                    _printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].ResourcePrintTime);
                     break;
             }
         }

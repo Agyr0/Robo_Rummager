@@ -119,6 +119,8 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
     private GameObject _loginMenu;
     [SerializeField]
     private GameObject _upgradeMenu;
+    [SerializeField]
+    private WeaponData _wrench;
 
     [SerializeField]
     private GameObject selectionCanvas;
@@ -139,7 +141,7 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
         UpdateUpgradeInventorySlot();
         UpdateUpgradeStackSize();
 
-        //WorkshopManager.Instance.WorkshopStorage.CreditCount = 200;
+        WorkshopManager.Instance.WorkshopStorage.CreditCount = 200;
     }
 
     private void OnDisable()
@@ -186,7 +188,7 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
             {
                 WorkshopManager.Instance.WorkshopStorage.CreditCount -= _upgradeCostHealth;
                 _upgradeCountCurrentHealth++;
-                EventBus.Publish(EventType.UPGRADE_HEALTH, 5);
+                EventBus.Publish(EventType.UPGRADE_HEALTH, 5f);
                 _textHealthCost.text = "Cost: " + _upgradeCostHealth;
                 _textHealthDesc.text = "+25 to Max Health";
                 _textHealthLevel.text = "Level " + _upgradeCountCurrentHealth + " of " + _upgradeCountMaxHealth;
@@ -207,7 +209,7 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
             {
                 WorkshopManager.Instance.WorkshopStorage.CreditCount -= _upgradeCostStamina;
                 _upgradeCountCurrentStamina++;
-                EventBus.Publish(EventType.UPGRADE_STAMINA, 5);
+                EventBus.Publish(EventType.UPGRADE_STAMINA, 5f);
                 _textStaminaCost.text = "Cost: " + _upgradeCostStamina;
                 _textStaminaDesc.text = "+25 to Max Stamina";
                 _textStaminaLevel.text = "Level " + _upgradeCountCurrentStamina + " of " + _upgradeCountMaxStamina;
@@ -228,7 +230,8 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
             if (WorkshopManager.Instance.WorkshopStorage.CreditCount >= _upgradeCostDamage)
             {
                 WorkshopManager.Instance.WorkshopStorage.CreditCount -= _upgradeCostDamage;
-                _upgradeCountCurrentDamage++;
+                _wrench.Damage += 10;
+               _upgradeCountCurrentDamage++;
                 _textDamageCost.text = "Cost: " + _upgradeCostDamage;
                 _textDamageDesc.text = "+10 to Wrench Swing Damage";
                 _textDamageLevel.text = "Level " + _upgradeCountCurrentDamage + " of " + _upgradeCountMaxDamage;
@@ -272,6 +275,7 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
             {
                 WorkshopManager.Instance.WorkshopStorage.CreditCount -= _upgradeCostStackSize;
                 _upgradeCountCurrentStackSize++;
+                EventBus.Publish(EventType.UPGRADE_STACKSIZE, 5);
                 _textStackSizeCost.text = "Cost: " + _upgradeCostStackSize;
                 _textStackSizeDesc.text = "Upgrade Stackable Resource Size";
                 _textStackSizeLevel.text = "Level " + _upgradeCountCurrentStackSize + " of " + _upgradeCountMaxStackSize;

@@ -64,6 +64,7 @@ public enum EventType
     PLAYER_ADDCONTRACT,
     PLAYER_LOADCONTRACT,
     CONTRACT_TIMERTICK,
+    UPGRADE_STACKSIZE,
     //Check should be called when a robot is sumbmitted,
     //will use the gameobject's Robot_Data to check aganist contracts
     CONTRACT_CHECK,
