@@ -1,9 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
-using UnityEngine.InputSystem.iOS;
-using UnityEngine.UIElements;
 using UnityEngine.VFX;
 
 public class SellingBin : MonoBehaviour
@@ -61,6 +57,8 @@ public class SellingBin : MonoBehaviour
                 showError = false;
                 if(scaleErrorCoroutine != null)
                     scaleErrorCoroutine = StartCoroutine(ScaleErrorMessage());
+
+                scaleErrorCoroutine = null;
             }
         }
 
