@@ -52,5 +52,26 @@ public class ScavengerConfig : ScriptableObject
     #endregion
 
     #region Shooting
+    [Header("Shooting Stats")]
+    [Tooltip("Speed of the Scavenger while in shooting state.")]
+    public float shootingSpeed;
+
+    [Tooltip("Acceleration of the Scavenger while in shooting state.")]
+    public float shootingAcceleration;
+
+    [Tooltip("Angular Speed of the Scavenger while in shooting state.")]
+    public float shootingAngularSpeed;
+
+    [Tooltip("The minimum number of shots the scavenger will shoot.")]
+    public int minShots;
+
+    [Tooltip("The maximum number of shots the scavenger will shoot.")]
+    public int maxShots;
+
+    [Tooltip("The time between scavenger shots.")]
+    public float timeBetweenShots;
+
+    [Tooltip("The speed of the scavenger bullets.")]
+    public float bulletSpeed;
     #endregion
 }

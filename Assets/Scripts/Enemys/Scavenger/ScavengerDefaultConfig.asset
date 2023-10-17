@@ -26,7 +26,10 @@ MonoBehaviour:
   detectionAcceleration: 8
   detectionAngularSpeed: 720
   detectionStateMaxTime: 15
-  shootDistance: 500
   shootingSpeed: 0
   shootingAcceleration: 0
   shootingAngularSpeed: 720
+  minShots: 1
+  maxShots: 3
+  timeBetweenShots: 1
+  bulletSpeed: 20
