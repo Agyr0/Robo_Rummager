@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class ScavengerShootingState : ScavengerState
 {
-    private int numberOfBullets = 0;
+    private ScavengerFireGun scavengerFireGun;
+    private GameObject playerGameObject;
+
     public ScavengerStateId GetId()
     {
         return ScavengerStateId.Shooting;
@@ -16,35 +18,15 @@ public class ScavengerShootingState : ScavengerState
         agent.navMeshAgent.speed = agent.config.shootingSpeed;
         agent.navMeshAgent.acceleration = agent.config.shootingAcceleration;
         agent.navMeshAgent.angularSpeed = agent.config.shootingAngularSpeed;
-        numberOfBullets = Random.Range(agent.config.minShots, agent.config.maxShots);
-        Debug.Log(numberOfBullets);
+
+        playerGameObject = GameObject.Find("Player");
+
+        scavengerFireGun = agent.GetComponent<ScavengerFireGun>();
+        scavengerFireGun.Shoot(agent.config.timeBetweenShots, agent);
     }
 
     public void Update(ScavengerAgent agent)
     {
-        agent.navMeshAgent.SetDestination(agent.transform.position);
-
-        for (int i = 0; i < numberOfBullets; i++)
-        {
-            GameObject currBullet = agent.objectPooler.GetPooledObject();
-
-            if (currBullet != null)
-            {
-                currBullet.transform.position = agent.scavengerWeaponIK.aimTransform.position;
-                currBullet.transform.rotation = agent.scavengerWeaponIK.aimTransform.rotation;
-                currBullet.SetActive(true);
-                currBullet.transform.position += currBullet.transform.forward * agent.config.bulletSpeed;
-            }
-            float timer = agent.config.timeBetweenShots;
-            if(timer <= 0)
-            {
-                return;
-            }
-            else
-            {
-                timer -= Time.deltaTime;
-            }
-        }
     }
 
     public void Exit(ScavengerAgent agent)

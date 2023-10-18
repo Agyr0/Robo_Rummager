@@ -44,7 +44,7 @@ public class ScavengerWeaponIK : MonoBehaviour
     private void AimAtTarget(Transform bone, Vector3 targetPosition, float weight)
     {
         Vector3 aimDirection = aimTransform.forward;
-        Vector3 targetDirection = targetPosition - aimTransform.position;
+        Vector3 targetDirection = targetPosition - aimTransform.position - new Vector3(0, 0.125f, 0);
         Quaternion aimTowards = Quaternion.FromToRotation(aimDirection, targetDirection);
         Quaternion blendedRotation = Quaternion.Slerp(Quaternion.identity, aimTowards, weight);
         bone.rotation = blendedRotation * bone.rotation;
