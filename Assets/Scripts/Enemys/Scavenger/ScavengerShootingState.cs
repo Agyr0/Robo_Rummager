@@ -20,13 +20,13 @@ public class ScavengerShootingState : ScavengerState
         agent.navMeshAgent.angularSpeed = agent.config.shootingAngularSpeed;
 
         playerGameObject = GameObject.Find("Player");
-
         scavengerFireGun = agent.GetComponent<ScavengerFireGun>();
         scavengerFireGun.Shoot(agent.config.timeBetweenShots, agent);
     }
 
     public void Update(ScavengerAgent agent)
     {
+        agent.navMeshAgent.SetDestination(playerGameObject.transform.position);
     }
 
     public void Exit(ScavengerAgent agent)

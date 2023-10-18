@@ -25,9 +25,10 @@ public class ScavengerFireGun : MonoBehaviour
             currBullet.transform.position = gunBarrel.transform.position;
             currBullet.transform.rotation = gunBarrel.transform.rotation;
             currBullet.SetActive(true);
-            //gunParticle.Play();
+            gunParticle.Play();
 
             yield return new WaitForSeconds(timeBetweenShots);
         }
+        agent.stateMachine.ChangeState(ScavengerStateId.Reposition);
     }
 }

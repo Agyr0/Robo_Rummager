@@ -57,6 +57,5 @@ public class ScavengerDetectionState : ScavengerState
     {
         agent.navMeshAgent.ResetPath();
         agent.navMeshAgent.velocity = Vector3.zero;
-        //weaponIK.enabled = false;
     }
 }

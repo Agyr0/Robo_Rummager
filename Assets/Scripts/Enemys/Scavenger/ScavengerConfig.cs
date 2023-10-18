@@ -74,4 +74,22 @@ public class ScavengerConfig : ScriptableObject
     [Tooltip("The speed of the scavenger bullets.")]
     public float bulletSpeed;
     #endregion
+
+    #region Reposition
+    [Header("Shooting Stats")]
+    [Tooltip("Speed of the Scavenger while in shooting state.")]
+    public float repositionSpeed;
+
+    [Tooltip("Acceleration of the Scavenger while in shooting state.")]
+    public float repositionAcceleration;
+
+    [Tooltip("Angular Speed of the Scavenger while in shooting state.")]
+    public float repositionAngularSpeed;
+
+    [Tooltip("Minimum distance from the player the AI can be when repositioning")]
+    public float minDistanceFromPlayer;
+
+    [Tooltip("Maximum distance from the player the AI can be when repositioning")]
+    public float maxDistanceFromPlayer;
+    #endregion
 }

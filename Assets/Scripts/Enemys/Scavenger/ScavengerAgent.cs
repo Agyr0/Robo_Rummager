@@ -29,6 +29,7 @@ public class ScavengerAgent : MonoBehaviour, IDamageable
         stateMachine.RegisterState(new ScavengerPatrolState());
         stateMachine.RegisterState(new ScavengerDetectionState());
         stateMachine.RegisterState(new ScavengerShootingState());
+        stateMachine.RegisterState(new ScavengerRepositionState());
         stateMachine.ChangeState(initialState);
 
         // Temp Code to setup pathing for scavenger patrol
