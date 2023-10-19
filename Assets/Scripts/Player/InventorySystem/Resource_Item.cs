@@ -40,9 +40,15 @@ public class Resource_Item : MonoBehaviour
         set { _pickupTimerCount = value; }
     }
 
-    private void OnEnable()
+    private void Start()
     {
         StartCoroutine(PickupCounter());
+
+        if (GameManager.Instance.playerController.gameObject.GetComponent<Collider>().bounds.Contains(this.transform.position))
+        {
+            EventBus.Publish<GameObject>(EventType.INVENTORY_ADDITEM, this.gameObject);
+            Debug.Log("I spawned inside the player");
+        }
     }
 
     IEnumerator PickupCounter()

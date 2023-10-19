@@ -31,7 +31,7 @@ public class Flicker : MonoBehaviour
                 if (this.GetComponent<TextMeshProUGUI>().color.a <= .01f)
                 {
                     _isFading = false;
-                    Debug.Log(trt.a);
+                    //Debug.Log(trt.a);
                 }
                 else
                 {
@@ -45,7 +45,7 @@ public class Flicker : MonoBehaviour
                 if (this.GetComponent<TextMeshProUGUI>().color.a >= .98f)
                 {
                     _isFading = true;
-                    Debug.Log(trt.a);
+                    //Debug.Log(trt.a);
                 }
                 else
                 {
