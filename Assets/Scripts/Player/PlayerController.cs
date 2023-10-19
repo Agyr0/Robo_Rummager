@@ -424,7 +424,7 @@ public class PlayerController : MonoBehaviour
         //Make sure player hasnt been hit for regenWaitTime
         while(time < regenWaitTime)
         {
-            Debug.Log("<color=yellow>Waiting to regen</color>");
+            //Debug.Log("<color=yellow>Waiting to regen</color>");
             time += Time.deltaTime;
             if (curHealth > Health)
             {
