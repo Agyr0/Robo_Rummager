@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ScavengerShootingState : ScavengerState
 {
-    private Transform playerTransform;
+    private ScavengerFireGun scavengerFireGun;
+    private GameObject playerGameObject;
 
     public ScavengerStateId GetId()
     {
@@ -13,13 +14,19 @@ public class ScavengerShootingState : ScavengerState
 
     public void Enter(ScavengerAgent agent)
     {
-        playerTransform = GameObject.Find("Player").transform;
-        agent.animator.Play("Shooting");
+        Debug.Log("Scavenger Entered: Shooting State");
+        agent.navMeshAgent.speed = agent.config.shootingSpeed;
+        agent.navMeshAgent.acceleration = agent.config.shootingAcceleration;
+        agent.navMeshAgent.angularSpeed = agent.config.shootingAngularSpeed;
+
+        playerGameObject = GameObject.Find("Player");
+        scavengerFireGun = agent.GetComponent<ScavengerFireGun>();
+        scavengerFireGun.Shoot(agent.config.timeBetweenShots, agent);
     }
 
     public void Update(ScavengerAgent agent)
     {
-        agent.navMeshAgent.SetDestination(agent.transform.position);
+        agent.navMeshAgent.SetDestination(playerGameObject.transform.position);
     }
 
     public void Exit(ScavengerAgent agent)

@@ -45,12 +45,12 @@ public class Scavenger : MonoBehaviour
     private void Update()
     {
         animator.SetFloat("Speed", agent.velocity.magnitude);
-        if (scavengerSensor.players.Count > 0)
-        {
-            ScavengerApproaching();
-        }
-        else if (!agent.pathPending)
-            ScavengerPatrolling();
+        //if (scavengerSensor.players.Count > 0)
+        //{
+        //    ScavengerApproaching();
+        //}
+        //else if (!agent.pathPending)
+        //   ScavengerPatrolling();
     }
 
     // Patrolling
