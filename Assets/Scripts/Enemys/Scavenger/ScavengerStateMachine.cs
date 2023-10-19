@@ -11,7 +11,7 @@ public class ScavengerStateMachine
     public ScavengerStateMachine(ScavengerAgent agent)
     {
         this.agent = agent;
-        int numStates = System.Enum.GetNames(typeof(RogueBotStateId)).Length;
+        int numStates = System.Enum.GetNames(typeof(RogueBotStateId)).Length + 1; 
         states = new ScavengerState[numStates];
     }
 

@@ -5,12 +5,19 @@ using UnityEngine.AI;
 
 public class ScavengerAgent : MonoBehaviour, IDamageable
 {
+    public ObjectPooler objectPooler;
+    public ScavengerWeaponIK scavengerWeaponIK;
     public ScavengerStateMachine stateMachine;
     public ScavengerStateId initialState;
     public NavMeshAgent navMeshAgent;
     public ScavengerConfig config;
     public ScavengerSensor scavengerSensor;
     public Animator animator;
+
+    private void Awake()
+    {
+        objectPooler = GameObject.Find("Object Pool Manager").GetComponent<ObjectPooler>();
+    }
 
     void Start()
     {
@@ -22,6 +29,7 @@ public class ScavengerAgent : MonoBehaviour, IDamageable
         stateMachine.RegisterState(new ScavengerPatrolState());
         stateMachine.RegisterState(new ScavengerDetectionState());
         stateMachine.RegisterState(new ScavengerShootingState());
+        stateMachine.RegisterState(new ScavengerRepositionState());
         stateMachine.ChangeState(initialState);
 
         // Temp Code to setup pathing for scavenger patrol

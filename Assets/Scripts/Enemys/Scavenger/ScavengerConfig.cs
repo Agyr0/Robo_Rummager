@@ -53,7 +53,40 @@ public class ScavengerConfig : ScriptableObject
 
     #region Shooting
     [Header("Shooting Stats")]
-    [Tooltip("The distance that the scavenger will stop from the player and begin to shoot.")]
-    public float shootDistance;
+    [Tooltip("Speed of the Scavenger while in shooting state.")]
+    public float shootingSpeed;
+
+    [Tooltip("Acceleration of the Scavenger while in shooting state.")]
+    public float shootingAcceleration;
+
+    [Tooltip("Angular Speed of the Scavenger while in shooting state.")]
+    public float shootingAngularSpeed;
+
+    [Tooltip("The minimum number of shots the scavenger will shoot.")]
+    public int minShots;
+
+    [Tooltip("The maximum number of shots the scavenger will shoot.")]
+    public int maxShots;
+
+    [Tooltip("The time between scavenger shots.")]
+    public float timeBetweenShots;
+
+    [Tooltip("The speed of the scavenger bullets.")]
+    public float bulletSpeed;
+    #endregion
+
+    #region Reposition
+    [Header("Shooting Stats")]
+    [Tooltip("Speed of the Scavenger while in shooting state.")]
+    public float repositionSpeed;
+
+    [Tooltip("Acceleration of the Scavenger while in shooting state.")]
+    public float repositionAcceleration;
+
+    [Tooltip("Angular Speed of the Scavenger while in shooting state.")]
+    public float repositionAngularSpeed;
+
+    [Tooltip("Distance that the AI will reposition within")]
+    public float repositionDistance;
     #endregion
 }
