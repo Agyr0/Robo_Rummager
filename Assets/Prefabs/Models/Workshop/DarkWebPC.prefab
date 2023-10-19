@@ -3494,6 +3494,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6769559142782435293}
+  - component: {fileID: 1600206170223512215}
   m_Layer: 5
   m_Name: UpgradeHealth
   m_TagString: Untagged
@@ -3521,6 +3522,24 @@ RectTransform:
   m_AnchoredPosition: {x: 0.84, y: -0.15}
   m_SizeDelta: {x: 1.6, y: 0.3}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1600206170223512215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3917353747485275925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60175c30c8a3eb2469a289f5d01fd231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _textDesc: {fileID: 7866268325857136203}
+  _textCost: {fileID: 4663101659630687679}
+  _textLevel: {fileID: 7933143668850266336}
+  _textButton: {fileID: 8281918806420920267}
+  _button: {fileID: 8151814626976756672}
+  _textSold: {fileID: 5058874242404449055}
 --- !u!1 &4034153771248570459
 GameObject:
   m_ObjectHideFlags: 0
@@ -5700,6 +5719,7 @@ GameObject:
   - component: {fileID: 8148361137639591479}
   - component: {fileID: 1871027624800092972}
   - component: {fileID: 8808692651368550541}
+  - component: {fileID: 8024605694223270329}
   m_Layer: 0
   m_Name: DarkWebPC
   m_TagString: Untagged
@@ -5814,7 +5834,29 @@ MonoBehaviour:
   _upgradesMachines: []
   _loginMenu: {fileID: 2138404011425818084}
   _upgradeMenu: {fileID: 680203630213396004}
+  _wrench: {fileID: 0}
   selectionCanvas: {fileID: 5142855021371634986}
+--- !u!65 &8024605694223270329
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6653075568634562025}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.68, y: 1.27, z: 0.19}
+  m_Center: {x: 0, y: 1.99, z: 0}
 --- !u!1 &6662928663237352747
 GameObject:
   m_ObjectHideFlags: 0

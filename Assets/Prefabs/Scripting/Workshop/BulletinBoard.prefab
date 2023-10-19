@@ -196,6 +196,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3571364208686048830}
   - component: {fileID: 963753302448572668}
+  - component: {fileID: 1751925478450875462}
   - component: {fileID: 750370295231408619}
   m_Layer: 0
   m_Name: BulletinBoard
@@ -242,6 +243,27 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.451636, y: 2.3087754, z: 0.49062237}
   m_Center: {x: 0, y: 1.1543872, z: 0}
+--- !u!65 &1751925478450875462
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4788507084458389084}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.98, y: 0.89, z: 0.11}
+  m_Center: {x: 0, y: 1.43, z: -0.15}
 --- !u!114 &750370295231408619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,6 +284,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: be1a9ca0bc57671439cec7c0e7395266, type: 2}
   - {fileID: 11400000, guid: b75652f004a40e543bca02b6dca47fdc, type: 2}
   _contract_Board_DataList: []
+  _timedContractChance: 2
   selectionCanvas: {fileID: 1807563699950900385}
 --- !u!1 &5895886602332305981
 GameObject:

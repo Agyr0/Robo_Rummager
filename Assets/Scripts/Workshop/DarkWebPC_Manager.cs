@@ -141,7 +141,7 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
         UpdateUpgradeInventorySlot();
         UpdateUpgradeStackSize();
 
-        WorkshopManager.Instance.WorkshopStorage.CreditCount = 200;
+        //WorkshopManager.Instance.WorkshopStorage.CreditCount = 200;
     }
 
     private void OnDisable()
