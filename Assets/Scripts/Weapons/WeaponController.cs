@@ -15,6 +15,8 @@ public class WeaponController : MonoBehaviour
     private InputManager inputManager;
 
     private ObjectPooler weaponPooler;
+    private AudioSource audioSource;
+    private AudioManager audioManager;
 
     [SerializeField]
     private Transform playerHand;
@@ -75,7 +77,7 @@ public class WeaponController : MonoBehaviour
         _curWeapon = _availableWeapons[0];
         inputManager = InputManager.Instance;
         _animator = GetComponent<Animator>();
-
+        audioManager = AudioManager.Instance;
         playerHandStartTransform = playerHand.transform;
 
         //Input Events
@@ -86,6 +88,8 @@ public class WeaponController : MonoBehaviour
 
 
         weaponPooler = Camera.main.gameObject.GetComponentInChildren<ObjectPooler>();
+        audioSource = GetComponent<AudioSource>();
+
     }
 
     private void OnEnable()
@@ -249,6 +253,8 @@ public class WeaponController : MonoBehaviour
             //GameObject muzzleFlash = Instantiate(_curWeapon.MuzzleFlash, transform.position, Quaternion.FromToRotation(transform.position, transform.forward));
 
             TrailRenderer trail = weaponPooler.GetPooledObject().GetComponent<TrailRenderer>();
+            audioManager.PlayClip(audioSource, audioManager.FindClip(AudioType.Gun, audioManager.effectAudio, true));
+
 
             if (Physics.Raycast(ray, out hit, _curWeapon.Range))
             {
