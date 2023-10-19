@@ -25,6 +25,7 @@ public class ScavengerRepositionState : ScavengerState
     {
         if (agent.navMeshAgent.remainingDistance < 0.1f)
         {
+            Debug.Log("Changed to Detection State from Reposition");
             agent.stateMachine.ChangeState(ScavengerStateId.Detection);
         }
     }
@@ -38,7 +39,7 @@ public class ScavengerRepositionState : ScavengerState
     private void SetRandomPoint(ScavengerAgent agent)
     {
         // Calculate a random direction away from the player
-        Vector3 randomDirection = Random.insideUnitSphere * agent.config.maxDistanceFromPlayer;
+        Vector3 randomDirection = Random.insideUnitSphere * agent.config.repositionDistance;
 
         // Ensure the destination is not towards the player
         Vector3 toPlayer = (playerGameObject.transform.position - agent.transform.position).normalized;

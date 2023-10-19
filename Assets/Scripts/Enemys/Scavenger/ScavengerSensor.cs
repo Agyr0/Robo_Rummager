@@ -247,6 +247,10 @@ public class ScavengerSensor : MonoBehaviour
             //Debug.Log("fail 1");
             //return false;
         //}
+        if(direction.magnitude > detectionDistance) 
+        {
+            return false;
+        }
 
         direction.y = 0;
         float deltaAngle = Vector3.Angle(direction, transform.forward);
@@ -280,6 +284,10 @@ public class ScavengerSensor : MonoBehaviour
         //Debug.Log("fail 1");
         //return false;
         //}
+        if (direction.magnitude > shootingDistance)
+        {
+            return false;
+        }
 
         direction.y = 0;
         float deltaAngle = Vector3.Angle(direction, transform.forward);

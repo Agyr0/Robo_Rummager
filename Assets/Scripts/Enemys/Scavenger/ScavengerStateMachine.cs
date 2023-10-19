@@ -11,14 +11,13 @@ public class ScavengerStateMachine
     public ScavengerStateMachine(ScavengerAgent agent)
     {
         this.agent = agent;
-        int numStates = System.Enum.GetNames(typeof(RogueBotStateId)).Length + 1; // Only reading up to 3 states for some reason???
-        states = new ScavengerState[numStates];                                   // adding additional numStates arbitrarily is my fix B)
+        int numStates = System.Enum.GetNames(typeof(RogueBotStateId)).Length + 1; 
+        states = new ScavengerState[numStates];
     }
 
     public void RegisterState(ScavengerState state)
     {
         int index = (int)state.GetId();
-        Debug.Log("index: " + index);
         states[index] = state;
     }
 

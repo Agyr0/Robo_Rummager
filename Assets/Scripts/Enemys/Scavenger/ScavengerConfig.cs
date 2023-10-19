@@ -86,10 +86,7 @@ public class ScavengerConfig : ScriptableObject
     [Tooltip("Angular Speed of the Scavenger while in shooting state.")]
     public float repositionAngularSpeed;
 
-    [Tooltip("Minimum distance from the player the AI can be when repositioning")]
-    public float minDistanceFromPlayer;
-
-    [Tooltip("Maximum distance from the player the AI can be when repositioning")]
-    public float maxDistanceFromPlayer;
+    [Tooltip("Distance that the AI will reposition within")]
+    public float repositionDistance;
     #endregion
 }
