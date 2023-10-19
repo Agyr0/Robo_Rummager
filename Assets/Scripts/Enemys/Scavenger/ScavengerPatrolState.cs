@@ -25,8 +25,8 @@ public class ScavengerPatrolState : ScavengerState
 
     public void Update(ScavengerAgent agent)
     {
-        // Check if player is in vision cone to determine if agent should swap to detection state
-        if(agent.scavengerSensor.IsInSight(playerGameObject) == true)
+        // Check if player is in detection cone to determine if agent should swap to detection state
+        if(agent.scavengerSensor.IsInDetectionSight(playerGameObject) == true)
         {
             agent.stateMachine.ChangeState(ScavengerStateId.Detection);
         }
