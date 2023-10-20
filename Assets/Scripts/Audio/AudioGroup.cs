@@ -46,7 +46,7 @@ public enum AudioType
 
     FootSteps_Dirt,
     FootSteps_Gravel,
-    FootSteps_Metal,
+    FootSteps_Metal
 
 
 }
