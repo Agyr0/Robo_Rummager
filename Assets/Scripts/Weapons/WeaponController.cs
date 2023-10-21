@@ -15,8 +15,6 @@ public class WeaponController : MonoBehaviour
     private InputManager inputManager;
 
     private ObjectPooler weaponPooler;
-    private AudioSource audioSource;
-    private AudioManager audioManager;
 
     [SerializeField]
     private Transform playerHand;
@@ -77,7 +75,7 @@ public class WeaponController : MonoBehaviour
         _curWeapon = _availableWeapons[0];
         inputManager = InputManager.Instance;
         _animator = GetComponent<Animator>();
-        audioManager = AudioManager.Instance;
+
         playerHandStartTransform = playerHand.transform;
 
         //Input Events
@@ -88,8 +86,6 @@ public class WeaponController : MonoBehaviour
 
 
         weaponPooler = Camera.main.gameObject.GetComponentInChildren<ObjectPooler>();
-        audioSource = GetComponent<AudioSource>();
-
     }
 
     private void OnEnable()
@@ -168,12 +164,10 @@ public class WeaponController : MonoBehaviour
             Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
             RaycastHit hit = new RaycastHit();
 
-
+       
 
             if (Physics.Raycast(ray, out hit, _curWeapon.Range))
             {
-                //Play hit wrench audio
-                audioManager.PlayClip(audioSource, audioManager.FindRandomizedClip(AudioType.Wrench_Metal, audioManager.effectAudio), 0.25f);
 
                 LootBag lootBag = hit.transform.gameObject.GetComponent<LootBag>();
                 PetBuildingController petBuildingController = hit.transform.gameObject.GetComponent<PetBuildingController>();
@@ -190,10 +184,6 @@ public class WeaponController : MonoBehaviour
                     return;
                 }
             }
-            else
-                //Play whoosh wrench audio
-                audioManager.PlayClip(audioSource, audioManager.FindRandomizedClip(AudioType.Wrench_Whoosh, audioManager.effectAudio), 0.25f);
-
 
         }
     }
@@ -202,6 +192,44 @@ public class WeaponController : MonoBehaviour
     {
         isSwinging = false;
     }
+
+    /* Depricated
+    public void PlayAttack()
+    {
+        //StartCoroutine(AttackRaycast(10));
+    }
+    private IEnumerator AttackRaycast(int numHits)
+    {
+        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward + _curWeapon.MuzzlePos.forward);
+
+        while (numHits > 0)
+        {
+            if (Physics.Raycast(ray, out RaycastHit hit, _curWeapon.Range))
+            {
+                LootBag lootBag = hit.transform.gameObject.GetComponent<LootBag>();
+                PetBuildingController petBuildingController = hit.transform.gameObject.GetComponent<PetBuildingController>();
+                //If I hit an item with a lootbag script run drop resource
+                if (lootBag != null)
+                {
+                    lootBag.DropResource(hit.point);
+                    Debug.Log("Hit resource");
+                    break;
+                }
+                if (petBuildingController != null)
+                {
+                    petBuildingController.BuildPiece();
+                    break;
+                }
+
+            }
+            //debug ray for seeing where the swing is sending out detection 
+            Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward + _curWeapon.MuzzlePos.forward * _curWeapon.Range, Color.yellow, 1000f);
+            yield return null;
+            numHits--;
+        }
+    }
+
+    */
 
 
     #endregion
@@ -221,9 +249,6 @@ public class WeaponController : MonoBehaviour
             //GameObject muzzleFlash = Instantiate(_curWeapon.MuzzleFlash, transform.position, Quaternion.FromToRotation(transform.position, transform.forward));
 
             TrailRenderer trail = weaponPooler.GetPooledObject().GetComponent<TrailRenderer>();
-            if(!audioSource.isPlaying)
-                audioManager.PlayClip(audioSource, audioManager.FindRandomizedClip(AudioType.Gun, audioManager.effectAudio));
-
 
             if (Physics.Raycast(ray, out hit, _curWeapon.Range))
             {
