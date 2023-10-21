@@ -76,8 +76,8 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
 
     public List<GameObject> Inventory_ItemCullPickupList
     {
-        get { return _inventory_ItemPickupList; }
-        set { _inventory_ItemPickupList = value; }
+        get { return _inventory_ItemCullPickupList; }
+        set { _inventory_ItemCullPickupList = value; }
     }
     
     public Resource_ItemData ResourceEmpty
@@ -293,17 +293,19 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
 
     public void OnAddCullItem(GameObject item_GO)
     {
-        if (!Inventory_ItemPickupList.Contains(item_GO))
+        if (!Inventory_ItemCullPickupList.Contains(item_GO))
             Inventory_ItemCullPickupList.Add(item_GO);
     }
 
     private void OnRemoveItem()
     {
+        
         for (int i = 0; i < Inventory_ItemCullPickupList.Count; i++)
             Inventory_ItemPickupList.Remove(Inventory_ItemCullPickupList[i]);
 
         Inventory_ItemCullPickupList.Clear();
         EventBus.Publish(EventType.INVENTORY_UPDATE, this.gameObject);
+        
     }
 
     private void OnContractCompleation(int creditValue)
@@ -343,7 +345,16 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
 
     private void OnTriggerExit(Collider other)
     {
-        EventBus.Publish<GameObject>(EventType.INVENTORY_ADDITEMCULL, other.gameObject);
-        EventBus.Publish(EventType.INVENTORY_REMOVEITEM);
+        if (other.GetComponent<Resource_Item>() != null)
+        {
+            EventBus.Publish<GameObject>(EventType.INVENTORY_ADDITEMCULL, other.gameObject);
+            EventBus.Publish(EventType.INVENTORY_REMOVEITEM);
+        }
+        /*
+        if (other.GetComponent<Resource_Item>() != null)
+        {
+            Inventory_ItemCullPickupList.Add(other.gameObject);
+        }
+        */
     }
 }
