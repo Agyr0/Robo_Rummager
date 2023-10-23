@@ -33,6 +33,7 @@ public class WeaponController : MonoBehaviour
     private float curZoom, targetZoom;
     private bool isZoomed = false;
     private Coroutine lerpZoom;
+    private WeaponRecoil weaponRecoil;
 
     private int _weaponIndex = 0;
     public int WeaponIndex
@@ -249,7 +250,7 @@ public class WeaponController : MonoBehaviour
             //GameObject muzzleFlash = Instantiate(_curWeapon.MuzzleFlash, transform.position, Quaternion.FromToRotation(transform.position, transform.forward));
 
             TrailRenderer trail = weaponPooler.GetPooledObject().GetComponent<TrailRenderer>();
-
+            weaponRecoil.GenerateRecoil();
             if (Physics.Raycast(ray, out hit, _curWeapon.Range))
             {
 
@@ -366,6 +367,7 @@ public class WeaponController : MonoBehaviour
         //Assign curweapon and send event
         _curWeapon = _availableWeapons[_weaponIndex];
         CurAmmoText.text = _curWeapon.CurAmmo.ToString();
+        
         EventBus.Publish(EventType.DISPLAY_WEAPON);
     }
 
@@ -393,7 +395,8 @@ public class WeaponController : MonoBehaviour
         {
             //Spawn weapon in the playerhand
             GameObject weaponInstance = Instantiate(_weaponPrefab, playerHand.position, transform.rotation, playerHand.transform);
-
+            if(weaponInstance.GetComponent<WeaponRecoil>() != null)
+                weaponRecoil = weaponInstance.GetComponent<WeaponRecoil>();
             //Assign _curWeapon.MuzzlePos with the instanced muzzle pos if available
             if (weaponInstance.transform.childCount > 0)
                 _curWeapon.MuzzlePos = weaponInstance.transform.GetChild(0);
