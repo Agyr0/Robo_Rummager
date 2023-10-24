@@ -8,21 +8,21 @@ using Agyr.Workshop;
 public class Upgrade_UI_Behavior : MonoBehaviour
 {
     [SerializeField]
-    private TextMeshProUGUI _textDesc;
+    public TextMeshProUGUI _textDesc;
     [SerializeField]
-    private TextMeshProUGUI _textCost;
+    public TextMeshProUGUI _textCost;
     [SerializeField]
-    private TextMeshProUGUI _textLevel;
+    public TextMeshProUGUI _textLevel;
     [SerializeField]
-    private TextMeshProUGUI _textButton;
+    public Button _button;
     [SerializeField]
-    private Button _button;
+    public GameObject _textBuy;
     [SerializeField]
-    private GameObject _textSold;
+    public GameObject _textSold;
 
     public void UpdateText(int _upgradeCost, string _upgradeDesc, int _upgradeCountCurrent, int _upgradeCountMax)
     {
-        _textCost.text = "Cost: " + _upgradeCost;
+        _textCost.text = _upgradeCost.ToString();
         _textDesc.text = _upgradeDesc;
         _textLevel.text = "Level " + _upgradeCountCurrent + " of " + _upgradeCountMax;
 
@@ -30,6 +30,7 @@ public class Upgrade_UI_Behavior : MonoBehaviour
         {
             _button.interactable = false;
             _textSold.SetActive(true);
+            _textBuy.SetActive(false);
         }
     }
 }

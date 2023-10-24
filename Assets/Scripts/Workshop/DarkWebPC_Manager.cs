@@ -9,44 +9,6 @@ using UnityEngine.UI;
 public class DarkWebPC_Manager : MonoBehaviour, IInteractable
 {
     [SerializeField]
-    private int _upgradeCountCurrentHealth;
-    [SerializeField]
-    private int _upgradeCountMaxHealth;
-    [SerializeField]
-    private int _upgradeCostHealth;
-    [SerializeField]
-    private TextMeshProUGUI _textHealthDesc;
-    [SerializeField]
-    private TextMeshProUGUI _textHealthCost;
-    [SerializeField]
-    private TextMeshProUGUI _textHealthLevel;
-    [SerializeField]
-    private Button _buttonHealth;
-    [SerializeField]
-    private GameObject _textHealthSold;
-    [SerializeField]
-    private GameObject _textHealthPurchase;
-
-    [SerializeField]
-    private int _upgradeCountCurrentStamina;
-    [SerializeField]
-    private int _upgradeCountMaxStamina;
-    [SerializeField]
-    private int _upgradeCostStamina;
-    [SerializeField]
-    private TextMeshProUGUI _textStaminaDesc;
-    [SerializeField]
-    private TextMeshProUGUI _textStaminaCost;
-    [SerializeField]
-    private TextMeshProUGUI _textStaminaLevel;
-    [SerializeField]
-    private Button _buttonStamina;
-    [SerializeField]
-    private GameObject _textStaminaSold;
-    [SerializeField]
-    private GameObject _textStaminaPurchase;
-
-    [SerializeField]
     private int _upgradeCountCurrentDamage;
     [SerializeField]
     private int _upgradeCountMaxDamage;
@@ -148,8 +110,6 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
     {
         //EventBus.Subscribe(EventType.TOGGLE_DARKPC_CAM_BLEND, ToggleDisplayUpgrades);
 
-        UpdateUpgradeHealth();
-        UpdateUpgradeStamina();
         UpdateUpgradeDamage();
         UpdateUpgradeInventorySlot();
         UpdateUpgradeStackSize();
@@ -164,19 +124,7 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
     {
         WorkshopManager.Instance.WorkshopStorage.CreditCount += 300;
     }
-
-    private void UpdateUpgradeHealth()
-    {
-        _textHealthCost.text = _upgradeCostHealth.ToString();
-        _textHealthDesc.text = "+25 to Max Health";
-        _textHealthLevel.text = "Level " + _upgradeCountCurrentHealth + " of " + _upgradeCountMaxHealth;
-    }
-    private void UpdateUpgradeStamina()
-    {
-        _textStaminaCost.text = _upgradeCostStamina.ToString();
-        _textStaminaDesc.text = "+25 to Max Stamina";
-        _textStaminaLevel.text = "Level " + _upgradeCountCurrentStamina + " of " + _upgradeCountMaxStamina;
-    }
+    
     private void UpdateUpgradeDamage()
     {
         _textDamageCost.text = _upgradeCostDamage.ToString();
@@ -194,49 +142,6 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
         _textStackSizeCost.text = _upgradeCostStackSize.ToString();
         _textStackSizeDesc.text = "+5 to Stack Size";
         _textStackSizeLevel.text = "Level " + _upgradeCountCurrentStackSize + " of " + _upgradeCountMaxStackSize;
-    }
-
-    public void UpgradeHealth()
-    {
-        if (_upgradeCountCurrentHealth < _upgradeCountMaxHealth)
-        {
-            if (WorkshopManager.Instance.WorkshopStorage.CreditCount >= _upgradeCostHealth)
-            {
-                WorkshopManager.Instance.WorkshopStorage.CreditCount -= _upgradeCostHealth;
-                _upgradeCountCurrentHealth++;
-                EventBus.Publish(EventType.UPGRADE_HEALTH, 5f);
-                _textHealthCost.text = _upgradeCostHealth.ToString();
-                _textHealthDesc.text = "+25 to Max Health";
-                _textHealthLevel.text = "Level " + _upgradeCountCurrentHealth + " of " + _upgradeCountMaxHealth;
-            }
-
-            if (_upgradeCountCurrentHealth == _upgradeCountMaxHealth)
-            {
-                _buttonHealth.interactable = false;
-                _textHealthSold.SetActive(true);
-            }
-        }
-    }
-    public void UpgradeStamina()
-    {
-        if (_upgradeCountCurrentStamina < _upgradeCountMaxStamina)
-        {
-            if (WorkshopManager.Instance.WorkshopStorage.CreditCount >= _upgradeCostStamina)
-            {
-                WorkshopManager.Instance.WorkshopStorage.CreditCount -= _upgradeCostStamina;
-                _upgradeCountCurrentStamina++;
-                EventBus.Publish(EventType.UPGRADE_STAMINA, 5f);
-                _textStaminaCost.text = _upgradeCostStamina.ToString();
-                _textStaminaDesc.text = "+25 to Max Stamina";
-                _textStaminaLevel.text = "Level " + _upgradeCountCurrentStamina + " of " + _upgradeCountMaxStamina;
-            }
-
-            if (_upgradeCountCurrentStamina == _upgradeCountMaxStamina)
-            {
-                _buttonStamina.interactable = false;
-                _textStaminaSold.SetActive(true);
-            }
-        }
     }
 
     public void UpgradeDamage()
@@ -303,6 +208,11 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
                 _textStackSizeSold.SetActive(true);
             }
         }
+    }
+
+    public void LeavePC()
+    {
+        HandleInteract();
     }
 
     public void HandleInteract()
