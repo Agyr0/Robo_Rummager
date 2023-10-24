@@ -184,6 +184,11 @@ public class WeaponController : MonoBehaviour
                     petBuildingController.BuildPiece();
                     return;
                 }
+                IDamageable enemy = hit.transform.GetComponent<IDamageable>();
+                if (enemy != null)
+                {
+                    enemy.TakeDamage(_curWeapon.Damage);
+                }
             }
 
         }
