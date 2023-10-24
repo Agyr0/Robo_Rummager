@@ -14,7 +14,6 @@ public class WeaponController : MonoBehaviour
     private GameManager gameManager;
     private InputManager inputManager;
 
-    private ObjectPooler weaponPooler;
 
     [SerializeField]
     private Transform playerHand;
@@ -86,7 +85,6 @@ public class WeaponController : MonoBehaviour
 
 
 
-        weaponPooler = Camera.main.gameObject.GetComponentInChildren<ObjectPooler>();
     }
 
     private void OnEnable()
@@ -254,7 +252,7 @@ public class WeaponController : MonoBehaviour
             //Spawn Muzzle Flash
             //GameObject muzzleFlash = Instantiate(_curWeapon.MuzzleFlash, transform.position, Quaternion.FromToRotation(transform.position, transform.forward));
 
-            TrailRenderer trail = weaponPooler.GetPooledObject().GetComponent<TrailRenderer>();
+            TrailRenderer trail = ObjectPooler.PullObjectFromPool(_curWeapon.Trail).GetComponent<TrailRenderer>();
             weaponRecoil.GenerateRecoil();
             if (Physics.Raycast(ray, out hit, _curWeapon.Range))
             {

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Search;
 using UnityEngine;
 
 public class LootableItemManager : Singleton<LootableItemManager>
@@ -12,7 +13,7 @@ public class LootableItemManager : Singleton<LootableItemManager>
 
 
     [SerializeField]
-    private List<Transform> possibleSpawnLocations = new List<Transform>();
+    private List<SpawnLocation> possibleSpawnLocations = new List<SpawnLocation>();
 
     [SerializeField]
     private int minResources = 1;
@@ -28,13 +29,17 @@ public class LootableItemManager : Singleton<LootableItemManager>
         EventBus.Unsubscribe(EventType.TEST_EVENT_1, SpawnResources);
 
     }
+
     public void SpawnResources()
     {
-        //Initialize all poolers
         for (int i = 0; i < itemPrefabs.Count; i++)
         {
-            itemPrefabs[i].InitializePooler(maxResources, gameObject);
-            GameObject go = Instantiate(itemPrefabs[i]._myPooler.GetPooledObject());
+            for (int j = 0; j < possibleSpawnLocations.Count; j++)
+            {
+                //Spawn Item
+                possibleSpawnLocations[j].active = itemPrefabs[i].SpawnItem(possibleSpawnLocations[j].location);
+                //Idk if this is checking if the location is active or not
+            }
         }
     }
 
@@ -47,14 +52,26 @@ public class LootableItemElement
     [Range(0, 1)]
     public float chanceToSpawn = 0f;
 
-    public ObjectPooler _myPooler;
-
-
-    public void InitializePooler(int maxObjects, GameObject self)
+    public bool SpawnItem(Transform spawnLocation)
     {
-        _myPooler = self.AddComponent<ObjectPooler>();
-        _myPooler.objectPrefab = prefab;
-        _myPooler.maxObjects = maxObjects;
+        float spawnChance = Random.Range(0, 2);
+        if (spawnChance <= chanceToSpawn)
+        {
+            GameObject go = ObjectPooler.PullObjectFromPool(prefab);
+            go.transform.position = spawnLocation.transform.position;
+            go.transform.rotation = spawnLocation.transform.rotation;
+            go.SetActive(true);
+            return true;
+        }
+        return false;
     }
+}
+
+[System.Serializable]
+public class SpawnLocation
+{
+    public Transform location;
+    public bool active { get; set; } = true;
+
 
 }
