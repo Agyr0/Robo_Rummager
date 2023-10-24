@@ -148,6 +148,14 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 5606956887168106471}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fb6fc459f28b718429d2390c7e166e6e,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6594689243456875665}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fb6fc459f28b718429d2390c7e166e6e,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 822731875884495334}
   m_SourcePrefab: {fileID: 100100000, guid: fb6fc459f28b718429d2390c7e166e6e, type: 3}
 --- !u!1 &4826807031198846429 stripped
 GameObject:
@@ -176,6 +184,46 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.073737, y: 0.76137036, z: 0.363516}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &6594689243456875665
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4826807031198846429}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &822731875884495334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4826807031198846429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3138eec820a0d642bafd0622664c6ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offSet: {x: -1, y: 0, z: 1}
 --- !u!4 &5311876769610422119 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: fb6fc459f28b718429d2390c7e166e6e,
