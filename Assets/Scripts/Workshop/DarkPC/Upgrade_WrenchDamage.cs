@@ -21,22 +21,14 @@ public class Upgrade_WrenchDamage : Upgrade_UI_Behavior
 
     public void Upgrade()
     {
-        if (_upgradeCountCurrentDamage < _upgradeCountMaxDamage)
+        if (_upgradeCurrentLevel < _upgradeMaxLevel)
         {
-            if (WorkshopManager.Instance.WorkshopStorage.CreditCount >= _upgradeCostDamage)
+            if (WorkshopManager.Instance.WorkshopStorage.CreditCount >= _upgradeCost)
             {
-                WorkshopManager.Instance.WorkshopStorage.CreditCount -= _upgradeCostDamage;
-                _wrench.Damage += 10;
-                _upgradeCountCurrentDamage++;
-                _textDamageCost.text = _upgradeCostDamage.ToString();
-                _textDamageDesc.text = "+10 to Wrench Swing Damage";
-                _textDamageLevel.text = "Level " + _upgradeCountCurrentDamage + " of " + _upgradeCountMaxDamage;
-            }
-
-            if (_upgradeCountCurrentDamage == _upgradeCountMaxDamage)
-            {
-                _buttonDamage.interactable = false;
-                _textDamageSold.SetActive(true);
+                WorkshopManager.Instance.WorkshopStorage.CreditCount -= _upgradeCost;
+                //_wrench.Damage += 10;
+                _upgradeCurrentLevel++;
+                UpdateText(_upgradeCost, _upgradeDesc, _upgradeCurrentLevel, _upgradeMaxLevel);
             }
         }
     }

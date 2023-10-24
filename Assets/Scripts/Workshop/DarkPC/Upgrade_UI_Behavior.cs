@@ -16,9 +16,7 @@ public class Upgrade_UI_Behavior : MonoBehaviour
     [SerializeField]
     public Button _button;
     [SerializeField]
-    public GameObject _textBuy;
-    [SerializeField]
-    public GameObject _textSold;
+    public TextMeshProUGUI _textBuy;
 
     public void UpdateText(int _upgradeCost, string _upgradeDesc, int _upgradeCountCurrent, int _upgradeCountMax)
     {
@@ -28,9 +26,8 @@ public class Upgrade_UI_Behavior : MonoBehaviour
 
         if (_upgradeCountCurrent == _upgradeCountMax)
         {
+            _textBuy.text = "Sold Out";
             _button.interactable = false;
-            _textSold.SetActive(true);
-            _textBuy.SetActive(false);
         }
     }
 }
