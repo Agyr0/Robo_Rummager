@@ -181,18 +181,54 @@ MonoBehaviour:
     m_TimeEnvelope:
       m_AttackShape:
         serializedVersion: 2
-        m_Curve: []
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0.8056399
+          outSlope: 0.8056399
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0.09504071
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
       m_DecayShape:
         serializedVersion: 2
-        m_Curve: []
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: -0.04231989
+          outSlope: -0.04231989
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0.15520628
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -2.5612667
+          outSlope: -2.5612667
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.062868536
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
       m_AttackTime: 0
-      m_SustainTime: 0.2
+      m_SustainTime: 0.3
       m_DecayTime: 0.7
       m_ScaleWithImpact: 1
       m_HoldForever: 0
@@ -201,7 +237,7 @@ MonoBehaviour:
     m_DissipationMode: 2
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
-  m_DefaultVelocity: {x: 0, y: -1, z: 0}
+  m_DefaultVelocity: {x: 0, y: 0, z: 1}
 --- !u!114 &-1810691241679403314
 MonoBehaviour:
   m_ObjectHideFlags: 0
