@@ -12,7 +12,7 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
     private int _creditPurse;
 
     [SerializeField]
-    private float _pickupEventInterval = .1f;
+    private float _pickupEventInterval = .5f;
 
     [SerializeField]
     private Inventory_Slot[] _inventory_DataArray;
@@ -48,7 +48,7 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
     private Resource_ItemData _resourceEmpty;
 
     [SerializeField]
-    private GameObject _itemBlankPrefab;
+    private List<GameObject> _itemDropList;
 
     private bool _isSendingPickupEvents = false;
 
@@ -259,9 +259,46 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
         ItemData = Inventory_DataArray[slotNumber];
 
         GameObject tempItemBlank;
-        tempItemBlank = Instantiate(_itemBlankPrefab, this.transform.position, this.transform.rotation);
-        tempItemBlank.GetComponent<Resource_Item>().ItemData = ItemData.SlotItemData;
-        tempItemBlank.GetComponent<Resource_Item>().ResourceAmount = ItemData.AmountStored;
+        if (ItemData.SlotItemData.ResourceName == ResourceType.MotherBoard)
+        {
+            tempItemBlank = Instantiate(_itemDropList[0], this.transform.position, this.transform.rotation);
+            tempItemBlank.GetComponent<Resource_Item>().ResourceAmount = ItemData.AmountStored;
+        }
+        else if (ItemData.SlotItemData.ResourceName == ResourceType.Wire)
+        {
+            tempItemBlank = Instantiate(_itemDropList[1], this.transform.position, this.transform.rotation);
+            tempItemBlank.GetComponent<Resource_Item>().ResourceAmount = ItemData.AmountStored;
+        }
+        else if (ItemData.SlotItemData.ResourceName == ResourceType.Oil)
+        {
+            tempItemBlank = Instantiate(_itemDropList[2], this.transform.position, this.transform.rotation);
+            tempItemBlank.GetComponent<Resource_Item>().ResourceAmount = ItemData.AmountStored;
+        }
+        else if (ItemData.SlotItemData.ResourceName == ResourceType.Metal_Scrap)
+        {
+            tempItemBlank = Instantiate(_itemDropList[3], this.transform.position, this.transform.rotation);
+            tempItemBlank.GetComponent<Resource_Item>().ResourceAmount = ItemData.AmountStored;
+        }
+        else if (ItemData.SlotItemData.ResourceName == ResourceType.Advanced_Sensors)
+        {
+            tempItemBlank = Instantiate(_itemDropList[4], this.transform.position, this.transform.rotation);
+            tempItemBlank.GetComponent<Resource_Item>().ResourceAmount = ItemData.AmountStored;
+        }
+        else if (ItemData.SlotItemData.ResourceName == ResourceType.Radioactive_Waste)
+        {
+            tempItemBlank = Instantiate(_itemDropList[5], this.transform.position, this.transform.rotation);
+            tempItemBlank.GetComponent<Resource_Item>().ResourceAmount = ItemData.AmountStored;
+        }
+        else if (ItemData.SlotItemData.ResourceName == ResourceType.Z_Crystal)
+        {
+            tempItemBlank = Instantiate(_itemDropList[6], this.transform.position, this.transform.rotation);
+            tempItemBlank.GetComponent<Resource_Item>().ResourceAmount = ItemData.AmountStored;
+        }
+        else if (ItemData.SlotItemData.ResourceName == ResourceType.Black_Matter)
+        {
+            tempItemBlank = Instantiate(_itemDropList[7], this.transform.position, this.transform.rotation);
+            tempItemBlank.GetComponent<Resource_Item>().ResourceAmount = ItemData.AmountStored;
+        }
 
         Debug.Log(Inventory_DataArray[slotNumber].SlotItemData);
         Inventory_DataArray[slotNumber].SlotItemData = _resourceEmpty;
@@ -274,9 +311,46 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
     public void ItemDropped(Inventory_Slot ItemData)
     {
         GameObject tempItemBlank;
-        tempItemBlank = Instantiate(_itemBlankPrefab, this.transform.position, this.transform.rotation);
-        tempItemBlank.GetComponent<Resource_Item>().ItemData = ItemData.SlotItemData;
-        tempItemBlank.GetComponent<Resource_Item>().ResourceAmount = ItemData.AmountStored;
+        if (ItemData.SlotItemData.ResourceName == ResourceType.MotherBoard)
+        {
+            tempItemBlank = Instantiate(_itemDropList[0], this.transform.position, this.transform.rotation);
+            tempItemBlank.GetComponent<Resource_Item>().ResourceAmount = ItemData.AmountStored;
+        }
+        else if (ItemData.SlotItemData.ResourceName == ResourceType.Wire)
+        {
+            tempItemBlank = Instantiate(_itemDropList[1], this.transform.position, this.transform.rotation);
+            tempItemBlank.GetComponent<Resource_Item>().ResourceAmount = ItemData.AmountStored;
+        }
+        else if (ItemData.SlotItemData.ResourceName == ResourceType.Oil)
+        {
+            tempItemBlank = Instantiate(_itemDropList[2], this.transform.position, this.transform.rotation);
+            tempItemBlank.GetComponent<Resource_Item>().ResourceAmount = ItemData.AmountStored;
+        }
+        else if (ItemData.SlotItemData.ResourceName == ResourceType.Metal_Scrap)
+        {
+            tempItemBlank = Instantiate(_itemDropList[3], this.transform.position, this.transform.rotation);
+            tempItemBlank.GetComponent<Resource_Item>().ResourceAmount = ItemData.AmountStored;
+        }
+        else if (ItemData.SlotItemData.ResourceName == ResourceType.Advanced_Sensors)
+        {
+            tempItemBlank = Instantiate(_itemDropList[4], this.transform.position, this.transform.rotation);
+            tempItemBlank.GetComponent<Resource_Item>().ResourceAmount = ItemData.AmountStored;
+        }
+        else if (ItemData.SlotItemData.ResourceName == ResourceType.Radioactive_Waste)
+        {
+            tempItemBlank = Instantiate(_itemDropList[5], this.transform.position, this.transform.rotation);
+            tempItemBlank.GetComponent<Resource_Item>().ResourceAmount = ItemData.AmountStored;
+        }
+        else if (ItemData.SlotItemData.ResourceName == ResourceType.Z_Crystal)
+        {
+            tempItemBlank = Instantiate(_itemDropList[6], this.transform.position, this.transform.rotation);
+            tempItemBlank.GetComponent<Resource_Item>().ResourceAmount = ItemData.AmountStored;
+        }
+        else if (ItemData.SlotItemData.ResourceName == ResourceType.Black_Matter)
+        {
+            tempItemBlank = Instantiate(_itemDropList[7], this.transform.position, this.transform.rotation);
+            tempItemBlank.GetComponent<Resource_Item>().ResourceAmount = ItemData.AmountStored;
+        }
         EventBus.Publish(EventType.INVENTORY_UPDATE, this.gameObject);
     }
 
