@@ -14,7 +14,7 @@ public class Resource_Item : MonoBehaviour
     private bool _isReadyForPickup = false;
 
     [SerializeField]
-    private int _pickupTimerCount = 0;
+    private float _pickupTimerCount = 0;
 
     public Resource_ItemData ItemData
     {
@@ -34,7 +34,7 @@ public class Resource_Item : MonoBehaviour
         set { _isReadyForPickup = value;}
     }
 
-    public int PickupTimerCount
+    public float PickupTimerCount
     {
         get { return _pickupTimerCount; }
         set { _pickupTimerCount = value; }
