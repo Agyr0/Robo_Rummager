@@ -74,7 +74,6 @@ public class WeaponController : MonoBehaviour
     {
         _curWeapon = _availableWeapons[0];
         inputManager = InputManager.Instance;
-        _animator = GetComponent<Animator>();
 
         playerHandStartTransform = playerHand.transform;
 
@@ -111,8 +110,8 @@ public class WeaponController : MonoBehaviour
     }
     private void LateUpdate()
     {
-        if (!isSwinging)
-            PointWeapon();
+        //if (!isSwinging)
+           // PointWeapon();
     }
     private void InitializeWeapon()
     {
@@ -157,7 +156,6 @@ public class WeaponController : MonoBehaviour
     private void StartWrenchSwing()
     {
         isSwinging = true;
-        _animator.SetTrigger("Attack");
         if (isSwinging)
         {
             Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
@@ -332,7 +330,7 @@ public class WeaponController : MonoBehaviour
     #region Weapon Switching
     private void SwitchWeapon(Vector2 index)
     {
-        
+
         if (index.y > 0)
             _weaponIndex++;
         else if (index.y < 0)
@@ -350,6 +348,8 @@ public class WeaponController : MonoBehaviour
         //Assign curweapon and send event
         _curWeapon = _availableWeapons[_weaponIndex];
         CurAmmoText.text = _curWeapon.CurAmmo.ToString();
+        _animator.SetInteger("Weapon_Index", _weaponIndex);
+        _animator.SetTrigger("Weapon_Switched");
         EventBus.Publish(EventType.DISPLAY_WEAPON);
     }
 
@@ -397,7 +397,7 @@ public class WeaponController : MonoBehaviour
         if (_weaponPrefab != null)
         {
             //Spawn weapon in the playerhand
-            GameObject weaponInstance = Instantiate(_weaponPrefab, playerHand.position, transform.rotation, playerHand.transform);
+            GameObject weaponInstance = Instantiate(_weaponPrefab, playerHand.position, playerHand.transform.rotation, playerHand.transform);
             if(weaponInstance.GetComponent<WeaponRecoil>() != null)
                 weaponRecoil = weaponInstance.GetComponent<WeaponRecoil>();
             //Assign _curWeapon.MuzzlePos with the instanced muzzle pos if available
