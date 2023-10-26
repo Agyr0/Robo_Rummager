@@ -23,8 +23,6 @@ public class PrinterManager : MonoBehaviour, IInteractable
     private VisualEffect _printingEffect_VFX;
 
     [SerializeField]
-    private GameObject _itemPrefab;
-    [SerializeField]
     private GameObject _itemSpawnLocation;
 
     [SerializeField]
@@ -140,37 +138,37 @@ public class PrinterManager : MonoBehaviour, IInteractable
                 case ResourceType.Oil:
                     //WorkshopManager.Instance.WorkshopStorage.OilCount++;
                     tempResource = Instantiate(ResourceDataList[0], _itemSpawnLocation.transform.position, _itemSpawnLocation.transform.rotation);
-                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 2;
+                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 1;
                     tempResource.GetComponent<Resource_Item>().ResourceAmount = 1;
                     break;
                 case ResourceType.Advanced_Sensors:
                     //WorkshopManager.Instance.WorkshopStorage.SensorCount++;
                     tempResource = Instantiate(ResourceDataList[2], _itemSpawnLocation.transform.position, _itemSpawnLocation.transform.rotation);
-                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 2;
+                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 1;
                     tempResource.GetComponent<Resource_Item>().ResourceAmount = 1;
                     break;
                 case ResourceType.MotherBoard:
                     //WorkshopManager.Instance.WorkshopStorage.MotherBoardCount++;
                     tempResource = Instantiate(ResourceDataList[1], _itemSpawnLocation.transform.position, _itemSpawnLocation.transform.rotation);
-                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 2;
+                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 1;
                     tempResource.GetComponent<Resource_Item>().ResourceAmount = 1;
                     break;
                 case ResourceType.Black_Matter:
                     //WorkshopManager.Instance.WorkshopStorage.BlackMatterCount++;
                     tempResource = Instantiate(ResourceDataList[4], _itemSpawnLocation.transform.position, _itemSpawnLocation.transform.rotation);
-                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 2;
+                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 1;
                     tempResource.GetComponent<Resource_Item>().ResourceAmount = 1;
                     break;
                 case ResourceType.Z_Crystal:
                     //WorkshopManager.Instance.WorkshopStorage.ZCrystalCount++;
                     tempResource = Instantiate(ResourceDataList[5], _itemSpawnLocation.transform.position, _itemSpawnLocation.transform.rotation);
-                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 2;
+                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 1;
                     tempResource.GetComponent<Resource_Item>().ResourceAmount = 1;
                     break;
                 case ResourceType.Radioactive_Waste:
                     //WorkshopManager.Instance.WorkshopStorage.RadioactiveWasteCount++;
                     tempResource = Instantiate(ResourceDataList[3], _itemSpawnLocation.transform.position, _itemSpawnLocation.transform.rotation);
-                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 2;
+                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 1;
                     tempResource.GetComponent<Resource_Item>().ResourceAmount = 1;
                     break;
             }
