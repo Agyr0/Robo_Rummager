@@ -3,28 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEngine.UI;
 
 public class TutorialManager : MonoBehaviour
 {
     public GameObject tutorialContainer;
     public TMP_Text tutorialText;
+    public Image chipFace;
+    public Sprite chipHappy;
+    public Sprite chipNeutral;
+    public Sprite chipSurprised;
+
     public string[] Messages;
     private int Index = 0;
     [SerializeField] private float messageSpeed;
 
-    [SerializeField] private float moveTime = 0.1f;
-    [SerializeField] private float scaleAmount = 1.1f;
+    [SerializeField] private float scaleTime = 0.5f;
+    [SerializeField] private float scaleAmount = 100f;
 
     private Vector3 tutorialContainerStartScale;
 
     private void OnEnable()
     {
-        EventBus.Subscribe(EventType.GAME_START, FirstLoadTutorial);
+        EventBus.Subscribe(EventType.GAME_START, FirstTutorialMessages);
     }
 
     private void OnDisable()
     {
-        EventBus.Unsubscribe(EventType.GAME_START, FirstLoadTutorial);
+        EventBus.Unsubscribe(EventType.GAME_START, FirstTutorialMessages);
     }
 
     private void Start()
@@ -32,11 +38,11 @@ public class TutorialManager : MonoBehaviour
         tutorialContainerStartScale = tutorialContainer.transform.localScale;
     }
 
-    private void FirstLoadTutorial()
+    private void FirstTutorialMessages()
     {
         tutorialContainer.SetActive(true);
         StartCoroutine(OpenTutorialBox(true));
-        StartCoroutine(WriteMessage());
+        StartCoroutine(WriteFirstTutorialMessages());
     }
 
     IEnumerator OpenTutorialBox(bool startingAnimation)
@@ -44,7 +50,7 @@ public class TutorialManager : MonoBehaviour
         Vector3 endScale;
 
         float elapsedTime = 0;
-        while (elapsedTime < moveTime)
+        while (elapsedTime < scaleTime)
         {
             elapsedTime += Time.deltaTime;
 
@@ -58,7 +64,7 @@ public class TutorialManager : MonoBehaviour
                 endScale = tutorialContainerStartScale;
             }
 
-            Vector3 lerpedScale = Vector3.Lerp(tutorialContainer.transform.localScale, endScale, (elapsedTime / moveTime));
+            Vector3 lerpedScale = Vector3.Lerp(tutorialContainer.transform.localScale, endScale, (elapsedTime / scaleTime));
 
             tutorialContainer.transform.localScale = lerpedScale;
 
@@ -66,8 +72,38 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
-    IEnumerator WriteMessage()
+    IEnumerator WriteFirstTutorialMessages()
     {
+        // Open first dialogue box
+        StartCoroutine(OpenTutorialBox(true));
+        foreach (char character in Messages[Index].ToCharArray())
+        {
+            tutorialText.text += character;
+            yield return new WaitForSeconds(messageSpeed);
+        }
+        yield return new WaitForSeconds(5);
+        tutorialText.text = null;
+        Index++;
+        StartCoroutine(OpenTutorialBox(false));
+        yield return new WaitForSeconds(scaleTime);
+        chipFace.sprite = chipSurprised;
+
+        // Open second dialogue box
+        StartCoroutine(OpenTutorialBox(true));
+        foreach (char character in Messages[Index].ToCharArray())
+        {
+            tutorialText.text += character;
+            yield return new WaitForSeconds(messageSpeed);
+        }
+        yield return new WaitForSeconds(5);
+        tutorialText.text = null;
+        Index++;
+        StartCoroutine(OpenTutorialBox(false));
+        yield return new WaitForSeconds(scaleTime);
+        chipFace.sprite = chipNeutral;
+
+        // Open third dialogue box
+        StartCoroutine(OpenTutorialBox(true));
         foreach (char character in Messages[Index].ToCharArray())
         {
             tutorialText.text += character;

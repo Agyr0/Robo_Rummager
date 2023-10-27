@@ -24265,6 +24265,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7747028061843134042, guid: 0778fc2c62197d9428d1cfe6e564b263,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7747028061843134042, guid: 0778fc2c62197d9428d1cfe6e564b263,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8519836069288394862, guid: 0778fc2c62197d9428d1cfe6e564b263,
         type: 3}
       propertyPath: m_SizeDelta.y
@@ -24274,6 +24284,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -158.85376
+      objectReference: {fileID: 0}
+    - target: {fileID: 8657774793151236306, guid: 0778fc2c62197d9428d1cfe6e564b263,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8657774793151236306, guid: 0778fc2c62197d9428d1cfe6e564b263,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8661002000532538332, guid: 0778fc2c62197d9428d1cfe6e564b263,
         type: 3}
@@ -36395,7 +36415,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1690172269
 RectTransform:
   m_ObjectHideFlags: 0
@@ -43463,13 +43483,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tutorialContainer: {fileID: 1690172268}
   tutorialText: {fileID: 296514944}
+  chipFace: {fileID: 115015416}
+  chipHappy: {fileID: 21300000, guid: bb56f4467ece584408527909732bdd16, type: 3}
+  chipNeutral: {fileID: 21300000, guid: f09007c7f156ca9408ab4e0fb8c40a53, type: 3}
+  chipSurprised: {fileID: 21300000, guid: 6f381ff6ce7a708409191f3278214d73, type: 3}
   Messages:
   - "\u201CHello Lumen! My name is Chip, Your virtual AI. I live inside of your goggles!\u201D"
   - "\u201CThis is your workshop! This is our home and our workspace. As a black
     market mechanic we build all of our creations here. \u201D"
   - "\u201CBut first, let\u2019s check out the contracts board\u201D"
   messageSpeed: 0.05
-  moveTime: 0.5
+  scaleTime: 0.2
   scaleAmount: 100
 --- !u!1001 &1967787331
 PrefabInstance:
