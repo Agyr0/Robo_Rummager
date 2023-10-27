@@ -371,8 +371,8 @@ public class WeaponController : MonoBehaviour
         _curWeapon = _availableWeapons[_weaponIndex];
         CurAmmoText.text = _curWeapon.CurAmmo.ToString();
         
-        EventBus.Publish(EventType.DISPLAY_WEAPON);
     }
+
 
     private void DisplayWeapon()
     {

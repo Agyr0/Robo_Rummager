@@ -42,7 +42,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3874632292391577253}
   - component: {fileID: 3632890964120253948}
-  - component: {fileID: 2227708760659251430}
   - component: {fileID: 3962257303861442168}
   m_Layer: 10
   m_Name: WeaponController
@@ -88,27 +87,6 @@ MonoBehaviour:
   zoomFOV: 40
   _animator: {fileID: 5614267723481267694}
   _curAmmoText: {fileID: 0}
---- !u!95 &2227708760659251430
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 533481007237501277}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: bf55bc16b43feba4f809a654b5336c97, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &3962257303861442168
 MonoBehaviour:
   m_ObjectHideFlags: 0
