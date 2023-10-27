@@ -2,14 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Unity.VisualScripting;
 
 public class TutorialManager : MonoBehaviour
 {
-    public TMP_Text tutorialsText;
-    [SerializeField] private float moveTime = 0.1f;
-    [Range(0f, 2f), SerializeField] private float scaleAmount = 1.1f;
+    public GameObject tutorialContainer;
+    public TMP_Text tutorialText;
+    public string[] Messages;
+    private int Index = 0;
+    [SerializeField] private float messageSpeed;
 
-    private Vector3 startScale;
+    [SerializeField] private float moveTime = 0.1f;
+    [SerializeField] private float scaleAmount = 1.1f;
+
+    private Vector3 tutorialContainerStartScale;
 
     private void OnEnable()
     {
@@ -21,37 +27,52 @@ public class TutorialManager : MonoBehaviour
         EventBus.Unsubscribe(EventType.GAME_START, FirstLoadTutorial);
     }
 
+    private void Start()
+    {
+        tutorialContainerStartScale = tutorialContainer.transform.localScale;
+    }
+
     private void FirstLoadTutorial()
     {
-        Debug.Log("Call Worked");
+        tutorialContainer.SetActive(true);
         StartCoroutine(OpenTutorialBox(true));
+        StartCoroutine(WriteMessage());
     }
 
     IEnumerator OpenTutorialBox(bool startingAnimation)
     {
-        Debug.Log("Entered Coroutine for Tutorial Animation");
         Vector3 endScale;
 
         float elapsedTime = 0;
-        while(elapsedTime < moveTime)
+        while (elapsedTime < moveTime)
         {
             elapsedTime += Time.deltaTime;
 
-            if(startingAnimation)
+            if (startingAnimation)
             {
-                endScale = startScale * scaleAmount;
+                endScale = tutorialContainerStartScale * scaleAmount;
             }
 
             else
             {
-                endScale = startScale;
+                endScale = tutorialContainerStartScale;
             }
 
-            Vector3 lerpedScale = Vector3.Lerp(transform.position, endScale, (elapsedTime / moveTime));
+            Vector3 lerpedScale = Vector3.Lerp(tutorialContainer.transform.localScale, endScale, (elapsedTime / moveTime));
 
-            transform.localScale = lerpedScale;
+            tutorialContainer.transform.localScale = lerpedScale;
 
             yield return null;
         }
+    }
+
+    IEnumerator WriteMessage()
+    {
+        foreach (char character in Messages[Index].ToCharArray())
+        {
+            tutorialText.text += character;
+            yield return new WaitForSeconds(messageSpeed);
+        }
+        Index++;
     }
 }
