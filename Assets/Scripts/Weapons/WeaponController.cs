@@ -76,7 +76,6 @@ public class WeaponController : MonoBehaviour
     {
         _curWeapon = _availableWeapons[0];
         inputManager = InputManager.Instance;
-        _animator = GetComponent<Animator>();
         audioManager = AudioManager.Instance;
         playerHandStartTransform = playerHand.transform;
 
@@ -162,7 +161,7 @@ public class WeaponController : MonoBehaviour
     private void StartWrenchSwing()
     {
         isSwinging = true;
-        _animator.SetTrigger("Attack");
+        //_animator.SetTrigger("Attack");
         if (isSwinging)
         {
             Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
@@ -220,7 +219,7 @@ public class WeaponController : MonoBehaviour
             //Spawn Muzzle Flash
             //GameObject muzzleFlash = Instantiate(_curWeapon.MuzzleFlash, transform.position, Quaternion.FromToRotation(transform.position, transform.forward));
 
-            TrailRenderer trail = weaponPooler.GetPooledObject().GetComponent<TrailRenderer>();
+            TrailRenderer trail = ObjectPooler.PullObjectFromPool(_curWeapon.Trail).GetComponent<TrailRenderer>();
             if(!audioSource.isPlaying)
                 audioManager.PlayClip(audioSource, audioManager.FindRandomizedClip(AudioType.Gun, audioManager.effectAudio));
 
