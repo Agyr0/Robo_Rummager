@@ -41,6 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4502879403399194580}
   - component: {fileID: 5072512693746017901}
+  - component: {fileID: 7945220538784559448}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -83,6 +84,19 @@ MonoBehaviour:
   weaponController: {fileID: 0}
   inputProvider: {fileID: 0}
   inventoryManager: {fileID: 0}
+  audioManager: {fileID: 0}
   playerVCam: {fileID: 0}
   _stateDrivenCamera: {fileID: 0}
   playerSpawnPoint: {fileID: 6381071350329009104}
+--- !u!114 &7945220538784559448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2622502968472187761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1a6f9065340134499a4a575d9f94afa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
