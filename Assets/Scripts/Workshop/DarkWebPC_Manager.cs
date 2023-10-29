@@ -60,7 +60,7 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
 
     private void Start()
     {
-        WorkshopManager.Instance.WorkshopStorage.CreditCount += 300;
+        //WorkshopManager.Instance.WorkshopStorage.CreditCount += 300;
     }
 
     public void LeavePC()
