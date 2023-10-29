@@ -17,6 +17,7 @@ public class TutorialManager : MonoBehaviour
 
     public string[] Messages;
     private int Index = 0;
+    private bool hasPlayedContractAcceptedTutorial = false;
 
     [SerializeField] private float messageSpeed;
 
@@ -29,12 +30,16 @@ public class TutorialManager : MonoBehaviour
     {
         EventBus.Subscribe(EventType.GAME_START, FirstTutorialMessages);
         EventBus.Subscribe(EventType.CONTRACTS_TUTORIALS, ContractsTutorialMessages);
+        EventBus.Subscribe(EventType.CONTRACTS_OPENED_TUTORIALS, ContractsOpenedTutorialMessages);
+        EventBus.Subscribe(EventType.PLAYER_CONTRACTUPDATE, ContractsAcceptedTutorialMessages);
     }
 
     private void OnDisable()
     {
         EventBus.Unsubscribe(EventType.GAME_START, FirstTutorialMessages);
-        EventBus.Subscribe(EventType.CONTRACTS_TUTORIALS, ContractsTutorialMessages);
+        EventBus.Unsubscribe(EventType.CONTRACTS_TUTORIALS, ContractsTutorialMessages);
+        EventBus.Unsubscribe(EventType.CONTRACTS_OPENED_TUTORIALS, ContractsOpenedTutorialMessages);
+        EventBus.Unsubscribe(EventType.PLAYER_CONTRACTUPDATE, ContractsAcceptedTutorialMessages);
     }
 
     private void Start()
@@ -52,6 +57,22 @@ public class TutorialManager : MonoBehaviour
     {
         tutorialContainer.SetActive(true);
         StartCoroutine(WriteContractsTutorialMessages());
+    }
+
+    public void ContractsOpenedTutorialMessages()
+    {
+        tutorialContainer.SetActive(true);
+        StartCoroutine(WriteContractsOpenedTutorialMessages());
+    }
+
+    public void ContractsAcceptedTutorialMessages()
+    {
+        if(hasPlayedContractAcceptedTutorial == false) 
+        {
+            tutorialContainer.SetActive(true);
+            StartCoroutine(WriteContractAcceptedTutorialMessages());
+            hasPlayedContractAcceptedTutorial = true;
+        }
     }
 
     // OPEN / CLOSE TUTORIAL TEXT BOX
@@ -134,7 +155,6 @@ public class TutorialManager : MonoBehaviour
     // CONTRACT TUTORIALS
     IEnumerator WriteContractsTutorialMessages()
     {
-        // Open first dialogue box
         StartCoroutine(OpenTutorialBox(true));
         tutorialObjectiveMarker.SetActive(false);
         foreach (char character in Messages[Index].ToCharArray())
@@ -147,9 +167,50 @@ public class TutorialManager : MonoBehaviour
         Index++;
         StartCoroutine(OpenTutorialBox(false));
         yield return new WaitForSeconds(scaleTime);
+        tutorialContainer.SetActive(false);
+        chipFace.sprite = chipNeutral;
+    }
+
+    // CONTRACT OPENED TUTORIALS
+    IEnumerator WriteContractsOpenedTutorialMessages()
+    {
+        StartCoroutine(OpenTutorialBox(true));
+        foreach (char character in Messages[Index].ToCharArray())
+        {
+            tutorialText.text += character;
+            yield return new WaitForSeconds(messageSpeed);
+        }
+        yield return new WaitForSeconds(3);
+        tutorialText.text = null;
+        Index++;
+        StartCoroutine(OpenTutorialBox(false));
+        yield return new WaitForSeconds(scaleTime);
+        tutorialContainer.SetActive(false);
+        chipFace.sprite = chipHappy;
+    }
+
+    // CONTRACT ACCEPTED TUTORIALS
+    IEnumerator WriteContractAcceptedTutorialMessages()
+    {
+        // Contract accepted message
+        StartCoroutine(OpenTutorialBox(true));
+        foreach (char character in Messages[Index].ToCharArray())
+        {
+            tutorialText.text += character;
+            yield return new WaitForSeconds(messageSpeed);
+        }
+        yield return new WaitForSeconds(3);
+        tutorialText.text = null;
+        Index++;
+        StartCoroutine(OpenTutorialBox(false));
+        yield return new WaitForSeconds(scaleTime);
+        tutorialContainer.SetActive(false);
         chipFace.sprite = chipNeutral;
 
-        // Open second dialogue box
+        yield return new WaitForSeconds(3);
+
+        // Use Scanner Goggle Message
+        tutorialContainer.SetActive(true);
         StartCoroutine(OpenTutorialBox(true));
         foreach (char character in Messages[Index].ToCharArray())
         {

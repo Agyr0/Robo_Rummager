@@ -9883,6 +9883,74 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 432362720}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &438556799
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 338189686045018662, guid: b7f89ddc0704b704bb488f4dba47d326,
+        type: 3}
+      propertyPath: m_Name
+      value: AudioManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 3156288248413771980, guid: b7f89ddc0704b704bb488f4dba47d326,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.1281304
+      objectReference: {fileID: 0}
+    - target: {fileID: 3156288248413771980, guid: b7f89ddc0704b704bb488f4dba47d326,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.2546022
+      objectReference: {fileID: 0}
+    - target: {fileID: 3156288248413771980, guid: b7f89ddc0704b704bb488f4dba47d326,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.07251483
+      objectReference: {fileID: 0}
+    - target: {fileID: 3156288248413771980, guid: b7f89ddc0704b704bb488f4dba47d326,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3156288248413771980, guid: b7f89ddc0704b704bb488f4dba47d326,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3156288248413771980, guid: b7f89ddc0704b704bb488f4dba47d326,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3156288248413771980, guid: b7f89ddc0704b704bb488f4dba47d326,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3156288248413771980, guid: b7f89ddc0704b704bb488f4dba47d326,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3156288248413771980, guid: b7f89ddc0704b704bb488f4dba47d326,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3156288248413771980, guid: b7f89ddc0704b704bb488f4dba47d326,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b7f89ddc0704b704bb488f4dba47d326, type: 3}
 --- !u!1001 &440300405
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -43852,6 +43920,9 @@ MonoBehaviour:
   - "\u201CThis is where we receive customers orders for robots! Commercial robots
     are expensive and people come to us for a cheaper alternative\u201D "
   - "\u201CRemember you can only hold 1 contract at a time, so choose wisely!\u201D"
+  - "\u201CGreat choice! Now let\u2019s go find the necessary parts!\u201D"
+  - "\u201CHmm, I know I saw some spare parts around here. Try pressing \u201CQ\u201D
+    to activate your scanner goggles \u201D"
   messageSpeed: 0.04
   scaleTime: 0.2
   scaleAmount: 100
@@ -48401,6 +48472,7 @@ SceneRoots:
   - {fileID: 2106051534}
   - {fileID: 308803037}
   - {fileID: 1986467804}
+  - {fileID: 438556799}
   - {fileID: 1537636956}
   - {fileID: 511441621}
   - {fileID: 336794155}

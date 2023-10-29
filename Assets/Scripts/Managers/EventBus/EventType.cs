@@ -99,6 +99,7 @@ public enum EventType
 
     #region Tutorial
     CONTRACTS_TUTORIALS,
+    CONTRACTS_OPENED_TUTORIALS,
     #endregion
 
     #region Testing Events
