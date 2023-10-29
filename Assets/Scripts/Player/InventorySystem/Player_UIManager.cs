@@ -63,7 +63,6 @@ public class Player_UIManager : MonoBehaviour
             _playerHUD_UI.SetActive(true);
             EventBus.Publish(EventType.INVENTORY_TOGGLE);
             EventBus.Publish(EventType.INVENTORY_UPDATE, this.gameObject);
-            EventBus.Publish(EventType.GAME_START);
         }
     }
 

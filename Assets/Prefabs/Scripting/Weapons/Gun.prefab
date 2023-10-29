@@ -26,13 +26,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2034469870312512184}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.028574083, y: -0, z: -0, w: 0.99959165}
-  m_LocalPosition: {x: -0.005741564, y: 0.005399523, z: 0.1542}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalRotation: {x: 0.028487341, y: -0.0022474632, z: 0.0786169, w: 0.99649525}
+  m_LocalPosition: {x: 0, y: 0, z: 0.1494}
+  m_LocalScale: {x: 1.505777, y: 1.505777, z: 1.505777}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1140793495130331070}
-  m_LocalEulerAnglesHint: {x: 3.275, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 3.275, y: 0, z: 9.022}
 --- !u!33 &8842908821498045645
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -108,7 +108,7 @@ Transform:
   m_GameObject: {fileID: 3816776108650364976}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.183, z: -0.13}
+  m_LocalPosition: {x: -0.0131, y: 0.1193, z: 0.4316}
   m_LocalScale: {x: 0.30039, y: 0.26939, z: 2.69504}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -123,6 +123,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1140793495130331070}
+  - component: {fileID: -1438967731997884310}
+  - component: {fileID: -1810691241679403314}
   m_Layer: 10
   m_Name: Gun
   m_TagString: Untagged
@@ -138,7 +140,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5795035365397072787}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -147,3 +149,106 @@ Transform:
   - {fileID: 4609205703693568361}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-1438967731997884310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5795035365397072787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ImpulseDefinition:
+    m_ImpulseChannel: 1
+    m_ImpulseShape: 2
+    m_CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ImpulseDuration: 0.2
+    m_ImpulseType: 3
+    m_DissipationRate: 0.25
+    m_RawSignal: {fileID: 11400000, guid: 3e0f9945e78e78243a005fa169dfc8de, type: 2}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_RepeatMode: 0
+    m_Randomize: 1
+    m_TimeEnvelope:
+      m_AttackShape:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0.8056399
+          outSlope: 0.8056399
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0.09504071
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_DecayShape:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: -0.04231989
+          outSlope: -0.04231989
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0.15520628
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -2.5612667
+          outSlope: -2.5612667
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.062868536
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_AttackTime: 0
+      m_SustainTime: 0.3
+      m_DecayTime: 0.7
+      m_ScaleWithImpact: 1
+      m_HoldForever: 0
+    m_ImpactRadius: 100
+    m_DirectionMode: 0
+    m_DissipationMode: 2
+    m_DissipationDistance: 100
+    m_PropagationSpeed: 343
+  m_DefaultVelocity: {x: 0, y: 0, z: 1}
+--- !u!114 &-1810691241679403314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5795035365397072787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88507edc3a7a262438a7682234ef18c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0
+  cameraShake: {fileID: 0}

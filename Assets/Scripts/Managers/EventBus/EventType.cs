@@ -101,12 +101,8 @@ public enum EventType
 
     TEST_EVENT_0,
     TEST_EVENT_1,
-    TEST_EVENT_2,
+    TEST_EVENT_2
 
-    #endregion
-
-    #region Tutorial
-    CONTRACTS_TUTORIALS
     #endregion
 
 }
