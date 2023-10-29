@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 //using UnityEngine.UIElements;
 
-public class DarkWebPC_Manager : MonoBehaviour, IInteractable
+public class DarkWebPC_Manager : Singleton<DarkWebPC_Manager>, IInteractable
 {
     [SerializeField]
     private List<GameObject> _upgradesPlayer;
@@ -25,6 +25,8 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
     private GameObject _upgradeMenu;
     [SerializeField]
     private WeaponData _wrench;
+    [SerializeField]
+    private WeaponData _gun;
 
     [SerializeField]
     private GameObject _allTab;
@@ -48,6 +50,18 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
 
     private bool isOn = false;
 
+    public WeaponData Wrench
+    {
+        get { return _wrench; }
+        set { _wrench = value; }
+    }
+
+    public WeaponData Gun
+    {
+        get { return _gun; }
+        set { _gun = value; }
+    }
+
     private void OnEnable()
     {
         //EventBus.Subscribe(EventType.TOGGLE_DARKPC_CAM_BLEND, ToggleDisplayUpgrades);
@@ -56,11 +70,6 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
     private void OnDisable()
     {
         //EventBus.Unsubscribe(EventType.TOGGLE_DARKPC_CAM_BLEND, ToggleDisplayUpgrades);
-    }
-
-    private void Start()
-    {
-        //WorkshopManager.Instance.WorkshopStorage.CreditCount += 300;
     }
 
     public void LeavePC()

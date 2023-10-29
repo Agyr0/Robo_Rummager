@@ -26,7 +26,7 @@ public class Upgrade_OillDrill : Upgrade_UI_Behavior
             if (WorkshopManager.Instance.WorkshopStorage.CreditCount >= _upgradeCost)
             {
                 WorkshopManager.Instance.WorkshopStorage.CreditCount -= _upgradeCost;
-                //_wrench.Damage += 10;
+                PrinterManager.Instance.PrintOil = true;
                 _upgradeCurrentLevel++;
                 UpdateText(_upgradeCost, _upgradeDesc, _upgradeCurrentLevel, _upgradeMaxLevel);
             }

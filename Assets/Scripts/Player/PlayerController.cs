@@ -162,6 +162,7 @@ public class PlayerController : MonoBehaviour
         EventBus.Subscribe(EventType.TOGGLE_SCANNER, ToggleScanner);
         EventBus.Subscribe<float>(EventType.UPGRADE_HEALTH, AdjustMaxHealth);
         EventBus.Subscribe<float>(EventType.UPGRADE_STAMINA, AdjustMaxStamina);
+        EventBus.Subscribe<float>(EventType.UPGRADE_STAMINA, AdjustMaxDash);
     }
     private void OnDisable()
     {
@@ -171,7 +172,7 @@ public class PlayerController : MonoBehaviour
         EventBus.Unsubscribe(EventType.TOGGLE_SCANNER, ToggleScanner);
         EventBus.Unsubscribe<float>(EventType.UPGRADE_HEALTH, AdjustMaxHealth);
         EventBus.Unsubscribe<float>(EventType.UPGRADE_STAMINA, AdjustMaxStamina);
-
+        EventBus.Unsubscribe<float>(EventType.UPGRADE_STAMINA, AdjustMaxDash);
     }
 
     private void Start()
@@ -331,6 +332,11 @@ public class PlayerController : MonoBehaviour
     public void AdjustMaxStamina(float stamina)
     {
         staminaMax += stamina;
+    }
+
+    public void AdjustMaxDash(float dash)
+    {
+        dashSpeed += dash;
     }
 
     #endregion

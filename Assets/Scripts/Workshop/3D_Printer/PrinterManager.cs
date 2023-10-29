@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 using UnityEngine.VFX;
 using Image = UnityEngine.UI.Image;
 
-public class PrinterManager : MonoBehaviour, IInteractable
+public class PrinterManager : Singleton<PrinterManager>, IInteractable
 {
     [SerializeField]
     private PrinterState _printerState = PrinterState.Available;
@@ -39,6 +38,94 @@ public class PrinterManager : MonoBehaviour, IInteractable
     private TextMeshProUGUI printerTime_Text;
 
     [SerializeField]
+    private Button printButtonOil;
+    [SerializeField]
+    private Button printButtonMotherboard;
+    [SerializeField]
+    private Button printButtonAdvSensor;
+    [SerializeField]
+    private Button printButtonWaste;
+    [SerializeField]
+    private Button printButtonDarkMatter;
+    [SerializeField]
+    private Button printButtonZ_Crystal;
+
+    #region PrintsUnlocked
+    [SerializeField]
+    private bool _printOil = false;
+    [SerializeField]
+    private bool _printAdvSensor = false;
+    [SerializeField]
+    private bool _printMotherboard = false;
+    [SerializeField]
+    private bool _printWaste = false;
+    [SerializeField]
+    private bool _printZ_Crystal = false;
+    [SerializeField]
+    private bool _printDarkMatter = false;
+
+    public bool PrintOil
+    {
+        set 
+        { 
+            _printOil = value;
+            printButtonOil.interactable = value;
+            printButtonOil.transform.GetChild(1).gameObject.SetActive(!value);
+        }
+    }
+
+    public bool PrintAdvSensor
+    {
+        set 
+        { 
+            _printAdvSensor = value;
+            printButtonAdvSensor.interactable = value;
+            printButtonAdvSensor.transform.GetChild(1).gameObject.SetActive(!value);
+        }
+    }
+
+    public bool PrintMotherboard
+    {
+        set
+        {
+            _printMotherboard = value;
+            printButtonMotherboard.interactable = value;
+            printButtonMotherboard.transform.GetChild(1).gameObject.SetActive(!value);
+        }
+    }
+
+    public bool PrintWaste
+    {
+        set
+        {
+            _printWaste = value;
+            printButtonWaste.interactable = value;
+            printButtonWaste.transform.GetChild(1).gameObject.SetActive(!value);
+        }
+    }
+
+    public bool PrintZCrystal
+    {
+        set
+        {
+            _printZ_Crystal = value;
+            printButtonZ_Crystal.interactable = value;
+            printButtonZ_Crystal.transform.GetChild(1).gameObject.SetActive(!value);
+        }
+    }
+
+    public bool PrintDarkMatter
+    {
+        set
+        {
+            _printDarkMatter = value;
+            printButtonDarkMatter.interactable = value;
+            printButtonDarkMatter.transform.GetChild(1).gameObject.SetActive(!value);
+        }
+    }
+    #endregion
+
+    [SerializeField]
     private GameObject selectionCanvas;
     private BilboardScaler scaler;
     private int originalWeaponIndex;
@@ -49,6 +136,16 @@ public class PrinterManager : MonoBehaviour, IInteractable
     private Coroutine handleUI;
 
     private bool isOn = false;
+
+    private void Start()
+    {
+        PrintOil = _printOil;
+        PrintMotherboard = _printMotherboard;
+        PrintAdvSensor = _printAdvSensor;
+        PrintDarkMatter = _printDarkMatter;
+        PrintWaste = _printWaste;
+        PrintZCrystal = _printZ_Crystal;
+    }
 
     public int Clock_PrintTime
     {
