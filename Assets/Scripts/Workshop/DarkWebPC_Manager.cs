@@ -9,6 +9,102 @@ using UnityEngine.UI;
 public class DarkWebPC_Manager : MonoBehaviour, IInteractable
 {
     [SerializeField]
+    private int _upgradeCountCurrentHealth;
+    [SerializeField]
+    private int _upgradeCountMaxHealth;
+    [SerializeField]
+    private int _upgradeCostHealth;
+    [SerializeField]
+    private TextMeshProUGUI _textHealthDesc;
+    [SerializeField]
+    private TextMeshProUGUI _textHealthCost;
+    [SerializeField]
+    private TextMeshProUGUI _textHealthLevel;
+    [SerializeField]
+    private TextMeshProUGUI _textHealthButton;
+    [SerializeField]
+    private Button _buttonHealth;
+    [SerializeField]
+    private GameObject _textHealthSold;
+
+    [SerializeField]
+    private int _upgradeCountCurrentStamina;
+    [SerializeField]
+    private int _upgradeCountMaxStamina;
+    [SerializeField]
+    private int _upgradeCostStamina;
+    [SerializeField]
+    private TextMeshProUGUI _textStaminaDesc;
+    [SerializeField]
+    private TextMeshProUGUI _textStaminaCost;
+    [SerializeField]
+    private TextMeshProUGUI _textStaminaLevel;
+    [SerializeField]
+    private TextMeshProUGUI _textStaminaButton;
+    [SerializeField]
+    private Button _buttonStamina;
+    [SerializeField]
+    private GameObject _textStaminaSold;
+
+    [SerializeField]
+    private int _upgradeCountCurrentDamage;
+    [SerializeField]
+    private int _upgradeCountMaxDamage;
+    [SerializeField]
+    private int _upgradeCostDamage;
+    [SerializeField]
+    private TextMeshProUGUI _textDamageDesc;
+    [SerializeField]
+    private TextMeshProUGUI _textDamageCost;
+    [SerializeField]
+    private TextMeshProUGUI _textDamageLevel;
+    [SerializeField]
+    private TextMeshProUGUI _textDamageButton;
+    [SerializeField]
+    private Button _buttonDamage;
+    [SerializeField]
+    private GameObject _textDamageSold;
+
+    [SerializeField]
+    private int _upgradeCountCurrentInventorySlot;
+    [SerializeField]
+    private int _upgradeCountMaxInventorySlot;
+    [SerializeField]
+    private int _upgradeCostInventorySlot;
+    [SerializeField]
+    private TextMeshProUGUI _textInventorySlotDesc;
+    [SerializeField]
+    private TextMeshProUGUI _textInventorySlotCost;
+    [SerializeField]
+    private TextMeshProUGUI _textInventorySlotLevel;
+    [SerializeField]
+    private TextMeshProUGUI _textInventorySlotButton;
+    [SerializeField]
+    private Button _buttonInventorySlot;
+    [SerializeField]
+    private GameObject _textInventorySlotSold;
+
+    [SerializeField]
+    private int _upgradeCountCurrentStackSize;
+    [SerializeField]
+    private int _upgradeCountMaxStackSize;
+    [SerializeField]
+    private int _upgradeCostStackSize;
+    [SerializeField]
+    private TextMeshProUGUI _textStackSizeDesc;
+    [SerializeField]
+    private TextMeshProUGUI _textStackSizeCost;
+    [SerializeField]
+    private TextMeshProUGUI _textStackSizeLevel;
+    [SerializeField]
+    private TextMeshProUGUI _textStackSizeButton;
+    [SerializeField]
+    private Button _buttonStackSize;
+    [SerializeField]
+    private GameObject _textStackSizeSold;
+
+
+    [SerializeField]
     private List<GameObject> _upgradesPlayer;
     [SerializeField]
     private List<GameObject> _upgradesWrench;
@@ -27,19 +123,6 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
     private WeaponData _wrench;
 
     [SerializeField]
-    private GameObject _allTab;
-    [SerializeField]
-    private GameObject _playerTab;
-    [SerializeField]
-    private GameObject _wrenchTab;
-    [SerializeField]
-    private GameObject _gunTab;
-    [SerializeField]
-    private GameObject _gogglesTab;
-    [SerializeField]
-    private GameObject _machineTab;
-
-    [SerializeField]
     private GameObject selectionCanvas;
     private BilboardScaler scaler;
     private int originalWeaponIndex;
@@ -50,22 +133,160 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
 
     private void OnEnable()
     {
-        //EventBus.Subscribe(EventType.TOGGLE_DARKPC_CAM_BLEND, ToggleDisplayUpgrades);
+        EventBus.Subscribe(EventType.TOGGLE_DARKPC_CAM_BLEND, ToggleDisplayUpgrades);
+
+        UpdateUpgradeHealth();
+        UpdateUpgradeStamina();
+        UpdateUpgradeDamage();
+        UpdateUpgradeInventorySlot();
+        UpdateUpgradeStackSize();
+
+        //WorkshopManager.Instance.WorkshopStorage.CreditCount = 200;
     }
 
     private void OnDisable()
     {
-        //EventBus.Unsubscribe(EventType.TOGGLE_DARKPC_CAM_BLEND, ToggleDisplayUpgrades);
+        EventBus.Unsubscribe(EventType.TOGGLE_DARKPC_CAM_BLEND, ToggleDisplayUpgrades);
     }
 
-    private void Start()
+    private void UpdateUpgradeHealth()
     {
-        //WorkshopManager.Instance.WorkshopStorage.CreditCount += 300;
+        _textHealthCost.text = "Cost: " + _upgradeCostHealth;
+        _textHealthDesc.text = "+25 to Max Health";
+        _textHealthLevel.text = "Level " + _upgradeCountCurrentHealth + " of " + _upgradeCountMaxHealth;
+    }
+    private void UpdateUpgradeStamina()
+    {
+        _textStaminaCost.text = "Cost: " + _upgradeCostStamina;
+        _textStaminaDesc.text = "+25 to Max Stamina";
+        _textStaminaLevel.text = "Level " + _upgradeCountCurrentStamina + " of " + _upgradeCountMaxStamina;
+    }
+    private void UpdateUpgradeDamage()
+    {
+        _textDamageCost.text = "Cost: " + _upgradeCostDamage;
+        _textDamageDesc.text = "+10 to Wrench Swing Damage";
+        _textDamageLevel.text = "Level " + _upgradeCountCurrentDamage + " of " + _upgradeCountMaxDamage;
+    }
+    private void UpdateUpgradeInventorySlot()
+    {
+        _textInventorySlotCost.text = "Cost: " + _upgradeCostInventorySlot;
+        _textInventorySlotDesc.text = "+1 Inventory Slot";
+        _textInventorySlotLevel.text = "Level " + _upgradeCountCurrentInventorySlot + " of " + _upgradeCountMaxInventorySlot;
+    }
+    private void UpdateUpgradeStackSize()
+    {
+        _textStackSizeCost.text = "Cost: " + _upgradeCostStackSize;
+        _textStackSizeDesc.text = "Upgrade Stackable Resource Size";
+        _textStackSizeLevel.text = "Level " + _upgradeCountCurrentStackSize + " of " + _upgradeCountMaxStackSize;
     }
 
-    public void LeavePC()
+    public void UpgradeHealth()
     {
-        HandleInteract();
+        if (_upgradeCountCurrentHealth < _upgradeCountMaxHealth)
+        {
+            if (WorkshopManager.Instance.WorkshopStorage.CreditCount >= _upgradeCostHealth)
+            {
+                WorkshopManager.Instance.WorkshopStorage.CreditCount -= _upgradeCostHealth;
+                _upgradeCountCurrentHealth++;
+                EventBus.Publish(EventType.UPGRADE_HEALTH, 5f);
+                _textHealthCost.text = "Cost: " + _upgradeCostHealth;
+                _textHealthDesc.text = "+25 to Max Health";
+                _textHealthLevel.text = "Level " + _upgradeCountCurrentHealth + " of " + _upgradeCountMaxHealth;
+            }
+
+            if (_upgradeCountCurrentHealth == _upgradeCountMaxHealth)
+            {
+                _buttonHealth.interactable = false;
+                _textHealthSold.SetActive(true);
+            }
+        }
+    }
+    public void UpgradeStamina()
+    {
+        if (_upgradeCountCurrentStamina < _upgradeCountMaxStamina)
+        {
+            if (WorkshopManager.Instance.WorkshopStorage.CreditCount >= _upgradeCostStamina)
+            {
+                WorkshopManager.Instance.WorkshopStorage.CreditCount -= _upgradeCostStamina;
+                _upgradeCountCurrentStamina++;
+                EventBus.Publish(EventType.UPGRADE_STAMINA, 5f);
+                _textStaminaCost.text = "Cost: " + _upgradeCostStamina;
+                _textStaminaDesc.text = "+25 to Max Stamina";
+                _textStaminaLevel.text = "Level " + _upgradeCountCurrentStamina + " of " + _upgradeCountMaxStamina;
+            }
+
+            if (_upgradeCountCurrentStamina == _upgradeCountMaxStamina)
+            {
+                _buttonStamina.interactable = false;
+                _textStaminaSold.SetActive(true);
+            }
+        }
+    }
+
+    public void UpgradeDamage()
+    {
+        if (_upgradeCountCurrentDamage < _upgradeCountMaxDamage)
+        {
+            if (WorkshopManager.Instance.WorkshopStorage.CreditCount >= _upgradeCostDamage)
+            {
+                WorkshopManager.Instance.WorkshopStorage.CreditCount -= _upgradeCostDamage;
+                _wrench.Damage += 10;
+               _upgradeCountCurrentDamage++;
+                _textDamageCost.text = "Cost: " + _upgradeCostDamage;
+                _textDamageDesc.text = "+10 to Wrench Swing Damage";
+                _textDamageLevel.text = "Level " + _upgradeCountCurrentDamage + " of " + _upgradeCountMaxDamage;
+            }
+
+            if (_upgradeCountCurrentDamage == _upgradeCountMaxDamage)
+            {
+                _buttonDamage.interactable = false;
+                _textDamageSold.SetActive(true);
+            }
+        }
+    }
+
+    public void UpgradeInventorySlot()
+    {
+        if (_upgradeCountCurrentInventorySlot < _upgradeCountMaxInventorySlot)
+        {
+            if (WorkshopManager.Instance.WorkshopStorage.CreditCount >= _upgradeCostInventorySlot)
+            {
+                WorkshopManager.Instance.WorkshopStorage.CreditCount -= _upgradeCostInventorySlot;
+                _upgradeCountCurrentInventorySlot++;
+                EventBus.Publish(EventType.INVENTORY_ADDSLOT);
+                _textInventorySlotCost.text = "Cost: " + _upgradeCostInventorySlot;
+                _textInventorySlotDesc.text = "+1 Inventory Slot";
+                _textInventorySlotLevel.text = "Level " + _upgradeCountCurrentInventorySlot + " of " + _upgradeCountMaxInventorySlot;
+            }
+
+            if (_upgradeCountCurrentInventorySlot == _upgradeCountMaxInventorySlot)
+            {
+                _buttonInventorySlot.interactable = false;
+                _textInventorySlotSold.SetActive(true);
+            }
+        }
+    }
+
+    public void UpgradeStackSize()
+    {
+        if (_upgradeCountCurrentStackSize < _upgradeCountMaxStackSize)
+        {
+            if (WorkshopManager.Instance.WorkshopStorage.CreditCount >= _upgradeCostStackSize)
+            {
+                WorkshopManager.Instance.WorkshopStorage.CreditCount -= _upgradeCostStackSize;
+                _upgradeCountCurrentStackSize++;
+                EventBus.Publish(EventType.UPGRADE_STACKSIZE, 5);
+                _textStackSizeCost.text = "Cost: " + _upgradeCostStackSize;
+                _textStackSizeDesc.text = "Upgrade Stackable Resource Size";
+                _textStackSizeLevel.text = "Level " + _upgradeCountCurrentStackSize + " of " + _upgradeCountMaxStackSize;
+            }
+
+            if (_upgradeCountCurrentStackSize == _upgradeCountMaxStackSize)
+            {
+                _buttonStackSize.interactable = false;
+                _textStackSizeSold.SetActive(true);
+            }
+        }
     }
 
     public void HandleInteract()
@@ -116,14 +337,7 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
 
     public void DisplayAll()
     {
-        _allTab.SetActive(true);
-        _playerTab.SetActive(false);
-        _wrenchTab.SetActive(false);
-        _gunTab.SetActive(false);
-        _gogglesTab.SetActive(false);
-        _machineTab.SetActive(false);
-
-        foreach (GameObject item in _upgradesPlayer)
+        foreach(GameObject item in _upgradesPlayer)
         {
             item.SetActive(true);
         }
@@ -147,14 +361,6 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
 
     public void DisplayPlayer()
     {
-
-        _allTab.SetActive(false);
-        _playerTab.SetActive(true);
-        _wrenchTab.SetActive(false);
-        _gunTab.SetActive(false);
-        _gogglesTab.SetActive(false);
-        _machineTab.SetActive(false);
-
         foreach (GameObject item in _upgradesPlayer)
         {
             item.SetActive(true);
@@ -179,14 +385,6 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
 
     public void DisplayWrench()
     {
-
-        _allTab.SetActive(false);
-        _playerTab.SetActive(false);
-        _wrenchTab.SetActive(true);
-        _gunTab.SetActive(false);
-        _gogglesTab.SetActive(false);
-        _machineTab.SetActive(false);
-
         foreach (GameObject item in _upgradesPlayer)
         {
             item.SetActive(false);
@@ -211,14 +409,6 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
 
     public void DisplayScannerGoggles()
     {
-
-        _allTab.SetActive(false);
-        _playerTab.SetActive(false);
-        _wrenchTab.SetActive(false);
-        _gunTab.SetActive(false);
-        _gogglesTab.SetActive(true);
-        _machineTab.SetActive(false);
-
         foreach (GameObject item in _upgradesPlayer)
         {
             item.SetActive(false);
@@ -243,14 +433,6 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
 
     public void DisplayLaser()
     {
-
-        _allTab.SetActive(false);
-        _playerTab.SetActive(false);
-        _wrenchTab.SetActive(false);
-        _gunTab.SetActive(true);
-        _gogglesTab.SetActive(false);
-        _machineTab.SetActive(false);
-
         foreach (GameObject item in _upgradesPlayer)
         {
             item.SetActive(false);
@@ -275,14 +457,6 @@ public class DarkWebPC_Manager : MonoBehaviour, IInteractable
 
     public void DisplayMachines()
     {
-
-        _allTab.SetActive(false);
-        _playerTab.SetActive(false);
-        _wrenchTab.SetActive(false);
-        _gunTab.SetActive(false);
-        _gogglesTab.SetActive(false);
-        _machineTab.SetActive(true);
-
         foreach (GameObject item in _upgradesPlayer)
         {
             item.SetActive(false);

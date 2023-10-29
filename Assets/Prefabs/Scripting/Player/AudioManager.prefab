@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1425646302006322326
+--- !u!1 &338189686045018662
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6898070485420948913}
-  - component: {fileID: 4885631991034484626}
+  - component: {fileID: 3156288248413771980}
+  - component: {fileID: 6927279726386915629}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -17,13 +17,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6898070485420948913
+--- !u!4 &3156288248413771980
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1425646302006322326}
+  m_GameObject: {fileID: 338189686045018662}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.1281304, y: 1.2546022, z: 0.07251483}
@@ -32,33 +32,251 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4885631991034484626
+--- !u!114 &6927279726386915629
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1425646302006322326}
+  m_GameObject: {fileID: 338189686045018662}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 81407e5384ebeb74b8c5e30f40d61a60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ambientAudio:
-  - name: Ambient Workshop
+  ambientAudio: []
+  effectAudio:
+  - name: Gun Shot
     myControllers:
-    - clip: {fileID: 0}
+    - clip: {fileID: 8300000, guid: 36147ebe4769259478978cef07cf7a4a, type: 3}
       type: 0
-      name: Clip one
-    - clip: {fileID: 0}
+      name: GunShot1
+    - clip: {fileID: 8300000, guid: a7a0d362e9574294c84e21ef16b40d1a, type: 3}
       type: 0
-      name: Clip Two
-  - name: Ambient Outdoors
+      name: GunShot2
+    - clip: {fileID: 8300000, guid: 9013389b665a41b4d830de5fff4b8a05, type: 3}
+      type: 0
+      name: GunShot3
+    - clip: {fileID: 8300000, guid: 5879e4b2b829c2b479da3e311e58e0a1, type: 3}
+      type: 0
+      name: GunShot4
+  - name: WrenchMetal
     myControllers:
-    - clip: {fileID: 0}
+    - clip: {fileID: 8300000, guid: 792ce67dd47f6574c9964508540bbb12, type: 3}
       type: 0
-      name: Clip one
-    - clip: {fileID: 0}
+      name: Wrench_Metal1
+    - clip: {fileID: 8300000, guid: 04ac8086b8a44c943bddb66a9b431d24, type: 3}
       type: 0
-      name: Clip Two
-  effectAudio: []
+      name: Wrench_Metal2
+    - clip: {fileID: 8300000, guid: 41863ad9e072ed745bd37bf6999c8246, type: 3}
+      type: 0
+      name: Wrench_Metal3
+    - clip: {fileID: 8300000, guid: 7af49cf65e257d24fa6bd99f577a00b0, type: 3}
+      type: 0
+      name: Wrench_Metal4
+    - clip: {fileID: 8300000, guid: fcbee1bb925b31f45925b96dbea43dc0, type: 3}
+      type: 0
+      name: Wrench_Metal5
+  - name: WrenchWhoosh
+    myControllers:
+    - clip: {fileID: 8300000, guid: e533503f76422ae4eb467408e15a99e7, type: 3}
+      type: 0
+      name: Wrench_Whoosh1
+    - clip: {fileID: 8300000, guid: c1767d84a974acb4ebe06dc5ae302ef8, type: 3}
+      type: 0
+      name: Wrench_Whoosh2
+    - clip: {fileID: 8300000, guid: 663899e419445c54dbb5407df8f015be, type: 3}
+      type: 0
+      name: Wrench_Whoosh3
+  - name: FootStepsDirt
+    myControllers:
+    - clip: {fileID: 8300000, guid: 9aa876183ddc7a74b94e135c0e12df65, type: 3}
+      type: 0
+      name: Dirt1
+    - clip: {fileID: 8300000, guid: b6c2439a23f863e43aad7c675ea5f13a, type: 3}
+      type: 0
+      name: Dirt2
+  - name: FootStepsGravel
+    myControllers:
+    - clip: {fileID: 8300000, guid: 49e224556b8d2234682ba934a252c986, type: 3}
+      type: 0
+      name: Gravel1
+    - clip: {fileID: 8300000, guid: 8d6b358bd3ae39e42b14efb4387e05c5, type: 3}
+      type: 0
+      name: Gravel2
+    - clip: {fileID: 8300000, guid: 79840fe71a3873b4bb330c4e791a10fa, type: 3}
+      type: 0
+      name: Gravel3
+    - clip: {fileID: 8300000, guid: 3ec6482cf6824334f8435e94c216460f, type: 3}
+      type: 0
+      name: Gravel4
+  - name: FootStepsMetal
+    myControllers:
+    - clip: {fileID: 8300000, guid: 701dd85361d06894f8540dd21a418215, type: 3}
+      type: 0
+      name: Metal1
+    - clip: {fileID: 8300000, guid: e053808fad8e40c48ab7aeffb9e4b11b, type: 3}
+      type: 0
+      name: Metal2
+    - clip: {fileID: 8300000, guid: eb62c629f555cb44f8f7744c6bb10b14, type: 3}
+      type: 0
+      name: Metal3
+    - clip: {fileID: 8300000, guid: 5e35616472933114983eff65afb2f2a6, type: 3}
+      type: 0
+      name: Metal4
+  - name: PositiveSfx
+    myControllers:
+    - clip: {fileID: 8300000, guid: e0f51f081e8a5274ebee71ffa6253c00, type: 3}
+      type: 0
+      name: Positive1
+    - clip: {fileID: 8300000, guid: 5e932e1860768bd46870ab9b17460266, type: 3}
+      type: 0
+      name: Positive2
+    - clip: {fileID: 8300000, guid: 9f21d9577c3eded449e194d4f5a424a2, type: 3}
+      type: 0
+      name: Positive3
+  - name: DropOffBox
+    myControllers:
+    - clip: {fileID: 8300000, guid: bd052bf8099f2894eac2ab6edf8ee7f1, type: 3}
+      type: 0
+      name: DropOffBox
+  - name: SellerBinYes
+    myControllers:
+    - clip: {fileID: 8300000, guid: 4988410fd334c4544aa6f04f68761342, type: 3}
+      type: 0
+      name: SellerBinYes1
+    - clip: {fileID: 8300000, guid: 56030a416ff1834459f15af246eb3343, type: 3}
+      type: 0
+      name: SellerBinYes2
+  - name: PrinterSwitch
+    myControllers:
+    - clip: {fileID: 8300000, guid: f5e1776b5af6ddc49856bf332535764e, type: 3}
+      type: 0
+      name: PrinterSwitch
+  - name: PrinterOn
+    myControllers:
+    - clip: {fileID: 8300000, guid: dc787f46650744b4f8655348411cd996, type: 3}
+      type: 0
+      name: PrinterPowerOn
+  - name: PrinterHum
+    myControllers:
+    - clip: {fileID: 8300000, guid: 445b5e8921b07b046a838d0e2d3d363a, type: 3}
+      type: 0
+      name: PrinterHum
+  - name: PrinterDing
+    myControllers:
+    - clip: {fileID: 8300000, guid: 11260d7e5822caf4c81f04f50c151f39, type: 3}
+      type: 0
+      name: PrinterDing
+  - name: HologramOn
+    myControllers:
+    - clip: {fileID: 8300000, guid: f5e85727fd37b774287b72c10a8721bf, type: 3}
+      type: 0
+      name: HologramOn
+  - name: HologramHum
+    myControllers:
+    - clip: {fileID: 8300000, guid: f4e18515136677740907a9d5824a2584, type: 3}
+      type: 0
+      name: HologramHum
+  - name: RogueBotAlert
+    myControllers:
+    - clip: {fileID: 8300000, guid: d7ddd70e68ac0ea43809f75f66f60412, type: 3}
+      type: 0
+      name: RogueBotAlert1
+    - clip: {fileID: 8300000, guid: 9893b7fc5d660f44d918b8043d37145c, type: 3}
+      type: 0
+      name: RogueBotAlert2
+    - clip: {fileID: 8300000, guid: 2d06987a55f15644a878570410570f9e, type: 3}
+      type: 0
+      name: RogueBotAlert3
+    - clip: {fileID: 8300000, guid: fcbd65199a37308408ffcc4d0c54e915, type: 3}
+      type: 0
+      name: RogueBotAlert4
+    - clip: {fileID: 8300000, guid: d37cc17c9b8a6a649b94fb4799c815da, type: 3}
+      type: 0
+      name: RogueBotAlert5
+    - clip: {fileID: 8300000, guid: 2c98d812fc1a4594ebf9e52efa5184a3, type: 3}
+      type: 0
+      name: RogueBotAlert6
+    - clip: {fileID: 8300000, guid: b0cc5bfe563a41d45879a3c8150d004d, type: 3}
+      type: 0
+      name: RogueBotAlert7
+    - clip: {fileID: 8300000, guid: 88b2e1da9dfed4b428a96e4773d729a5, type: 3}
+      type: 0
+      name: RogueBotAlert8
+    - clip: {fileID: 8300000, guid: 0afb3ad44ab5eea4085689832e9ca514, type: 3}
+      type: 0
+      name: RogueBotAlert9
+    - clip: {fileID: 8300000, guid: f0700c49b62bc0641a68bf49ac3cf40c, type: 3}
+      type: 0
+      name: RogueBotAlert10
+  - name: RogueBotDeath
+    myControllers:
+    - clip: {fileID: 8300000, guid: c09c31e26552cdf42a80313473d732f8, type: 3}
+      type: 0
+      name: RogueBotDeath1
+    - clip: {fileID: 8300000, guid: 345d729a45df7a94c9dcffc9fe58de29, type: 3}
+      type: 0
+      name: RogueBotDeath2
+    - clip: {fileID: 8300000, guid: 9c48dfd5fe82631488c7c165f38b753e, type: 3}
+      type: 0
+      name: RogueBotDeath3
+    - clip: {fileID: 8300000, guid: d74a8fb315649604e9542acc68103f96, type: 3}
+      type: 0
+      name: RogueBotDeath4
+    - clip: {fileID: 8300000, guid: 2e651c6dd5db032439081ca88c922975, type: 3}
+      type: 0
+      name: RogueBotDeath5
+    - clip: {fileID: 8300000, guid: b957a93a6506f994da1560c3f01efb2f, type: 3}
+      type: 0
+      name: RogueBotDeath6
+    - clip: {fileID: 8300000, guid: b834b17c8c67f884eb1ce4cef2366296, type: 3}
+      type: 0
+      name: RogueBotDeath7
+    - clip: {fileID: 8300000, guid: 6093af5767acf2c4f82222849eff809a, type: 3}
+      type: 0
+      name: RogueBotDeath8
+    - clip: {fileID: 8300000, guid: 0bca0af3c08c932479feb36ccab5a05e, type: 3}
+      type: 0
+      name: RogueBotDeath9
+  - name: RogueBotIdle
+    myControllers:
+    - clip: {fileID: 8300000, guid: b7fea5a2f0ce98a4fa60921d5de3c2f5, type: 3}
+      type: 0
+      name: RogueBotIdle1
+    - clip: {fileID: 8300000, guid: cbb2ea68de32bf0439f500702bbbed0b, type: 3}
+      type: 0
+      name: RogueBotIdle2
+    - clip: {fileID: 8300000, guid: daede5b6a948fbc4792e25ddaf16fc40, type: 3}
+      type: 0
+      name: RogueBotIdle3
+    - clip: {fileID: 8300000, guid: f8f8019c70a77bf48a148e4353e192db, type: 3}
+      type: 0
+      name: RogueBotIdle4
+    - clip: {fileID: 8300000, guid: aac6b415b944acb45a781c18235ded57, type: 3}
+      type: 0
+      name: RogueBotIdle5
+    - clip: {fileID: 8300000, guid: 17c24063c07db5348859d57a9ba9bf28, type: 3}
+      type: 0
+      name: RogueBotIdle6
+    - clip: {fileID: 8300000, guid: 295e9eef54c9bb147af75a084d57aa2e, type: 3}
+      type: 0
+      name: RogueBotIdle7
+    - clip: {fileID: 8300000, guid: edc7566235349cf48803365fb6b11d7b, type: 3}
+      type: 0
+      name: RogueBotIdle8
+    - clip: {fileID: 8300000, guid: d2e8e3fde59b28a44b38bb623b5b584d, type: 3}
+      type: 0
+      name: RogueBotIdle9
+    - clip: {fileID: 8300000, guid: a212176dd1393ea4cb07008c4853679c, type: 3}
+      type: 0
+      name: RogueBotIdle10
+    - clip: {fileID: 8300000, guid: 29cefda45d5718c4a87bff36d5088624, type: 3}
+      type: 0
+      name: RogueBotIdle11
+    - clip: {fileID: 8300000, guid: b84c51bb56fac82409796a419058ebb8, type: 3}
+      type: 0
+      name: RogueBotIdle12
+    - clip: {fileID: 8300000, guid: 3cd1a72a6310cf64f8c4d3ccc8e6a604, type: 3}
+      type: 0
+      name: RogueBotIdle13

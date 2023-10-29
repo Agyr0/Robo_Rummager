@@ -7,7 +7,6 @@ public class ScavengerFireGun : MonoBehaviour
 {
     public Transform gunBarrel;
     public ParticleSystem gunParticle;
-    public GameObject bulletPrefab;
 
     public void Shoot(float timeBetweenShots, ScavengerAgent agent)
     {
@@ -21,8 +20,7 @@ public class ScavengerFireGun : MonoBehaviour
 
         for (int i = 0; i < numberOfBullets; i++)
         {
-            GameObject currBullet = ObjectPooler.PullObjectFromPool(bulletPrefab);
-            Debug.LogError("Tucker Changed the object pooler here");
+            GameObject currBullet = agent.objectPooler.GetPooledObject();
 
             currBullet.transform.position = gunBarrel.transform.position;
             currBullet.transform.rotation = gunBarrel.transform.rotation;

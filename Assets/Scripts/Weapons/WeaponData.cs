@@ -17,7 +17,7 @@ public class WeaponData : ScriptableObject
     public float _wrenchSpeed = 1f;
     public float _disassembleTime = 0;
     public Sprite _icon;
-    public GameObject _trail;
+    public TrailRenderer _trail;
     public GameObject _muzzleFlash;
     public Transform _muzzlePos;
     private Text _curAmmoText;
@@ -133,7 +133,7 @@ public class WeaponData : ScriptableObject
             _icon = value; 
         } 
     }
-    public GameObject Trail
+    public TrailRenderer Trail
     {
         get
         {

@@ -105,7 +105,4 @@ public enum EventType
 
     #endregion
 
-    #region Tutorial
-    #endregion
-
 }
