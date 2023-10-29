@@ -97,6 +97,11 @@ public enum EventType
     ROBOT_SOLD,
     #endregion
 
+    #region Tutorial
+    CONTRACTS_TUTORIALS,
+    CONTRACTS_OPENED_TUTORIALS,
+    #endregion
+
     #region Testing Events
 
     TEST_EVENT_0,

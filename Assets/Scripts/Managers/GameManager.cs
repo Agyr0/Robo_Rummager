@@ -18,6 +18,8 @@ public class GameManager : Singleton<GameManager>
     public CinemachineInputProvider inputProvider;
     [HideInInspector]
     public Player_InventoryManager inventoryManager;
+    [HideInInspector]
+    public AudioManager audioManager;
 
     private CinemachineStoryboard _storyboard;
     public CinemachineStoryboard Storyboard { get { return _storyboard; } }
@@ -115,6 +117,7 @@ public class GameManager : Singleton<GameManager>
         inputProvider = PlayerVCam.gameObject.GetComponent<CinemachineInputProvider>();
         _storyboard = PlayerVCam.gameObject.GetComponent<CinemachineStoryboard>();
         _camAnimator = StateDrivenCamera.gameObject.GetComponent<Animator>();
+        audioManager = AudioManager.Instance;
         _storyboard.m_Alpha = 0f;
 
     }

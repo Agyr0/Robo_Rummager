@@ -30,6 +30,7 @@ public class ContractBoard_Manager : Singleton<ContractBoard_Manager>, IInteract
     private Coroutine handleUI;
 
     private bool isOn = false;
+    private bool hasPlayedSingleContractTutorial = false;
 
     public List<Robot_RecipeData> Robot_RecipeDataList
     {
@@ -131,7 +132,15 @@ public class ContractBoard_Manager : Singleton<ContractBoard_Manager>, IInteract
     public void HandleInteract()
     {
         if (!isOn)
+        {
             originalWeaponIndex = GameManager.Instance.weaponController.WeaponIndex;
+            if(hasPlayedSingleContractTutorial == false)
+            {
+                EventBus.Publish(EventType.CONTRACTS_OPENED_TUTORIALS);
+                hasPlayedSingleContractTutorial = true;
+            }
+        }
+        originalWeaponIndex = GameManager.Instance.weaponController.WeaponIndex;
         isOn = !isOn;
 
 

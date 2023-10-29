@@ -6,6 +6,7 @@ using UnityEngine;
 [DefaultExecutionOrder(2)]
 public class RogueBotSpawnManager : MonoBehaviour
 {
+
     public GameObject rougeBot;
     public List<Transform> spawnPoints;
 
@@ -23,7 +24,6 @@ public class RogueBotSpawnManager : MonoBehaviour
         {
             Transform randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
             GameObject robot = ObjectPooler.PullObjectFromPool(rougeBot);
-            Debug.LogError("Tucker Changed the object pooler here");
 
             if (robot != null)
             {

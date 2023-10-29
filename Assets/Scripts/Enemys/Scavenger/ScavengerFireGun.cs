@@ -22,7 +22,6 @@ public class ScavengerFireGun : MonoBehaviour
         for (int i = 0; i < numberOfBullets; i++)
         {
             GameObject currBullet = ObjectPooler.PullObjectFromPool(bulletPrefab);
-            Debug.LogError("Tucker Changed the object pooler here");
 
             currBullet.transform.position = gunBarrel.transform.position;
             currBullet.transform.rotation = gunBarrel.transform.rotation;
