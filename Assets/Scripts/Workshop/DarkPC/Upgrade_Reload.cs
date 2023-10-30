@@ -1,16 +1,18 @@
-using Agyr.Workshop;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
+using Agyr.Workshop;
 
-public class Upgrade_WrenchDamage : Upgrade_UI_Behavior
+public class Upgrade_Reload : Upgrade_UI_Behavior
 {
     [SerializeField]
     private int _upgradeCurrentLevel = 1;
     [SerializeField]
-    private int _upgradeMaxLevel = 5;
+    private int _upgradeMaxLevel = 3;
     [SerializeField]
-    private int _upgradeCost = 5;
+    private int _upgradeCost = 150;
     [SerializeField]
     private string _upgradeDesc = "";
 
@@ -26,9 +28,9 @@ public class Upgrade_WrenchDamage : Upgrade_UI_Behavior
             if (WorkshopManager.Instance.WorkshopStorage.CreditCount >= _upgradeCost)
             {
                 WorkshopManager.Instance.WorkshopStorage.CreditCount -= _upgradeCost;
-                DarkWebPC_Manager.Instance.Wrench.WrenchLevel++;
                 _upgradeCurrentLevel++;
                 UpdateText(_upgradeCost, _upgradeDesc, _upgradeCurrentLevel, _upgradeMaxLevel);
+                DarkWebPC_Manager.Instance.Gun.ReloadTime -= .2f;
             }
         }
     }

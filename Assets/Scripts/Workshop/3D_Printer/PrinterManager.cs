@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 using UnityEngine.VFX;
 using Image = UnityEngine.UI.Image;
 
-public class PrinterManager : MonoBehaviour, IInteractable
+public class PrinterManager : Singleton<PrinterManager>, IInteractable
 {
     [SerializeField]
     private PrinterState _printerState = PrinterState.Available;
@@ -17,13 +16,11 @@ public class PrinterManager : MonoBehaviour, IInteractable
 
     public List<Sprite> ResourceImageList;
 
-    public List<Resource_ItemData> ResourceDataList;
+    public List<GameObject> ResourceDataList;
 
     [SerializeField]
     private VisualEffect _printingEffect_VFX;
 
-    [SerializeField]
-    private GameObject _itemPrefab;
     [SerializeField]
     private GameObject _itemSpawnLocation;
 
@@ -41,6 +38,94 @@ public class PrinterManager : MonoBehaviour, IInteractable
     private TextMeshProUGUI printerTime_Text;
 
     [SerializeField]
+    private Button printButtonOil;
+    [SerializeField]
+    private Button printButtonMotherboard;
+    [SerializeField]
+    private Button printButtonAdvSensor;
+    [SerializeField]
+    private Button printButtonWaste;
+    [SerializeField]
+    private Button printButtonDarkMatter;
+    [SerializeField]
+    private Button printButtonZ_Crystal;
+
+    #region PrintsUnlocked
+    [SerializeField]
+    private bool _printOil = false;
+    [SerializeField]
+    private bool _printAdvSensor = false;
+    [SerializeField]
+    private bool _printMotherboard = false;
+    [SerializeField]
+    private bool _printWaste = false;
+    [SerializeField]
+    private bool _printZ_Crystal = false;
+    [SerializeField]
+    private bool _printDarkMatter = false;
+
+    public bool PrintOil
+    {
+        set 
+        { 
+            _printOil = value;
+            printButtonOil.interactable = value;
+            printButtonOil.transform.GetChild(1).gameObject.SetActive(!value);
+        }
+    }
+
+    public bool PrintAdvSensor
+    {
+        set 
+        { 
+            _printAdvSensor = value;
+            printButtonAdvSensor.interactable = value;
+            printButtonAdvSensor.transform.GetChild(1).gameObject.SetActive(!value);
+        }
+    }
+
+    public bool PrintMotherboard
+    {
+        set
+        {
+            _printMotherboard = value;
+            printButtonMotherboard.interactable = value;
+            printButtonMotherboard.transform.GetChild(1).gameObject.SetActive(!value);
+        }
+    }
+
+    public bool PrintWaste
+    {
+        set
+        {
+            _printWaste = value;
+            printButtonWaste.interactable = value;
+            printButtonWaste.transform.GetChild(1).gameObject.SetActive(!value);
+        }
+    }
+
+    public bool PrintZCrystal
+    {
+        set
+        {
+            _printZ_Crystal = value;
+            printButtonZ_Crystal.interactable = value;
+            printButtonZ_Crystal.transform.GetChild(1).gameObject.SetActive(!value);
+        }
+    }
+
+    public bool PrintDarkMatter
+    {
+        set
+        {
+            _printDarkMatter = value;
+            printButtonDarkMatter.interactable = value;
+            printButtonDarkMatter.transform.GetChild(1).gameObject.SetActive(!value);
+        }
+    }
+    #endregion
+
+    [SerializeField]
     private GameObject selectionCanvas;
     private BilboardScaler scaler;
     private int originalWeaponIndex;
@@ -51,6 +136,16 @@ public class PrinterManager : MonoBehaviour, IInteractable
     private Coroutine handleUI;
 
     private bool isOn = false;
+
+    private void Start()
+    {
+        PrintOil = _printOil;
+        PrintMotherboard = _printMotherboard;
+        PrintAdvSensor = _printAdvSensor;
+        PrintDarkMatter = _printDarkMatter;
+        PrintWaste = _printWaste;
+        PrintZCrystal = _printZ_Crystal;
+    }
 
     public int Clock_PrintTime
     {
@@ -89,41 +184,41 @@ public class PrinterManager : MonoBehaviour, IInteractable
             switch (order)
             {
                 case 0:
-                    Clock_PrintTime = ResourceDataList[order].ResourcePrintTime;
-                    StartCoroutine(PrintOrder(ResourceDataList[order].ResourceName, ResourceImageList[order]));
-                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].ResourceMesh);
-                    _printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].ResourcePrintTime);
+                    Clock_PrintTime = ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime;
+                    StartCoroutine(PrintOrder(ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceName, ResourceImageList[order]));
+                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceMesh);
+                    _printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime);
                     
                     break;
                 case 1:
-                    Clock_PrintTime = ResourceDataList[order].ResourcePrintTime;
-                    StartCoroutine(PrintOrder(ResourceDataList[order].ResourceName, ResourceImageList[order]));
-                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].ResourceMesh);
-                    _printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].ResourcePrintTime);
+                    Clock_PrintTime = ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime;
+                    StartCoroutine(PrintOrder(ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceName, ResourceImageList[order]));
+                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceMesh);
+                    _printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime);
                     break;
                 case 2:
-                    Clock_PrintTime = ResourceDataList[order].ResourcePrintTime;
-                    StartCoroutine(PrintOrder(ResourceDataList[order].ResourceName, ResourceImageList[order]));
-                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].ResourceMesh);
-                    _printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].ResourcePrintTime);
+                    Clock_PrintTime = ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime;
+                    StartCoroutine(PrintOrder(ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceName, ResourceImageList[order]));
+                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceMesh);
+                    _printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime);
                     break;
                 case 3:
-                    Clock_PrintTime = ResourceDataList[order].ResourcePrintTime;
-                    StartCoroutine(PrintOrder(ResourceDataList[order].ResourceName, ResourceImageList[order]));
-                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].ResourceMesh);
-                    _printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].ResourcePrintTime);
+                    Clock_PrintTime = ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime;
+                    StartCoroutine(PrintOrder(ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceName, ResourceImageList[order]));
+                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceMesh);
+                    _printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime);
                     break;
                 case 4:
-                    Clock_PrintTime = ResourceDataList[order].ResourcePrintTime;
-                    StartCoroutine(PrintOrder(ResourceDataList[order].ResourceName, ResourceImageList[order]));
-                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].ResourceMesh);
-                    _printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].ResourcePrintTime);
+                    Clock_PrintTime = ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime;
+                    StartCoroutine(PrintOrder(ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceName, ResourceImageList[order]));
+                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceMesh);
+                    _printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime);
                     break;
                 case 5:
-                    Clock_PrintTime = ResourceDataList[order].ResourcePrintTime;
-                    StartCoroutine(PrintOrder(ResourceDataList[order].ResourceName, ResourceImageList[order]));
-                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].ResourceMesh);
-                    _printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].ResourcePrintTime);
+                    Clock_PrintTime = ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime;
+                    StartCoroutine(PrintOrder(ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceName, ResourceImageList[order]));
+                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceMesh);
+                    _printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime);
                     break;
             }
         }
@@ -133,57 +228,45 @@ public class PrinterManager : MonoBehaviour, IInteractable
     {
         if (_printerState == PrinterState.Completed)
         {
-            GameObject tempResource = Instantiate(_itemPrefab, _itemSpawnLocation.transform.position, _itemSpawnLocation.transform.rotation);
+            GameObject tempResource;
             
             switch (printingResource)
             {
                 case ResourceType.Oil:
                     //WorkshopManager.Instance.WorkshopStorage.OilCount++;
-                    tempResource.GetComponent<Resource_Item>().ItemData = ResourceDataList[0];
-                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 2;
+                    tempResource = Instantiate(ResourceDataList[0], _itemSpawnLocation.transform.position, _itemSpawnLocation.transform.rotation);
+                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 1;
                     tempResource.GetComponent<Resource_Item>().ResourceAmount = 1;
-                    tempResource.GetComponent<MeshRenderer>().material = ResourceDataList[0].ResourceMaterial;
-                    tempResource.GetComponent<MeshFilter>().mesh = ResourceDataList[0].ResourceMesh;
                     break;
                 case ResourceType.Advanced_Sensors:
                     //WorkshopManager.Instance.WorkshopStorage.SensorCount++;
-                    tempResource.GetComponent<Resource_Item>().ItemData = ResourceDataList[1];
-                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 2;
+                    tempResource = Instantiate(ResourceDataList[2], _itemSpawnLocation.transform.position, _itemSpawnLocation.transform.rotation);
+                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 1;
                     tempResource.GetComponent<Resource_Item>().ResourceAmount = 1;
-                    tempResource.GetComponent<MeshRenderer>().material = ResourceDataList[1].ResourceMaterial;
-                    tempResource.GetComponent<MeshFilter>().mesh = ResourceDataList[1].ResourceMesh;
                     break;
                 case ResourceType.MotherBoard:
                     //WorkshopManager.Instance.WorkshopStorage.MotherBoardCount++;
-                    tempResource.GetComponent<Resource_Item>().ItemData = ResourceDataList[2];
-                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 2;
+                    tempResource = Instantiate(ResourceDataList[1], _itemSpawnLocation.transform.position, _itemSpawnLocation.transform.rotation);
+                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 1;
                     tempResource.GetComponent<Resource_Item>().ResourceAmount = 1;
-                    tempResource.GetComponent<MeshRenderer>().material = ResourceDataList[2].ResourceMaterial;
-                    tempResource.GetComponent<MeshFilter>().mesh = ResourceDataList[2].ResourceMesh;
                     break;
                 case ResourceType.Black_Matter:
                     //WorkshopManager.Instance.WorkshopStorage.BlackMatterCount++;
-                    tempResource.GetComponent<Resource_Item>().ItemData = ResourceDataList[3];
-                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 2;
+                    tempResource = Instantiate(ResourceDataList[4], _itemSpawnLocation.transform.position, _itemSpawnLocation.transform.rotation);
+                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 1;
                     tempResource.GetComponent<Resource_Item>().ResourceAmount = 1;
-                    tempResource.GetComponent<MeshRenderer>().material = ResourceDataList[3].ResourceMaterial;
-                    tempResource.GetComponent<MeshFilter>().mesh = ResourceDataList[3].ResourceMesh;
                     break;
                 case ResourceType.Z_Crystal:
                     //WorkshopManager.Instance.WorkshopStorage.ZCrystalCount++;
-                    tempResource.GetComponent<Resource_Item>().ItemData = ResourceDataList[4];
-                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 2;
+                    tempResource = Instantiate(ResourceDataList[5], _itemSpawnLocation.transform.position, _itemSpawnLocation.transform.rotation);
+                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 1;
                     tempResource.GetComponent<Resource_Item>().ResourceAmount = 1;
-                    tempResource.GetComponent<MeshRenderer>().material = ResourceDataList[4].ResourceMaterial;
-                    tempResource.GetComponent<MeshFilter>().mesh = ResourceDataList[4].ResourceMesh;
                     break;
                 case ResourceType.Radioactive_Waste:
                     //WorkshopManager.Instance.WorkshopStorage.RadioactiveWasteCount++;
-                    tempResource.GetComponent<Resource_Item>().ItemData = ResourceDataList[5];
-                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 2;
+                    tempResource = Instantiate(ResourceDataList[3], _itemSpawnLocation.transform.position, _itemSpawnLocation.transform.rotation);
+                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 1;
                     tempResource.GetComponent<Resource_Item>().ResourceAmount = 1;
-                    tempResource.GetComponent<MeshRenderer>().material = ResourceDataList[5].ResourceMaterial;
-                    tempResource.GetComponent<MeshFilter>().mesh = ResourceDataList[5].ResourceMesh;
                     break;
             }
      

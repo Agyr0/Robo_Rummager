@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Upgrade_WrenchDamage : Upgrade_UI_Behavior
+public class Upgrade_PCBPrinter : Upgrade_UI_Behavior
 {
     [SerializeField]
-    private int _upgradeCurrentLevel = 1;
+    private int _upgradeCurrentLevel = 0;
     [SerializeField]
-    private int _upgradeMaxLevel = 5;
+    private int _upgradeMaxLevel = 1;
     [SerializeField]
     private int _upgradeCost = 5;
     [SerializeField]
@@ -26,7 +26,7 @@ public class Upgrade_WrenchDamage : Upgrade_UI_Behavior
             if (WorkshopManager.Instance.WorkshopStorage.CreditCount >= _upgradeCost)
             {
                 WorkshopManager.Instance.WorkshopStorage.CreditCount -= _upgradeCost;
-                DarkWebPC_Manager.Instance.Wrench.WrenchLevel++;
+                PrinterManager.Instance.PrintAdvSensor = true;
                 _upgradeCurrentLevel++;
                 UpdateText(_upgradeCost, _upgradeDesc, _upgradeCurrentLevel, _upgradeMaxLevel);
             }
