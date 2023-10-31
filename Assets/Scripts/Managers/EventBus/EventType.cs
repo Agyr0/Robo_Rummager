@@ -85,6 +85,7 @@ public enum EventType
 
     #region Workshop
     REFRESH_RESOURCES,
+    SPAWN_RESOURCES,
     TIER_1_ROBOTS,
     TIER_2_ROBOTS,
     TIER_3_ROBOTS,

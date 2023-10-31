@@ -22,12 +22,17 @@ public class LootableItemManager : Singleton<LootableItemManager>
 
     private void OnEnable()
     {
-        EventBus.Subscribe(EventType.TEST_EVENT_1, SpawnResources);
+        EventBus.Subscribe(EventType.SPAWN_RESOURCES, SpawnResources);
     }
     private void OnDisable()
     {
-        EventBus.Unsubscribe(EventType.TEST_EVENT_1, SpawnResources);
+        EventBus.Unsubscribe(EventType.SPAWN_RESOURCES, SpawnResources);
 
+    }
+
+    private void Start()
+    {
+        EventBus.Publish(EventType.SPAWN_RESOURCES);
     }
 
     public void SpawnResources()

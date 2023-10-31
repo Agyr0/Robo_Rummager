@@ -222,6 +222,7 @@ GameObject:
   - component: {fileID: 7125138409795605343}
   - component: {fileID: 4779623248929188627}
   - component: {fileID: 1589096811094696852}
+  - component: {fileID: 2584296322110992115}
   m_Layer: 0
   m_Name: State-Driven Camera
   m_TagString: Untagged
@@ -272,12 +273,7 @@ MonoBehaviour:
   m_AnimatedTarget: {fileID: 1589096811094696852}
   m_LayerIndex: 0
   m_ShowDebugText: 0
-  m_ChildCameras:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  m_ChildCameras: []
   m_Instructions:
   - m_FullHash: 1118231599
     m_VirtualCamera: {fileID: 4340764269067426543}
@@ -341,6 +337,23 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2584296322110992115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4878046678947873020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8155b6c235b8ce4f810c036e1110fe3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waypointImage: {fileID: 0}
+  waypointTarget: {fileID: 0}
+  playerTransform: {fileID: 0}
+  meters: {fileID: 0}
+  offset: {x: 0, y: 3, z: 0}
 --- !u!1 &5138060806714654305
 GameObject:
   m_ObjectHideFlags: 0

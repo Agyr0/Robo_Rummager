@@ -16,38 +16,42 @@ public class TutorialWaypoint : MonoBehaviour
 
     private void Update()
     {
-        float minX = waypointImage.GetPixelAdjustedRect().width / 2;
-        float maxX = Screen.width - minX;
-
-        float minY = waypointImage.GetPixelAdjustedRect().height / 2;
-        float maxY = Screen.height - minY;
-
-        Vector2 pos = Camera.main.WorldToScreenPoint(waypointTarget.position + offset);
-
-        if (Vector3.Dot((waypointTarget.position - playerTransform.position), playerTransform.forward) < 0)
+        if (!hasTriggeredContractTutorial)
         {
-            if (pos.x < Screen.width / 2)
+
+            float minX = waypointImage.GetPixelAdjustedRect().width / 2;
+            float maxX = Screen.width - minX;
+
+            float minY = waypointImage.GetPixelAdjustedRect().height / 2;
+            float maxY = Screen.height - minY;
+
+            Vector2 pos = Camera.main.WorldToScreenPoint(waypointTarget.position + offset);
+
+            if (Vector3.Dot((waypointTarget.position - playerTransform.position), playerTransform.forward) < 0)
             {
-                pos.x = maxX;
+                if (pos.x < Screen.width / 2)
+                {
+                    pos.x = maxX;
+                }
+                else
+                {
+                    pos.x = minX;
+                }
             }
-            else
+
+            pos.x = Mathf.Clamp(pos.x, minX, maxX);
+            pos.y = Mathf.Clamp(pos.y, minY, maxY);
+
+            waypointImage.transform.position = pos;
+            meters.text = ((int)Vector3.Distance(waypointTarget.position, playerTransform.position)).ToString() + "m";
+
+            if (hasTriggeredContractTutorial == false)
             {
-                pos.x = minX;
-            }
-        }
-
-        pos.x = Mathf.Clamp(pos.x, minX, maxX);
-        pos.y = Mathf.Clamp(pos.y, minY, maxY);
-
-        waypointImage.transform.position = pos;
-        meters.text = ((int)Vector3.Distance(waypointTarget.position, playerTransform.position)).ToString() + "m";
-
-        if (hasTriggeredContractTutorial == false)
-        {
-            if ((int)Vector3.Distance(waypointTarget.position, playerTransform.position) < 3)
-            {
-                EventBus.Publish(EventType.CONTRACTS_TUTORIALS);
-                hasTriggeredContractTutorial = true;
+                if ((int)Vector3.Distance(waypointTarget.position, playerTransform.position) < 3)
+                {
+                    EventBus.Publish(EventType.CONTRACTS_TUTORIALS);
+                    hasTriggeredContractTutorial = true;
+                }
             }
         }
     }
