@@ -52,35 +52,17 @@ MonoBehaviour:
   - resource: {fileID: 2652622360622632555, guid: 6ccdceb36497005498250b22a2a1ef20,
       type: 3}
     dropChance: 75
-    _minDropCount: 5
-    _maxDropCount: 7
+    _minDropCount: 1
+    _maxDropCount: 10
     elementName: Credits
-  - resource: {fileID: 2652622360622632555, guid: 7f7d96b6610083b41bf6b9018c6f9080,
-      type: 3}
-    dropChance: 75
-    _minDropCount: 3
-    _maxDropCount: 5
-    elementName: Wires
-  - resource: {fileID: 2652622360622632555, guid: 58c3975f7ae00f54280223294944b0ec,
-      type: 3}
-    dropChance: 75
-    _minDropCount: 3
-    _maxDropCount: 5
-    elementName: Oil Can
-  - resource: {fileID: 2652622360622632555, guid: 6a152fca52c1b7846a4547f550b59247,
-      type: 3}
-    dropChance: 75
-    _minDropCount: 3
-    _maxDropCount: 5
-    elementName: Metal Scrap
   - resource: {fileID: 8732709107487535309, guid: 51c64994112c72445a42d635fe49261f,
       type: 3}
     dropChance: 75
-    _minDropCount: 3
-    _maxDropCount: 5
-    elementName: Sensor
+    _minDropCount: 2
+    _maxDropCount: 4
+    elementName: Sensors
   _resourceFullMesh: {fileID: 8240748538382978325}
-  _maxDrops: 15
+  _maxDrops: 6
   _dropsLeft: 0
   _explosionForce: 2
   _explosionRadius: 1

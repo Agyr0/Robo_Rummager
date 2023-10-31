@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class WeaponRecoil : MonoBehaviour
 {
-    public float duration;
 
     [HideInInspector]
     public Cinemachine.CinemachineImpulseSource cameraShake;

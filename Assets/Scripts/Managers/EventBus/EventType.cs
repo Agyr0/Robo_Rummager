@@ -28,6 +28,7 @@ public enum EventType
     PLAYER_RELOAD,
     LOW_AMMO,
     SWING_WRENCH,
+    WRENCH_RAYCAST,
     PUNCH_HANDS,
     #endregion
 

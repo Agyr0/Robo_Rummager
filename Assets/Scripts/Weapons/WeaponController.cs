@@ -22,8 +22,8 @@ public class WeaponController : MonoBehaviour
     private Transform playerHand;
     private Transform playerHandStartTransform;
 
-    private WeaponData _curWeapon;
-    private GameObject _weaponPrefab;
+    public WeaponData _curWeapon;
+    public GameObject _weaponPrefab;
     public WeaponData[] _availableWeapons;
 
     [SerializeField]
@@ -45,7 +45,9 @@ public class WeaponController : MonoBehaviour
     private const int _laserIndex = 1;
     private const int _handsIndex = 2;
     private bool canShoot = true;
-    private bool isSwinging, isReloading = false;
+    private bool isSwinging, isReloading, swingCheck = false;
+    private int swingCount = 0;
+    private Coroutine wrenchAnim;
     [SerializeField]
     private Animator _animator;
     [SerializeField]
@@ -97,7 +99,8 @@ public class WeaponController : MonoBehaviour
         gameManager.weaponController = this;
 
         EventBus.Subscribe(EventType.PLAYER_SHOOT, ShootRifle);
-        EventBus.Subscribe(EventType.SWING_WRENCH, StartWrenchSwing);
+        EventBus.Subscribe(EventType.SWING_WRENCH, HandleWrenchAnim);
+        EventBus.Subscribe(EventType.WRENCH_RAYCAST, SendWrenchRaycast);
         EventBus.Subscribe<Vector2>(EventType.WEAPON_SWITCH, SwitchWeapon);
         EventBus.Subscribe(EventType.DISPLAY_WEAPON, DisplayWeapon);
         EventBus.Subscribe(EventType.PLAYER_RELOAD, HandleReload);
@@ -109,15 +112,16 @@ public class WeaponController : MonoBehaviour
         EventBus.Unsubscribe<Vector2>(EventType.WEAPON_SWITCH, SwitchWeapon);
         EventBus.Unsubscribe(EventType.DISPLAY_WEAPON, DisplayWeapon);
         EventBus.Unsubscribe(EventType.PLAYER_RELOAD, HandleReload);
-        EventBus.Unsubscribe(EventType.SWING_WRENCH, StartWrenchSwing);
+        EventBus.Unsubscribe(EventType.SWING_WRENCH, HandleWrenchAnim);
+        EventBus.Unsubscribe(EventType.WRENCH_RAYCAST, SendWrenchRaycast);
         EventBus.Unsubscribe(EventType.PLAYER_ZOOM, ToggleZoom);
 
     }
-    private void LateUpdate()
-    {
-        if (!isSwinging)
-            PointWeapon();
-    }
+    //private void LateUpdate()
+    //{
+    //    if (!isSwinging)
+    //        PointWeapon();
+    //}
     private void InitializeWeapon()
     {
         //Ensure weapon is displayed on start
@@ -152,54 +156,88 @@ public class WeaponController : MonoBehaviour
     }
 
 
-    public void PointWeapon()
-    {
-        transform.rotation = gameManager.CameraTransform.rotation;
-    }
+
 
     #region Wrench
-    private void StartWrenchSwing()
+    //Handles the animation for wrench swings
+    private void HandleWrenchAnim()
     {
-        isSwinging = true;
-        //_animator.SetTrigger("Attack");
-        if (isSwinging)
+        swingCheck = true;
+
+        if(wrenchAnim != null)
         {
-            Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
-            RaycastHit hit = new RaycastHit();
+            StopCoroutine(wrenchAnim);
+            wrenchAnim = null;
+        }
+        if (wrenchAnim == null)
+        {
+            _animator.SetTrigger("Wrench_Swing");
 
+            swingCount++;
+            if (swingCount == 4)
+                swingCount -= 2;
 
-
-            if (Physics.Raycast(ray, out hit, _curWeapon.Range))
-            {
-                //Play hit wrench audio
-                audioManager.PlayClip(audioSource, audioManager.FindRandomizedClip(AudioType.Wrench_Metal, audioManager.effectAudio), 0.25f);
-
-                LootBag lootBag = hit.transform.gameObject.GetComponent<LootBag>();
-                PetBuildingController petBuildingController = hit.transform.gameObject.GetComponent<PetBuildingController>();
-                //If I hit an item with a lootbag script run drop resource
-                if (lootBag != null)
-                {
-                    lootBag.DropResource(hit.point);
-                    Debug.Log("Hit resource");
-                    return;
-                }
-                if (petBuildingController != null)
-                {
-                    petBuildingController.BuildPiece();
-                    return;
-                }
-            }
-            else
-                //Play whoosh wrench audio
-                audioManager.PlayClip(audioSource, audioManager.FindRandomizedClip(AudioType.Wrench_Whoosh, audioManager.effectAudio), 0.25f);
-
-
+            _animator.SetInteger("Wrench_Attack", swingCount);
+            wrenchAnim = StartCoroutine(HandleSwingWaitTime());
         }
     }
 
-    public void StopWrenchSwing()
+    //Sends out the actual raycast for wrench
+    public void SendWrenchRaycast()
     {
+        isSwinging = true;
+
+        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+        RaycastHit hit = new RaycastHit();
+
+
+
+        if (Physics.Raycast(ray, out hit, _curWeapon.Range))
+        {
+            //Play hit wrench audio
+            audioManager.PlayClip(audioSource, audioManager.FindRandomizedClip(AudioType.Wrench_Metal, audioManager.effectAudio), 0.25f);
+
+            LootBag lootBag = hit.transform.gameObject.GetComponent<LootBag>();
+            PetBuildingController petBuildingController = hit.transform.gameObject.GetComponent<PetBuildingController>();
+            //If I hit an item with a lootbag script run drop resource
+            if (lootBag != null)
+            {
+                lootBag.DropResource(hit.point);
+                Debug.Log("Hit resource");
+                return;
+            }
+            if (petBuildingController != null)
+            {
+                petBuildingController.BuildPiece();
+                return;
+            }
+        }
+        else
+            //Play whoosh wrench audio
+            audioManager.PlayClip(audioSource, audioManager.FindRandomizedClip(AudioType.Wrench_Whoosh, audioManager.effectAudio), 0.25f);
         isSwinging = false;
+
+    }
+
+
+    private IEnumerator HandleSwingWaitTime()
+    {
+        float resetTime = 2f;
+        float time = 0;
+
+        while (time < resetTime)
+        {
+            if (!swingCheck)
+            {
+                yield break;
+            }
+            time += Time.deltaTime;
+            yield return null;
+
+        }
+        _animator.SetTrigger("Wrench_Reset");
+        swingCount = 0;
+        swingCheck = false;
     }
 
 
@@ -319,8 +357,10 @@ public class WeaponController : MonoBehaviour
 
         //Assign curweapon and send event
         _curWeapon = _availableWeapons[_weaponIndex];
+
+        _animator.SetInteger("Weapon_Index", _weaponIndex);
         CurAmmoText.text = _curWeapon.CurAmmo.ToString();
-        EventBus.Publish(EventType.DISPLAY_WEAPON);
+        //EventBus.Publish(EventType.DISPLAY_WEAPON);
     }
 
     //Used in workbench to force a weapon switch
@@ -339,6 +379,7 @@ public class WeaponController : MonoBehaviour
 
         //Assign curweapon and send event
         _curWeapon = _availableWeapons[_weaponIndex];
+        _animator.SetInteger("Weapon_Index", _weaponIndex);
         CurAmmoText.text = _curWeapon.CurAmmo.ToString();
         EventBus.Publish(EventType.DISPLAY_WEAPON);
     }
@@ -347,6 +388,7 @@ public class WeaponController : MonoBehaviour
     {
         //if(_curWeapon != _availableWeapons[_weaponIndex])
         //    _curWeapon = _availableWeapons[_weaponIndex];
+        _animator.ResetTrigger("Weapon_Switched");
 
         if (playerHand.childCount > 0)
         {
@@ -366,13 +408,14 @@ public class WeaponController : MonoBehaviour
         if (_weaponPrefab != null)
         {
             //Spawn weapon in the playerhand
-            GameObject weaponInstance = Instantiate(_weaponPrefab, playerHand.position, transform.rotation, playerHand.transform);
+            GameObject weaponInstance = Instantiate(_weaponPrefab, playerHand.position, playerHand.rotation, playerHand.transform);
 
             //Assign _curWeapon.MuzzlePos with the instanced muzzle pos if available
             if (weaponInstance.transform.childCount > 0)
                 _curWeapon.MuzzlePos = weaponInstance.transform.GetChild(0);
         }
 
+        _animator.SetTrigger("Weapon_Switched");
         //playerHand.transform.position = playerHandStartTransform.position;
         //playerHand.transform.rotation = playerHandStartTransform.rotation;
     }

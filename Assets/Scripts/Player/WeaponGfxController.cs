@@ -8,4 +8,8 @@ public class WeaponGfxController : MonoBehaviour
     {
         EventBus.Publish(EventType.DISPLAY_WEAPON);
     }
+    public void RaycastWrench()
+    {
+        EventBus.Publish(EventType.WRENCH_RAYCAST);
+    }
 }
