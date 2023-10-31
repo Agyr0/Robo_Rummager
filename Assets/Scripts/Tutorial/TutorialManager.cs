@@ -17,29 +17,33 @@ public class TutorialManager : MonoBehaviour
 
     public string[] Messages;
     private int Index = 0;
+
+    public bool hasPlayedStartTutorial = false;
+    private bool hasPlayedContractBoardTutorial = false;
+    private bool hasPlayedContractOpenedTutorial = false;
     private bool hasPlayedContractAcceptedTutorial = false;
 
     [SerializeField] private float messageSpeed;
 
-    [SerializeField] private float scaleTime = 0.5f;
-    [SerializeField] private float scaleAmount = 100f;
+    [SerializeField] private float scaleTime;
+    [SerializeField] private float scaleAmount;
 
     private Vector3 tutorialContainerStartScale;
 
     private void OnEnable()
     {
-        EventBus.Subscribe(EventType.GAME_START, FirstTutorialMessages);
-        EventBus.Subscribe(EventType.CONTRACTS_TUTORIALS, ContractsTutorialMessages);
-        EventBus.Subscribe(EventType.CONTRACTS_OPENED_TUTORIALS, ContractsOpenedTutorialMessages);
-        EventBus.Subscribe(EventType.PLAYER_CONTRACTUPDATE, ContractsAcceptedTutorialMessages);
+        EventBus.Subscribe(EventType.GAME_START, StartTutorialMessage);
+        EventBus.Subscribe(EventType.CONTRACTS_TUTORIALS, ContractBoardTutorialMessages);
+        EventBus.Subscribe(EventType.CONTRACTS_OPENED_TUTORIALS, ContractOpenedTutorialMessages);
+        EventBus.Subscribe(EventType.PLAYER_CONTRACTUPDATE, ContractAcceptedTutorialMessages);
     }
 
     private void OnDisable()
     {
-        EventBus.Unsubscribe(EventType.GAME_START, FirstTutorialMessages);
-        EventBus.Unsubscribe(EventType.CONTRACTS_TUTORIALS, ContractsTutorialMessages);
-        EventBus.Unsubscribe(EventType.CONTRACTS_OPENED_TUTORIALS, ContractsOpenedTutorialMessages);
-        EventBus.Unsubscribe(EventType.PLAYER_CONTRACTUPDATE, ContractsAcceptedTutorialMessages);
+        EventBus.Unsubscribe(EventType.GAME_START, StartTutorialMessage);
+        EventBus.Unsubscribe(EventType.CONTRACTS_TUTORIALS, ContractBoardTutorialMessages);
+        EventBus.Unsubscribe(EventType.CONTRACTS_OPENED_TUTORIALS, ContractOpenedTutorialMessages);
+        EventBus.Unsubscribe(EventType.PLAYER_CONTRACTUPDATE, ContractAcceptedTutorialMessages);
     }
 
     private void Start()
@@ -47,31 +51,40 @@ public class TutorialManager : MonoBehaviour
         tutorialContainerStartScale = tutorialContainer.transform.localScale;
     }
 
-    private void FirstTutorialMessages()
+    // Start of Game Tutorial
+    private void StartTutorialMessage()
     {
         tutorialContainer.SetActive(true);
-        StartCoroutine(WriteFirstTutorialMessages());
+        StartCoroutine(WriteStartTutorialMessages());
     }
 
-    public void ContractsTutorialMessages()
+    // Contract Board Tutorial
+    public void ContractBoardTutorialMessages()
     {
-        tutorialContainer.SetActive(true);
-        StartCoroutine(WriteContractsTutorialMessages());
+        if (hasPlayedStartTutorial)
+        {
+            tutorialContainer.SetActive(true);
+            StartCoroutine(WriteContractBoardTutorialMessages());
+        }
     }
 
-    public void ContractsOpenedTutorialMessages()
+    // Contract Opened Tutorial
+    public void ContractOpenedTutorialMessages()
     {
-        tutorialContainer.SetActive(true);
-        StartCoroutine(WriteContractsOpenedTutorialMessages());
+        if (hasPlayedContractBoardTutorial)
+        {
+            tutorialContainer.SetActive(true);
+            StartCoroutine(WriteContractOpenedTutorialMessages());
+        }
     }
 
-    public void ContractsAcceptedTutorialMessages()
+    // Contract Accepeted Tutorial
+    public void ContractAcceptedTutorialMessages()
     {
-        if(hasPlayedContractAcceptedTutorial == false) 
+        if (hasPlayedContractOpenedTutorial)
         {
             tutorialContainer.SetActive(true);
             StartCoroutine(WriteContractAcceptedTutorialMessages());
-            hasPlayedContractAcceptedTutorial = true;
         }
     }
 
@@ -103,8 +116,8 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
-    // START OF GAME TUTORIALS
-    IEnumerator WriteFirstTutorialMessages()
+    // WRITE START OF GAME TUTORIAL
+    IEnumerator WriteStartTutorialMessages()
     {
         // Open first dialogue box
         StartCoroutine(OpenTutorialBox(true));
@@ -150,10 +163,11 @@ public class TutorialManager : MonoBehaviour
         yield return new WaitForSeconds(scaleTime);
         tutorialContainer.SetActive(false);
         tutorialObjectiveMarker.SetActive(true);
+        hasPlayedStartTutorial = true;
     }
 
-    // CONTRACT TUTORIALS
-    IEnumerator WriteContractsTutorialMessages()
+    // WRITE CONTRACT BOARD TUTORIAL
+    IEnumerator WriteContractBoardTutorialMessages()
     {
         StartCoroutine(OpenTutorialBox(true));
         tutorialObjectiveMarker.SetActive(false);
@@ -169,10 +183,11 @@ public class TutorialManager : MonoBehaviour
         yield return new WaitForSeconds(scaleTime);
         tutorialContainer.SetActive(false);
         chipFace.sprite = chipNeutral;
+        hasPlayedContractBoardTutorial = true;
     }
 
-    // CONTRACT OPENED TUTORIALS
-    IEnumerator WriteContractsOpenedTutorialMessages()
+    // WRITE CONTRACT OPENED TUTORIAL
+    IEnumerator WriteContractOpenedTutorialMessages()
     {
         StartCoroutine(OpenTutorialBox(true));
         foreach (char character in Messages[Index].ToCharArray())
@@ -187,9 +202,10 @@ public class TutorialManager : MonoBehaviour
         yield return new WaitForSeconds(scaleTime);
         tutorialContainer.SetActive(false);
         chipFace.sprite = chipHappy;
+        hasPlayedContractOpenedTutorial = true;
     }
 
-    // CONTRACT ACCEPTED TUTORIALS
+    // WRITE CONTRACT ACCEPTED TUTORIAL
     IEnumerator WriteContractAcceptedTutorialMessages()
     {
         // Contract accepted message
@@ -224,5 +240,6 @@ public class TutorialManager : MonoBehaviour
         yield return new WaitForSeconds(scaleTime);
         tutorialContainer.SetActive(false);
         chipFace.sprite = chipHappy;
+        hasPlayedContractAcceptedTutorial = true;
     }
 }

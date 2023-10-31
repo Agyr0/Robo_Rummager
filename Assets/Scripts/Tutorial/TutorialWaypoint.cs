@@ -6,6 +6,7 @@ using TMPro;
 
 public class TutorialWaypoint : MonoBehaviour
 {
+    public TutorialManager tutorialManager;
     public Image waypointImage;
     public Transform waypointTarget;
     public Transform playerTransform;
@@ -47,7 +48,7 @@ public class TutorialWaypoint : MonoBehaviour
 
             if (hasTriggeredContractTutorial == false)
             {
-                if ((int)Vector3.Distance(waypointTarget.position, playerTransform.position) < 3)
+                if ((int)Vector3.Distance(waypointTarget.position, playerTransform.position) < 3 && tutorialManager.hasPlayedStartTutorial == true)
                 {
                     EventBus.Publish(EventType.CONTRACTS_TUTORIALS);
                     hasTriggeredContractTutorial = true;
