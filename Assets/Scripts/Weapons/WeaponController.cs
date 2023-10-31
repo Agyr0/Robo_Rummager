@@ -201,11 +201,10 @@ public class WeaponController : MonoBehaviour
             LootBag lootBag = hit.transform.gameObject.GetComponent<LootBag>();
             PetBuildingController petBuildingController = hit.transform.gameObject.GetComponent<PetBuildingController>();
             //If I hit an item with a lootbag script run drop resource
-            if (lootBag != null)
+            if (lootBag != null && hit.transform.gameObject.GetComponent<RogueBotAgent>() == null)
             {
                 lootBag.DropResource(hit.point);
                 isSwinging = false;
-                swingCheck = false;
                 Debug.Log("Hit resource");
                 return;
             }
@@ -213,7 +212,6 @@ public class WeaponController : MonoBehaviour
             {
                 petBuildingController.BuildPiece();
                 isSwinging = false;
-                swingCheck = false;
                 return;
             }
         }
@@ -223,7 +221,6 @@ public class WeaponController : MonoBehaviour
 
 
         isSwinging = false;
-        swingCheck = false;
 
     }
 
@@ -232,13 +229,16 @@ public class WeaponController : MonoBehaviour
     {
         _animator.ResetTrigger("Wrench_Reset");
 
-        float resetTime = 2f;
+        float resetTime = 0.5f;
         float time = 0;
 
         while (time < resetTime)
         {
             if (!swingCheck)
             {
+                _animator.SetTrigger("Wrench_Reset");
+                swingCount = 0;
+                _animator.SetInteger("Wrench_Attack", swingCount);
                 yield break;
             }
             time += Time.deltaTime;
@@ -307,6 +307,7 @@ public class WeaponController : MonoBehaviour
         float time = 0;
         trail.transform.position = _curWeapon.MuzzlePos.position;
         Vector3 startPos = trail.transform.position;
+        trail.Clear();
         trail.gameObject.SetActive(true);
 
         if(hit.point == Vector3.zero)
