@@ -23,9 +23,11 @@ public class ObjectPooler: MonoBehaviour
             DontDestroyOnLoad(poolParent);
         }
 
-        specificPool = Instantiate(poolParent, poolParent.transform);
+        specificPool = Instantiate(new GameObject("Specific Pool"), poolParent.transform);
         specificPool.transform.position = Vector3.zero;
         specificPool.name = go.name + " Pool";
+
+        DontDestroyOnLoad(specificPool);
 
         GameObject temp;
         List<GameObject> list = new List<GameObject>();
@@ -56,9 +58,11 @@ public class ObjectPooler: MonoBehaviour
             DontDestroyOnLoad(poolParent);
         }
 
-        specificPool = Instantiate(poolParent);
+        specificPool = Instantiate(new GameObject("Specific Pool"), poolParent.transform);
         specificPool.transform.position = Vector3.zero;
         specificPool.name = go.name + " Pool";
+
+        DontDestroyOnLoad(specificPool);
 
         GameObject temp;
         List<GameObject> list = new List<GameObject>();
