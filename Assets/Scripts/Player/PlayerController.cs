@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour
 {
     private GameManager gameManager;
     private Vector2 startLookDirection;
+
+    [SerializeField]
+    private AudioSource audioSource;
     #region Health
     [SerializeField]
     private HealthBarManager _healthBar;
@@ -494,6 +497,9 @@ public class PlayerController : MonoBehaviour
         float fadeWaitTime = 2f;
         float fadeInTime = 2f;
         float time = 0f;
+
+        //Play death sfx
+        AudioManager.Instance.PlayClip(audioSource, AudioManager.Instance.FindRandomizedClip(AudioType.Player_Death, AudioManager.Instance.effectAudio));
 
         PlayerControls = false;
         while (time < fadeOutTime)

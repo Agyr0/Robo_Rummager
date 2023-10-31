@@ -1213,18 +1213,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dropTable:
-  - resource: {fileID: 2652622360622632555, guid: 58c3975f7ae00f54280223294944b0ec,
+  - resource: {fileID: 8732709107487535309, guid: aa033531699e2464a8eda19e65f5950d,
       type: 3}
-    dropChance: 50
+    dropChance: 100
     _minDropCount: 1
-    _maxDropCount: 3
-    elementName: 
-  - resource: {fileID: 2652622360622632555, guid: 7f7d96b6610083b41bf6b9018c6f9080,
+    _maxDropCount: 1
+    elementName: Motherboard
+  - resource: {fileID: 2652622360622632555, guid: 6ccdceb36497005498250b22a2a1ef20,
       type: 3}
-    dropChance: 50
-    _minDropCount: 1
-    _maxDropCount: 3
-    elementName: 
+    dropChance: 75
+    _minDropCount: 5
+    _maxDropCount: 10
+    elementName: Credits
   _resourceFullMesh: {fileID: 0}
   _maxDrops: 10
   _dropsLeft: 0
