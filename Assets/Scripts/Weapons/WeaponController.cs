@@ -45,7 +45,7 @@ public class WeaponController : MonoBehaviour
     private const int _laserIndex = 1;
     private const int _handsIndex = 2;
     private bool canShoot = true;
-    private bool isSwinging, isReloading, swingCheck = false;
+    public bool isSwinging, isReloading, swingCheck = false;
     private int swingCount = 0;
     private Coroutine wrenchAnim;
     [SerializeField]
@@ -204,19 +204,26 @@ public class WeaponController : MonoBehaviour
             if (lootBag != null)
             {
                 lootBag.DropResource(hit.point);
+                isSwinging = false;
+                swingCheck = false;
                 Debug.Log("Hit resource");
                 return;
             }
             if (petBuildingController != null)
             {
                 petBuildingController.BuildPiece();
+                isSwinging = false;
+                swingCheck = false;
                 return;
             }
         }
         else
             //Play whoosh wrench audio
             audioManager.PlayClip(audioSource, audioManager.FindRandomizedClip(AudioType.Wrench_Whoosh, audioManager.effectAudio), 0.25f);
+
+
         isSwinging = false;
+        swingCheck = false;
 
     }
 
