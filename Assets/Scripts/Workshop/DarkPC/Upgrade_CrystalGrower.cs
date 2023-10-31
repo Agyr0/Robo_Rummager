@@ -26,7 +26,7 @@ public class Upgrade_CrystalGrower : Upgrade_UI_Behavior
             if (WorkshopManager.Instance.WorkshopStorage.CreditCount >= _upgradeCost)
             {
                 WorkshopManager.Instance.WorkshopStorage.CreditCount -= _upgradeCost;
-                PrinterManager.Instance.PrintZCrystal = true;
+                PrinterManager.Instance.CanPrintZCrystal = true;
                 _upgradeCurrentLevel++;
                 UpdateText(_upgradeCost, _upgradeDesc, _upgradeCurrentLevel, _upgradeMaxLevel);
             }

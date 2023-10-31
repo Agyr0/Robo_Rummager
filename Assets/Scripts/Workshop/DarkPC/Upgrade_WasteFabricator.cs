@@ -26,7 +26,7 @@ public class Upgrade_WasteFabricator : Upgrade_UI_Behavior
             if (WorkshopManager.Instance.WorkshopStorage.CreditCount >= _upgradeCost)
             {
                 WorkshopManager.Instance.WorkshopStorage.CreditCount -= _upgradeCost;
-                PrinterManager.Instance.PrintWaste = true;
+                PrinterManager.Instance.CanPrintWaste = true;
                 _upgradeCurrentLevel++;
                 UpdateText(_upgradeCost, _upgradeDesc, _upgradeCurrentLevel, _upgradeMaxLevel);
             }
