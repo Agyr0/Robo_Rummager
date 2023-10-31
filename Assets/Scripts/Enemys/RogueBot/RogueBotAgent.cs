@@ -53,7 +53,9 @@ public class RogueBotAgent : MonoBehaviour, IDamageable
         {
             LootBag lootBag = this.gameObject.GetComponent<LootBag>();
             lootBag.DropResource(this.gameObject.transform.position);
-            Destroy(this.gameObject);
+            gameObject.SetActive(false);
+            navMeshAgent.enabled = false;
+            rogueBotHealth = rogueBotMaxHealth;
         }
     }
 

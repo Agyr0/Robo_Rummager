@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 [DefaultExecutionOrder(2)]
 public class RogueBotSpawnManager : MonoBehaviour
@@ -27,9 +28,10 @@ public class RogueBotSpawnManager : MonoBehaviour
 
             if (robot != null)
             {
-                robot.transform.position = randomSpawnPoint.transform.position;
-                robot.transform.rotation = randomSpawnPoint.transform.rotation;
+                robot.transform.position = randomSpawnPoint.position;
+                robot.transform.rotation = randomSpawnPoint.rotation;
                 robot.SetActive(true);
+                robot.GetComponent<NavMeshAgent>().enabled = true;
             }
             spawnPoints.Remove(randomSpawnPoint);
         }

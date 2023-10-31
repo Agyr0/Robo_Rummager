@@ -1166,7 +1166,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3092579538385285110}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: -1372625422
   m_Radius: 0.5
   m_Speed: 3.5
@@ -1227,6 +1227,7 @@ MonoBehaviour:
     elementName: 
   _resourceFullMesh: {fileID: 0}
   _maxDrops: 10
+  _dropsLeft: 0
   _explosionForce: 2
   _explosionRadius: 1
   _upwardsModifier: 2
