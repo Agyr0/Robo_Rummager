@@ -45,6 +45,10 @@ public class ResetTransforms : EditorWindow
         if (GUILayout.Button("Unparent Originals"))
             UnparentAllOriginals();
 
+        GUILayout.Space(20);
+
+        if (GUILayout.Button("Randomize Originals Rotation"))
+            RandomizeOriginalRotation();
     }
     
     public void UpdateAllTransforms()
@@ -61,6 +65,15 @@ public class ResetTransforms : EditorWindow
         for (int i = 0; i < originalObj.Count; i++)
         {
             originalObj[i].transform.parent = null;
+        }
+    }
+
+    public void RandomizeOriginalRotation()
+    {
+        for (int i = 0; i < originalObj.Count; i++)
+        {
+            Quaternion rotation = new Quaternion(Random.Range(-360, 360), Random.Range(-360, 360), Random.Range(-360, 360), Random.Range(-360, 360));
+            originalObj[i].transform.rotation = rotation;
         }
     }
 }

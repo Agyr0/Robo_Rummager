@@ -6,7 +6,9 @@ using UnityEngine;
 public class AudioGroup
 {
     public AudioType type;
+#if UNITY_EDITOR
     [ArrayElementTitle("name")]
+#endif
     public List<AudioController> myControllers = new List<AudioController>();
 
 

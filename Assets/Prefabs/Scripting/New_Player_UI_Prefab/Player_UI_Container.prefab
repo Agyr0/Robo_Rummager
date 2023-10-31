@@ -17405,15 +17405,7 @@ MonoBehaviour:
   _inventorySlotMax: 7
   _inventorySlotMin: 2
   _resourceEmpty: {fileID: 11400000, guid: 35e3f447c8ddc134f9dc33bc6f4206e8, type: 2}
-  _itemDropList:
-  - {fileID: 8732709107487535309, guid: aa033531699e2464a8eda19e65f5950d, type: 3}
-  - {fileID: 2652622360622632555, guid: 7f7d96b6610083b41bf6b9018c6f9080, type: 3}
-  - {fileID: 2652622360622632555, guid: 58c3975f7ae00f54280223294944b0ec, type: 3}
-  - {fileID: 2652622360622632555, guid: 6a152fca52c1b7846a4547f550b59247, type: 3}
-  - {fileID: 8732709107487535309, guid: 51c64994112c72445a42d635fe49261f, type: 3}
-  - {fileID: 2652622360622632555, guid: 2a55e99c8541cd141a4f4581185c60f2, type: 3}
-  - {fileID: 2652622360622632555, guid: f5392ea59cf726744bd66960cda3e282, type: 3}
-  - {fileID: 2652622360622632555, guid: 124a49b6830509944894a187a26b4149, type: 3}
+  _itemBlankPrefab: {fileID: 0}
   _inventorySlotCount: 2
 --- !u!114 &3672615972305746384
 MonoBehaviour:
@@ -17427,7 +17419,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85fe0d0f2a3e532438ed29a2783bd94b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _feedbackForm_URL: https://forms.gle/VfPz9JPBVJXS86rb8
+  _feedbackForm_URL: https://docs.google.com/forms/d/1wsqZ9KR8_4pwZ2QfGDSjJWYpRWgyFeIjpOrkYdPdvsg/viewform?edit_requested=true
   _startMenu_UI: {fileID: 5515549023240931796}
   _startMenu_QUIT_UI: {fileID: 6714487092491715978}
   _optionMenu_QUIT_UI: {fileID: 2873648096124874033}

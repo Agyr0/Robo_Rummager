@@ -163,23 +163,24 @@ public class WeaponController : MonoBehaviour
     private void HandleWrenchAnim()
     {
         swingCheck = true;
+        _animator.ResetTrigger("Wrench_Swing");
 
-        if(wrenchAnim != null)
+        if (wrenchAnim != null)
         {
             StopCoroutine(wrenchAnim);
             wrenchAnim = null;
         }
-        if (wrenchAnim == null)
-        {
-            _animator.SetTrigger("Wrench_Swing");
 
-            swingCount++;
-            if (swingCount == 4)
-                swingCount -= 2;
 
-            _animator.SetInteger("Wrench_Attack", swingCount);
-            wrenchAnim = StartCoroutine(HandleSwingWaitTime());
-        }
+        swingCount++;
+        if (swingCount == 4)
+            swingCount -= 2;
+        swingCount = Mathf.Clamp(swingCount, 1, 3);
+        _animator.SetInteger("Wrench_Attack", swingCount);
+        wrenchAnim = StartCoroutine(HandleSwingWaitTime());
+
+        _animator.SetTrigger("Wrench_Swing");
+
     }
 
     //Sends out the actual raycast for wrench
@@ -222,6 +223,8 @@ public class WeaponController : MonoBehaviour
 
     private IEnumerator HandleSwingWaitTime()
     {
+        _animator.ResetTrigger("Wrench_Reset");
+
         float resetTime = 2f;
         float time = 0;
 
@@ -237,6 +240,7 @@ public class WeaponController : MonoBehaviour
         }
         _animator.SetTrigger("Wrench_Reset");
         swingCount = 0;
+        _animator.SetInteger("Wrench_Attack", swingCount);
         swingCheck = false;
     }
 

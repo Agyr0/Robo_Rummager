@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.ShaderGraph.Drawing.Inspector.PropertyDrawers;
 using UnityEngine;
 
 public class AudioManager : Singleton<AudioManager>
 {
+#if UNITY_EDITOR
     [ArrayElementTitle("type")]
+#endif
     public List<AudioGroup> ambientAudio = new List<AudioGroup>();
+#if UNITY_EDITOR
     [ArrayElementTitle("type")]
+#endif
     public List<AudioGroup> effectAudio= new List<AudioGroup>();
 
 

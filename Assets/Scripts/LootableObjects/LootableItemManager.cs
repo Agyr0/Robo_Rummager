@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Search;
 using UnityEngine;
 
 public class LootableItemManager : Singleton<LootableItemManager>
@@ -42,8 +41,13 @@ public class LootableItemManager : Singleton<LootableItemManager>
             for (int j = 0; j < possibleSpawnLocations.Count; j++)
             {
                 //Spawn Item
-                possibleSpawnLocations[j].active = itemPrefabs[i].SpawnItem(possibleSpawnLocations[j].location);
-                //Idk if this is checking if the location is active or not
+                if (possibleSpawnLocations[j].Active)
+                    possibleSpawnLocations[j].Active = !itemPrefabs[i].SpawnItem(possibleSpawnLocations[j].location);
+                //Idk if this is checking if the loca
+                //tion is active or not
+                possibleSpawnLocations[j].active = possibleSpawnLocations[j].Active;
+                if (possibleSpawnLocations[j].Active)
+                    break;
             }
         }
     }
@@ -76,7 +80,8 @@ public class LootableItemElement
 public class SpawnLocation
 {
     public Transform location;
-    public bool active { get; set; } = true;
+    public bool active;
+    public bool Active { get; set; } = true;
 
 
 }

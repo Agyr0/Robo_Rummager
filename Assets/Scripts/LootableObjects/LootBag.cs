@@ -31,15 +31,15 @@ public class LootBag : MonoBehaviour
             if (DropsLeft <= 0 && _resourceFullMesh != null)
             {
                 transform.gameObject.SetActive(false);
-                if(gameObject.GetComponent<Collider>() != null && gameObject.GetComponent<Collider>().enabled != false)
-                    gameObject.GetComponent<Collider>().enabled = false;
+                //if(gameObject.GetComponent<Collider>() != null && gameObject.GetComponent<Collider>().enabled != false)
+                //    gameObject.GetComponent<Collider>().enabled = false;
             }
 
             else if (DropsLeft > 0 && !_resourceFullMesh.activeInHierarchy && _resourceFullMesh != null)
             {
                 transform.gameObject.SetActive(true);
-                if(gameObject.GetComponent<Collider>() != null && gameObject.GetComponent<Collider>().enabled != true)
-                    gameObject.GetComponent<Collider>().enabled = true;
+                //if(gameObject.GetComponent<Collider>() != null && gameObject.GetComponent<Collider>().enabled != true)
+                //    gameObject.GetComponent<Collider>().enabled = true;
             }
 
             return transform.gameObject;
@@ -60,6 +60,11 @@ public class LootBag : MonoBehaviour
         EventBus.Unsubscribe(EventType.REFRESH_RESOURCES, RefreshDrops);
     }
 
+
+    private void Start()
+    {
+        EventBus.Publish(EventType.REFRESH_RESOURCES);
+    }
     private void RefreshDrops()
     {
         DropsLeft = MaxDrops;

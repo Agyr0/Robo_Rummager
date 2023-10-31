@@ -18,14 +18,16 @@ public class PickUpObject : MonoBehaviour, IInteractable
 
         if (!pickedUp)
         {
+            GameManager.Instance.weaponController.SwitchWeapon(2);
             transform.parent = GameManager.Instance.playerController.handTransform;
-            transform.localPosition = new Vector3(GameManager.Instance.playerController.handTransform.localPosition.x * offSet.x,
-                GameManager.Instance.playerController.handTransform.localPosition.y * offSet.y,
-                GameManager.Instance.playerController.handTransform.localPosition.z * offSet.z);
+            transform.localPosition = new Vector3(GameManager.Instance.playerController.handTransform.localPosition.x,
+                GameManager.Instance.playerController.handTransform.localPosition.y,
+                GameManager.Instance.playerController.handTransform.localPosition.z);
             if (rb == null)
                 rb = GetComponent<Rigidbody>();
 
             rb.isKinematic = true;
+            GetComponent<Collider>().isTrigger = true;
 
             StartCoroutine(LerpRotation(true));
         }
@@ -36,6 +38,7 @@ public class PickUpObject : MonoBehaviour, IInteractable
                 rb = GetComponent<Rigidbody>();
 
             rb.isKinematic = false;
+            GetComponent<Collider>().isTrigger = false;
 
             StartCoroutine(LerpRotation(false));
 
@@ -52,7 +55,7 @@ public class PickUpObject : MonoBehaviour, IInteractable
             while (time < duration)
             {
                 rotation =
-                    Quaternion.LookRotation(-GameManager.Instance.playerController.handTransform.forward, GameManager.Instance.playerController.handTransform.up);
+                    Quaternion.LookRotation(-GameManager.Instance.playerController.transform.forward, GameManager.Instance.playerController.transform.up);
                 transform.rotation = Quaternion.Lerp(startPos, rotation, time / duration);
                 time += Time.deltaTime;
                 yield return null;
@@ -60,7 +63,7 @@ public class PickUpObject : MonoBehaviour, IInteractable
         else
         {
             rotation =
-                Quaternion.LookRotation(GameManager.Instance.playerController.handTransform.forward, GameManager.Instance.playerController.handTransform.up);
+                Quaternion.LookRotation(GameManager.Instance.playerController.transform.forward, GameManager.Instance.playerController.transform.up);
             while (time < duration)
             {
                 transform.rotation = Quaternion.Lerp(startPos, rotation, time / duration);
