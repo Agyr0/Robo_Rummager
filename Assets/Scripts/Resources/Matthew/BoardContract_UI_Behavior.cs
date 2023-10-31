@@ -163,12 +163,14 @@ public class BoardContract_UI_Behavior : MonoBehaviour
     {
         if (isContractAccepted)
         {
+            AudioManager.Instance.PlayClip(this.GetComponent<AudioSource>(), AudioManager.Instance.FindClip(AudioType.Positive_SFX, AudioManager.Instance.effectAudio));
             EventBus.Publish(EventType.PLAYER_ADDCONTRACT, this.gameObject);
             EventBus.Publish(EventType.PLAYER_CONTRACTUPDATE);
             Destroy(this.gameObject);
         }
         else
         {
+            AudioManager.Instance.PlayClip(this.GetComponent<AudioSource>(), AudioManager.Instance.FindClip(AudioType.SellerBin_No, AudioManager.Instance.effectAudio));
             _contract_Button_Promt.SetActive(false);
             _contract_Information_Promt.SetActive(true);
         }

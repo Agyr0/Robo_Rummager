@@ -52,73 +52,73 @@ public class PrinterManager : Singleton<PrinterManager>, IInteractable
 
     #region PrintsUnlocked
     [SerializeField]
-    private bool _printOil = false;
+    private bool _canPrintOil = false;
     [SerializeField]
-    private bool _printAdvSensor = false;
+    private bool _canPrintAdvSensor = false;
     [SerializeField]
-    private bool _printMotherboard = false;
+    private bool _canPrintMotherboard = false;
     [SerializeField]
-    private bool _printWaste = false;
+    private bool _canPrintWaste = false;
     [SerializeField]
-    private bool _printZ_Crystal = false;
+    private bool _canPrintZ_Crystal = false;
     [SerializeField]
-    private bool _printDarkMatter = false;
+    private bool _canPrintDarkMatter = false;
 
-    public bool PrintOil
+    public bool CanPrintOil
     {
         set 
-        { 
-            _printOil = value;
+        {
+            _canPrintOil = value;
             printButtonOil.interactable = value;
             printButtonOil.transform.GetChild(1).gameObject.SetActive(!value);
         }
     }
 
-    public bool PrintAdvSensor
+    public bool CanPrintAdvSensor
     {
         set 
         { 
-            _printAdvSensor = value;
+            _canPrintAdvSensor = value;
             printButtonAdvSensor.interactable = value;
             printButtonAdvSensor.transform.GetChild(1).gameObject.SetActive(!value);
         }
     }
 
-    public bool PrintMotherboard
+    public bool CanPrintMotherboard
     {
         set
         {
-            _printMotherboard = value;
+            _canPrintMotherboard = value;
             printButtonMotherboard.interactable = value;
             printButtonMotherboard.transform.GetChild(1).gameObject.SetActive(!value);
         }
     }
 
-    public bool PrintWaste
+    public bool CanPrintWaste
     {
         set
         {
-            _printWaste = value;
+            _canPrintWaste = value;
             printButtonWaste.interactable = value;
             printButtonWaste.transform.GetChild(1).gameObject.SetActive(!value);
         }
     }
 
-    public bool PrintZCrystal
+    public bool CanPrintZCrystal
     {
         set
         {
-            _printZ_Crystal = value;
+            _canPrintZ_Crystal = value;
             printButtonZ_Crystal.interactable = value;
             printButtonZ_Crystal.transform.GetChild(1).gameObject.SetActive(!value);
         }
     }
 
-    public bool PrintDarkMatter
+    public bool CanPrintDarkMatter
     {
         set
         {
-            _printDarkMatter = value;
+            _canPrintDarkMatter = value;
             printButtonDarkMatter.interactable = value;
             printButtonDarkMatter.transform.GetChild(1).gameObject.SetActive(!value);
         }
@@ -139,12 +139,12 @@ public class PrinterManager : Singleton<PrinterManager>, IInteractable
 
     private void Start()
     {
-        PrintOil = _printOil;
-        PrintMotherboard = _printMotherboard;
-        PrintAdvSensor = _printAdvSensor;
-        PrintDarkMatter = _printDarkMatter;
-        PrintWaste = _printWaste;
-        PrintZCrystal = _printZ_Crystal;
+        CanPrintOil = _canPrintOil;
+        CanPrintMotherboard = _canPrintMotherboard;
+        CanPrintAdvSensor = _canPrintAdvSensor;
+        CanPrintDarkMatter = _canPrintDarkMatter;
+        CanPrintWaste = _canPrintWaste;
+        CanPrintZCrystal = _canPrintZ_Crystal;
     }
 
     public int Clock_PrintTime
@@ -181,6 +181,7 @@ public class PrinterManager : Singleton<PrinterManager>, IInteractable
             printerCompleteUI.SetActive(false);
 
             _printerState = PrinterState.Printing;
+            AudioManager.Instance.PlayClip(this.GetComponent<AudioSource>(), AudioManager.Instance.FindClip(AudioType.Printer_Switch, AudioManager.Instance.effectAudio));
             switch (order)
             {
                 case 0:

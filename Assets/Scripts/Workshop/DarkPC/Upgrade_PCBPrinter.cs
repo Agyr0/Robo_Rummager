@@ -26,7 +26,7 @@ public class Upgrade_PCBPrinter : Upgrade_UI_Behavior
             if (WorkshopManager.Instance.WorkshopStorage.CreditCount >= _upgradeCost)
             {
                 WorkshopManager.Instance.WorkshopStorage.CreditCount -= _upgradeCost;
-                PrinterManager.Instance.PrintAdvSensor = true;
+                PrinterManager.Instance.CanPrintAdvSensor = true;
                 _upgradeCurrentLevel++;
                 UpdateText(_upgradeCost, _upgradeDesc, _upgradeCurrentLevel, _upgradeMaxLevel);
             }
