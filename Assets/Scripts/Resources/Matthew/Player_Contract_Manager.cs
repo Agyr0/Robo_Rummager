@@ -142,7 +142,7 @@ public class Player_Contract_Manager : Singleton<Player_Contract_Manager>
 
     public void CreateContract(GameObject contract_DataHolder)
     {
-        Debug.Log("Ading contract");
+        Debug.Log("Adding contract");
         Contract_Data newContract = contract_DataHolder.GetComponent<BoardContract_UI_Behavior>().Contract_Data;
         newContract.Contract_Status = ContractStatus.InProgress;
         Contract_DataList.Add(newContract);

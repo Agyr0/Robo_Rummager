@@ -161,16 +161,15 @@ public class BoardContract_UI_Behavior : MonoBehaviour
 
     public void OnButtonPromtPress(bool isContractAccepted)
     {
-        if (isContractAccepted)
+        if (isContractAccepted && Player_Contract_Manager.Instance.Contract_DataList.Count == 0)
         {
-            AudioManager.Instance.PlayClip(this.GetComponent<AudioSource>(), AudioManager.Instance.FindClip(AudioType.Positive_SFX, AudioManager.Instance.effectAudio));
+            ContractBoard_Manager.Instance.OnContractAccepted();
             EventBus.Publish(EventType.PLAYER_ADDCONTRACT, this.gameObject);
             EventBus.Publish(EventType.PLAYER_CONTRACTUPDATE);
             Destroy(this.gameObject);
         }
         else
         {
-            AudioManager.Instance.PlayClip(this.GetComponent<AudioSource>(), AudioManager.Instance.FindClip(AudioType.SellerBin_No, AudioManager.Instance.effectAudio));
             _contract_Button_Promt.SetActive(false);
             _contract_Information_Promt.SetActive(true);
         }
