@@ -1,9 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Agyr.CustomAttributes;
 
 public class LootableItemManager : Singleton<LootableItemManager>
 {
+    [SerializeField]
+    private int minResources = 1;
+    [HideInInspector]
+    public int curNumResources = 0;
+    [Space(15)]
+
 #if UNITY_EDITOR
     [ArrayElementTitle("prefab")]
 #endif
@@ -14,10 +21,8 @@ public class LootableItemManager : Singleton<LootableItemManager>
     [SerializeField]
     private List<SpawnLocation> possibleSpawnLocations = new List<SpawnLocation>();
 
-    [SerializeField]
-    private int minResources = 1;
-    [SerializeField]
-    private int maxResources = 40;
+
+    private int maxResources;
 
     private void OnEnable()
     {
@@ -33,34 +38,47 @@ public class LootableItemManager : Singleton<LootableItemManager>
 
     private void Start()
     {
+        maxResources = possibleSpawnLocations.Count;
+        if (minResources > maxResources)
+            minResources = maxResources;
+
         EventBus.Publish(EventType.SPAWN_RESOURCES);
     }
 
     private void SpawnResources()
     {
-        for (int i = 0; i < itemPrefabs.Count; i++)
+        do
         {
-            for (int j = 0; j < possibleSpawnLocations.Count; j++)
+
+            for (int i = 0; i < itemPrefabs.Count; i++)
             {
-                //Spawn Item
-                if (possibleSpawnLocations[j].Active)
-                    possibleSpawnLocations[j].Active = !itemPrefabs[i].SpawnItem(possibleSpawnLocations[j].location, possibleSpawnLocations[i]);
+                for (int j = 0; j < possibleSpawnLocations.Count; j++)
+                {
+                    if (curNumResources >= maxResources)
+                        return;
 
-                //Just to see it in the inspector
-                possibleSpawnLocations[j].active = possibleSpawnLocations[j].Active;
+                    //Spawn Item
+                    if (possibleSpawnLocations[j].active)
+                        possibleSpawnLocations[j].active = !itemPrefabs[i].SpawnItem(possibleSpawnLocations[j].location, possibleSpawnLocations[i]);
 
 
-                if (possibleSpawnLocations[j].Active)
-                    break;
+
+
+                    if (possibleSpawnLocations[j].active)
+                        break;
+                }
             }
         }
+
+        while (curNumResources < minResources);
+            
     }
 
     private void DespawnResources()
     {
         for (int i = 0; i < possibleSpawnLocations.Count; i++)
         {
-            if (!possibleSpawnLocations[i].Active)
+            if (!possibleSpawnLocations[i].active)
                 break;
 
             LootBag item = possibleSpawnLocations[i].myCurObject.GetComponent<LootBag>();
@@ -68,6 +86,8 @@ public class LootableItemManager : Singleton<LootableItemManager>
 
             possibleSpawnLocations[i].myCurObject.SetActive(false);
         }
+
+        curNumResources = 0;
     }
 
     private void RefreshResources()
@@ -95,6 +115,7 @@ public class LootableItemElement
             go.transform.position = spawnLocation.transform.position;
             go.transform.rotation = spawnLocation.transform.rotation;
             locationClass.myCurObject = go;
+            LootableItemManager.Instance.curNumResources++;
             go.SetActive(true);
             return true;
         }
@@ -106,9 +127,9 @@ public class LootableItemElement
 public class SpawnLocation
 {
     public Transform location;
-    public bool active;
     [HideInInspector]
     public GameObject myCurObject = null;
-    public bool Active { get; set; } = true;
+    [ReadOnly]
+    public bool active = true;
 
 }
