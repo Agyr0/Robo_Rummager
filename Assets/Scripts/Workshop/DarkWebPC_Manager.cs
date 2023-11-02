@@ -77,6 +77,11 @@ public class DarkWebPC_Manager : Singleton<DarkWebPC_Manager>, IInteractable
         HandleInteract();
     }
 
+    private void Start()
+    {
+        //WorkshopManager.Instance.WorkshopStorage.CreditCount += 5000;
+    }
+
     public void HandleInteract()
     {
         if (!isOn)

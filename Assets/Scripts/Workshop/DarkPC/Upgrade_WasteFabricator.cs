@@ -25,6 +25,7 @@ public class Upgrade_WasteFabricator : Upgrade_UI_Behavior
         {
             if (WorkshopManager.Instance.WorkshopStorage.CreditCount >= _upgradeCost)
             {
+                AudioManager.Instance.PlayClip(this.GetComponent<AudioSource>(), AudioManager.Instance.effectAudio[6].myControllers[1]);
                 WorkshopManager.Instance.WorkshopStorage.CreditCount -= _upgradeCost;
                 PrinterManager.Instance.CanPrintWaste = true;
                 _upgradeCurrentLevel++;

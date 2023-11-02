@@ -179,47 +179,47 @@ public class PrinterManager : Singleton<PrinterManager>, IInteractable
             printerTimerUI.SetActive(true);
             printerTimerTextUI.SetActive(true);
             printerCompleteUI.SetActive(false);
-
+            AudioManager.Instance.PlayClip(this.GetComponent<AudioSource>(), AudioManager.Instance.effectAudio[6].myControllers[2]);
             _printerState = PrinterState.Printing;
-            AudioManager.Instance.PlayClip(this.GetComponent<AudioSource>(), AudioManager.Instance.FindClip(AudioType.Printer_Switch, AudioManager.Instance.effectAudio));
+            
             switch (order)
             {
                 case 0:
                     Clock_PrintTime = ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime;
                     StartCoroutine(PrintOrder(ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceName, ResourceImageList[order]));
-                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceMesh);
-                    _printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime);
+                    //_printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceMesh);
+                    //_printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime);
                     
                     break;
                 case 1:
                     Clock_PrintTime = ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime;
                     StartCoroutine(PrintOrder(ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceName, ResourceImageList[order]));
-                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceMesh);
-                    _printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime);
+                    //_printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceMesh);
+                    //_printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime);
                     break;
                 case 2:
                     Clock_PrintTime = ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime;
                     StartCoroutine(PrintOrder(ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceName, ResourceImageList[order]));
-                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceMesh);
-                    _printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime);
+                    //_printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceMesh);
+                    //_printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime);
                     break;
                 case 3:
                     Clock_PrintTime = ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime;
                     StartCoroutine(PrintOrder(ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceName, ResourceImageList[order]));
-                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceMesh);
-                    _printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime);
+                    //_printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceMesh);
+                    //_printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime);
                     break;
                 case 4:
                     Clock_PrintTime = ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime;
                     StartCoroutine(PrintOrder(ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceName, ResourceImageList[order]));
-                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceMesh);
-                    _printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime);
+                    //_printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceMesh);
+                    //_printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime);
                     break;
                 case 5:
                     Clock_PrintTime = ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime;
                     StartCoroutine(PrintOrder(ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceName, ResourceImageList[order]));
-                    _printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceMesh);
-                    _printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime);
+                    //_printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceMesh);
+                    //_printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime);
                     break;
             }
         }
@@ -283,8 +283,9 @@ public class PrinterManager : Singleton<PrinterManager>, IInteractable
 
     public IEnumerator PrintOrder(ResourceType printResource, Sprite resourceImage)
     {
+        yield return new WaitForSeconds(.8f);
         printingResource = printResource;
-        _printingEffect_VFX.Play();
+        AudioManager.Instance.PlayClip(this.GetComponent<AudioSource>(), AudioManager.Instance.FindClip(AudioType.Printer_Hum, AudioManager.Instance.effectAudio));
         while (_printerState == PrinterState.Printing)
         {
             printerResourceImage.sprite = resourceImage;
@@ -294,7 +295,7 @@ public class PrinterManager : Singleton<PrinterManager>, IInteractable
                 printerTimerUI.SetActive(true);
                 printerTimerTextUI.SetActive(false);
                 printerCompleteUI.SetActive(true);
-
+                AudioManager.Instance.PlayClip(this.GetComponent<AudioSource>(), AudioManager.Instance.FindClip(AudioType.Printer_Ding, AudioManager.Instance.effectAudio));
                 _printerState = PrinterState.Completed;
             }
             Clock_PrintTime--;

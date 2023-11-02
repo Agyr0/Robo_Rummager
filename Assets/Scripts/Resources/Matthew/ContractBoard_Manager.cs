@@ -62,6 +62,11 @@ public class ContractBoard_Manager : Singleton<ContractBoard_Manager>, IInteract
         StartCoroutine(MakeContracts());
     }
 
+    public void LeavePC()
+    {
+        HandleInteract();
+    }
+
     IEnumerator MakeContracts()
     {
         while (true)
@@ -102,7 +107,11 @@ public class ContractBoard_Manager : Singleton<ContractBoard_Manager>, IInteract
         }
     }
 
-    
+    public void OnContractAccepted()
+    {
+        AudioManager.Instance.PlayClip(this.GetComponent<AudioSource>(), AudioManager.Instance.effectAudio[6].myControllers[0]);
+    }
+
     public void CreateContract(int robot, float TimeCount)
     {
         
