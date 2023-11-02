@@ -125,7 +125,6 @@ public class GameManager : Singleton<GameManager>
     {
         inputProvider.enabled = false;
         weaponController.enabled = false;
-        EventBus.Publish(EventType.REFRESH_RESOURCES);
     }
 
     private void ToggleInput()

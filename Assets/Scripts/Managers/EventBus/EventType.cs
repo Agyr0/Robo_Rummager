@@ -84,8 +84,15 @@ public enum EventType
     #endregion
 
     #region Workshop
+    /// <summary>
+    /// Despawns and refreshes all lootable items then respawns them randomly
+    /// </summary>
     REFRESH_RESOURCES,
     SPAWN_RESOURCES,
+    /// <summary>
+    /// Gets published with the single parameter of "Robot_RecipeData" for what robot chassis was collected
+    /// </summary>
+    PICKED_UP_CHASSIS,
     TIER_1_ROBOTS,
     TIER_2_ROBOTS,
     TIER_3_ROBOTS,
