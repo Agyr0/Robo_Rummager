@@ -22,8 +22,8 @@ public class ScavengerBullets : MonoBehaviour
         // Damage Handling
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            GameManager.Instance.playerController.TakeDamage(10);
-            Debug.Log(GameManager.Instance.playerController.Health);
+            GameManager.Instance.playerController.TakeDamage(15);
+            //Debug.Log(GameManager.Instance.playerController.Health);
             //this.gameObject.SetActive(false);
         }
 
@@ -37,7 +37,7 @@ public class ScavengerBullets : MonoBehaviour
 
     IEnumerator DespawnBullet()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(1);
         this.gameObject.SetActive(false);
     }
 }
