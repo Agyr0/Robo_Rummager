@@ -2,12 +2,15 @@
 #if UNITY_EDITOR
 using UnityEngine;
 
-public class ArrayElementTitleAttribute : PropertyAttribute
+namespace Agyr.CustomAttributes
 {
-    public string Varname;
-    public ArrayElementTitleAttribute(string ElementTitleVar)
+    public class ArrayElementTitleAttribute : PropertyAttribute
     {
-        Varname = ElementTitleVar;
+        public string Varname;
+        public ArrayElementTitleAttribute(string ElementTitleVar)
+        {
+            Varname = ElementTitleVar;
+        }
     }
 }
 #endif

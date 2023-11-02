@@ -93,8 +93,6 @@ public class PetBuildingController : MonoBehaviour
             if (aiPrefab != null)
             {
                 go = Instantiate(aiPrefab, transform.position, transform.rotation, WorkshopBench.Instance.tabManager.robotParent);
-                //Refresh lootable items
-                EventBus.Publish(EventType.REFRESH_RESOURCES);
             }
             
             for (int i = 0;i < myParts.Count;i++)
@@ -120,6 +118,8 @@ public class PetBuildingController : MonoBehaviour
 
         yield return new WaitForSeconds(3f);
         EventBus.Publish(EventType.ROBOT_BUILT);
+        //Refresh lootable items
+        EventBus.Publish(EventType.REFRESH_RESOURCES);
 
         if(SpawnAIPrefab())
             ResetRobot();
