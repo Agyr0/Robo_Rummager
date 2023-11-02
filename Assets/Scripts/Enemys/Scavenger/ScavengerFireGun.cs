@@ -9,13 +9,21 @@ public class ScavengerFireGun : MonoBehaviour
     public ParticleSystem gunParticle;
     public GameObject bulletPrefab;
 
+    private bool firingGun = false;
+
     public void Shoot(float timeBetweenShots, ScavengerAgent agent)
     {
-        StartCoroutine(FireGun(timeBetweenShots, agent));
+        if(!firingGun)
+        {
+            StartCoroutine(FireGun(timeBetweenShots, agent));
+            firingGun = false;
+        }
     }
 
     IEnumerator FireGun(float timeBetweenShots, ScavengerAgent agent)
     {
+        Debug.Log("Starting To Fire My GUN!");
+        firingGun = true;
         int numberOfBullets = Random.Range(agent.config.minShots, agent.config.maxShots);
         Debug.Log("Number of Shots:" + numberOfBullets);
 
@@ -23,8 +31,10 @@ public class ScavengerFireGun : MonoBehaviour
         {
             GameObject currBullet = ObjectPooler.PullObjectFromPool(bulletPrefab);
 
+            currBullet.GetComponent<TrailRenderer>().enabled = false;
             currBullet.transform.position = gunBarrel.transform.position;
             currBullet.transform.rotation = gunBarrel.transform.rotation;
+            currBullet.GetComponent<TrailRenderer>().enabled = true;
             currBullet.SetActive(true);
             gunParticle.Play();
 
