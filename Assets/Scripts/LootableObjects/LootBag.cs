@@ -50,22 +50,12 @@ public class LootBag : MonoBehaviour
     public int DropsLeft
     { get { return _dropsLeft; } set { _dropsLeft = value; } }
 
-
-    private void OnEnable()
-    {
-        EventBus.Subscribe(EventType.REFRESH_RESOURCES, RefreshDrops);
-    }
-    private void OnDisable()
-    {
-        EventBus.Unsubscribe(EventType.REFRESH_RESOURCES, RefreshDrops);
-    }
-
-
     private void Start()
     {
-        EventBus.Publish(EventType.REFRESH_RESOURCES);
+        RefreshDrops();
     }
-    private void RefreshDrops()
+
+    public void RefreshDrops()
     {
         DropsLeft = MaxDrops;
         if (_resourceFullMesh != null)

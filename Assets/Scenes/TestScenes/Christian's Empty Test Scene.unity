@@ -21420,6 +21420,16 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7747028061843134042, guid: 0778fc2c62197d9428d1cfe6e564b263,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7747028061843134042, guid: 0778fc2c62197d9428d1cfe6e564b263,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8661002000532538332, guid: 0778fc2c62197d9428d1cfe6e564b263,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -27445,10 +27455,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47918ad63ab724d448cae560b085cc64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pooledObjects: []
-  objectPrefab: {fileID: 5541104777284346043, guid: e053b93d65cffda4c82663e303ea4d1c,
-    type: 3}
-  maxObjects: 20
 --- !u!1 &2087113750
 GameObject:
   m_ObjectHideFlags: 0
@@ -27621,6 +27627,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunBarrel: {fileID: 456615848}
   gunParticle: {fileID: 1939743588}
+  bulletPrefab: {fileID: 5541104777284346043, guid: e053b93d65cffda4c82663e303ea4d1c,
+    type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

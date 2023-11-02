@@ -22,10 +22,12 @@ public class LootableItemManager : Singleton<LootableItemManager>
     private void OnEnable()
     {
         EventBus.Subscribe(EventType.SPAWN_RESOURCES, SpawnResources);
+        EventBus.Subscribe(EventType.REFRESH_RESOURCES, RefreshResources);
     }
     private void OnDisable()
     {
         EventBus.Unsubscribe(EventType.SPAWN_RESOURCES, SpawnResources);
+        EventBus.Unsubscribe(EventType.REFRESH_RESOURCES, RefreshResources);
 
     }
 
@@ -34,7 +36,7 @@ public class LootableItemManager : Singleton<LootableItemManager>
         EventBus.Publish(EventType.SPAWN_RESOURCES);
     }
 
-    public void SpawnResources()
+    private void SpawnResources()
     {
         for (int i = 0; i < itemPrefabs.Count; i++)
         {
@@ -42,14 +44,36 @@ public class LootableItemManager : Singleton<LootableItemManager>
             {
                 //Spawn Item
                 if (possibleSpawnLocations[j].Active)
-                    possibleSpawnLocations[j].Active = !itemPrefabs[i].SpawnItem(possibleSpawnLocations[j].location);
-                //Idk if this is checking if the loca
-                //tion is active or not
+                    possibleSpawnLocations[j].Active = !itemPrefabs[i].SpawnItem(possibleSpawnLocations[j].location, possibleSpawnLocations[i]);
+
+                //Just to see it in the inspector
                 possibleSpawnLocations[j].active = possibleSpawnLocations[j].Active;
+
+
                 if (possibleSpawnLocations[j].Active)
                     break;
             }
         }
+    }
+
+    private void DespawnResources()
+    {
+        for (int i = 0; i < possibleSpawnLocations.Count; i++)
+        {
+            if (!possibleSpawnLocations[i].Active)
+                break;
+
+            LootBag item = possibleSpawnLocations[i].myCurObject.GetComponent<LootBag>();
+            item.RefreshDrops();
+
+            possibleSpawnLocations[i].myCurObject.SetActive(false);
+        }
+    }
+
+    private void RefreshResources()
+    {
+        DespawnResources();
+        SpawnResources();
     }
 
 }
@@ -61,7 +85,8 @@ public class LootableItemElement
     [Range(0, 1)]
     public float chanceToSpawn = 0f;
 
-    public bool SpawnItem(Transform spawnLocation)
+
+    public bool SpawnItem(Transform spawnLocation, SpawnLocation locationClass)
     {
         float spawnChance = Random.Range(0, 2);
         if (spawnChance <= chanceToSpawn)
@@ -69,6 +94,7 @@ public class LootableItemElement
             GameObject go = ObjectPooler.PullObjectFromPool(prefab);
             go.transform.position = spawnLocation.transform.position;
             go.transform.rotation = spawnLocation.transform.rotation;
+            locationClass.myCurObject = go;
             go.SetActive(true);
             return true;
         }
@@ -81,7 +107,8 @@ public class SpawnLocation
 {
     public Transform location;
     public bool active;
+    [HideInInspector]
+    public GameObject myCurObject = null;
     public bool Active { get; set; } = true;
-
 
 }
