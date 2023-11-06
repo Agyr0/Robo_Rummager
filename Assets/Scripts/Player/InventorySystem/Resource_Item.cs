@@ -14,7 +14,7 @@ public class Resource_Item : MonoBehaviour
     private bool _isReadyForPickup = false;
 
     [SerializeField]
-    private int _pickupTimerCount = 0;
+    private int _pickupTimerCount = 2;
 
     public Resource_ItemData ItemData
     {
