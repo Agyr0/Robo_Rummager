@@ -41,6 +41,8 @@ public class DarkWebPC_Manager : Singleton<DarkWebPC_Manager>, IInteractable
     [SerializeField]
     private GameObject _machineTab;
 
+    public List<GameObject> _3DPrinterList;
+
     [SerializeField]
     private GameObject selectionCanvas;
     private BilboardScaler scaler;

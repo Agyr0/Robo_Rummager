@@ -137,6 +137,12 @@ public class PrinterManager : Singleton<PrinterManager>, IInteractable
 
     private bool isOn = false;
 
+    public override void Awake()
+    {
+        DarkWebPC_Manager.Instance._3DPrinterList.Add(this.gameObject);
+        this.gameObject.SetActive(false);
+    }
+
     private void Start()
     {
         CanPrintOil = _canPrintOil;
