@@ -7,10 +7,6 @@ using UnityEngine.AI;
 
 public class RogueBotAgent : MonoBehaviour, IDamageable
 {
-    private float blinkIntensity;
-    private float blinkDuration;
-    private float blinkTimer;
-
     public RogueBotStateMachine stateMachine;
     public RogueBotStateId initialState;
     public NavMeshAgent navMeshAgent;
@@ -20,7 +16,6 @@ public class RogueBotAgent : MonoBehaviour, IDamageable
     public GameObject chargeHitbox;
     private float rogueBotMaxHealth = 75;
     public float rogueBotHealth;
-    public Material rogueBotMat;
 
     void Start()
     {
@@ -38,16 +33,10 @@ public class RogueBotAgent : MonoBehaviour, IDamageable
     void Update()
     {
         stateMachine.Update();
-
-        blinkTimer -= Time.deltaTime;
-        float lerp = Mathf.Clamp01(blinkTimer / blinkDuration);
-        float intensity = (lerp * blinkIntensity) + 1;
-        rogueBotMat.color = Color.white * intensity;
     }
 
     public void TakeDamage(float damage)
     {
-        blinkTimer = blinkDuration;
         rogueBotHealth -= damage;
         if (rogueBotHealth <= 0)
         {

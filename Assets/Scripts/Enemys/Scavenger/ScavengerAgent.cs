@@ -14,6 +14,9 @@ public class ScavengerAgent : MonoBehaviour, IDamageable
     public ScavengerSensor scavengerSensor;
     public Animator animator;
 
+    public float scavengerMaxHealth = 100;
+    public float scavengerHealth;
+
     private void Awake()
     {
         objectPooler = GameObject.Find("Object Pool Manager").GetComponent<ObjectPooler>();
@@ -31,6 +34,7 @@ public class ScavengerAgent : MonoBehaviour, IDamageable
         stateMachine.RegisterState(new ScavengerShootingState());
         stateMachine.RegisterState(new ScavengerRepositionState());
         stateMachine.ChangeState(initialState);
+        scavengerHealth = scavengerMaxHealth;
 
         // Temp Code to setup pathing for scavenger patrol
         // TODO: Create a spawn manager for scavengers that will properly assign a scavengerPatrolPath
@@ -50,6 +54,15 @@ public class ScavengerAgent : MonoBehaviour, IDamageable
 
     public void TakeDamage(float damage)
     {
-        // Take damage yo!
+        scavengerHealth -= damage;
+        if (scavengerHealth <= 0)
+        {
+            Debug.Log("Scavenger Shot");
+            LootBag lootBag = this.gameObject.GetComponent<LootBag>();
+            lootBag.DropResource(this.gameObject.transform.position);
+            gameObject.SetActive(false);
+            navMeshAgent.enabled = false;
+            scavengerHealth = scavengerMaxHealth;
+        }
     }
 }
