@@ -366,6 +366,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b67bc4b0efbab7448df8b666cb64030, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minResources: 100
+  curNumResources: 0
   itemPrefabs:
   - prefab: {fileID: 2376081649294581180, guid: 494486b3384027e4a813a5418f19e7b9,
       type: 3}
@@ -378,19 +380,41 @@ MonoBehaviour:
     chanceToSpawn: 0.37
   possibleSpawnLocations:
   - location: {fileID: 7571921515767607350}
+    myCurObject: {fileID: 0}
+    active: 1
   - location: {fileID: 3713371786762644272}
+    myCurObject: {fileID: 0}
+    active: 1
   - location: {fileID: 7752542985833500396}
+    myCurObject: {fileID: 0}
+    active: 1
   - location: {fileID: 9183796751352180048}
+    myCurObject: {fileID: 0}
+    active: 1
   - location: {fileID: 2926890054185885585}
+    myCurObject: {fileID: 0}
+    active: 1
   - location: {fileID: 8479253418761516604}
+    myCurObject: {fileID: 0}
+    active: 1
   - location: {fileID: 627336248707584817}
+    myCurObject: {fileID: 0}
+    active: 1
   - location: {fileID: 778561765842416446}
+    myCurObject: {fileID: 0}
+    active: 1
   - location: {fileID: 4756169219531563209}
+    myCurObject: {fileID: 0}
+    active: 1
   - location: {fileID: 4841116589037513831}
+    myCurObject: {fileID: 0}
+    active: 1
   - location: {fileID: 5955291794229435314}
+    myCurObject: {fileID: 0}
+    active: 1
   - location: {fileID: 7206822050581599425}
-  minResources: 1
-  maxResources: 40
+    myCurObject: {fileID: 0}
+    active: 1
 --- !u!1 &8353963137002628205
 GameObject:
   m_ObjectHideFlags: 0

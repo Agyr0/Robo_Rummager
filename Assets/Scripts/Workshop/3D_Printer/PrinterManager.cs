@@ -10,6 +10,9 @@ using Image = UnityEngine.UI.Image;
 public class PrinterManager : Singleton<PrinterManager>, IInteractable
 {
     [SerializeField]
+    private int printerID;
+
+    [SerializeField]
     private PrinterState _printerState = PrinterState.Available;
 
     public int clock_PrintTime = 0;
@@ -136,6 +139,12 @@ public class PrinterManager : Singleton<PrinterManager>, IInteractable
     private Coroutine handleUI;
 
     private bool isOn = false;
+
+    public override void Awake()
+    {
+        DarkWebPC_Manager.Instance._3DPrinterList.Add(this.gameObject);
+        this.gameObject.SetActive(false);
+    }
 
     private void Start()
     {
@@ -332,7 +341,23 @@ public class PrinterManager : Singleton<PrinterManager>, IInteractable
         else if (handleUI != null)
             StopCoroutine(handleUI);
 
-        EventBus.Publish(EventType.TOGGLE_PRINTER_CAM_BLEND);
+        if (printerID == 1)
+        {
+            EventBus.Publish(EventType.TOGGLE_PRINTER1_CAM_BLEND);
+        }
+        else if (printerID == 2)
+        {
+            EventBus.Publish(EventType.TOGGLE_PRINTER2_CAM_BLEND);
+        }
+        else if (printerID == 3)
+        {
+            EventBus.Publish(EventType.TOGGLE_PRINTER3_CAM_BLEND);
+        }
+        else if (printerID == 4)
+        {
+            EventBus.Publish(EventType.TOGGLE_PRINTER4_CAM_BLEND);
+        }
+
     }
 
     enum PrinterState

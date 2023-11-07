@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Agyr.CustomAttributes;
 
 public class AudioManager : Singleton<AudioManager>
 {

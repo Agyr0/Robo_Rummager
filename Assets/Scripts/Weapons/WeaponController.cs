@@ -263,15 +263,14 @@ public class WeaponController : MonoBehaviour
             RaycastHit hit = new RaycastHit();
 
             //Handle VFX
-            //Spawn Laser Bullet
-            // GameObject laser = Instantiate(_curWeapon.LaserBeam, _curWeapon.MuzzlePos.position, transform.rotation);
-            //Spawn Muzzle Flash
-            //GameObject muzzleFlash = Instantiate(_curWeapon.MuzzleFlash, transform.position, Quaternion.FromToRotation(transform.position, transform.forward));
-
             TrailRenderer trail = ObjectPooler.PullObjectFromPool(_curWeapon.Trail).GetComponent<TrailRenderer>();
+            //SFX
             if(!audioSource.isPlaying)
                 audioManager.PlayClip(audioSource, audioManager.FindRandomizedClip(AudioType.Gun, audioManager.effectAudio));
 
+            //Generate recoil
+            if(_curWeapon.GetComponent<WeaponRecoil>() != null)
+                _curWeapon.GetComponent<WeaponRecoil>().GenerateRecoil();
 
             if (Physics.Raycast(ray, out hit, _curWeapon.Range))
             {

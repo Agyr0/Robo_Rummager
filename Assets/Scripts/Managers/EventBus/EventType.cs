@@ -84,14 +84,24 @@ public enum EventType
     #endregion
 
     #region Workshop
+    /// <summary>
+    /// Despawns and refreshes all lootable items then respawns them randomly
+    /// </summary>
     REFRESH_RESOURCES,
     SPAWN_RESOURCES,
+    /// <summary>
+    /// Gets published with the single parameter of "Robot_RecipeData" for what robot chassis was collected
+    /// </summary>
+    PICKED_UP_CHASSIS,
     TIER_1_ROBOTS,
     TIER_2_ROBOTS,
     TIER_3_ROBOTS,
     TOGGLE_WORKBENCH_CAM_BLEND,
     TOGGLE_BULLETIN_CAM_BLEND,
-    TOGGLE_PRINTER_CAM_BLEND,
+    TOGGLE_PRINTER1_CAM_BLEND,
+    TOGGLE_PRINTER2_CAM_BLEND,
+    TOGGLE_PRINTER3_CAM_BLEND,
+    TOGGLE_PRINTER4_CAM_BLEND,
     TOGGLE_DARKPC_CAM_BLEND,
     SPAWN_HOLOGRAM,
     ROBOT_BUILT,
