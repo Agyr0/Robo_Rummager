@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5597632032156238668}
   - component: {fileID: 1892134693477626963}
   - component: {fileID: 3764277745542253634}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Motherboard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -181,6 +181,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PickupItem_Motherboard
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3c400b1ec0f2a154b9c47cfbc5d5f57b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
