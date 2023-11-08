@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7646040111493356634}
   - component: {fileID: 9134113773435399064}
   - component: {fileID: 939349376934131623}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Z_Crystal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,6 +111,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PickupItem_Zcrystal
+      objectReference: {fileID: 0}
+    - target: {fileID: 241085201683115378, guid: 033effc9191ff884f95e1f80ed019235,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 581897949850417096, guid: 033effc9191ff884f95e1f80ed019235,
         type: 3}

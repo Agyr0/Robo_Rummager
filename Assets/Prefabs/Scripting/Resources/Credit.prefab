@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7646040111493356634}
   - component: {fileID: 9134113773435399064}
   - component: {fileID: 939349376934131623}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Credit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,6 +107,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3935234143892535242}
     m_Modifications:
+    - target: {fileID: 1844863884052144131, guid: ae1ea14cefaf6d843855ed531c90628c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2910188765333655272, guid: ae1ea14cefaf6d843855ed531c90628c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8102009144528352353, guid: ae1ea14cefaf6d843855ed531c90628c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -157,10 +167,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8223441492945410980, guid: ae1ea14cefaf6d843855ed531c90628c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8879918451232370395, guid: ae1ea14cefaf6d843855ed531c90628c,
         type: 3}
       propertyPath: m_Name
       value: PickupItem_Credits
+      objectReference: {fileID: 0}
+    - target: {fileID: 8879918451232370395, guid: ae1ea14cefaf6d843855ed531c90628c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

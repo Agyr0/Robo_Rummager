@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7646040111493356634}
   - component: {fileID: 9134113773435399064}
   - component: {fileID: 939349376934131623}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: OilCan
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,10 +107,20 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3935234143892535242}
     m_Modifications:
+    - target: {fileID: 1404148065683474816, guid: 7f62e6daf823ccf4da2b04e2d7aa870d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7316004925068307686, guid: 7f62e6daf823ccf4da2b04e2d7aa870d,
         type: 3}
       propertyPath: m_Name
       value: PickupItem_OilCan
+      objectReference: {fileID: 0}
+    - target: {fileID: 7316004925068307686, guid: 7f62e6daf823ccf4da2b04e2d7aa870d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7983891596238403164, guid: 7f62e6daf823ccf4da2b04e2d7aa870d,
         type: 3}
