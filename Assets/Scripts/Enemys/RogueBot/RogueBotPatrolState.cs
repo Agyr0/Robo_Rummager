@@ -8,7 +8,8 @@ public class RogueBotPatrolState : RogueBotState
 {
     private float patrolWaitTime;
     private bool playerInChaseRange;
-    private float timer = 0.0f;
+    private float audioTimer = 0.0f;
+    private float updateTimer = 0.0f;
 
     public RogueBotStateId GetId()
     {
@@ -27,8 +28,8 @@ public class RogueBotPatrolState : RogueBotState
     public void Update(RogueBotAgent agent)
     {
         // Chase State Change
-        timer -= Time.deltaTime;
-        if (timer < 0.0f)
+        updateTimer -= Time.deltaTime;
+        if (updateTimer < 0.0f)
         {
             // Check if player is in chase range
             playerInChaseRange = Physics.CheckSphere(agent.transform.position, agent.config.chaseRange, agent.config.playerLayerMask);
@@ -38,9 +39,16 @@ public class RogueBotPatrolState : RogueBotState
                 RogueBotChaseState chaseState = agent.stateMachine.GetState(RogueBotStateId.Chase) as RogueBotChaseState;
                 agent.stateMachine.ChangeState(RogueBotStateId.Chase);
             }
-            timer = agent.config.tickRate;
+            updateTimer = agent.config.tickRate;
         }
 
+        // Play an idle clip evey 10 seconds when the Rogue Bot stops moving
+        audioTimer -= Time.deltaTime;
+        if (audioTimer < 0.0f)
+        {
+            agent.audioManager.PlayClip(agent.audioSource, agent.audioManager.FindRandomizedClip(AudioType.RogueBot_Idle, agent.audioManager.effectAudio), 0.25f);
+            audioTimer = Random.Range(20, 40);
+        }
 
         // Patrolling Logic
         if (agent.navMeshAgent.remainingDistance <= agent.navMeshAgent.stoppingDistance) // Check if Rogue Bot has reached position

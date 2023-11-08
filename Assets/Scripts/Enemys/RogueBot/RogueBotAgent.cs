@@ -7,6 +7,8 @@ using UnityEngine.AI;
 
 public class RogueBotAgent : MonoBehaviour, IDamageable
 {
+    public AudioManager audioManager;
+    public AudioSource audioSource;
     public RogueBotStateMachine stateMachine;
     public RogueBotStateId initialState;
     public NavMeshAgent navMeshAgent;
@@ -20,7 +22,8 @@ public class RogueBotAgent : MonoBehaviour, IDamageable
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
-        
+        audioManager = AudioManager.Instance;
+        audioSource = GetComponent<AudioSource>();
         config = RogueBotConfig.Instantiate(config);
         stateMachine = new RogueBotStateMachine(this);
         stateMachine.RegisterState(new RogueBotPatrolState());
@@ -40,8 +43,14 @@ public class RogueBotAgent : MonoBehaviour, IDamageable
         rogueBotHealth -= damage;
         if (rogueBotHealth <= 0)
         {
+            // Chase Player
+            stateMachine.ChangeState(RogueBotStateId.Chase);
+
+            // Item Drops
             LootBag lootBag = this.gameObject.GetComponent<LootBag>();
             lootBag.DropResource(this.gameObject.transform.position);
+            
+            // Respawn and Object Pool stuff
             gameObject.SetActive(false);
             navMeshAgent.enabled = false;
             rogueBotHealth = rogueBotMaxHealth;
