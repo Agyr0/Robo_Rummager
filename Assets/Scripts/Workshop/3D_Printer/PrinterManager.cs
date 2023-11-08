@@ -7,7 +7,7 @@ using UnityEngine.UI;
 using UnityEngine.VFX;
 using Image = UnityEngine.UI.Image;
 
-public class PrinterManager : Singleton<PrinterManager>, IInteractable
+public class PrinterManager : MonoBehaviour, IInteractable
 {
     [SerializeField]
     private int printerID;
@@ -140,7 +140,7 @@ public class PrinterManager : Singleton<PrinterManager>, IInteractable
 
     private bool isOn = false;
 
-    public override void Awake()
+    public void Awake()
     {
         DarkWebPC_Manager.Instance._3DPrinterList.Add(this.gameObject);
         this.gameObject.SetActive(false);
