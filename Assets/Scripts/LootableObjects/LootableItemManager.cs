@@ -19,7 +19,7 @@ public class LootableItemManager : Singleton<LootableItemManager>
 
 
     [SerializeField]
-    private List<SpawnLocation> possibleSpawnLocations = new List<SpawnLocation>();
+    public List<SpawnLocation> possibleSpawnLocations = new List<SpawnLocation>();
 
 
     private int maxResources;
@@ -49,7 +49,6 @@ public class LootableItemManager : Singleton<LootableItemManager>
     {
         do
         {
-
             for (int i = 0; i < itemPrefabs.Count; i++)
             {
                 for (int j = 0; j < possibleSpawnLocations.Count; j++)
@@ -59,18 +58,11 @@ public class LootableItemManager : Singleton<LootableItemManager>
 
                     //Spawn Item
                     if (possibleSpawnLocations[j].active)
-                        possibleSpawnLocations[j].active = !itemPrefabs[i].SpawnItem(possibleSpawnLocations[j].location, possibleSpawnLocations[i]);
-
-
-
-
-                    if (possibleSpawnLocations[j].active)
-                        break;
+                        possibleSpawnLocations[j].active = !itemPrefabs[i].SpawnItem(possibleSpawnLocations[j].location, possibleSpawnLocations[j]);
                 }
             }
         }
-
-        while (curNumResources < minResources);
+        while (curNumResources <= minResources);
             
     }
 
@@ -78,13 +70,14 @@ public class LootableItemManager : Singleton<LootableItemManager>
     {
         for (int i = 0; i < possibleSpawnLocations.Count; i++)
         {
-            if (!possibleSpawnLocations[i].active)
-                break;
+            if (possibleSpawnLocations[i].active)
+                continue;
 
             LootBag item = possibleSpawnLocations[i].myCurObject.GetComponent<LootBag>();
             item.RefreshDrops();
 
             possibleSpawnLocations[i].myCurObject.SetActive(false);
+            possibleSpawnLocations[i].active = true;
         }
 
         curNumResources = 0;
@@ -94,8 +87,8 @@ public class LootableItemManager : Singleton<LootableItemManager>
     {
         DespawnResources();
         SpawnResources();
-    }
 
+    }
 }
 
 [System.Serializable]
@@ -127,7 +120,7 @@ public class LootableItemElement
 public class SpawnLocation
 {
     public Transform location;
-    [HideInInspector]
+    [ReadOnly]
     public GameObject myCurObject = null;
     [ReadOnly]
     public bool active = true;

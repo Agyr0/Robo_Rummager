@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7646040111493356634}
   - component: {fileID: 9134113773435399064}
   - component: {fileID: 939349376934131623}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: RadioactiveWaste
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,6 +111,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PickupItem_RadioactiveWaste
+      objectReference: {fileID: 0}
+    - target: {fileID: 8449334517975507486, guid: 34bfb5dca349553428bb04577dbe9393,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9082001602907224228, guid: 34bfb5dca349553428bb04577dbe9393,
         type: 3}

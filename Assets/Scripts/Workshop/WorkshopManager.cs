@@ -11,6 +11,8 @@ namespace Agyr.Workshop
         [SerializeField]
         private WorkshopStorage workshopStorage;
         private WorkshopBench workshopBench;
+        [SerializeField]
+        private WorkshopZone workshopZone;
 
         public WorkshopStorage WorkshopStorage
         {
@@ -22,6 +24,12 @@ namespace Agyr.Workshop
         {
             get { return workshopBench; }
             set { workshopBench = value; }
+        }
+
+        public WorkshopZone WorkshopZone
+        {
+            get { return workshopZone; }
+            set { workshopZone = value; }
         }
 
     }

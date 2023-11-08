@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7646040111493356634}
   - component: {fileID: 9134113773435399064}
   - component: {fileID: 939349376934131623}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: WireBundle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,6 +112,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PickupItem_WireBundle
       objectReference: {fileID: 0}
+    - target: {fileID: 310616786630751952, guid: 7cb9f8a7c8ac838478805feb259c24e4,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1082087661756640362, guid: 7cb9f8a7c8ac838478805feb259c24e4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -161,6 +166,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1331793238547013168, guid: 7cb9f8a7c8ac838478805feb259c24e4,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

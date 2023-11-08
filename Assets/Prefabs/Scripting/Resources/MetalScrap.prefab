@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7646040111493356634}
   - component: {fileID: 9134113773435399064}
   - component: {fileID: 939349376934131623}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: MetalScrap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,10 +107,20 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3935234143892535242}
     m_Modifications:
+    - target: {fileID: 4901379553026996974, guid: c270425a531495c4aba7d347c1c91f3c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5006637583005037136, guid: c270425a531495c4aba7d347c1c91f3c,
         type: 3}
       propertyPath: m_Name
       value: PickupItem_MetalCog
+      objectReference: {fileID: 0}
+    - target: {fileID: 5006637583005037136, guid: c270425a531495c4aba7d347c1c91f3c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5634274671950227690, guid: c270425a531495c4aba7d347c1c91f3c,
         type: 3}

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9134113773435399064}
   - component: {fileID: 939349376934131623}
   - component: {fileID: 1242393712121359483}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: BlackMatter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,6 +114,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PickupItem_BlackMatter
       objectReference: {fileID: 0}
+    - target: {fileID: 310616786630751952, guid: 579022886734a6c46b8c87387814a616,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1082087661756640362, guid: 579022886734a6c46b8c87387814a616,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -163,6 +168,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1331793238547013168, guid: 579022886734a6c46b8c87387814a616,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
