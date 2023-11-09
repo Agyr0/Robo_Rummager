@@ -81,6 +81,7 @@ public enum EventType
     BOARD_CONTRACTUPDATE,
     CONTRACTACCEPTED,
     SAVECONTRACTPURGE,
+    BOARD_RESETCONTRACT,
     #endregion
 
     #region Workshop

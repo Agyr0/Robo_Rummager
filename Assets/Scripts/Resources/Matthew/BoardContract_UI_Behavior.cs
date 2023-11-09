@@ -41,11 +41,13 @@ public class BoardContract_UI_Behavior : MonoBehaviour
     private void OnEnable()
     {
         EventBus.Subscribe(EventType.BOARD_CONTRACTUPDATE, OnDisplayUpdate_Contract);
+        EventBus.Subscribe<GameObject>(EventType.BOARD_RESETCONTRACT, OnButtonPromtPress);
     }
 
     private void OnDisable()
     {
         EventBus.Unsubscribe(EventType.BOARD_CONTRACTUPDATE, OnDisplayUpdate_Contract);
+        EventBus.Unsubscribe<GameObject>(EventType.BOARD_RESETCONTRACT, OnButtonPromtPress);
     }
 
     private void OnDisplayUpdate_Contract()
@@ -157,6 +159,7 @@ public class BoardContract_UI_Behavior : MonoBehaviour
     {
         _contract_Button_Promt.SetActive(true);
         _contract_Information_Promt.SetActive(false);
+        EventBus.Publish(EventType.BOARD_RESETCONTRACT, this.gameObject);
     }
 
     public void OnButtonPromtPress(bool isContractAccepted)
@@ -165,10 +168,20 @@ public class BoardContract_UI_Behavior : MonoBehaviour
         {
             ContractBoard_Manager.Instance.OnContractAccepted();
             EventBus.Publish(EventType.PLAYER_ADDCONTRACT, this.gameObject);
+            EventBus.Publish(EventType.BOARD_RESETCONTRACT, this.gameObject);
             EventBus.Publish(EventType.PLAYER_CONTRACTUPDATE);
             Destroy(this.gameObject);
         }
         else
+        {
+            _contract_Button_Promt.SetActive(false);
+            _contract_Information_Promt.SetActive(true);
+        }
+    }
+
+    public void OnButtonPromtPress(GameObject activeContract)
+    {
+        if (this.gameObject != activeContract)
         {
             _contract_Button_Promt.SetActive(false);
             _contract_Information_Promt.SetActive(true);
