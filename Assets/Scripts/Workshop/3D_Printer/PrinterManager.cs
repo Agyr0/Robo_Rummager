@@ -17,6 +17,14 @@ public class PrinterManager : MonoBehaviour, IInteractable
 
     public int clock_PrintTime = 0;
 
+    public int printedAmount = 0;
+
+    [SerializeField]
+    public Button printResourceCollectionButton;
+
+    [SerializeField]
+    public Button printHaltButton;
+
     public List<Sprite> ResourceImageList;
 
     public List<GameObject> ResourceDataList;
@@ -30,15 +38,20 @@ public class PrinterManager : MonoBehaviour, IInteractable
     [SerializeField]
     private GameObject printMenuUI;
     [SerializeField]
-    private GameObject printerTimerUI;
+    private GameObject printerCountDownUI;
     [SerializeField]
     private GameObject printerTimerTextUI;
     [SerializeField]
     private GameObject printerCompleteUI;
     [SerializeField]
     private Image printerResourceImage;
+
     [SerializeField]
     private TextMeshProUGUI printerTime_Text;
+    [SerializeField]
+    private TextMeshProUGUI printerCollect_Text;
+    [SerializeField]
+    private TextMeshProUGUI printerHalt_Text;
 
     [SerializeField]
     private Button printButtonOil;
@@ -170,11 +183,11 @@ public class PrinterManager : MonoBehaviour, IInteractable
 
             if (seconds.Length == 2)
             {
-                printerTime_Text.text = mintutes + ':' + seconds;
+                printerTime_Text.text = "Printing: " + mintutes + ':' + seconds;
             }
             else
             {
-                printerTime_Text.text = mintutes + ":0" + seconds;
+                printerTime_Text.text = "Printing: " + mintutes + ":0" + seconds;
             }
             
         }
@@ -185,129 +198,156 @@ public class PrinterManager : MonoBehaviour, IInteractable
         if (_printerState == PrinterState.Available)
         {
             printMenuUI.SetActive(false);
-            printerTimerUI.SetActive(true);
-            printerTimerTextUI.SetActive(true);
-            printerCompleteUI.SetActive(false);
+            printerCountDownUI.SetActive(true);
             AudioManager.Instance.PlayClip(this.GetComponent<AudioSource>(), AudioManager.Instance.effectAudio[6].myControllers[2]);
             _printerState = PrinterState.Printing;
-            
+            printHaltButton.interactable = true;
+            printResourceCollectionButton.interactable = false;
+            printedAmount = 0;
+            printerCollect_Text.text = "COLLECT " + "[" + printedAmount + "]";
+            printerHalt_Text.text = "HALT";
             switch (order)
             {
                 case 0:
                     Clock_PrintTime = ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime;
-                    StartCoroutine(PrintOrder(ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceName, ResourceImageList[order]));
-                    //_printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceMesh);
-                    //_printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime);
-                    
+                    StartCoroutine(PrintOrder(ResourceDataList[order].GetComponent<Resource_Item>().ItemData, ResourceImageList[order]));
                     break;
                 case 1:
                     Clock_PrintTime = ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime;
-                    StartCoroutine(PrintOrder(ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceName, ResourceImageList[order]));
-                    //_printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceMesh);
-                    //_printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime);
+                    StartCoroutine(PrintOrder(ResourceDataList[order].GetComponent<Resource_Item>().ItemData, ResourceImageList[order]));
                     break;
                 case 2:
                     Clock_PrintTime = ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime;
-                    StartCoroutine(PrintOrder(ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceName, ResourceImageList[order]));
-                    //_printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceMesh);
-                    //_printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime);
+                    StartCoroutine(PrintOrder(ResourceDataList[order].GetComponent<Resource_Item>().ItemData, ResourceImageList[order]));
                     break;
                 case 3:
                     Clock_PrintTime = ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime;
-                    StartCoroutine(PrintOrder(ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceName, ResourceImageList[order]));
-                    //_printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceMesh);
-                    //_printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime);
+                    StartCoroutine(PrintOrder(ResourceDataList[order].GetComponent<Resource_Item>().ItemData, ResourceImageList[order]));
                     break;
                 case 4:
                     Clock_PrintTime = ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime;
-                    StartCoroutine(PrintOrder(ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceName, ResourceImageList[order]));
-                    //_printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceMesh);
-                    //_printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime);
+                    StartCoroutine(PrintOrder(ResourceDataList[order].GetComponent<Resource_Item>().ItemData, ResourceImageList[order]));
                     break;
                 case 5:
                     Clock_PrintTime = ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime;
-                    StartCoroutine(PrintOrder(ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceName, ResourceImageList[order]));
+                    StartCoroutine(PrintOrder(ResourceDataList[order].GetComponent<Resource_Item>().ItemData, ResourceImageList[order]));
                     //_printingEffect_VFX.SetMesh("MaterializingMesh", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourceMesh);
                     //_printingEffect_VFX.SetFloat("MeshLifeTime", ResourceDataList[order].GetComponent<Resource_Item>().ItemData.ResourcePrintTime);
                     break;
             }
         }
+    }
+
+    public void HaltPrinting()
+    {
+        _printerState = PrinterState.Halting;
+        printerHalt_Text.text = "HALTING...";
+        printHaltButton.interactable = false;
     }
 
     public void CollectPrint()
     {
+        GameObject tempResource;
+
+        switch (printingResource)
+        {
+            case ResourceType.Oil:
+                //WorkshopManager.Instance.WorkshopStorage.OilCount++;
+                tempResource = Instantiate(ResourceDataList[0], _itemSpawnLocation.transform.position, _itemSpawnLocation.transform.rotation);
+                tempResource.GetComponent<Resource_Item>().PickupTimerCount = 1;
+                tempResource.GetComponent<Resource_Item>().ResourceAmount = printedAmount;
+                break;
+            case ResourceType.Advanced_Sensors:
+                //WorkshopManager.Instance.WorkshopStorage.SensorCount++;
+                tempResource = Instantiate(ResourceDataList[2], _itemSpawnLocation.transform.position, _itemSpawnLocation.transform.rotation);
+                tempResource.GetComponent<Resource_Item>().PickupTimerCount = 1;
+                tempResource.GetComponent<Resource_Item>().ResourceAmount = printedAmount;
+                break;
+            case ResourceType.MotherBoard:
+                //WorkshopManager.Instance.WorkshopStorage.MotherBoardCount++;
+                tempResource = Instantiate(ResourceDataList[1], _itemSpawnLocation.transform.position, _itemSpawnLocation.transform.rotation);
+                tempResource.GetComponent<Resource_Item>().PickupTimerCount = 1;
+                tempResource.GetComponent<Resource_Item>().ResourceAmount = printedAmount;
+                break;
+            case ResourceType.Black_Matter:
+                //WorkshopManager.Instance.WorkshopStorage.BlackMatterCount++;
+                tempResource = Instantiate(ResourceDataList[4], _itemSpawnLocation.transform.position, _itemSpawnLocation.transform.rotation);
+                tempResource.GetComponent<Resource_Item>().PickupTimerCount = 1;
+                tempResource.GetComponent<Resource_Item>().ResourceAmount = printedAmount;
+                break;
+            case ResourceType.Z_Crystal:
+                //WorkshopManager.Instance.WorkshopStorage.ZCrystalCount++;
+                tempResource = Instantiate(ResourceDataList[5], _itemSpawnLocation.transform.position, _itemSpawnLocation.transform.rotation);
+                tempResource.GetComponent<Resource_Item>().PickupTimerCount = 1;
+                tempResource.GetComponent<Resource_Item>().ResourceAmount = printedAmount;
+                break;
+            case ResourceType.Radioactive_Waste:
+                //WorkshopManager.Instance.WorkshopStorage.RadioactiveWasteCount++;
+                tempResource = Instantiate(ResourceDataList[3], _itemSpawnLocation.transform.position, _itemSpawnLocation.transform.rotation);
+                tempResource.GetComponent<Resource_Item>().PickupTimerCount = 1;
+                tempResource.GetComponent<Resource_Item>().ResourceAmount = printedAmount;
+                break;
+        }
         if (_printerState == PrinterState.Completed)
         {
-            GameObject tempResource;
-            
-            switch (printingResource)
-            {
-                case ResourceType.Oil:
-                    //WorkshopManager.Instance.WorkshopStorage.OilCount++;
-                    tempResource = Instantiate(ResourceDataList[0], _itemSpawnLocation.transform.position, _itemSpawnLocation.transform.rotation);
-                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 1;
-                    tempResource.GetComponent<Resource_Item>().ResourceAmount = 1;
-                    break;
-                case ResourceType.Advanced_Sensors:
-                    //WorkshopManager.Instance.WorkshopStorage.SensorCount++;
-                    tempResource = Instantiate(ResourceDataList[2], _itemSpawnLocation.transform.position, _itemSpawnLocation.transform.rotation);
-                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 1;
-                    tempResource.GetComponent<Resource_Item>().ResourceAmount = 1;
-                    break;
-                case ResourceType.MotherBoard:
-                    //WorkshopManager.Instance.WorkshopStorage.MotherBoardCount++;
-                    tempResource = Instantiate(ResourceDataList[1], _itemSpawnLocation.transform.position, _itemSpawnLocation.transform.rotation);
-                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 1;
-                    tempResource.GetComponent<Resource_Item>().ResourceAmount = 1;
-                    break;
-                case ResourceType.Black_Matter:
-                    //WorkshopManager.Instance.WorkshopStorage.BlackMatterCount++;
-                    tempResource = Instantiate(ResourceDataList[4], _itemSpawnLocation.transform.position, _itemSpawnLocation.transform.rotation);
-                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 1;
-                    tempResource.GetComponent<Resource_Item>().ResourceAmount = 1;
-                    break;
-                case ResourceType.Z_Crystal:
-                    //WorkshopManager.Instance.WorkshopStorage.ZCrystalCount++;
-                    tempResource = Instantiate(ResourceDataList[5], _itemSpawnLocation.transform.position, _itemSpawnLocation.transform.rotation);
-                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 1;
-                    tempResource.GetComponent<Resource_Item>().ResourceAmount = 1;
-                    break;
-                case ResourceType.Radioactive_Waste:
-                    //WorkshopManager.Instance.WorkshopStorage.RadioactiveWasteCount++;
-                    tempResource = Instantiate(ResourceDataList[3], _itemSpawnLocation.transform.position, _itemSpawnLocation.transform.rotation);
-                    tempResource.GetComponent<Resource_Item>().PickupTimerCount = 1;
-                    tempResource.GetComponent<Resource_Item>().ResourceAmount = 1;
-                    break;
-            }
-     
             printMenuUI.SetActive(true);
-            printerTimerUI.SetActive(false);
-            printerTimerTextUI.SetActive(false);
-            printerCompleteUI.SetActive(false);
-
+            printerCountDownUI.SetActive(false);
             _printerState = PrinterState.Available;
         }
+        printedAmount = 0;
+        printerCollect_Text.text = "COLLECT " + "[" + printedAmount + "]";
+        printResourceCollectionButton.interactable = false;
     }
     
 
-    public IEnumerator PrintOrder(ResourceType printResource, Sprite resourceImage)
+    public IEnumerator PrintOrder(Resource_ItemData printResource, Sprite resourceImage)
     {
-        yield return new WaitForSeconds(.8f);
-        printingResource = printResource;
-        AudioManager.Instance.PlayClip(this.GetComponent<AudioSource>(), AudioManager.Instance.FindClip(AudioType.Printer_Hum, AudioManager.Instance.effectAudio));
-        while (_printerState == PrinterState.Printing)
+        if(_printerState != PrinterState.Halting) 
         {
-            printerResourceImage.sprite = resourceImage;
+            while (_printerState != PrinterState.Halting)
+            {
+                _printerState = PrinterState.Printing;
+                //yield return new WaitForSeconds(.8f);
+                printingResource = printResource.ResourceName;
+                AudioManager.Instance.PlayClip(this.GetComponent<AudioSource>(), AudioManager.Instance.FindClip(AudioType.Printer_Hum, AudioManager.Instance.effectAudio));
+                while (_printerState == PrinterState.Printing)
+                {
+                    printerResourceImage.sprite = resourceImage;
+                    if (Clock_PrintTime == 0)
+                    {
+                        Clock_PrintTime = printResource.ResourcePrintTime;
+                        AudioManager.Instance.PlayClip(this.GetComponent<AudioSource>(), AudioManager.Instance.FindClip(AudioType.Printer_Ding, AudioManager.Instance.effectAudio));
+                        printedAmount++;
+                        printerCollect_Text.text = "COLLECT " + "[" + printedAmount + "]";
+                        _printerState = PrinterState.NextPrint;
+                        printResourceCollectionButton.interactable = true;
+                    }
+                    else
+                    {
+                        Clock_PrintTime--;
+                    }
+                    yield return new WaitForSeconds(1);
+                }
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
+
+        while (_printerState == PrinterState.Halting)
+        {
             if (Clock_PrintTime == 0)
             {
                 printMenuUI.SetActive(false);
-                printerTimerUI.SetActive(true);
-                printerTimerTextUI.SetActive(false);
-                printerCompleteUI.SetActive(true);
+                printerCountDownUI.SetActive(true);
+                printedAmount++;
+                printerCollect_Text.text = "COLLECT " + "[" + printedAmount + "]";
                 AudioManager.Instance.PlayClip(this.GetComponent<AudioSource>(), AudioManager.Instance.FindClip(AudioType.Printer_Ding, AudioManager.Instance.effectAudio));
+                printResourceCollectionButton.interactable= true;
                 _printerState = PrinterState.Completed;
             }
-            Clock_PrintTime--;
+            else
+            {
+                Clock_PrintTime--;
+            }
             yield return new WaitForSeconds(1);
         }
     }
@@ -364,7 +404,9 @@ public class PrinterManager : MonoBehaviour, IInteractable
     {
         Available,
         Printing,
-        Completed
+        NextPrint,
+        Completed,
+        Halting
     }
     
 }

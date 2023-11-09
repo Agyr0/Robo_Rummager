@@ -124,6 +124,7 @@ public class Player_Contract_Manager : Singleton<Player_Contract_Manager>
                 Contract_DataList[i].Contract_Status = ContractStatus.Completed;
                 _contract_DataCullList.Add(Contract_DataList[i]);
                 EventBus.Publish(EventType.PLAYER_CONTRACTUPDATE);
+                ContractBoard_Manager.Instance._bulletinBoard_InProgress_UI.SetActive(false);
                 return;
             }
         }
