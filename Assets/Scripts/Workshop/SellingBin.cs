@@ -35,7 +35,7 @@ public class SellingBin : MonoBehaviour
             if (controller.CheckContract(player_Contract_Manager))
             {
                 //controller.HandleInteract();
-                controller.animator.Play("DogDissolve");
+                controller.animator.Play("Dissolve");
                 soldEffect.Play();
             }
             else
