@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class RogueBotPatrolState : RogueBotState
 {
-    private float patrolWaitTime;
     private bool playerInChaseRange;
+    private float patrolWaitTime;
     private float audioTimer = 0.0f;
     private float updateTimer = 0.0f;
 
@@ -22,7 +21,6 @@ public class RogueBotPatrolState : RogueBotState
         agent.navMeshAgent.speed = agent.config.patrolSpeed;
         agent.navMeshAgent.acceleration = agent.config.patrolAcceleration;
         agent.navMeshAgent.angularSpeed = agent.config.patrolAngularSpeed;
-        agent.config.patrolCenterPoint = agent.transform.position;
     }
 
     public void Update(RogueBotAgent agent)
@@ -42,11 +40,11 @@ public class RogueBotPatrolState : RogueBotState
             updateTimer = agent.config.tickRate;
         }
 
-        // Play an idle clip evey 10 seconds when the Rogue Bot stops moving
+        // Play an idle clip evey X seconds when the Rogue Bot stops moving
         audioTimer -= Time.deltaTime;
         if (audioTimer < 0.0f)
         {
-            agent.audioManager.PlayClip(agent.audioSource, agent.audioManager.FindRandomizedClip(AudioType.RogueBot_Idle, agent.audioManager.effectAudio), 0.25f);
+            agent.audioManager.PlayClip(agent.audioSource, agent.audioManager.FindRandomizedClip(AudioType.RogueBot_Idle, agent.audioManager.effectAudio));
             audioTimer = Random.Range(20, 40);
         }
 
@@ -100,6 +98,7 @@ public class RogueBotPatrolState : RogueBotState
     IEnumerator DetectedIcon(RogueBotAgent agent)
     {
         agent.detectedIcon.SetActive(true);
+        agent.audioManager.PlayClip(agent.audioSource, agent.audioManager.FindRandomizedClip(AudioType.RogueBot_Alert, agent.audioManager.effectAudio));
         yield return new WaitForSeconds(agent.config.spriteFlashTime);
         agent.detectedIcon.SetActive(false);
     }

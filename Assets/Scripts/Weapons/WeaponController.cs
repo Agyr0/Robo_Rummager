@@ -269,8 +269,8 @@ public class WeaponController : MonoBehaviour
                 audioManager.PlayClip(audioSource, audioManager.FindRandomizedClip(AudioType.Gun, audioManager.effectAudio));
 
             //Generate recoil
-            if(_curWeapon.GetComponent<WeaponRecoil>() != null)
-                _curWeapon.GetComponent<WeaponRecoil>().GenerateRecoil();
+            //if(_curWeapon.GetComponent<WeaponRecoil>() != null)
+            //    _curWeapon.GetComponent<WeaponRecoil>().GenerateRecoil();
 
             if (Physics.Raycast(ray, out hit, _curWeapon.Range))
             {

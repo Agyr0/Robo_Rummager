@@ -29,8 +29,10 @@ public class RogueBotAgent : MonoBehaviour, IDamageable
         stateMachine.RegisterState(new RogueBotPatrolState());
         stateMachine.RegisterState(new RogueBotChaseState());
         stateMachine.RegisterState(new RogueBotChargeState());
+        stateMachine.RegisterState(new RogueBotRepositionState());
         stateMachine.ChangeState(initialState);
         rogueBotHealth = rogueBotMaxHealth;
+        config.patrolCenterPoint = transform.position;
     }
 
     void Update()
@@ -43,9 +45,6 @@ public class RogueBotAgent : MonoBehaviour, IDamageable
         rogueBotHealth -= damage;
         if (rogueBotHealth <= 0)
         {
-            // Chase Player
-            stateMachine.ChangeState(RogueBotStateId.Chase);
-
             // Item Drops
             LootBag lootBag = this.gameObject.GetComponent<LootBag>();
             lootBag.DropResource(this.gameObject.transform.position);
@@ -54,6 +53,11 @@ public class RogueBotAgent : MonoBehaviour, IDamageable
             gameObject.SetActive(false);
             navMeshAgent.enabled = false;
             rogueBotHealth = rogueBotMaxHealth;
+        }
+        else
+        {
+            // Chase Player
+            stateMachine.ChangeState(RogueBotStateId.Chase);
         }
     }
 
