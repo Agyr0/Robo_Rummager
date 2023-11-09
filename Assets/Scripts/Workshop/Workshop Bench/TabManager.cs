@@ -178,11 +178,13 @@ namespace Agyr.Workshop
                 if (myTabs[i].myButton == button)
                 {
                     myTabs[i].backgroundImage.color = activeColor;
+                    myTabs[i].CheckResourceCount(workshopStorage);
                     myTabs[i].myContent.SetActive(true);
                 }
                 else
                 {
                     myTabs[i].backgroundImage.color = inactiveColor;
+                    myTabs[i].CheckResourceCount(workshopStorage);
                     myTabs[i].myContent.SetActive(false);
                 }
             }
@@ -283,6 +285,7 @@ namespace Agyr.Workshop
         public string elementName = "ChangeMe";
         private bool cancelActive = false;
 
+        [HideInInspector]
         public Property<string> ButtonText;
 
         public RobotCost myCost
