@@ -10,6 +10,8 @@ public class ContractBoard_Manager : Singleton<ContractBoard_Manager>, IInteract
     [SerializeField]
     private GameObject _bulletinBoard_Container;
 
+    public GameObject _bulletinBoard_InProgress_UI;
+
     [SerializeField]
     private List<GameObject> _purgeContractList;
 
@@ -50,11 +52,13 @@ public class ContractBoard_Manager : Singleton<ContractBoard_Manager>, IInteract
         EventBus.Subscribe<Robot_RecipeData, float>(EventType.BOARD_ADDLOADCONTRACT, CreateContract);
         EventBus.Subscribe(EventType.SAVECONTRACTPURGE, PurgeContracts);
         EventBus.Subscribe<GameObject>(EventType.PLAYER_ADDCONTRACT, PurgeContract);
+        EventBus.Subscribe<Robot_RecipeData>(EventType.PICKED_UP_CHASSIS, AddChassis);
     }
     private void OnDisable()
     {
         EventBus.Unsubscribe<GameObject>(EventType.PLAYER_ADDCONTRACT, PurgeContract);
         EventBus.Unsubscribe<int, float>(EventType.BOARD_ADDCONTRACT, CreateContract);
+        EventBus.Unsubscribe<Robot_RecipeData>(EventType.PICKED_UP_CHASSIS, AddChassis);
     }
 
     private void Start()
@@ -65,6 +69,11 @@ public class ContractBoard_Manager : Singleton<ContractBoard_Manager>, IInteract
     public void LeavePC()
     {
         HandleInteract();
+    }
+
+    public void AddChassis(Robot_RecipeData chassisColelcted)
+    {
+        Robot_RecipeDataList.Add(chassisColelcted);
     }
 
     IEnumerator MakeContracts()
@@ -110,6 +119,7 @@ public class ContractBoard_Manager : Singleton<ContractBoard_Manager>, IInteract
     public void OnContractAccepted()
     {
         AudioManager.Instance.PlayClip(this.GetComponent<AudioSource>(), AudioManager.Instance.effectAudio[6].myControllers[0]);
+        _bulletinBoard_InProgress_UI.gameObject.SetActive(true);
     }
 
     public void CreateContract(int robot, float TimeCount)
