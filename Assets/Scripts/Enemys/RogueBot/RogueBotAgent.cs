@@ -1,61 +1,69 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class RogueBotAgent : MonoBehaviour, IDamageable
 {
-    private float blinkIntensity;
-    private float blinkDuration;
-    private float blinkTimer;
-
+    public AudioManager audioManager;
+    public AudioSource audioSource;
+    public Animator animator;
+    public NavMeshAgent navMeshAgent;
     public RogueBotStateMachine stateMachine;
     public RogueBotStateId initialState;
-    public NavMeshAgent navMeshAgent;
     public RogueBotConfig config;
-
+    
     public GameObject detectedIcon;
     public GameObject chargeHitbox;
-    private float rogueBotMaxHealth = 75;
+
+    public float rogueBotMaxHealth = 75;
     public float rogueBotHealth;
-    public Material rogueBotMat;
 
     void Start()
     {
+        audioManager = AudioManager.Instance;
+        audioSource = GetComponent<AudioSource>();
+        animator = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
-        
-        config = RogueBotConfig.Instantiate(config);
+
+        // State Machine Stuff
         stateMachine = new RogueBotStateMachine(this);
         stateMachine.RegisterState(new RogueBotPatrolState());
         stateMachine.RegisterState(new RogueBotChaseState());
         stateMachine.RegisterState(new RogueBotChargeState());
+        stateMachine.RegisterState(new RogueBotRepositionState());
+        config = RogueBotConfig.Instantiate(config);
+
+        // Stuff to do when enemy is spawned
         stateMachine.ChangeState(initialState);
         rogueBotHealth = rogueBotMaxHealth;
+        config.patrolCenterPoint = transform.position;
     }
 
     void Update()
     {
         stateMachine.Update();
-
-        blinkTimer -= Time.deltaTime;
-        float lerp = Mathf.Clamp01(blinkTimer / blinkDuration);
-        float intensity = (lerp * blinkIntensity) + 1;
-        rogueBotMat.color = Color.white * intensity;
     }
 
     public void TakeDamage(float damage)
     {
-        blinkTimer = blinkDuration;
         rogueBotHealth -= damage;
         if (rogueBotHealth <= 0)
         {
+            // Item Drops
             LootBag lootBag = this.gameObject.GetComponent<LootBag>();
             lootBag.DropResource(this.gameObject.transform.position);
+            
+            // Respawn and Object Pool stuff
             gameObject.SetActive(false);
             navMeshAgent.enabled = false;
             rogueBotHealth = rogueBotMaxHealth;
+        }
+        else
+        {
+            // Chase Player
+            stateMachine.ChangeState(RogueBotStateId.Chase);
         }
     }
 

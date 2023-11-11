@@ -77,4 +77,22 @@ public class RogueBotConfig : ScriptableObject
     [Tooltip("The time (in seconds) that the RogueBot will be charging for.")]
     public float chargeDuration;
     #endregion
+
+    #region Reposition
+    [Header("Reposition Stats")]
+    [Tooltip("Speed of the RogueBot during repositon state.")]
+    public float repositionSpeed;
+
+    [Tooltip("Acceleration of the RogueBot during reposition state.")]
+    public float repositionAcceleration;
+
+    [Tooltip("Speed of the RogueBot while turning during reposition state.")]
+    public float repositionAngularSpeed;
+
+    [Tooltip("The minimum distance a RogueBot will away to after charging.")]
+    public float minRepositionDistance;
+
+    [Tooltip("The maximum distance a RogueBot will away to after charging.")]
+    public float maxRepositionDistance;
+    #endregion
 }

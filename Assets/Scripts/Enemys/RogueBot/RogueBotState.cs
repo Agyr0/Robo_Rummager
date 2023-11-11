@@ -6,7 +6,8 @@ public enum RogueBotStateId
 {
     Patrol,
     Chase,
-    Charge
+    Charge,
+    Reposition
 }
 public interface RogueBotState
 {

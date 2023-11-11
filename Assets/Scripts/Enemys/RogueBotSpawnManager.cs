@@ -8,7 +8,7 @@ using UnityEngine.AI;
 public class RogueBotSpawnManager : MonoBehaviour
 {
 
-    public GameObject rougeBot;
+    public GameObject rougeBotPrefab;
     public List<Transform> spawnPoints;
 
     public int numberOfObjectsToSpawn = 5;
@@ -24,7 +24,7 @@ public class RogueBotSpawnManager : MonoBehaviour
         for (int i = 0; i < numberOfObjectsToSpawn; i++)
         {
             Transform randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
-            GameObject robot = ObjectPooler.PullObjectFromPool(rougeBot);
+            GameObject robot = ObjectPooler.PullObjectFromPool(rougeBotPrefab);
 
             if (robot != null)
             {
