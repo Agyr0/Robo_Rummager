@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class ScavengerPatrolState : ScavengerState
 {
-    private float patrolWaitTime;
     private int patrolPointIndex;
+    private float patrolWaitTime;
+    private float audioTimer = 0.0f;
+    private float updateTimer = 0.0f;
     private GameObject playerGameObject;
 
     public ScavengerStateId GetId()
@@ -37,6 +40,14 @@ public class ScavengerPatrolState : ScavengerState
             Debug.Log(this + "has no patrol points!");
             return;
         }
+
+        // Play an idle clip evey X seconds when the Rogue Bot stops moving
+        //audioTimer -= Time.deltaTime;
+        //if (audioTimer < 0.0f)
+        //{
+        //    agent.audioManager.PlayClip(agent.audioSource, agent.audioManager.FindRandomizedClip(AudioType., agent.audioManager.effectAudio));
+        //    audioTimer = Random.Range(20, 40);
+        //}
 
         // Patrolling Logic
         if (agent.navMeshAgent.remainingDistance <= agent.navMeshAgent.stoppingDistance) // Check if Scavenger has reached position

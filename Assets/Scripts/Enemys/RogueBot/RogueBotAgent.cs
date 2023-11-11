@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,27 +8,34 @@ public class RogueBotAgent : MonoBehaviour, IDamageable
 {
     public AudioManager audioManager;
     public AudioSource audioSource;
+    public Animator animator;
+    public NavMeshAgent navMeshAgent;
     public RogueBotStateMachine stateMachine;
     public RogueBotStateId initialState;
-    public NavMeshAgent navMeshAgent;
     public RogueBotConfig config;
-
+    
     public GameObject detectedIcon;
     public GameObject chargeHitbox;
-    private float rogueBotMaxHealth = 75;
+
+    public float rogueBotMaxHealth = 75;
     public float rogueBotHealth;
 
     void Start()
     {
-        navMeshAgent = GetComponent<NavMeshAgent>();
         audioManager = AudioManager.Instance;
         audioSource = GetComponent<AudioSource>();
-        config = RogueBotConfig.Instantiate(config);
+        animator = GetComponent<Animator>();
+        navMeshAgent = GetComponent<NavMeshAgent>();
+
+        // State Machine Stuff
         stateMachine = new RogueBotStateMachine(this);
         stateMachine.RegisterState(new RogueBotPatrolState());
         stateMachine.RegisterState(new RogueBotChaseState());
         stateMachine.RegisterState(new RogueBotChargeState());
         stateMachine.RegisterState(new RogueBotRepositionState());
+        config = RogueBotConfig.Instantiate(config);
+
+        // Stuff to do when enemy is spawned
         stateMachine.ChangeState(initialState);
         rogueBotHealth = rogueBotMaxHealth;
         config.patrolCenterPoint = transform.position;

@@ -17,6 +17,12 @@ public class ScavengerWeaponIK : MonoBehaviour
 
     public float angleLimit = 90.0f;
     public float distanceLimit = 1.5f;
+
+    private void Start()
+    {
+        targetTransform = GameManager.Instance.playerController.transform;
+    }
+
     Vector3 GetTargetPosition()
     {
         Vector3 targetDirection = targetTransform.position - aimTransform.position;
@@ -32,6 +38,7 @@ public class ScavengerWeaponIK : MonoBehaviour
         Vector3 direction = Vector3.Slerp(targetDirection, aimDirection, blendOut);
         return aimTransform.position + direction;
     }
+
     private void LateUpdate()
     {
         Vector3 targetPosition = GetTargetPosition();
@@ -44,7 +51,7 @@ public class ScavengerWeaponIK : MonoBehaviour
     private void AimAtTarget(Transform bone, Vector3 targetPosition, float weight)
     {
         Vector3 aimDirection = aimTransform.forward;
-        Vector3 targetDirection = targetPosition - aimTransform.position - new Vector3(0, 0.125f, 0);
+        Vector3 targetDirection = targetPosition - aimTransform.position - new Vector3(0, -1.5f, 0);
         Quaternion aimTowards = Quaternion.FromToRotation(aimDirection, targetDirection);
         Quaternion blendedRotation = Quaternion.Slerp(Quaternion.identity, aimTowards, weight);
         bone.rotation = blendedRotation * bone.rotation;

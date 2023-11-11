@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 851525395675995350}
-  - component: {fileID: 2611300886873205338}
   - component: {fileID: 4729039545950213095}
+  - component: {fileID: 6470395437004968214}
   m_Layer: 0
-  m_Name: Spawn Manager
+  m_Name: Enemy Spawn Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,22 +33,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2611300886873205338
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5364662569695849778}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47918ad63ab724d448cae560b085cc64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pooledObjects: []
-  objectPrefab: {fileID: 3092579538385285110, guid: b439d33a8e9847a468314de12c704dca,
-    type: 3}
-  maxObjects: 5
 --- !u!114 &4729039545950213095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,12 +45,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a51871004b82a5e498308324f6bdde96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rougeBot: {fileID: 3092579538385285110, guid: b439d33a8e9847a468314de12c704dca,
+  rougeBot: {fileID: 2614609566850391967, guid: 1fb05febd9dd4694dacc58cb610d8b26,
     type: 3}
-  spawnPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  numberOfObjectsToSpawn: 3
+  spawnPoints: []
+  numberOfObjectsToSpawn: 0
+--- !u!114 &6470395437004968214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5364662569695849778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 982ccb64542643543ab549d65bc02889, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scavengerPrefab: {fileID: 5447517983591290391, guid: 78c44189719866746b486c543ab7a92d,
+    type: 3}
+  spawnLocations: []
+  numberOfScavengersToSpawn: 0
