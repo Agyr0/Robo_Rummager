@@ -2,19 +2,12 @@ public enum RobotType
 {
     Dog,
     Cat,
-    Rabbit,
-    Turtle,
-    GuinneaPig,
-    HouseKeep,
-    ElderCare,
-    YardMaintenance,
+    Rat,
     Nurse,
-    Retail,
-    BodyGuard,
-    HouseProtector,
+    ServiceWorker,
     PoliceBot,
-    MilitaryBot,
-    FootBall
+    FootBall,
+    Handyman
 }
 public enum RobotTier
 {
