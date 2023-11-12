@@ -43,6 +43,7 @@ public class RogueBotAgent : MonoBehaviour, IDamageable
 
     void Update()
     {
+        animator.SetFloat("Speed", navMeshAgent.velocity.magnitude);
         stateMachine.Update();
     }
 
