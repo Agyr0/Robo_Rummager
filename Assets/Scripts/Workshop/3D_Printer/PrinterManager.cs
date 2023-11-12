@@ -19,6 +19,8 @@ public class PrinterManager : MonoBehaviour, IInteractable
 
     public int printedAmount = 0;
 
+    public int printedMaxAmount = 10;
+
     [SerializeField]
     public Button printResourceCollectionButton;
 
@@ -288,12 +290,19 @@ public class PrinterManager : MonoBehaviour, IInteractable
                 tempResource.GetComponent<Resource_Item>().ResourceAmount = printedAmount;
                 break;
         }
+
         if (_printerState == PrinterState.Completed)
         {
             printMenuUI.SetActive(true);
             printerCountDownUI.SetActive(false);
             _printerState = PrinterState.Available;
         }
+
+        else if (_printerState == PrinterState.PrinterFull)
+        {
+            _printerState = PrinterState.NextPrint;
+        }
+
         printedAmount = 0;
         printerCollect_Text.text = "COLLECT " + "[" + printedAmount + "]";
         printResourceCollectionButton.interactable = false;
@@ -306,27 +315,41 @@ public class PrinterManager : MonoBehaviour, IInteractable
         {
             while (_printerState != PrinterState.Halting)
             {
-                _printerState = PrinterState.Printing;
-                //yield return new WaitForSeconds(.8f);
-                printingResource = printResource.ResourceName;
-                AudioManager.Instance.PlayClip(this.GetComponent<AudioSource>(), AudioManager.Instance.FindClip(AudioType.Printer_Hum, AudioManager.Instance.effectAudio));
-                while (_printerState == PrinterState.Printing)
+                if (_printerState == PrinterState.PrinterFull)
                 {
-                    printerResourceImage.sprite = resourceImage;
-                    if (Clock_PrintTime == 0)
+                    printerTime_Text.text = "Printer: Full";
+                    yield return new WaitUntil(() => _printerState != PrinterState.PrinterFull);
+                }
+                else
+                {
+                    _printerState = PrinterState.Printing;
+                    printingResource = printResource.ResourceName;
+                    AudioManager.Instance.PlayClip(this.GetComponent<AudioSource>(), AudioManager.Instance.FindClip(AudioType.Printer_Hum, AudioManager.Instance.effectAudio));
+                    while (_printerState == PrinterState.Printing)
                     {
-                        Clock_PrintTime = printResource.ResourcePrintTime;
-                        AudioManager.Instance.PlayClip(this.GetComponent<AudioSource>(), AudioManager.Instance.FindClip(AudioType.Printer_Ding, AudioManager.Instance.effectAudio));
-                        printedAmount++;
-                        printerCollect_Text.text = "COLLECT " + "[" + printedAmount + "]";
-                        _printerState = PrinterState.NextPrint;
-                        printResourceCollectionButton.interactable = true;
+                        printerResourceImage.sprite = resourceImage;
+                        if (Clock_PrintTime == 0)
+                        {
+                            Clock_PrintTime = printResource.ResourcePrintTime;
+                            AudioManager.Instance.PlayClip(this.GetComponent<AudioSource>(), AudioManager.Instance.FindClip(AudioType.Printer_Ding, AudioManager.Instance.effectAudio));
+                            printedAmount++;
+                            printResourceCollectionButton.interactable = true;
+                            printerCollect_Text.text = "COLLECT " + "[" + printedAmount + "]";
+                            if (printedAmount == printedMaxAmount)
+                            {
+                                _printerState = PrinterState.PrinterFull;
+                            }
+                            else
+                            {
+                                _printerState = PrinterState.NextPrint;
+                            }
+                        }
+                        else
+                        {
+                            Clock_PrintTime--;
+                        }
+                        yield return new WaitForSeconds(1);
                     }
-                    else
-                    {
-                        Clock_PrintTime--;
-                    }
-                    yield return new WaitForSeconds(1);
                 }
                 yield return new WaitForSeconds(0.1f);
             }
@@ -339,6 +362,7 @@ public class PrinterManager : MonoBehaviour, IInteractable
                 printMenuUI.SetActive(false);
                 printerCountDownUI.SetActive(true);
                 printedAmount++;
+                printerTime_Text.text = "Printer: Halted";
                 printerCollect_Text.text = "COLLECT " + "[" + printedAmount + "]";
                 AudioManager.Instance.PlayClip(this.GetComponent<AudioSource>(), AudioManager.Instance.FindClip(AudioType.Printer_Ding, AudioManager.Instance.effectAudio));
                 printResourceCollectionButton.interactable= true;
@@ -404,6 +428,7 @@ public class PrinterManager : MonoBehaviour, IInteractable
     {
         Available,
         Printing,
+        PrinterFull,
         NextPrint,
         Completed,
         Halting

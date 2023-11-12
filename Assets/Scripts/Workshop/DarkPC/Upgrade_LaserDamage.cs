@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Upgrade_WrenchDamage : Upgrade_UI_Behavior
+public class Upgrade_LaserDamage : Upgrade_UI_Behavior
 {
     [SerializeField]
     private int _upgradeCurrentLevel = 1;
@@ -21,15 +21,16 @@ public class Upgrade_WrenchDamage : Upgrade_UI_Behavior
 
     public void Upgrade()
     {
+        Debug.Log("Upgrade Button was pressed");
         if (_upgradeCurrentLevel < _upgradeMaxLevel)
         {
             if (WorkshopManager.Instance.WorkshopStorage.CreditCount >= _upgradeCost)
             {
                 AudioManager.Instance.PlayClip(this.GetComponent<AudioSource>(), AudioManager.Instance.effectAudio[6].myControllers[1]);
                 WorkshopManager.Instance.WorkshopStorage.CreditCount -= _upgradeCost;
-                GameManager.Instance.weaponController._availableWeapons[0]._damage += 2;
                 _upgradeCurrentLevel++;
                 UpdateText(_upgradeCost, _upgradeDesc, _upgradeCurrentLevel, _upgradeMaxLevel);
+                GameManager.Instance.weaponController._availableWeapons[1]._damage += 2;
             }
         }
     }

@@ -31,7 +31,7 @@ public class Upgrade_Reload : Upgrade_UI_Behavior
                 WorkshopManager.Instance.WorkshopStorage.CreditCount -= _upgradeCost;
                 _upgradeCurrentLevel++;
                 UpdateText(_upgradeCost, _upgradeDesc, _upgradeCurrentLevel, _upgradeMaxLevel);
-                DarkWebPC_Manager.Instance.Gun.ReloadTime -= .2f;
+                GameManager.Instance.weaponController._availableWeapons[1]._reloadTime -= .2f;
             }
         }
     }
