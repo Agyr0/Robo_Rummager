@@ -51,7 +51,14 @@ public enum AudioType
     FootSteps_Gravel,
     FootSteps_Metal,
 
-    Player_Death
+    Player_Death,
+
+    Scavenger_Alert,
+    Scavenger_Death,
+    Scavenger_Idle,
+    Scavenger_Laugh,
+
+    PC
 
 
 }
