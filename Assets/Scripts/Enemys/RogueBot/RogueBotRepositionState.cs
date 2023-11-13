@@ -23,8 +23,15 @@ public class RogueBotRepositionState : RogueBotState
     {
         if (agent.navMeshAgent.remainingDistance < 0.1f)
         {
-            Debug.Log("Changed to Chase State from Reposition");
-            agent.stateMachine.ChangeState(RogueBotStateId.Chase);
+            bool playerInChargeRange = Physics.CheckSphere(agent.transform.position, agent.config.chargeRange, agent.config.playerLayerMask);
+            if (playerInChargeRange)
+            {
+                SetRandomPoint(agent);
+            }
+            else
+            {
+                agent.stateMachine.ChangeState(RogueBotStateId.Chase);
+            }
         }
     }
 

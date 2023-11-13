@@ -85,7 +85,7 @@ public class ScavengerAgent : MonoBehaviour, IDamageable
             //LootBag lootBag = this.gameObject.GetComponent<LootBag>();
             //lootBag.DropResource(this.gameObject.transform.position);
 
-            // Respawn and Object Pool stuff
+            audioManager.PlayClip(audioSource, audioManager.FindRandomizedClip(AudioType.Scavenger_Death, audioManager.effectAudio));
             gameObject.SetActive(false);
             navMeshAgent.enabled = false;
             scavengerHealth = scavengerMaxHealth;

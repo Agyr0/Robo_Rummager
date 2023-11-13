@@ -19,7 +19,6 @@ public class TutorialWaypoint : MonoBehaviour
     {
         if (!hasTriggeredContractTutorial)
         {
-
             float minX = waypointImage.GetPixelAdjustedRect().width / 2;
             float maxX = Screen.width - minX;
 
