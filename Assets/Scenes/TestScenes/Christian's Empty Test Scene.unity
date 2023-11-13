@@ -306,6 +306,7 @@ GameObject:
   m_Component:
   - component: {fileID: 440324538}
   - component: {fileID: 440324537}
+  - component: {fileID: 440324539}
   m_Layer: 0
   m_Name: NavMesh Surface
   m_TagString: Untagged
@@ -359,6 +360,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 646096998}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &440324539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 440324536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: -1372625422
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 8
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 9c808f72d16ccf0408f51b73cc5dbd55, type: 2}
+  m_BuildHeightMesh: 0
 --- !u!1001 &470756897
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -417,6 +449,42 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4729039545950213095, guid: 91dc17ebf39168a43a42864f06a8c647,
+        type: 3}
+      propertyPath: rougeBotPrefab
+      value: 
+      objectReference: {fileID: 4596662765436844987, guid: 3af97db6dfa8c864a8a48e2193049dd4,
+        type: 3}
+    - target: {fileID: 4729039545950213095, guid: 91dc17ebf39168a43a42864f06a8c647,
+        type: 3}
+      propertyPath: numberOfObjectsToSpawn
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4729039545950213095, guid: 91dc17ebf39168a43a42864f06a8c647,
+        type: 3}
+      propertyPath: spawnPoints.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4729039545950213095, guid: 91dc17ebf39168a43a42864f06a8c647,
+        type: 3}
+      propertyPath: numberOfRogueBotsToSpawn
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4729039545950213095, guid: 91dc17ebf39168a43a42864f06a8c647,
+        type: 3}
+      propertyPath: spawnLocations.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4729039545950213095, guid: 91dc17ebf39168a43a42864f06a8c647,
+        type: 3}
+      propertyPath: spawnPoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 766552105}
+    - target: {fileID: 4729039545950213095, guid: 91dc17ebf39168a43a42864f06a8c647,
+        type: 3}
+      propertyPath: spawnLocations.Array.data[0]
+      value: 
+      objectReference: {fileID: 766552105}
     - target: {fileID: 5364662569695849778, guid: 91dc17ebf39168a43a42864f06a8c647,
         type: 3}
       propertyPath: m_Name
@@ -425,7 +493,7 @@ PrefabInstance:
     - target: {fileID: 6470395437004968214, guid: 91dc17ebf39168a43a42864f06a8c647,
         type: 3}
       propertyPath: numberOfScavengersToSpawn
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6470395437004968214, guid: 91dc17ebf39168a43a42864f06a8c647,
         type: 3}
@@ -21060,6 +21128,80 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2797b1dc411e1594786304e203647c46, type: 3}
+--- !u!1001 &766552104
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2754927940740371581, guid: 13f4aa1bfbb467a40b491ade9446756b,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 17.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 2754927940740371581, guid: 13f4aa1bfbb467a40b491ade9446756b,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.50000024
+      objectReference: {fileID: 0}
+    - target: {fileID: 2754927940740371581, guid: 13f4aa1bfbb467a40b491ade9446756b,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 17.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 2754927940740371581, guid: 13f4aa1bfbb467a40b491ade9446756b,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2754927940740371581, guid: 13f4aa1bfbb467a40b491ade9446756b,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2754927940740371581, guid: 13f4aa1bfbb467a40b491ade9446756b,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2754927940740371581, guid: 13f4aa1bfbb467a40b491ade9446756b,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2754927940740371581, guid: 13f4aa1bfbb467a40b491ade9446756b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2754927940740371581, guid: 13f4aa1bfbb467a40b491ade9446756b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2754927940740371581, guid: 13f4aa1bfbb467a40b491ade9446756b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841414961219411082, guid: 13f4aa1bfbb467a40b491ade9446756b,
+        type: 3}
+      propertyPath: m_Name
+      value: RogueBot Spawn Location
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 13f4aa1bfbb467a40b491ade9446756b, type: 3}
+--- !u!4 &766552105 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2754927940740371581, guid: 13f4aa1bfbb467a40b491ade9446756b,
+    type: 3}
+  m_PrefabInstance: {fileID: 766552104}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &819339185 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2446187838209424323, guid: 9f43977826ba06d4897bbc0df364fde5,
@@ -22489,3 +22631,4 @@ SceneRoots:
   - {fileID: 646096998}
   - {fileID: 1899640299}
   - {fileID: 1961411661}
+  - {fileID: 766552104}

@@ -7,7 +7,7 @@ using UnityEngine.Rendering.Universal;
 
 public class ScavengerWeaponIK : MonoBehaviour
 {
-    public Transform targetTransform;
+    public GameObject targetTransform;
     public Transform aimTransform;
     public Transform bone;
 
@@ -20,12 +20,12 @@ public class ScavengerWeaponIK : MonoBehaviour
 
     private void Start()
     {
-        targetTransform = GameManager.Instance.playerController.transform;
+        targetTransform = GameObject.Find("PlayerEyes");
     }
 
     Vector3 GetTargetPosition()
     {
-        Vector3 targetDirection = targetTransform.position - aimTransform.position;
+        Vector3 targetDirection = targetTransform.transform.position - aimTransform.position;
         Vector3 aimDirection = aimTransform.forward;
         float blendOut = 0.0f;
 
@@ -51,7 +51,7 @@ public class ScavengerWeaponIK : MonoBehaviour
     private void AimAtTarget(Transform bone, Vector3 targetPosition, float weight)
     {
         Vector3 aimDirection = aimTransform.forward;
-        Vector3 targetDirection = targetPosition - aimTransform.position - new Vector3(0, -1.5f, 0);
+        Vector3 targetDirection = targetPosition - aimTransform.position - new Vector3(0, 0.25f, 0);
         Quaternion aimTowards = Quaternion.FromToRotation(aimDirection, targetDirection);
         Quaternion blendedRotation = Quaternion.Slerp(Quaternion.identity, aimTowards, weight);
         bone.rotation = blendedRotation * bone.rotation;

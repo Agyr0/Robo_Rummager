@@ -7,12 +7,9 @@ using UnityEngine.AI;
 [DefaultExecutionOrder(2)]
 public class RogueBotSpawnManager : MonoBehaviour
 {
-
     public GameObject rougeBotPrefab;
-    public List<Transform> spawnPoints;
-
-    public int numberOfObjectsToSpawn = 5;
-
+    public List<Transform> spawnLocations;
+    public int numberOfRogueBotsToSpawn;
 
     void Start()
     {
@@ -21,9 +18,9 @@ public class RogueBotSpawnManager : MonoBehaviour
 
     void SpawnRogueBots()
     {
-        for (int i = 0; i < numberOfObjectsToSpawn; i++)
+        for (int i = 0; i < numberOfRogueBotsToSpawn; i++)
         {
-            Transform randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
+            Transform randomSpawnPoint = spawnLocations[Random.Range(0, spawnLocations.Count)];
             GameObject robot = ObjectPooler.PullObjectFromPool(rougeBotPrefab);
 
             if (robot != null)
@@ -33,7 +30,7 @@ public class RogueBotSpawnManager : MonoBehaviour
                 robot.SetActive(true);
                 robot.GetComponent<NavMeshAgent>().enabled = true;
             }
-            spawnPoints.Remove(randomSpawnPoint);
+            spawnLocations.Remove(randomSpawnPoint);
         }
     }
 }
