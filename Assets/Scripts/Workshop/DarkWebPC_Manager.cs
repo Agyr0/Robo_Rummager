@@ -23,10 +23,6 @@ public class DarkWebPC_Manager : Singleton<DarkWebPC_Manager>, IInteractable
     private GameObject _loginMenu;
     [SerializeField]
     private GameObject _upgradeMenu;
-    [SerializeField]
-    private WeaponData _wrench;
-    [SerializeField]
-    private WeaponData _gun;
 
     [SerializeField]
     private GameObject _allTab;
@@ -51,18 +47,6 @@ public class DarkWebPC_Manager : Singleton<DarkWebPC_Manager>, IInteractable
     private Coroutine handleUI;
 
     private bool isOn = false;
-
-    public WeaponData Wrench
-    {
-        get { return _wrench; }
-        set { _wrench = value; }
-    }
-
-    public WeaponData Gun
-    {
-        get { return _gun; }
-        set { _gun = value; }
-    }
 
     private void OnEnable()
     {

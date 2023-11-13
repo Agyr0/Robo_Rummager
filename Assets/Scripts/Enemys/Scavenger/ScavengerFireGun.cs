@@ -36,6 +36,7 @@ public class ScavengerFireGun : MonoBehaviour
             currBullet.transform.rotation = gunBarrel.transform.rotation;
             currBullet.GetComponent<TrailRenderer>().enabled = true;
             currBullet.SetActive(true);
+            agent.audioManager.PlayClip(agent.audioSource, agent.audioManager.FindRandomizedClip(AudioType.Gun, agent.audioManager.effectAudio));
             gunParticle.Play();
 
             yield return new WaitForSeconds(timeBetweenShots);

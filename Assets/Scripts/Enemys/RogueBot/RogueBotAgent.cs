@@ -43,6 +43,7 @@ public class RogueBotAgent : MonoBehaviour, IDamageable
 
     void Update()
     {
+        animator.SetFloat("Speed", navMeshAgent.velocity.magnitude);
         stateMachine.Update();
     }
 
@@ -51,6 +52,9 @@ public class RogueBotAgent : MonoBehaviour, IDamageable
         rogueBotHealth -= damage;
         if (rogueBotHealth <= 0)
         {
+            // Play Death Audio
+            audioManager.PlayClip(audioSource, audioManager.FindRandomizedClip(AudioType.RogueBot_Death, audioManager.effectAudio));
+
             // Item Drops
             LootBag lootBag = this.gameObject.GetComponent<LootBag>();
             lootBag.DropResource(this.gameObject.transform.position);

@@ -7,7 +7,7 @@ public class RogueBotPatrolState : RogueBotState
 {
     private bool playerInChaseRange;
     private float patrolWaitTime;
-    private float audioTimer = 0.0f;
+    private float audioTimer = Random.Range(20, 40);
     private float updateTimer = 0.0f;
 
     public RogueBotStateId GetId()
@@ -25,19 +25,13 @@ public class RogueBotPatrolState : RogueBotState
 
     public void Update(RogueBotAgent agent)
     {
-        // Chase State Change
-        updateTimer -= Time.deltaTime;
-        if (updateTimer < 0.0f)
-        {
-            // Check if player is in chase range
-            playerInChaseRange = Physics.CheckSphere(agent.transform.position, agent.config.chaseRange, agent.config.playerLayerMask);
+        // Check if player is in chase range
+        playerInChaseRange = Physics.CheckSphere(agent.transform.position, agent.config.chaseRange, agent.config.playerLayerMask);
 
-            if (playerInChaseRange)
-            {
-                RogueBotChaseState chaseState = agent.stateMachine.GetState(RogueBotStateId.Chase) as RogueBotChaseState;
-                agent.stateMachine.ChangeState(RogueBotStateId.Chase);
-            }
-            updateTimer = agent.config.tickRate;
+        if (playerInChaseRange)
+        {
+            RogueBotChaseState chaseState = agent.stateMachine.GetState(RogueBotStateId.Chase) as RogueBotChaseState;
+            agent.stateMachine.ChangeState(RogueBotStateId.Chase);
         }
 
         // Play an idle clip evey X seconds when the Rogue Bot stops moving
