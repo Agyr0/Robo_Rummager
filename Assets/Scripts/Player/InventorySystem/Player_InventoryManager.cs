@@ -76,8 +76,8 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
 
     public List<GameObject> Inventory_ItemCullPickupList
     {
-        get { return _inventory_ItemPickupList; }
-        set { _inventory_ItemPickupList = value; }
+        get { return _inventory_ItemCullPickupList; }
+        set { _inventory_ItemCullPickupList = value; }
     }
     
     public Resource_ItemData ResourceEmpty
@@ -228,6 +228,7 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
         if (itemPicked.GetComponent<Resource_Item>().ResourceAmount == 0)
         {
             EventBus.Publish<GameObject>(EventType.INVENTORY_ADDITEMCULL, itemPicked);
+            EventBus.Publish(EventType.INVENTORY_REMOVEITEM);
             itemPicked.gameObject.SetActive(false);
         }
         EventBus.Publish(EventType.INVENTORY_UPDATE, this.gameObject);
@@ -319,6 +320,7 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
         Inventory_DataArray[slotNumber].AmountStored = 0;
         _inventoryItemDropDialougeArray[slotNumber].SetActive(false);
         EventBus.Publish(EventType.INVENTORY_UPDATE, this.gameObject);
+        
     }
 
     public void OnItemDropCancelled(int slotNumber)
