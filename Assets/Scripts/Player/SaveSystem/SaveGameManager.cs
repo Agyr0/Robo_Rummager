@@ -159,34 +159,7 @@ public class SaveGameManager : Singleton<SaveGameManager>
                 case RobotType.Cat:
                     EventBus.Publish(EventType.PLAYER_LOADCONTRACT, _robot_RecipeDataList[1], data.save_PlayerContracts[i].Contract_TimerCount);
                     break;
-                case RobotType.Rabbit:
-                    break;
-                case RobotType.Turtle:
-                    break;
-                case RobotType.GuinneaPig:
-                    break;
-                case RobotType.HouseKeep:
-                    break;
-                case RobotType.ElderCare:
-                    break;
-                case RobotType.YardMaintenance:
-                    break;
-                case RobotType.Nurse:
-                    break;
-                case RobotType.Retail:
-                    break;
-                case RobotType.BodyGuard:
-                    break;
-                case RobotType.HouseProtector:
-                    break;
-                case RobotType.PoliceBot:
-                    break;
-                case RobotType.MilitaryBot:
-                    break;
-                case RobotType.FootBall:
-                    break;
-                default:
-                    break;
+
             }
         }
     }
@@ -204,34 +177,7 @@ public class SaveGameManager : Singleton<SaveGameManager>
                 case RobotType.Cat:
                     EventBus.Publish(EventType.BOARD_ADDLOADCONTRACT, _robot_RecipeDataList[1], data.save_BoardContracts[i].Contract_TimerCount);
                     break;
-                case RobotType.Rabbit:
-                    break;
-                case RobotType.Turtle:
-                    break;
-                case RobotType.GuinneaPig:
-                    break;
-                case RobotType.HouseKeep:
-                    break;
-                case RobotType.ElderCare:
-                    break;
-                case RobotType.YardMaintenance:
-                    break;
-                case RobotType.Nurse:
-                    break;
-                case RobotType.Retail:
-                    break;
-                case RobotType.BodyGuard:
-                    break;
-                case RobotType.HouseProtector:
-                    break;
-                case RobotType.PoliceBot:
-                    break;
-                case RobotType.MilitaryBot:
-                    break;
-                case RobotType.FootBall:
-                    break;
-                default:
-                    break;
+
             }
         }
     }

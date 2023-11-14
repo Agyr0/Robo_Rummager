@@ -92,48 +92,28 @@ public class BoardContract_UI_Behavior : MonoBehaviour
             case RobotType.Cat:
                 _contract_RobotType_Text.text = "Cat";
                 break;
-            case RobotType.Rabbit:
-                _contract_RobotType_Text.text = "Rabbit";
-                break;
-            case RobotType.Turtle:
-                _contract_RobotType_Text.text = "Turtle";
-                break;
-            case RobotType.GuinneaPig:
-                _contract_RobotType_Text.text = "Guinnea Pig";
-                break;
-            case RobotType.HouseKeep:
-                _contract_RobotType_Text.text = "House Keep";
-                break;
-            case RobotType.ElderCare:
-                _contract_RobotType_Text.text = "Elder Care";
-                break;
-            case RobotType.YardMaintenance:
-                _contract_RobotType_Text.text = "Yard Maintenance";
+            case RobotType.Rat:
+                _contract_RobotType_Text.text = "Rat";
                 break;
             case RobotType.Nurse:
                 _contract_RobotType_Text.text = "Nurse";
                 break;
-            case RobotType.Retail:
-                _contract_RobotType_Text.text = "Retail";
-                break;
-            case RobotType.BodyGuard:
-                _contract_RobotType_Text.text = "Body Gaurd";
-                break;
-            case RobotType.HouseProtector:
-                _contract_RobotType_Text.text = "House Protector";
+            case RobotType.ServiceWorker:
+                _contract_RobotType_Text.text = "Service Worker";
                 break;
             case RobotType.PoliceBot:
                 _contract_RobotType_Text.text = "Police Bot";
                 break;
-            case RobotType.MilitaryBot:
-                _contract_RobotType_Text.text = "Military Bot";
-                break;
             case RobotType.FootBall:
                 _contract_RobotType_Text.text = "Foot Ball";
+                break;
+            case RobotType.Handyman:
+                _contract_RobotType_Text.text = "Handyman";
                 break;
             default:
                 break;
         }
+
     }
 
     public void Set_Payout_Text()

@@ -92,7 +92,7 @@ public class PetBuildingController : MonoBehaviour
 
             if (aiPrefab != null)
             {
-                go = Instantiate(aiPrefab, transform.position, transform.rotation, WorkshopBench.Instance.tabManager.robotParent);
+                go = Instantiate(aiPrefab, transform.position, Quaternion.identity, WorkshopBench.Instance.tabManager.robotParent);
             }
             
             for (int i = 0;i < myParts.Count;i++)
