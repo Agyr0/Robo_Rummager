@@ -21,6 +21,7 @@ public class WeaponController : MonoBehaviour
 
     public WeaponData _curWeapon;
     public GameObject _weaponPrefab;
+    private GameObject _weaponInstance;
     public WeaponData[] _availableWeapons;
 
     [SerializeField]
@@ -266,8 +267,8 @@ public class WeaponController : MonoBehaviour
                 audioManager.PlayClip(audioSource, audioManager.FindRandomizedClip(AudioType.Gun, audioManager.effectAudio));
 
             //Generate recoil
-            if (_weaponPrefab.GetComponent<WeaponRecoil>() != null)
-                _weaponPrefab.GetComponent<WeaponRecoil>().GenerateRecoil();
+            if (_weaponInstance.GetComponent<WeaponRecoil>() != null)
+                _weaponInstance.GetComponent<WeaponRecoil>().GenerateRecoil();
 
             if (Physics.Raycast(ray, out hit, _curWeapon.Range))
             {
@@ -416,11 +417,11 @@ public class WeaponController : MonoBehaviour
         if (_weaponPrefab != null)
         {
             //Spawn weapon in the playerhand
-            GameObject weaponInstance = Instantiate(_weaponPrefab, playerHand.position, playerHand.rotation, playerHand.transform);
+            _weaponInstance = Instantiate(_weaponPrefab, playerHand.position, playerHand.rotation, playerHand.transform);
 
             //Assign _curWeapon.MuzzlePos with the instanced muzzle pos if available
-            if (weaponInstance.transform.childCount > 0)
-                _curWeapon.MuzzlePos = weaponInstance.transform.GetChild(0);
+            if (_weaponInstance.transform.childCount > 0)
+                _curWeapon.MuzzlePos = _weaponInstance.transform.GetChild(0);
         }
 
         _animator.SetTrigger("Weapon_Switched");
