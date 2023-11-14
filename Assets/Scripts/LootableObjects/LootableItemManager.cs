@@ -120,9 +120,14 @@ public class LootableItemElement
 public class SpawnLocation
 {
     public Transform location;
+#if UNITY_EDITOR
+    [HideInInspector]
     [ReadOnly]
+#endif
     public GameObject myCurObject = null;
+#if UNITY_EDITOR
     [ReadOnly]
+#endif
     public bool active = true;
 
 }

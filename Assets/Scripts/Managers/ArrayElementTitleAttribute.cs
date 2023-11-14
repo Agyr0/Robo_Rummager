@@ -1,9 +1,9 @@
 
-#if UNITY_EDITOR
 using UnityEngine;
 
 namespace Agyr.CustomAttributes
 {
+#if UNITY_EDITOR
     public class ArrayElementTitleAttribute : PropertyAttribute
     {
         public string Varname;
@@ -12,5 +12,5 @@ namespace Agyr.CustomAttributes
             Varname = ElementTitleVar;
         }
     }
-}
 #endif
+}

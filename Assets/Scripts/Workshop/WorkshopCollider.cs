@@ -7,8 +7,10 @@ using UnityEngine;
 public class WorkshopCollider : MonoBehaviour
 {
     [Space(20)]
-    [SerializeField, ReadOnly, 
+#if UNITY_EDITOR
+    [SerializeField, ReadOnly,
         Header("Set ONE Box Collider to cover the whole workshop zone")]
+#endif 
     private string IMPORTANT = "";
 
 
