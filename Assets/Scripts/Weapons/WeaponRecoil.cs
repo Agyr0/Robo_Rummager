@@ -6,7 +6,6 @@ using UnityEngine;
 public class WeaponRecoil : MonoBehaviour
 {
 
-    [HideInInspector]
     public Cinemachine.CinemachineImpulseSource cameraShake;
 
 
