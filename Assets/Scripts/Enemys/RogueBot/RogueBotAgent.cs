@@ -52,23 +52,32 @@ public class RogueBotAgent : MonoBehaviour, IDamageable
         rogueBotHealth -= damage;
         if (rogueBotHealth <= 0)
         {
+            navMeshAgent.isStopped = true;
+            animator.SetBool("Dead", true);
             // Play Death Audio
             audioManager.PlayClip(audioSource, audioManager.FindRandomizedClip(AudioType.RogueBot_Death, audioManager.effectAudio));
-
-            // Item Drops
-            LootBag lootBag = this.gameObject.GetComponent<LootBag>();
-            lootBag.DropResource(this.gameObject.transform.position);
-            
-            // Respawn and Object Pool stuff
-            gameObject.SetActive(false);
-            navMeshAgent.enabled = false;
-            rogueBotHealth = rogueBotMaxHealth;
+            StartCoroutine(DespawnRogueBot());
         }
         else
         {
             // Chase Player
             stateMachine.ChangeState(RogueBotStateId.Chase);
         }
+    }
+
+    IEnumerator DespawnRogueBot()
+    {
+        yield return new WaitForSeconds(1.069f);
+        // Item Drops
+        LootBag lootBag = this.gameObject.GetComponent<LootBag>();
+        lootBag.DropResource(this.gameObject.transform.position);
+
+        // Respawn and Object Pool stuff
+        navMeshAgent.isStopped = false;
+        gameObject.SetActive(false);
+        navMeshAgent.enabled = false;
+        rogueBotHealth = rogueBotMaxHealth;
+        animator.SetBool("Dead", false);
     }
 
     private void OnDrawGizmos()
