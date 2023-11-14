@@ -67,7 +67,7 @@ namespace Agyr.Workshop
 
         private void SpawnRobotHologram(TierController controller)
         {
-            hologramInstance = Instantiate(controller.hologramPrefab, prefabSpawnPoint.position, Quaternion.identity, robotParent);
+            hologramInstance = Instantiate(controller.hologramPrefab, prefabSpawnPoint.position, prefabSpawnPoint.rotation, robotParent);
             hologramInstance.GetComponent<PetBuildingController>().myTab = controller.selectedTab;
             
 

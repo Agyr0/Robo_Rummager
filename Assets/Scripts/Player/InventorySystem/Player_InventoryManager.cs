@@ -263,38 +263,51 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
         switch (ItemData.SlotItemData.ResourceName)
         {
             case ResourceType.MotherBoard:
-                tempItemBlank = Instantiate(_ResourceData_DropList[0], GameManager.Instance.playerController.handTransform.position, this.transform.rotation);
+                tempItemBlank = ObjectPooler.PullObjectFromPool(_ResourceData_DropList[0]);
+
+                //Instantiate(_ResourceData_DropList[0], GameManager.Instance.playerController.handTransform.position, this.transform.rotation);
 
                 break;
             case ResourceType.Wire:
-                tempItemBlank = Instantiate(_ResourceData_DropList[1], GameManager.Instance.playerController.handTransform.position, this.transform.rotation);
+                tempItemBlank = ObjectPooler.PullObjectFromPool(_ResourceData_DropList[1]);
+                //Instantiate(_ResourceData_DropList[1], GameManager.Instance.playerController.handTransform.position, this.transform.rotation);
 
                 break;
             case ResourceType.Oil:
-                tempItemBlank = Instantiate(_ResourceData_DropList[2], GameManager.Instance.playerController.handTransform.position, this.transform.rotation);
+                tempItemBlank = ObjectPooler.PullObjectFromPool(_ResourceData_DropList[2]);
+                //Instantiate(_ResourceData_DropList[2], GameManager.Instance.playerController.handTransform.position, this.transform.rotation);
 
                 break;
             case ResourceType.Metal_Scrap:
-                tempItemBlank = Instantiate(_ResourceData_DropList[3], GameManager.Instance.playerController.handTransform.position, this.transform.rotation);
+                tempItemBlank = ObjectPooler.PullObjectFromPool(_ResourceData_DropList[3]);
+                //Instantiate(_ResourceData_DropList[3], GameManager.Instance.playerController.handTransform.position, this.transform.rotation);
 
                 break;
             case ResourceType.Advanced_Sensors:
-                tempItemBlank = Instantiate(_ResourceData_DropList[4], GameManager.Instance.playerController.handTransform.position, this.transform.rotation);
+                tempItemBlank = ObjectPooler.PullObjectFromPool(_ResourceData_DropList[4]);
+                //Instantiate(_ResourceData_DropList[4], GameManager.Instance.playerController.handTransform.position, this.transform.rotation);
 
                 break;
             case ResourceType.Radioactive_Waste:
-                tempItemBlank = Instantiate(_ResourceData_DropList[5], GameManager.Instance.playerController.handTransform.position, this.transform.rotation);
+                tempItemBlank = ObjectPooler.PullObjectFromPool(_ResourceData_DropList[5]);
+                //Instantiate(_ResourceData_DropList[5], GameManager.Instance.playerController.handTransform.position, this.transform.rotation);
 
                 break;
             case ResourceType.Z_Crystal:
-                tempItemBlank = Instantiate(_ResourceData_DropList[6], GameManager.Instance.playerController.handTransform.position, this.transform.rotation);
+                tempItemBlank = ObjectPooler.PullObjectFromPool(_ResourceData_DropList[6]);
+                //Instantiate(_ResourceData_DropList[6], GameManager.Instance.playerController.handTransform.position, this.transform.rotation);
 
                 break;
             case ResourceType.Black_Matter:
-                tempItemBlank = Instantiate(_ResourceData_DropList[7], GameManager.Instance.playerController.handTransform.position, this.transform.rotation);
+                tempItemBlank = ObjectPooler.PullObjectFromPool(_ResourceData_DropList[7]);
+                //Instantiate(_ResourceData_DropList[7], GameManager.Instance.playerController.handTransform.position, this.transform.rotation);
 
                 break;
         }
+
+        tempItemBlank.transform.position = GameManager.Instance.playerController.handTransform.position;
+        tempItemBlank.transform.rotation = this.transform.rotation;
+        tempItemBlank.SetActive(true);
 
         tempItemBlank.GetComponent<Resource_Item>().ItemData = ItemData.SlotItemData;
         tempItemBlank.GetComponent<Resource_Item>().ResourceAmount = ItemData.AmountStored;

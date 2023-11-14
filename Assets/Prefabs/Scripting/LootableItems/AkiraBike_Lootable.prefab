@@ -51,48 +51,18 @@ MonoBehaviour:
   _dropTable:
   - resource: {fileID: 2652622360622632555, guid: 6ccdceb36497005498250b22a2a1ef20,
       type: 3}
-    dropChance: 75
-    _minDropCount: 15
-    _maxDropCount: 20
+    dropChance: 100
+    _minDropCount: 1
+    _maxDropCount: 10
     elementName: Credits
-  - resource: {fileID: 2652622360622632555, guid: 7f7d96b6610083b41bf6b9018c6f9080,
-      type: 3}
-    dropChance: 75
-    _minDropCount: 7
-    _maxDropCount: 10
-    elementName: Wires
-  - resource: {fileID: 2652622360622632555, guid: 58c3975f7ae00f54280223294944b0ec,
-      type: 3}
-    dropChance: 75
-    _minDropCount: 7
-    _maxDropCount: 10
-    elementName: Oil Can
-  - resource: {fileID: 2652622360622632555, guid: 6a152fca52c1b7846a4547f550b59247,
-      type: 3}
-    dropChance: 75
-    _minDropCount: 7
-    _maxDropCount: 10
-    elementName: Metal Scrap
-  - resource: {fileID: 8732709107487535309, guid: 51c64994112c72445a42d635fe49261f,
-      type: 3}
-    dropChance: 75
-    _minDropCount: 7
-    _maxDropCount: 10
-    elementName: Sensor
   - resource: {fileID: 2652622360622632555, guid: f5392ea59cf726744bd66960cda3e282,
       type: 3}
-    dropChance: 75
-    _minDropCount: 7
-    _maxDropCount: 10
+    dropChance: 100
+    _minDropCount: 2
+    _maxDropCount: 4
     elementName: Z_Crystal
-  - resource: {fileID: 2652622360622632555, guid: 2a55e99c8541cd141a4f4581185c60f2,
-      type: 3}
-    dropChance: 75
-    _minDropCount: 15
-    _maxDropCount: 20
-    elementName: Radioactive Waste
   _resourceFullMesh: {fileID: 6605563872198495263}
-  _maxDrops: 50
+  _maxDrops: 6
   _dropsLeft: 0
   _explosionForce: 2
   _explosionRadius: 1
