@@ -23,6 +23,14 @@ public class RogueBotChargeState : RogueBotState
     {
         agent.animator.SetBool("Charging", rogueBotCharging);
         agent.animator.SetBool("Swinging", rogueBotSwinging);
+        if (rogueBotSwinging)
+        {
+            agent.chargeHitbox.SetActive(true);
+        }
+        else if (rogueBotSwinging == false)
+        {
+            agent.chargeHitbox.SetActive(false);
+        }
     }
 
     public void Exit(RogueBotAgent agent)
