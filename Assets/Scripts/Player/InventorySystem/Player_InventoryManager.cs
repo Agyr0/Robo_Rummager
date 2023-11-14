@@ -227,11 +227,7 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
         
         if (itemPicked.GetComponent<Resource_Item>().ResourceAmount == 0)
         {
-<<<<<<< Updated upstream
-            EventBus.Publish<GameObject>(EventType.INVENTORY_ADDITEMCULL, itemPicked);
-=======
             OnAddCullItem(itemPicked);
->>>>>>> Stashed changes
             itemPicked.gameObject.SetActive(false);
             itemPicked.GetComponent<Resource_Item>().ResourceAmount = 1;
         }
