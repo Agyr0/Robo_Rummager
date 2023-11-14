@@ -227,8 +227,13 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
         
         if (itemPicked.GetComponent<Resource_Item>().ResourceAmount == 0)
         {
+<<<<<<< Updated upstream
             EventBus.Publish<GameObject>(EventType.INVENTORY_ADDITEMCULL, itemPicked);
+=======
+            OnAddCullItem(itemPicked);
+>>>>>>> Stashed changes
             itemPicked.gameObject.SetActive(false);
+            itemPicked.GetComponent<Resource_Item>().ResourceAmount = 1;
         }
         EventBus.Publish(EventType.INVENTORY_UPDATE, this.gameObject);
     }
@@ -311,7 +316,8 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
 
         tempItemBlank.GetComponent<Resource_Item>().ItemData = ItemData.SlotItemData;
         tempItemBlank.GetComponent<Resource_Item>().ResourceAmount = ItemData.AmountStored;
-        tempItemBlank.GetComponent<Resource_Item>().PickupTimerCount = 10;
+        tempItemBlank.GetComponent<Resource_Item>().IsReadyForPickup = false;
+        tempItemBlank.GetComponent<Resource_Item>().PickupTimerCount = 2;
 
         tempItemBlank.GetComponent<Rigidbody>().AddExplosionForce(2, Camera.main.transform.forward, 2,2, ForceMode.Force);
         
@@ -334,7 +340,8 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
 
     public void OnAddCullItem(GameObject item_GO)
     {
-        if (!Inventory_ItemPickupList.Contains(item_GO))
+        if (Inventory_ItemPickupList.Contains(item_GO) &&
+            !Inventory_ItemCullPickupList.Contains(item_GO))
             Inventory_ItemCullPickupList.Add(item_GO);
     }
 
@@ -385,6 +392,6 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
     private void OnTriggerExit(Collider other)
     {
         EventBus.Publish<GameObject>(EventType.INVENTORY_ADDITEMCULL, other.gameObject);
-        EventBus.Publish(EventType.INVENTORY_REMOVEITEM);
+        OnRemoveItem();
     }
 }
