@@ -195,6 +195,11 @@ public class PrinterManager : MonoBehaviour, IInteractable
         }
     }
 
+    public void LeavePrinter()
+    {
+        HandleInteract();
+    }
+
     public void StartPrintOrder(int order)
     {
         if (_printerState == PrinterState.Available)

@@ -84,9 +84,25 @@ public class ContractBoard_Manager : Singleton<ContractBoard_Manager>, IInteract
                 Contract_DataList.Count < 3)
             {
                 int tempChance = Random.Range(0, _timedContractChance);
+                //tier I 8:00 minutes
+                //go up by 2 minutes every tier
                 if (tempChance == 0)
                 {
-                    EventBus.Publish(EventType.BOARD_ADDCONTRACT, Random.Range(0, _robot_RecipeDataList.Count), 380f);
+                    Robot_RecipeData tempData = _robot_RecipeDataList[Random.Range(0, _robot_RecipeDataList.Count)];
+
+                    if (tempData.RobotTier == RobotTier.I)
+                    {
+                        EventBus.Publish(EventType.BOARD_ADDCONTRACT, tempData, 480f);
+                    }
+                    else if (tempData.RobotTier == RobotTier.II)
+                    {
+                        EventBus.Publish(EventType.BOARD_ADDCONTRACT, tempData, 600f);
+                    }
+                    else if (tempData.RobotTier == RobotTier.III)
+                    {
+                        EventBus.Publish(EventType.BOARD_ADDCONTRACT, tempData, 720f);
+                    }
+
                 }
                 else
                 {
