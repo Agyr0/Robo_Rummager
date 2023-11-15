@@ -58,7 +58,11 @@ public enum AudioType
     Scavenger_Idle,
     Scavenger_Laugh,
 
-    PC
+    PC,
+
+    Combat_Playlist,
+    Scrapyard_Playlist,
+    Workshop_Playlist
 
 
 }

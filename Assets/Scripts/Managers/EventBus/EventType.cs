@@ -5,6 +5,10 @@ public enum EventType
     GAME_OVER,
     LEVEL_START,
     LEVEL_OVER,
+    /// <summary>
+    /// Gets published with the single parameter of "AudioType" for what ambient audio to switch to.
+    /// </summary>
+    CHANGE_AMBIENT,
 
     #endregion
 
