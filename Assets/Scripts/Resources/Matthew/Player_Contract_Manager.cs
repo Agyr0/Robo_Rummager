@@ -1,6 +1,7 @@
 using SaveLoadSystem;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Threading;
 using UnityEngine;
 
@@ -72,6 +73,18 @@ public class Player_Contract_Manager : Singleton<Player_Contract_Manager>
             yield return new WaitForSeconds(_contract_TimerTickRate);
         }
     }
+
+    public void OnContractRemove()
+    {
+        for (int i = 0; i < _contract_DataCullList.Count; i++)
+        {
+            if (Contract_DataList.Contains(_contract_DataCullList[i]))
+            {
+                Contract_DataList.Remove(_contract_DataCullList[i]);
+            }
+        }
+        _contract_DataCullList.Clear();
+    }
     
     private void OnContractTimerTick()
     {
@@ -97,21 +110,8 @@ public class Player_Contract_Manager : Singleton<Player_Contract_Manager>
                 }
                 
             }
-            
         }
-        
-        if (_contract_DataCullList.Count > 0)
-        {
-            for (int i = 0; i < _contract_DataCullList.Count; i++)
-            {
-                Contract_DataList.Contains(_contract_DataCullList[i]);
-                Contract_DataList.Remove(_contract_DataCullList[i]);
-            }
-            _contract_DataCullList.Clear();
-        }
-
         EventBus.Publish(EventType.PLAYER_CONTRACTUPDATE);
-
     }
 
     public void OnContractCheckForCompleation(Robot_RecipeData robot)
@@ -120,23 +120,12 @@ public class Player_Contract_Manager : Singleton<Player_Contract_Manager>
         {
             if (Contract_DataList[i].Robot_RecipeData == robot)
             {
-                //EventBus.Publish(EventType.CONTRACT_COMPLETED, Contract_DataList[i].Value_Credit);
                 Contract_DataList[i].Contract_Status = ContractStatus.Completed;
                 _contract_DataCullList.Add(Contract_DataList[i]);
                 EventBus.Publish(EventType.PLAYER_CONTRACTUPDATE);
                 ContractBoard_Manager.Instance._bulletinBoard_InProgress_UI.SetActive(false);
                 return;
             }
-        }
-
-        if (_contract_DataCullList.Count > 0)
-        {
-            for (int i = 0; i < _contract_DataCullList.Count; i++)
-            {
-                Contract_DataList.Contains(_contract_DataCullList[i]);
-                Contract_DataList.Remove(_contract_DataCullList[i]);
-            }
-            _contract_DataCullList.Clear();
         }
     }
     

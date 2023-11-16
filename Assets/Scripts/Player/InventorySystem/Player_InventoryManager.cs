@@ -225,11 +225,12 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
             }
         }
         
-        if (itemPicked.GetComponent<Resource_Item>().ResourceAmount == 0)
+        if (itemPicked.GetComponent<Resource_Item>().ResourceAmount == 0
+            && itemPicked.activeSelf == true)
         {
             OnAddCullItem(itemPicked);
             itemPicked.gameObject.SetActive(false);
-            itemPicked.GetComponent<Resource_Item>().ResourceAmount = 1;
+            //OnRemoveItem();
         }
         EventBus.Publish(EventType.INVENTORY_UPDATE, this.gameObject);
     }

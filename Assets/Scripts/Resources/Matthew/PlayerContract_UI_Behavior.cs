@@ -54,14 +54,16 @@ public class PlayerContract_UI_Behavior : MonoBehaviour
         {
             _contract_Failed.SetActive(true);
         }
-        else
+
+        if (_contract_Data.Contract_Status == ContractStatus.Completed)
         {
-            Destroy(this.gameObject);
+            DeleteContract();
         }
     }
 
     public void DeleteContract()
     {
+        Player_Contract_Manager.Instance.OnContractRemove();
         Destroy(this.gameObject);
     }
 

@@ -45,6 +45,11 @@ public class Resource_Item : MonoBehaviour
         StartCoroutine(PickupCounter());
     }
 
+    private void OnDisable()
+    {
+        ResourceAmount++;
+    }
+
     private void Start()
     {
         if(Player_InventoryManager.Instance.GetComponent<Collider>().bounds.Contains(this.transform.position) == true)
