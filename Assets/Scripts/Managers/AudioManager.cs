@@ -245,12 +245,29 @@ public class AudioManager : Singleton<AudioManager>
         }
         #endregion
 
+
+        while (!fadeComplete)
+            yield return null;
+
+
+        float time = 0f;
+        float duration = 1f;
+
+        while (time < duration)
+        {
+            ambientSource.volume = Mathf.Lerp(ambientSource.volume,  1 , time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        ambientSource.volume = 1;
+
+
+
         int index = 0;
         int lastIndex = 0;
         while (true)
         {
-            if (!fadeComplete)
-                continue;
+
             //Ensure last clip doesnt play again
             do
             {
@@ -269,20 +286,21 @@ public class AudioManager : Singleton<AudioManager>
             lastIndex = index;
             yield return new WaitUntil(() => source.isPlaying == false);
         }
+
     }
 
-
+    private Coroutine loopAmbient;
     public void ChangeAmbientAudio(AudioType audioType)
     {
-       // StartCoroutine(FadeAmbientAudio(false));
-        StopCoroutine(LoopRandomizedClips(ambientSource, FindClipTypes(audioType, ambientAudio)));
-        //StartCoroutine(FadeAmbientAudio(true));
+        if(loopAmbient != null)
+            StopCoroutine(loopAmbient);
 
-        StartCoroutine(LoopRandomizedClips(ambientSource, FindClipTypes(audioType, ambientAudio)));
+        StartCoroutine(FadeAmbientAudioOut());
+        loopAmbient = StartCoroutine(LoopRandomizedClips(ambientSource, FindClipTypes(audioType, ambientAudio)));
     }
 
 
-    private IEnumerator FadeAmbientAudio(bool fadeIn)
+    private IEnumerator FadeAmbientAudioOut()
     {
         float time = 0f;
         float duration = 1f;
@@ -290,12 +308,12 @@ public class AudioManager : Singleton<AudioManager>
 
         while (time < duration)
         {
-            ambientSource.volume = Mathf.Lerp(ambientSource.volume, fadeIn ? 1 : 0, time / duration);
+            ambientSource.volume = Mathf.Lerp(ambientSource.volume, 0, time / duration);
             time += Time.deltaTime;
             yield return null;
         }
-        ambientSource.volume = fadeIn ? 1 : 0;
-
+        ambientSource.volume = 0;
+        ambientSource.clip = null;
         fadeComplete = true;
     }
 
