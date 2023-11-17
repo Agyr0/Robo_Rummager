@@ -80,6 +80,7 @@ public class ContractBoard_Manager : Singleton<ContractBoard_Manager>, IInteract
     {
         while (true)
         {
+            Debug.Log("Spawning contract");
             if (Player_Contract_Manager.Instance.Contract_DataList.Count < 2 &&
                 Contract_DataList.Count < 3)
             {
@@ -92,15 +93,15 @@ public class ContractBoard_Manager : Singleton<ContractBoard_Manager>, IInteract
 
                     if (tempData.RobotTier == RobotTier.I)
                     {
-                        EventBus.Publish(EventType.BOARD_ADDCONTRACT, tempData, 480f);
+                        CreateContract(tempData, 480f);
                     }
                     else if (tempData.RobotTier == RobotTier.II)
                     {
-                        EventBus.Publish(EventType.BOARD_ADDCONTRACT, tempData, 600f);
+                        CreateContract(tempData, 600f);
                     }
                     else if (tempData.RobotTier == RobotTier.III)
                     {
-                        EventBus.Publish(EventType.BOARD_ADDCONTRACT, tempData, 720f);
+                        CreateContract(tempData, 720f);
                     }
 
                 }
@@ -135,7 +136,6 @@ public class ContractBoard_Manager : Singleton<ContractBoard_Manager>, IInteract
     public void OnContractAccepted()
     {
         AudioManager.Instance.PlayClip(this.GetComponent<AudioSource>(), AudioManager.Instance.effectAudio[6].myControllers[0]);
-        _bulletinBoard_InProgress_UI.gameObject.SetActive(true);
     }
 
     public void CreateContract(int robot, float TimeCount)
@@ -166,6 +166,12 @@ public class ContractBoard_Manager : Singleton<ContractBoard_Manager>, IInteract
 
     public void HandleInteract()
     {
+
+        if (Player_Contract_Manager.Instance.Contract_DataList.Count == 0)
+        {
+            _bulletinBoard_InProgress_UI.gameObject.SetActive(false);
+        }
+
         if (!isOn)
         {
             originalWeaponIndex = GameManager.Instance.weaponController.WeaponIndex;
