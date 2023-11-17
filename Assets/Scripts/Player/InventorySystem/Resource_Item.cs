@@ -47,7 +47,7 @@ public class Resource_Item : MonoBehaviour
 
     private void OnDisable()
     {
-        ResourceAmount++;
+        //ResourceAmount++;
     }
 
     private void Start()

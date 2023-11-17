@@ -16,11 +16,11 @@ public class Player_Contract_Manager : Singleton<Player_Contract_Manager>
     [SerializeField]
     private List<GameObject> _purgeContractList;
 
-    [SerializeField]
-    private List<Contract_Data> _contract_Player_DataList;
 
-    [SerializeField]
-    private List<Contract_Data> _contract_DataCullList;
+    public List<Contract_Data> _contract_Player_DataList;
+
+
+    public List<Contract_Data> _contract_DataCullList;
 
     [SerializeField]
     private float _contract_TimerTickRate = 1;
@@ -76,11 +76,13 @@ public class Player_Contract_Manager : Singleton<Player_Contract_Manager>
 
     public void OnContractRemove()
     {
+        Debug.Log("Removing contract");
         for (int i = 0; i < _contract_DataCullList.Count; i++)
         {
             if (Contract_DataList.Contains(_contract_DataCullList[i]))
             {
                 Contract_DataList.Remove(_contract_DataCullList[i]);
+                
             }
         }
         _contract_DataCullList.Clear();
@@ -106,7 +108,11 @@ public class Player_Contract_Manager : Singleton<Player_Contract_Manager>
                     Contract_DataList[i].Contract_Status != ContractStatus.Completed)
                 {
                     Contract_DataList[i].Contract_Status = ContractStatus.Failed;
-                    _contract_DataCullList.Add(Contract_DataList[i]);
+
+                    if (!_contract_DataCullList.Contains(Contract_DataList[i]))
+                    {
+                        _contract_DataCullList.Add(Contract_DataList[i]);
+                    }
                 }
                 
             }
@@ -121,7 +127,16 @@ public class Player_Contract_Manager : Singleton<Player_Contract_Manager>
             if (Contract_DataList[i].Robot_RecipeData == robot)
             {
                 Contract_DataList[i].Contract_Status = ContractStatus.Completed;
-                _contract_DataCullList.Add(Contract_DataList[i]);
+
+                if (!_contract_DataCullList.Contains(Contract_DataList[i]))
+                {
+                    _contract_DataCullList.Add(Contract_DataList[i]);
+                }
+
+                OnContractRemove();
+
+                PurgeContracts();
+
                 EventBus.Publish(EventType.PLAYER_CONTRACTUPDATE);
                 ContractBoard_Manager.Instance._bulletinBoard_InProgress_UI.SetActive(false);
                 return;
@@ -145,6 +160,8 @@ public class Player_Contract_Manager : Singleton<Player_Contract_Manager>
         GameObject Contract = Instantiate(_contract_BlankTemplate_Prefab, _playerContract_Container.transform);
         Contract.GetComponent<PlayerContract_UI_Behavior>().Contract_Data = newContract;
 
+        ContractBoard_Manager.Instance._bulletinBoard_InProgress_UI.SetActive(true);
+
         EventBus.Publish(EventType.PLAYER_CONTRACTUPDATE);
     }
 
@@ -161,6 +178,8 @@ public class Player_Contract_Manager : Singleton<Player_Contract_Manager>
 
         GameObject Contract = Instantiate(_contract_BlankTemplate_Prefab, _playerContract_Container.transform);
         Contract.GetComponent<PlayerContract_UI_Behavior>().Contract_Data = newContract;
+
+        ContractBoard_Manager.Instance._bulletinBoard_InProgress_UI.SetActive(true);
 
         EventBus.Publish(EventType.PLAYER_CONTRACTUPDATE);
     }

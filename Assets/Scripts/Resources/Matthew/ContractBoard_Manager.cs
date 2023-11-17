@@ -93,7 +93,7 @@ public class ContractBoard_Manager : Singleton<ContractBoard_Manager>, IInteract
 
                     if (tempData.RobotTier == RobotTier.I)
                     {
-                        CreateContract(tempData, 4f);
+                        CreateContract(tempData, 480f);
                     }
                     else if (tempData.RobotTier == RobotTier.II)
                     {

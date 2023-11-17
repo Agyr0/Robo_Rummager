@@ -127,7 +127,14 @@ public class BoardContract_UI_Behavior : MonoBehaviour
         {
             string mintutes = ((float)_contract_Data.Contract_TimerCount / 60).ToString().Split('.')[0];
             string seconds = (_contract_Data.Contract_TimerCount % 60).ToString();
-            _contract_CountTimer_Text.text = "Timer: " + mintutes + ':' + seconds;
+            if (seconds.Length == 2)
+            {
+                _contract_CountTimer_Text.text = "Timer: " + mintutes + ':' + seconds;
+            }
+            else
+            {
+                _contract_CountTimer_Text.text = "Timer: " + mintutes + ":0" + seconds;
+            }
         }
         else
         {

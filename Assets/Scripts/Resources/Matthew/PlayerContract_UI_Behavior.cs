@@ -50,7 +50,8 @@ public class PlayerContract_UI_Behavior : MonoBehaviour
             Set_CountTimer_Text();
             Set_RobotImage(_contract_Data.RobotSprite);
         }
-        else if(_contract_Data.Contract_Status != ContractStatus.Failed)
+
+        if(_contract_Data.Contract_Status == ContractStatus.Failed)
         {
             _contract_Failed.SetActive(true);
         }
@@ -60,9 +61,10 @@ public class PlayerContract_UI_Behavior : MonoBehaviour
             DeleteContract();
         }
     }
-
+    
     public void DeleteContract()
     {
+        ContractBoard_Manager.Instance._bulletinBoard_InProgress_UI.SetActive(false);
         Player_Contract_Manager.Instance.OnContractRemove();
         Destroy(this.gameObject);
     }
@@ -135,7 +137,14 @@ public class PlayerContract_UI_Behavior : MonoBehaviour
         {
             string mintutes = ((float)_contract_Data.Contract_TimerCount / 60).ToString().Split('.')[0];
             string seconds = (_contract_Data.Contract_TimerCount % 60).ToString();
-            _contract_CountTimer_Text.text = "Timer: " + mintutes + ':' + seconds;
+            if (seconds.Length == 2)
+            {
+                _contract_CountTimer_Text.text = "Timer: " + mintutes + ':' + seconds;
+            }
+            else
+            {
+                _contract_CountTimer_Text.text = "Timer: " + mintutes + ":0" + seconds;
+            }
         }
         else
         {

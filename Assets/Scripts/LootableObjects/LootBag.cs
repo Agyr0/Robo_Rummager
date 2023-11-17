@@ -83,6 +83,7 @@ public class LootBag : MonoBehaviour
 
                     //Instantiate(_dropTable[itemToDrop].Resource, hitPosition, Quaternion.identity);
                     GameObject drop = ObjectPooler.PullObjectFromPool(_dropTable[itemToDrop].Resource);
+                    drop.GetComponent<Resource_Item>().ResourceAmount = 1;
                     drop.transform.position = hitPosition;
                     drop.transform.rotation = Quaternion.identity;
                     drop.SetActive(true);
