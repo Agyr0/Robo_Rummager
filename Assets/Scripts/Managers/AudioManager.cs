@@ -12,8 +12,37 @@ public class AudioManager : Singleton<AudioManager>
 #if UNITY_EDITOR
     [ArrayElementTitle("type")]
 #endif
-    public List<AudioGroup> effectAudio= new List<AudioGroup>();
+    public List<AudioGroup> effectAudio = new List<AudioGroup>();
 
+    private AudioSource ambientSource;
+    private bool fadeComplete = false;
+
+    private void OnEnable()
+    {
+        EventBus.Subscribe<AudioType>(EventType.CHANGE_AMBIENT, ChangeAmbientAudio);
+        EventBus.Subscribe(EventType.TEST_EVENT_0, testCombat);
+        EventBus.Subscribe(EventType.TEST_EVENT_1, testScrapyard);
+    }
+    private void OnDisable()
+    {
+        EventBus.Unsubscribe<AudioType>(EventType.CHANGE_AMBIENT, ChangeAmbientAudio);
+        EventBus.Unsubscribe(EventType.TEST_EVENT_0, testCombat);
+        EventBus.Unsubscribe(EventType.TEST_EVENT_1, testScrapyard);
+    }
+
+    private void Start()
+    {
+        ambientSource = GetComponent<AudioSource>();
+    }
+
+    void testCombat()
+    {
+        EventBus.Publish(EventType.CHANGE_AMBIENT, AudioType.Combat_Playlist);
+    }
+    void testScrapyard()
+    {
+        EventBus.Publish(EventType.CHANGE_AMBIENT, AudioType.Scrapyard_Playlist);
+    }
 
     #region Formatting
     //Shhh this was so the descriptions would look better for function summaries
@@ -98,7 +127,7 @@ public class AudioManager : Singleton<AudioManager>
             if (soundGroup[i].type == audioType)
             {
                 index = Random.Range(0, soundGroup[i].myControllers.Count);
-                    return soundGroup[i].myControllers[index];
+                return soundGroup[i].myControllers[index];
             }
         }
         Debug.LogError("Could not find desired clip to return");
@@ -124,7 +153,7 @@ public class AudioManager : Singleton<AudioManager>
         return null;
     }
 
-    
+
 
     /// <summary>
     /// <inheritdoc cref="PlayClip"/>
@@ -139,14 +168,14 @@ public class AudioManager : Singleton<AudioManager>
             Debug.LogError("Audio source not found");
             return;
         }
-        if(audioController == null)
+        if (audioController == null)
         {
             Debug.LogError("Audio clip not found. \nTry using FindClip on AudioManager");
             return;
         }
         #endregion
 
-        
+
         source.clip = audioController.clip;
         source.volume = audioController.volume;
         source.pitch = audioController.pitch;
@@ -216,30 +245,76 @@ public class AudioManager : Singleton<AudioManager>
         }
         #endregion
 
+
+        while (!fadeComplete)
+            yield return null;
+
+
+        float time = 0f;
+        float duration = 1f;
+
+        while (time < duration)
+        {
+            ambientSource.volume = Mathf.Lerp(ambientSource.volume,  1 , time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        ambientSource.volume = 1;
+
+
+
         int index = 0;
         int lastIndex = 0;
         while (true)
         {
+
             //Ensure last clip doesnt play again
-            do 
+            do
             {
                 index = Random.Range(0, audioController.Count);
                 yield return null;
-            } 
+            }
             while (index == lastIndex);
 
             source.clip = audioController[index].clip;
             source.volume = audioController[index].volume;
             source.pitch = audioController[index].pitch;
+            source.loop = audioController[index].loop;
 
             source.Play();
 
             lastIndex = index;
             yield return new WaitUntil(() => source.isPlaying == false);
         }
+
+    }
+
+    private Coroutine loopAmbient;
+    public void ChangeAmbientAudio(AudioType audioType)
+    {
+        if(loopAmbient != null)
+            StopCoroutine(loopAmbient);
+
+        StartCoroutine(FadeAmbientAudioOut());
+        loopAmbient = StartCoroutine(LoopRandomizedClips(ambientSource, FindClipTypes(audioType, ambientAudio)));
     }
 
 
+    private IEnumerator FadeAmbientAudioOut()
+    {
+        float time = 0f;
+        float duration = 1f;
+        fadeComplete = false;
 
+        while (time < duration)
+        {
+            ambientSource.volume = Mathf.Lerp(ambientSource.volume, 0, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        ambientSource.volume = 0;
+        ambientSource.clip = null;
+        fadeComplete = true;
+    }
 
 }
