@@ -25,14 +25,11 @@ public class BaseRobotPetController : PickUpObject, IInteractable
 
     public bool CheckContract(Player_Contract_Manager player_Contract_Manager)
     {
-        for (int i = 0; i < player_Contract_Manager.Contract_DataList.Count; i++)
+        if (player_Contract_Manager.Contract_Data.Contract_Status == ContractStatus.InProgress &&
+            player_Contract_Manager.Contract_Data.Robot_RecipeData == recipieData)
         {
-            if (player_Contract_Manager.Contract_DataList[i].Contract_Status == ContractStatus.InProgress &&
-                player_Contract_Manager.Contract_DataList[i].Robot_RecipeData == recipieData)
-            {
-                SellRobot(player_Contract_Manager.Contract_DataList[i]);
-                return true;
-            }
+            SellRobot(player_Contract_Manager.Contract_Data);
+            return true;
         }
         return false;
     }

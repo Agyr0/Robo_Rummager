@@ -151,7 +151,7 @@ public class BoardContract_UI_Behavior : MonoBehaviour
 
     public void OnButtonPromtPress(bool isContractAccepted)
     {
-        if (isContractAccepted && Player_Contract_Manager.Instance.Contract_DataList.Count == 0)
+        if (isContractAccepted)
         {
             ContractBoard_Manager.Instance.OnContractAccepted();
             EventBus.Publish(EventType.PLAYER_ADDCONTRACT, this.gameObject);

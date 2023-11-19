@@ -70,6 +70,7 @@ public class SaveGameManager : Singleton<SaveGameManager>
 
     private void SavePlayerContract()
     {
+        /*
         data._robot_PlayerTypeList.Clear();
         SaveGameManager.data.save_PlayerContracts = Player_Contract_Manager.Instance.Contract_DataList;
         if (data.save_PlayerContracts.Count != 0)
@@ -79,7 +80,7 @@ public class SaveGameManager : Singleton<SaveGameManager>
                 data._robot_PlayerTypeList.Add(Player_Contract_Manager.Instance.Contract_DataList[i].RobotType);
             }
         }
-        
+        */
     }
 
     private void SaveBoardContract()
@@ -148,6 +149,7 @@ public class SaveGameManager : Singleton<SaveGameManager>
 
     private void LoadPlayerContracts(SaveData data)
     {
+        /*
         Player_Contract_Manager.Instance.Contract_DataList.Clear();
         for (int i = 0; i < data.save_PlayerContracts.Count; i++)
         {
@@ -162,6 +164,7 @@ public class SaveGameManager : Singleton<SaveGameManager>
 
             }
         }
+        */
     }
 
     private void LoadBoardContracts(SaveData data)

@@ -81,8 +81,7 @@ public class ContractBoard_Manager : Singleton<ContractBoard_Manager>, IInteract
         while (true)
         {
             Debug.Log("Spawning contract");
-            if (Player_Contract_Manager.Instance.Contract_DataList.Count < 2 &&
-                Contract_DataList.Count < 3)
+            if (Contract_DataList.Count < 3)
             {
                 int tempChance = Random.Range(0, _timedContractChance);
                 //tier I 8:00 minutes
@@ -166,12 +165,12 @@ public class ContractBoard_Manager : Singleton<ContractBoard_Manager>, IInteract
 
     public void HandleInteract()
     {
-
-        if (Player_Contract_Manager.Instance.Contract_DataList.Count == 0)
+        /*
+        if (Player_Contract_Manager.Instance.Contract_Data.Contract_Status == ContractStatus.Unassigned)
         {
             _bulletinBoard_InProgress_UI.gameObject.SetActive(false);
         }
-
+        */
         if (!isOn)
         {
             originalWeaponIndex = GameManager.Instance.weaponController.WeaponIndex;
