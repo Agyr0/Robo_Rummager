@@ -50,6 +50,7 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
     [SerializeField]
     private List<GameObject> _ResourceData_DropList;
 
+    [SerializeField]
     private bool _isSendingPickupEvents = false;
 
     public int CreditPurse
@@ -76,8 +77,8 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
 
     public List<GameObject> Inventory_ItemCullPickupList
     {
-        get { return _inventory_ItemPickupList; }
-        set { _inventory_ItemPickupList = value; }
+        get { return _inventory_ItemCullPickupList; }
+        set { _inventory_ItemCullPickupList = value; }
     }
     
     public Resource_ItemData ResourceEmpty
@@ -230,8 +231,8 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
         {
             OnAddCullItem(itemPicked);
             itemPicked.gameObject.SetActive(false);
-            //OnRemoveItem();
         }
+        OnRemoveItem();
         EventBus.Publish(EventType.INVENTORY_UPDATE, this.gameObject);
     }
 
@@ -252,7 +253,6 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
 
         }
         EventBus.Publish(EventType.INVENTORY_UPDATE, this.gameObject);
-        //EventBus.Publish(EventType.INVENTORY_REMOVEITEM);
     }
 
     public void OnItemDrop(int slotNumber)
@@ -266,44 +266,27 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
         {
             case ResourceType.MotherBoard:
                 tempItemBlank = ObjectPooler.PullObjectFromPool(_ResourceData_DropList[0]);
-
-                //Instantiate(_ResourceData_DropList[0], GameManager.Instance.playerController.handTransform.position, this.transform.rotation);
-
                 break;
             case ResourceType.Wire:
                 tempItemBlank = ObjectPooler.PullObjectFromPool(_ResourceData_DropList[1]);
-                //Instantiate(_ResourceData_DropList[1], GameManager.Instance.playerController.handTransform.position, this.transform.rotation);
-
                 break;
             case ResourceType.Oil:
                 tempItemBlank = ObjectPooler.PullObjectFromPool(_ResourceData_DropList[2]);
-                //Instantiate(_ResourceData_DropList[2], GameManager.Instance.playerController.handTransform.position, this.transform.rotation);
-
                 break;
             case ResourceType.Metal_Scrap:
                 tempItemBlank = ObjectPooler.PullObjectFromPool(_ResourceData_DropList[3]);
-                //Instantiate(_ResourceData_DropList[3], GameManager.Instance.playerController.handTransform.position, this.transform.rotation);
-
                 break;
             case ResourceType.Advanced_Sensors:
                 tempItemBlank = ObjectPooler.PullObjectFromPool(_ResourceData_DropList[4]);
-                //Instantiate(_ResourceData_DropList[4], GameManager.Instance.playerController.handTransform.position, this.transform.rotation);
-
                 break;
             case ResourceType.Radioactive_Waste:
                 tempItemBlank = ObjectPooler.PullObjectFromPool(_ResourceData_DropList[5]);
-                //Instantiate(_ResourceData_DropList[5], GameManager.Instance.playerController.handTransform.position, this.transform.rotation);
-
                 break;
             case ResourceType.Z_Crystal:
                 tempItemBlank = ObjectPooler.PullObjectFromPool(_ResourceData_DropList[6]);
-                //Instantiate(_ResourceData_DropList[6], GameManager.Instance.playerController.handTransform.position, this.transform.rotation);
-
                 break;
             case ResourceType.Black_Matter:
                 tempItemBlank = ObjectPooler.PullObjectFromPool(_ResourceData_DropList[7]);
-                //Instantiate(_ResourceData_DropList[7], GameManager.Instance.playerController.handTransform.position, this.transform.rotation);
-
                 break;
         }
 
@@ -360,7 +343,6 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
     {
         while (_isSendingPickupEvents)
         {
-            //Debug.Log("Checking for pickups");
             EventBus.Publish(EventType.INVENTORY_PICKUP);
 
             yield return new WaitForSeconds(_pickupEventInterval);
