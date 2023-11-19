@@ -33,7 +33,6 @@ public class Player_Contract_Manager : Singleton<Player_Contract_Manager>
             if (_contractHolder == ContractHolder.Occupied)
             {
                 _contractData = value;
-                Debug.Log(_contractData.RobotSprite);
                 Contract_Image = _contractData.RobotSprite;
 
                 switch (_contractData.RobotTier)
@@ -221,9 +220,11 @@ public class Player_Contract_Manager : Singleton<Player_Contract_Manager>
 
     public void OnContractRemove()
     {
-        Contract_Data = null;
-        _contractHolder = ContractHolder.Unoccupied;
         
+        _contractHolder = ContractHolder.Unoccupied;
+
+        Contract_Data = null;
+
         ContractBoard_Manager.Instance._bulletinBoard_InProgress_UI.SetActive(false);
     }
     
@@ -234,7 +235,7 @@ public class Player_Contract_Manager : Singleton<Player_Contract_Manager>
         {
             Contract_Status = ContractStatus.Failed;
         }
-        else
+        else if (Contract_Data.Contract_IsTimed)
         {
             Contract_Data.Contract_TimerCount--;
             Contract_CountTimer_Text = Contract_Data.Contract_TimerCount.ToString();
