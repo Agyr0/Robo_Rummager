@@ -30,8 +30,8 @@ namespace SaveLoadSystem
         public SaveData() 
         {
             save_WorkShopStorage = new WorkshopStorage();
-            save_Inventory_SlotAmounts = new int[Player_InventoryManager.Instance.Inventory_DataArray.Count()];
-            save_Inventory_SlotResources = new ResourceType[Player_InventoryManager.Instance.Inventory_DataArray.Count()];
+            //save_Inventory_SlotAmounts = new int[Player_InventoryManager.Instance.Inventory_DataArray.Count()];
+            //save_Inventory_SlotResources = new ResourceType[Player_InventoryManager.Instance.Inventory_DataArray.Count()];
             save_PlayerContracts = new List<Contract_Data>();
             save_BoardContracts = new List<Contract_Data>();
             _robot_BoardTypeList = new List<RobotType>();

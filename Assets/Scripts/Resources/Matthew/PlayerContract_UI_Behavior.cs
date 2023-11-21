@@ -20,6 +20,30 @@ public class PlayerContract_UI_Behavior : MonoBehaviour
     private TextMeshProUGUI _contract_Payout_Text;
 
     [SerializeField]
+    private TextMeshProUGUI _contract_Resource_Scrap_Text;
+
+    [SerializeField]
+    private TextMeshProUGUI _contract_Resource_Wires_Text;
+
+    [SerializeField]
+    private TextMeshProUGUI _contract_Resource_Oilcan_Text;
+
+    [SerializeField]
+    private TextMeshProUGUI _contract_Resource_Motherboards_Text;
+
+    [SerializeField]
+    private TextMeshProUGUI _contract_Resource_AdvSensors_Text;
+
+    [SerializeField]
+    private TextMeshProUGUI _contract_Resource_BlackMatter_Text;
+
+    [SerializeField]
+    private TextMeshProUGUI _contract_Resource_RadWaste_Text;
+
+    [SerializeField]
+    private TextMeshProUGUI _contract_Resource_ZCrystal_Text;
+
+    [SerializeField]
     private Image _contract_Image;
 
 
@@ -55,5 +79,125 @@ public class PlayerContract_UI_Behavior : MonoBehaviour
     {
         get { return _contract_Image.sprite; }
         set { _contract_Image.sprite = value; }
+    }
+
+    public string Contract_Resource_Scrap_Text
+    {
+        set
+        {
+            if (value.Split('/')[0] == "0")
+            {
+                _contract_Resource_Scrap_Text.transform.parent.gameObject.SetActive(false);
+            }
+            else
+            {
+                _contract_Resource_Scrap_Text.text = value;
+            }
+        }
+    }
+
+    public string Contract_Resource_Wires_Text
+    {
+        set
+        {
+            if (value.Split('/')[0] == "0")
+            {
+                _contract_Resource_Wires_Text.transform.parent.gameObject.SetActive(false);
+            }
+            else
+            {
+                _contract_Resource_Wires_Text.text = value;
+            }
+        }
+    }
+
+    public string Contract_Resource_Oilcan_Text
+    {
+        set
+        {
+            if (value.Split('/')[0] == "0")
+            {
+                _contract_Resource_Oilcan_Text.transform.parent.gameObject.SetActive(false);
+            }
+            else
+            {
+                _contract_Resource_Oilcan_Text.text = value;
+            }
+        }
+    }
+
+    public string Contract_Resource_Motherboards_Text
+    {
+        set
+        {
+            if (value.Split('/')[0] == "0")
+            {
+                _contract_Resource_Motherboards_Text.transform.parent.gameObject.SetActive(false);
+            }
+            else
+            {
+                _contract_Resource_Motherboards_Text.text = value;
+            }
+        }
+    }
+
+    public string Contract_Resource_AdvSensor_Text
+    {
+        set
+        {
+            if (value.Split('/')[0] == "0")
+            {
+                _contract_Resource_AdvSensors_Text.transform.parent.gameObject.SetActive(false);
+            }
+            else
+            {
+                _contract_Resource_AdvSensors_Text.text = value;
+            }
+        }
+    }
+
+    public string Contract_Resource_RadWaste_Text
+    {
+        set
+        {
+            if (value.Split('/')[0] == "0")
+            {
+                _contract_Resource_RadWaste_Text.transform.parent.gameObject.SetActive(false);
+            }
+            else
+            {
+                _contract_Resource_RadWaste_Text.text = value;
+            }
+        }
+    }
+
+    public string Contract_Resource_ZCrystal_Text
+    {
+        set
+        {
+            if (value.Split('/')[0] == "0")
+            {
+                _contract_Resource_ZCrystal_Text.transform.parent.gameObject.SetActive(false);
+            }
+            else
+            {
+                _contract_Resource_ZCrystal_Text.text = value;
+            }
+        }
+    }
+
+    public string Contract_Resource_BlackMatter_Text
+    {
+        set 
+        { 
+            if (value.Split('/')[0] == "0")
+            {
+                _contract_Resource_BlackMatter_Text.transform.parent.gameObject.SetActive(false);
+            }
+            else
+            {
+                _contract_Resource_BlackMatter_Text.text = value;
+            }
+        }
     }
 }

@@ -1,11 +1,14 @@
+using Agyr.Workshop;
 using SaveLoadSystem;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Threading;
+using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-public class Player_Contract_Manager : Singleton<Player_Contract_Manager>
+public class Player_Contract_Manager : MonoBehaviour
 {
     //public List<Contract_Data> _contract_Player_DataList;
 
@@ -15,9 +18,6 @@ public class Player_Contract_Manager : Singleton<Player_Contract_Manager>
 
     [SerializeField]
     private float _contract_TimerTickRate = 1;
-
-    [SerializeField]
-    private bool isContractTimerActive = false;
 
     [SerializeField]
     private PlayerContract_UI_Behavior _contract_UI;
@@ -64,17 +64,17 @@ public class Player_Contract_Manager : Singleton<Player_Contract_Manager>
                     case RobotType.Nurse:
                         Contract_RobotType_Text = "Nurse";
                         break;
-                    case RobotType.ServiceWorker:
-                        Contract_RobotType_Text = "Service Worker";
+                    case RobotType.HouseKeeper:
+                        Contract_RobotType_Text = "House Keeper";
                         break;
                     case RobotType.PoliceBot:
                         Contract_RobotType_Text = "Police Bot";
                         break;
                     case RobotType.FootBall:
-                        Contract_RobotType_Text = "Foot Ball";
+                        Contract_RobotType_Text = "Football Bot";
                         break;
-                    case RobotType.Handyman:
-                        Contract_RobotType_Text = "Handyman";
+                    case RobotType.YardMaintenance:
+                        Contract_RobotType_Text = "Yard Maintenance Bot";
                         break;
                     default:
                         break;
@@ -85,6 +85,17 @@ public class Player_Contract_Manager : Singleton<Player_Contract_Manager>
                 Contract_CountTimer_Text = _contractData.Contract_TimerCount.ToString();
 
                 Contract_Status = _contractData.Contract_Status;
+
+                #region SetResources
+                Contract_Resource_Wires_Text = _contractData.Robot_RecipeData.Resource_Wire;
+                Contract_Resource_Oilcan_Text = _contractData.Robot_RecipeData.Resource_Oil;
+                Contract_Resource_Motherboards_Text = _contractData.Robot_RecipeData.Resource_MotherBoard;
+                Contract_Resource_AdvSensor_Text = _contractData.Robot_RecipeData.Resource_AdvancedSensor;
+                Contract_Resource_RadWaste_Text = _contractData.Robot_RecipeData.Resource_RadioactiveWaste;
+                Contract_Resource_ZCrystal_Text = _contractData.Robot_RecipeData.Z_Crystal;
+                Contract_Resource_BlackMatter_Text = _contractData.Robot_RecipeData.Resource_BlackMatter;
+                Contract_Resource_Scrap_Text = _contractData.Robot_RecipeData.Resource_MetalScrap;
+                #endregion
             }
             else
             {
@@ -92,6 +103,86 @@ public class Player_Contract_Manager : Singleton<Player_Contract_Manager>
                 _contract_UI.contract_Failed.SetActive(false);
                 _contract_UI.contract_Unassigned.SetActive(true);
             }
+        }
+    }
+
+    public int Contract_Resource_Scrap_Text
+    {
+        set 
+        {
+            string tempValue = "";
+            tempValue += value.ToString() + "/" + (WorkshopManager.Instance.WorkshopStorage.MetalScrapCount);
+            _contract_UI.Contract_Resource_Scrap_Text = tempValue; 
+        }
+    }
+
+    public int Contract_Resource_Wires_Text
+    {
+        set 
+        {
+            string tempValue = "";
+            tempValue += value.ToString() + "/" + (WorkshopManager.Instance.WorkshopStorage.WireCount);
+            _contract_UI.Contract_Resource_Wires_Text = tempValue; 
+        }
+    }
+
+    public int Contract_Resource_Oilcan_Text
+    {
+        set 
+        {
+            string tempValue = "";
+            tempValue += value.ToString() + "/" + (WorkshopManager.Instance.WorkshopStorage.OilCount);
+            _contract_UI.Contract_Resource_Oilcan_Text = tempValue; 
+        }
+    }
+
+    public int Contract_Resource_Motherboards_Text
+    {
+        set 
+        {
+            string tempValue = "";
+            tempValue += value.ToString() + "/" + (WorkshopManager.Instance.WorkshopStorage.MotherBoardCount);
+            _contract_UI.Contract_Resource_Motherboards_Text = tempValue;
+        }
+    }
+
+    public int Contract_Resource_AdvSensor_Text
+    {
+        set 
+        {
+            string tempValue = "";
+            tempValue += value.ToString() + "/" + (WorkshopManager.Instance.WorkshopStorage.SensorCount);
+            _contract_UI.Contract_Resource_AdvSensor_Text = tempValue; 
+        }
+    }
+
+    public int Contract_Resource_RadWaste_Text
+    {
+        set 
+        {
+            string tempValue = "";
+            tempValue += value.ToString() + "/" + (WorkshopManager.Instance.WorkshopStorage.RadioactiveWasteCount);
+            _contract_UI.Contract_Resource_RadWaste_Text = tempValue; 
+        }
+    }
+
+    public int Contract_Resource_ZCrystal_Text
+    {
+        set 
+        {
+            string tempValue = "";
+            tempValue += value.ToString() + "/" + (WorkshopManager.Instance.WorkshopStorage.ZCrystalCount);
+            _contract_UI.Contract_Resource_ZCrystal_Text = tempValue; 
+        }
+    }
+
+    public int Contract_Resource_BlackMatter_Text
+    {
+        set 
+        {
+            string tempValue = "";
+            tempValue += value.ToString() + "/" + (WorkshopManager.Instance.WorkshopStorage.BlackMatterCount);
+            _contract_UI.Contract_Resource_BlackMatter_Text = tempValue; 
         }
     }
 
@@ -173,6 +264,7 @@ public class Player_Contract_Manager : Singleton<Player_Contract_Manager>
         EventBus.Subscribe<GameObject>(EventType.PLAYER_ADDCONTRACT, CreateContract);
         EventBus.Subscribe(EventType.SAVECONTRACTPURGE, PurgeContracts);
         EventBus.Subscribe<Robot_RecipeData>(EventType.ROBOT_SOLD, OnContractCheckForCompleation);
+        EventBus.Subscribe<GameObject>(EventType.INVENTORY_UPDATE, UpdateResourceCount);
     }
     private void OnDisable()
     {
@@ -184,8 +276,25 @@ public class Player_Contract_Manager : Singleton<Player_Contract_Manager>
 
     private void Start()
     {
+        
+
         _contractHolder = ContractHolder.Unoccupied;
         StartCoroutine(ContractTimerTickCoroutine());
+    }
+
+    public void UpdateResourceCount(GameObject placeholder)
+    {
+        if (_contractHolder == ContractHolder.Occupied)
+        {
+            Contract_Resource_Wires_Text = _contractData.Robot_RecipeData.Resource_Wire;
+            Contract_Resource_Oilcan_Text = _contractData.Robot_RecipeData.Resource_Oil;
+            Contract_Resource_Motherboards_Text = _contractData.Robot_RecipeData.Resource_MotherBoard;
+            Contract_Resource_AdvSensor_Text = _contractData.Robot_RecipeData.Resource_AdvancedSensor;
+            Contract_Resource_RadWaste_Text = _contractData.Robot_RecipeData.Resource_RadioactiveWaste;
+            Contract_Resource_ZCrystal_Text = _contractData.Robot_RecipeData.Z_Crystal;
+            Contract_Resource_BlackMatter_Text = _contractData.Robot_RecipeData.Resource_BlackMatter;
+            Contract_Resource_Scrap_Text = _contractData.Robot_RecipeData.Resource_MetalScrap;
+        }
     }
 
     public void PurgeContracts()

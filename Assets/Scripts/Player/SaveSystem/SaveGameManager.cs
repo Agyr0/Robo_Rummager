@@ -59,6 +59,7 @@ public class SaveGameManager : Singleton<SaveGameManager>
 
     private void SavePlayerInventory()
     {
+        /*
         for (int i = 0; i < Player_InventoryManager.Instance.Inventory_DataArray.Length; i++)
         {
             data.save_Inventory_SlotAmounts[i] = Player_InventoryManager.Instance.Inventory_DataArray[i].AmountStored;
@@ -66,6 +67,7 @@ public class SaveGameManager : Singleton<SaveGameManager>
         }
         data.save_Player_CreditPurse = Player_InventoryManager.Instance.CreditPurse;
         data.save_Player_SlotCount = Player_InventoryManager.Instance.InventorySlotCount;
+        */
     }
 
     private void SavePlayerContract()
@@ -102,6 +104,7 @@ public class SaveGameManager : Singleton<SaveGameManager>
 
     private void LoadPlayerInventory(SaveData data)
     {
+        /*
         for (int i = 0; i < data.save_Inventory_SlotAmounts.Length; i++)
         {
             Player_InventoryManager.Instance.Inventory_DataArray[i].AmountStored = data.save_Inventory_SlotAmounts[i];
@@ -140,6 +143,7 @@ public class SaveGameManager : Singleton<SaveGameManager>
         }
         Player_InventoryManager.Instance.CreditPurse = data.save_Player_CreditPurse;
         Player_InventoryManager.Instance.InventorySlotCount = data.save_Player_SlotCount;
+        */
     }
 
     private void LoadWorkshopStorage(SaveData data)
