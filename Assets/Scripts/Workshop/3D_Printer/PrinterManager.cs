@@ -362,21 +362,14 @@ public class PrinterManager : MonoBehaviour, IInteractable
 
         while (_printerState == PrinterState.Halting)
         {
-            if (Clock_PrintTime == 0)
-            {
-                printMenuUI.SetActive(false);
-                printerCountDownUI.SetActive(true);
-                printedAmount++;
-                printerTime_Text.text = "Printer: Halted";
-                printerCollect_Text.text = "COLLECT " + "[" + printedAmount + "]";
-                AudioManager.Instance.PlayClip(this.GetComponent<AudioSource>(), AudioManager.Instance.FindClip(AudioType.Printer_Ding, AudioManager.Instance.effectAudio));
-                printResourceCollectionButton.interactable= true;
-                _printerState = PrinterState.Completed;
-            }
-            else
-            {
-                Clock_PrintTime--;
-            }
+            printMenuUI.SetActive(true);
+            printerCountDownUI.SetActive(false);
+            _printerState = PrinterState.Available;
+            printedAmount = 0;
+
+            printerTime_Text.text = "Printer: Halted";
+            printerCollect_Text.text = "COLLECT " + "[" + printedAmount + "]";
+            AudioManager.Instance.PlayClip(this.GetComponent<AudioSource>(), AudioManager.Instance.FindClip(AudioType.Printer_Ding, AudioManager.Instance.effectAudio));
             yield return new WaitForSeconds(1);
         }
     }
@@ -425,6 +418,14 @@ public class PrinterManager : MonoBehaviour, IInteractable
         else if (printerID == 4)
         {
             EventBus.Publish(EventType.TOGGLE_PRINTER4_CAM_BLEND);
+        }
+        else if (printerID == 5)
+        {
+            EventBus.Publish(EventType.TOGGLE_PRINTER5_CAM_BLEND);
+        }
+        else if (printerID == 6)
+        {
+            EventBus.Publish(EventType.TOGGLE_PRINTER6_CAM_BLEND);
         }
 
     }
