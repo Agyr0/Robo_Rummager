@@ -32,10 +32,11 @@ public class PlayerController : MonoBehaviour
             if(_storyboard == null)
                 _storyboard = gameManager.Storyboard;
 
-            //if (value < Health)
-            //    StartCoroutine(FadeRedScreen());
+            //If the player takes any damage
+            if (value < Health)
+                AudioManager.Instance.ChangeAmbientAudio(AudioType.Combat_Playlist);
 
-            
+
 
             _healthBar.SetHealth(value);
 
@@ -458,6 +459,7 @@ public class PlayerController : MonoBehaviour
 
         }
         Health = _maxHealth;
+        AudioManager.Instance.ChangeAmbientAudio(AudioType.Scrapyard_Playlist);
         regenningHealth = false;
         yield return null;
 
