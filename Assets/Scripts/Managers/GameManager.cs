@@ -47,25 +47,25 @@ public class GameManager : Singleton<GameManager>
     private Transform _cameraTransform;
     public Transform CameraTransform
     {
-        get
+        get 
         {
             if (_cameraTransform == null)
                 _cameraTransform = Camera.main.transform;
             return _cameraTransform;
         }
-        private set
+        private set 
         {
-            _cameraTransform = value;
+            _cameraTransform = value; 
         }
     }
 
     private bool _inUI = true;
 
-    public bool InUI
-    {
-        get { return _inUI; }
+    public bool InUI 
+    { 
+        get { return _inUI; } 
         set
-        {
+        { 
             //toggle weapon controller and input provider
             weaponController.enabled = !value;
             inputProvider.enabled = !value;
@@ -74,7 +74,7 @@ public class GameManager : Singleton<GameManager>
             playerController.CanSprint = !value;
             playerController.CanDash = !value;
             _inUI = value;
-            if (value)
+            if(value)
             {
                 //Set cursor to visible
                 Cursor.lockState = CursorLockMode.None;
@@ -86,7 +86,7 @@ public class GameManager : Singleton<GameManager>
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
             }
-        }
+        } 
     }
 
 
@@ -95,7 +95,7 @@ public class GameManager : Singleton<GameManager>
 
 
     private void OnEnable()
-    {
+    {        
         EventBus.Subscribe(EventType.INVENTORY_TOGGLE, ToggleInput);
         EventBus.Subscribe(EventType.TOGGLE_WORKBENCH_CAM_BLEND, SwitchWorkbenchCam);
         EventBus.Subscribe(EventType.TOGGLE_BULLETIN_CAM_BLEND, SwitchBulletinCam);
@@ -103,8 +103,6 @@ public class GameManager : Singleton<GameManager>
         EventBus.Subscribe(EventType.TOGGLE_PRINTER2_CAM_BLEND, SwitchPrinterCam2);
         EventBus.Subscribe(EventType.TOGGLE_PRINTER3_CAM_BLEND, SwitchPrinterCam3);
         EventBus.Subscribe(EventType.TOGGLE_PRINTER4_CAM_BLEND, SwitchPrinterCam4);
-        EventBus.Subscribe(EventType.TOGGLE_PRINTER5_CAM_BLEND, SwitchPrinterCam5);
-        EventBus.Subscribe(EventType.TOGGLE_PRINTER6_CAM_BLEND, SwitchPrinterCam6);
         EventBus.Subscribe(EventType.TOGGLE_DARKPC_CAM_BLEND, SwitchDarkPCCam);
     }
     private void OnDisable()
@@ -116,8 +114,6 @@ public class GameManager : Singleton<GameManager>
         EventBus.Unsubscribe(EventType.TOGGLE_PRINTER2_CAM_BLEND, SwitchPrinterCam2);
         EventBus.Unsubscribe(EventType.TOGGLE_PRINTER3_CAM_BLEND, SwitchPrinterCam3);
         EventBus.Unsubscribe(EventType.TOGGLE_PRINTER4_CAM_BLEND, SwitchPrinterCam4);
-        EventBus.Unsubscribe(EventType.TOGGLE_PRINTER5_CAM_BLEND, SwitchPrinterCam5);
-        EventBus.Unsubscribe(EventType.TOGGLE_PRINTER6_CAM_BLEND, SwitchPrinterCam6);
         EventBus.Unsubscribe(EventType.TOGGLE_DARKPC_CAM_BLEND, SwitchDarkPCCam);
     }
     public override void Awake()
@@ -149,7 +145,7 @@ public class GameManager : Singleton<GameManager>
 
         if (isPlayerCam)
             _camAnimator.Play("PlayerCam");
-        else if (isWorkbenchCam)
+        else if(isWorkbenchCam)
             _camAnimator.Play("WorkbenchCam");
 
     }
@@ -222,26 +218,4 @@ public class GameManager : Singleton<GameManager>
 
     }
 
-    private void SwitchPrinterCam5()
-    {
-        isPrinterCam = !isPrinterCam;
-        isPlayerCam = !isPrinterCam;
-
-        if (isPlayerCam)
-            _camAnimator.Play("PlayerCam");
-        else if (isPrinterCam)
-            _camAnimator.Play("3DPrinterCam5");
-
-    }
-
-    private void SwitchPrinterCam6()
-    {
-        isPrinterCam = !isPrinterCam;
-        isPlayerCam = !isPrinterCam;
-
-        if (isPlayerCam)
-            _camAnimator.Play("PlayerCam");
-        else if (isPrinterCam)
-            _camAnimator.Play("3DPrinterCam6");
-    }
 }

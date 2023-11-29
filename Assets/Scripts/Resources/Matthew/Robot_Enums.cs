@@ -4,11 +4,10 @@ public enum RobotType
     Cat,
     Rat,
     Nurse,
-    HouseKeeper,
+    ServiceWorker,
     PoliceBot,
     FootBall,
-    YardMaintenance,
-    MilitaryBot
+    Handyman
 }
 public enum RobotTier
 {

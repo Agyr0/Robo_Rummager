@@ -633,14 +633,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4d56dcaaa5cf834badba22703a68042, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _contract_Data:
+    _robot_RecipeData: {fileID: 0}
+    _contract_TimerCount: 0
+    _contract_PayOut: 0
+    _contract_IsTimed: 0
+    _contract_Status: 0
   _contract_RobotTier_Text: {fileID: 2973358926369363742}
   _contract_RobotType_Text: {fileID: 1785008833688554109}
   _contract_CountTimer_Text: {fileID: 20794508345153451}
   _contract_Payout_Text: {fileID: 7914085115439953144}
   _contract_Image: {fileID: 1411568627463527475}
-  contract_Failed: {fileID: 0}
-  contract_Info: {fileID: 0}
-  contract_Unassigned: {fileID: 0}
+  _contract_Failed: {fileID: 6352492446651483671}
+  _contract_Info: {fileID: 0}
+  _contract_Unassigned: {fileID: 0}
+  _contractHolder: 0
 --- !u!1 &3805424357711298170
 GameObject:
   m_ObjectHideFlags: 0

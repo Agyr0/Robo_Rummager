@@ -26,8 +26,9 @@ public class WorkshopCollider : MonoBehaviour
             if(!WorkshopManager.Instance.WorkshopZone.ResourcesAvailable())
                 EventBus.Publish(EventType.REFRESH_RESOURCES);
 
-            AudioManager.Instance.ChangeAmbientAudio(AudioType.Workshop_Playlist);
-            
+            EventBus.Publish(EventType.CHANGE_AMBIENT, AudioType.Workshop_Playlist);
+
+
         }
     }
 
@@ -35,7 +36,7 @@ public class WorkshopCollider : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            AudioManager.Instance.ChangeAmbientAudio(AudioType.Scrapyard_Playlist);
+            EventBus.Publish(EventType.CHANGE_AMBIENT, AudioType.Scrapyard_Playlist);
         }
     }
 }
