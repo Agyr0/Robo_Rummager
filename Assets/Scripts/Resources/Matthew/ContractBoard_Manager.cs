@@ -50,7 +50,6 @@ public class ContractBoard_Manager : Singleton<ContractBoard_Manager>, IInteract
     {
         EventBus.Subscribe<int,float>(EventType.BOARD_ADDCONTRACT, CreateContract);
         EventBus.Subscribe<Robot_RecipeData, float>(EventType.BOARD_ADDLOADCONTRACT, CreateContract);
-        EventBus.Subscribe(EventType.SAVECONTRACTPURGE, PurgeContracts);
         EventBus.Subscribe<GameObject>(EventType.PLAYER_ADDCONTRACT, PurgeContract);
         EventBus.Subscribe<Robot_RecipeData>(EventType.PICKED_UP_CHASSIS, AddChassis);
     }
