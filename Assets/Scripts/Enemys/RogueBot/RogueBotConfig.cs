@@ -12,6 +12,9 @@ public class RogueBotConfig : ScriptableObject
     [Tooltip("The Layer the player is tagged under.")]
     public LayerMask playerLayerMask;
 
+    public float maxHealth;
+    public float damage;
+
     #region Patrol
     [Header("Patrol Stats")]
     [Tooltip("Speed of the RogueBot while patrolling.")]
