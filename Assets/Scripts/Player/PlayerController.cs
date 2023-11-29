@@ -33,8 +33,8 @@ public class PlayerController : MonoBehaviour
                 _storyboard = gameManager.Storyboard;
 
             //If the player takes any damage
-            if (value < Health)
-                AudioManager.Instance.ChangeAmbientAudio(AudioType.Combat_Playlist);
+            if (value < Health && !regenningHealth)
+                EventBus.Publish(EventType.CHANGE_AMBIENT,AudioType.Combat_Playlist);
 
 
 
@@ -459,7 +459,8 @@ public class PlayerController : MonoBehaviour
 
         }
         Health = _maxHealth;
-        AudioManager.Instance.ChangeAmbientAudio(AudioType.Scrapyard_Playlist);
+        EventBus.Publish(EventType.CHANGE_AMBIENT, AudioType.Scrapyard_Playlist);
+
         regenningHealth = false;
         yield return null;
 
@@ -548,6 +549,8 @@ public class PlayerController : MonoBehaviour
         }
         gameManager.inventoryManager.CreditPurse = 0;
         EventBus.Publish(EventType.INVENTORY_UPDATE, gameManager.inventoryManager.gameObject);
+        EventBus.Publish(EventType.CHANGE_AMBIENT, AudioType.Scrapyard_Playlist);
+
     }
 
     #endregion

@@ -280,8 +280,13 @@ public class AudioManager : Singleton<AudioManager>
     }
 
     private Coroutine loopAmbient;
+    private AudioType currentPlaylist;
     public void ChangeAmbientAudio(AudioType audioType)
     {
+        if (currentPlaylist == audioType)
+            return;
+        currentPlaylist = audioType;
+
         if(loopAmbient != null)
             StopCoroutine(loopAmbient);
 
