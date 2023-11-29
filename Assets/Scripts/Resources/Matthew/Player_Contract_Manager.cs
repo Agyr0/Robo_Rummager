@@ -262,7 +262,6 @@ public class Player_Contract_Manager : MonoBehaviour
     {
         EventBus.Subscribe<Robot_RecipeData, float>(EventType.PLAYER_LOADCONTRACT, CreateContract);
         EventBus.Subscribe<GameObject>(EventType.PLAYER_ADDCONTRACT, CreateContract);
-        EventBus.Subscribe(EventType.SAVECONTRACTPURGE, PurgeContracts);
         EventBus.Subscribe<Robot_RecipeData>(EventType.ROBOT_SOLD, OnContractCheckForCompleation);
         EventBus.Subscribe<GameObject>(EventType.INVENTORY_UPDATE, UpdateResourceCount);
     }
@@ -270,7 +269,6 @@ public class Player_Contract_Manager : MonoBehaviour
     {
         EventBus.Unsubscribe<Robot_RecipeData, float>(EventType.PLAYER_LOADCONTRACT, CreateContract);
         EventBus.Unsubscribe<GameObject>(EventType.PLAYER_ADDCONTRACT, CreateContract);
-        EventBus.Unsubscribe(EventType.SAVECONTRACTPURGE, PurgeContracts);
         EventBus.Unsubscribe<Robot_RecipeData>(EventType.ROBOT_SOLD, OnContractCheckForCompleation);
     }
 
