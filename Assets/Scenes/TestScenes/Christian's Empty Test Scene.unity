@@ -493,7 +493,7 @@ PrefabInstance:
     - target: {fileID: 6470395437004968214, guid: 91dc17ebf39168a43a42864f06a8c647,
         type: 3}
       propertyPath: numberOfScavengersToSpawn
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6470395437004968214, guid: 91dc17ebf39168a43a42864f06a8c647,
         type: 3}
@@ -21128,6 +21128,30 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2797b1dc411e1594786304e203647c46, type: 3}
+--- !u!114 &712536180 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2174557942838211460, guid: 9f43977826ba06d4897bbc0df364fde5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1140499963}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &720948574 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8730798863154365149, guid: 9f43977826ba06d4897bbc0df364fde5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1140499963}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &766552104
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21276,6 +21300,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b7f89ddc0704b704bb488f4dba47d326, type: 3}
+--- !u!114 &973357872 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6209090851475334778, guid: 9f43977826ba06d4897bbc0df364fde5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1140499963}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1013512004
 GameObject:
   m_ObjectHideFlags: 0
@@ -21812,8 +21848,23 @@ PrefabInstance:
     - target: {fileID: 4529959461738403414, guid: 9f43977826ba06d4897bbc0df364fde5,
         type: 3}
       propertyPath: m_ChildCameras.Array.size
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 4529959461738403414, guid: 9f43977826ba06d4897bbc0df364fde5,
+        type: 3}
+      propertyPath: m_ChildCameras.Array.data[5]
+      value: 
+      objectReference: {fileID: 712536180}
+    - target: {fileID: 4529959461738403414, guid: 9f43977826ba06d4897bbc0df364fde5,
+        type: 3}
+      propertyPath: m_ChildCameras.Array.data[6]
+      value: 
+      objectReference: {fileID: 720948574}
+    - target: {fileID: 4529959461738403414, guid: 9f43977826ba06d4897bbc0df364fde5,
+        type: 3}
+      propertyPath: m_ChildCameras.Array.data[7]
+      value: 
+      objectReference: {fileID: 973357872}
     - target: {fileID: 4918639938657463977, guid: 9f43977826ba06d4897bbc0df364fde5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -21984,7 +22035,8 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6869194446463767478, guid: 9f43977826ba06d4897bbc0df364fde5, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 2446187838209424323, guid: 9f43977826ba06d4897bbc0df364fde5,
