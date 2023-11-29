@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
@@ -33,7 +34,7 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
     private List<GameObject> _inventory_ItemCullPickupList;
 
     [SerializeField]
-    private Text _creditText;
+    private TextMeshProUGUI _creditText;
 
     [SerializeField]
     private int _slotStackLimit;
