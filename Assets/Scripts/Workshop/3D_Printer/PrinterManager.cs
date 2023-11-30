@@ -9,6 +9,7 @@ using Image = UnityEngine.UI.Image;
 
 public class PrinterManager : MonoBehaviour, IInteractable
 {
+
     [SerializeField]
     private int printerID;
 
@@ -18,7 +19,6 @@ public class PrinterManager : MonoBehaviour, IInteractable
     public int clock_PrintTime = 0;
 
     public int printedAmount = 0;
-
     public int printedMaxAmount = 10;
 
     [SerializeField]
@@ -39,32 +39,43 @@ public class PrinterManager : MonoBehaviour, IInteractable
 
     [SerializeField]
     private GameObject printMenuUI;
+
     [SerializeField]
     private GameObject printerCountDownUI;
+
     [SerializeField]
     private GameObject printerTimerTextUI;
+
     [SerializeField]
     private GameObject printerCompleteUI;
+
     [SerializeField]
     private Image printerResourceImage;
 
     [SerializeField]
     private TextMeshProUGUI printerTime_Text;
+
     [SerializeField]
     private TextMeshProUGUI printerCollect_Text;
+
     [SerializeField]
     private TextMeshProUGUI printerHalt_Text;
 
     [SerializeField]
     private Button printButtonOil;
+
     [SerializeField]
     private Button printButtonMotherboard;
+
     [SerializeField]
     private Button printButtonAdvSensor;
+
     [SerializeField]
     private Button printButtonWaste;
+
     [SerializeField]
     private Button printButtonDarkMatter;
+
     [SerializeField]
     private Button printButtonZ_Crystal;
 
@@ -84,7 +95,7 @@ public class PrinterManager : MonoBehaviour, IInteractable
 
     public bool CanPrintOil
     {
-        set 
+        set
         {
             _canPrintOil = value;
             printButtonOil.interactable = value;
@@ -94,8 +105,8 @@ public class PrinterManager : MonoBehaviour, IInteractable
 
     public bool CanPrintAdvSensor
     {
-        set 
-        { 
+        set
+        {
             _canPrintAdvSensor = value;
             printButtonAdvSensor.interactable = value;
             printButtonAdvSensor.transform.GetChild(1).gameObject.SetActive(!value);
@@ -141,11 +152,13 @@ public class PrinterManager : MonoBehaviour, IInteractable
             printButtonDarkMatter.transform.GetChild(1).gameObject.SetActive(!value);
         }
     }
-    #endregion
 
+    #endregion
     [SerializeField]
     private GameObject selectionCanvas;
+
     private BilboardScaler scaler;
+
     private int originalWeaponIndex;
 
     [SerializeField]
@@ -173,11 +186,11 @@ public class PrinterManager : MonoBehaviour, IInteractable
 
     public int Clock_PrintTime
     {
-        get 
-        { 
-            return clock_PrintTime; 
+        get
+        {
+            return clock_PrintTime;
         }
-        set 
+        set
         {
             clock_PrintTime = value;
             string mintutes = ((float)clock_PrintTime / 60).ToString().Split('.')[0];
@@ -191,7 +204,7 @@ public class PrinterManager : MonoBehaviour, IInteractable
             {
                 printerTime_Text.text = "Printing: " + mintutes + ":0" + seconds;
             }
-            
+
         }
     }
 
@@ -312,11 +325,10 @@ public class PrinterManager : MonoBehaviour, IInteractable
         printerCollect_Text.text = "COLLECT " + "[" + printedAmount + "]";
         printResourceCollectionButton.interactable = false;
     }
-    
 
     public IEnumerator PrintOrder(Resource_ItemData printResource, Sprite resourceImage)
     {
-        if(_printerState != PrinterState.Halting) 
+        if (_printerState != PrinterState.Halting)
         {
             while (_printerState != PrinterState.Halting)
             {
@@ -362,21 +374,14 @@ public class PrinterManager : MonoBehaviour, IInteractable
 
         while (_printerState == PrinterState.Halting)
         {
-            if (Clock_PrintTime == 0)
-            {
-                printMenuUI.SetActive(false);
-                printerCountDownUI.SetActive(true);
-                printedAmount++;
-                printerTime_Text.text = "Printer: Halted";
-                printerCollect_Text.text = "COLLECT " + "[" + printedAmount + "]";
-                AudioManager.Instance.PlayClip(this.GetComponent<AudioSource>(), AudioManager.Instance.FindClip(AudioType.Printer_Ding, AudioManager.Instance.effectAudio));
-                printResourceCollectionButton.interactable= true;
-                _printerState = PrinterState.Completed;
-            }
-            else
-            {
-                Clock_PrintTime--;
-            }
+            printMenuUI.SetActive(true);
+            printerCountDownUI.SetActive(false);
+            _printerState = PrinterState.Available;
+            printedAmount = 0;
+            printerTime_Text.text = "Printer: Halted";
+            printerCollect_Text.text = "COLLECT " + "[" + printedAmount + "]";
+
+            AudioManager.Instance.PlayClip(this.GetComponent<AudioSource>(), AudioManager.Instance.FindClip(AudioType.Printer_Ding, AudioManager.Instance.effectAudio));
             yield return new WaitForSeconds(1);
         }
     }
@@ -385,8 +390,8 @@ public class PrinterManager : MonoBehaviour, IInteractable
     {
         if (!isOn)
             originalWeaponIndex = GameManager.Instance.weaponController.WeaponIndex;
-        isOn = !isOn;
 
+        isOn = !isOn;
 
         //Force Weapon switch to hands
         if (isOn)
@@ -394,6 +399,7 @@ public class PrinterManager : MonoBehaviour, IInteractable
             GameManager.Instance.weaponController.SwitchWeapon(2);
             GameManager.Instance.InUI = !GameManager.Instance.InUI;
         }
+
         else if (!isOn)
         {
             GameManager.Instance.InUI = !GameManager.Instance.InUI;
@@ -407,6 +413,7 @@ public class PrinterManager : MonoBehaviour, IInteractable
 
         if (isOn)
             handleUI = StartCoroutine(scaler.HandleUI());
+
         else if (handleUI != null)
             StopCoroutine(handleUI);
 
@@ -414,19 +421,31 @@ public class PrinterManager : MonoBehaviour, IInteractable
         {
             EventBus.Publish(EventType.TOGGLE_PRINTER1_CAM_BLEND);
         }
+
         else if (printerID == 2)
         {
             EventBus.Publish(EventType.TOGGLE_PRINTER2_CAM_BLEND);
         }
+
         else if (printerID == 3)
         {
             EventBus.Publish(EventType.TOGGLE_PRINTER3_CAM_BLEND);
         }
+
         else if (printerID == 4)
         {
             EventBus.Publish(EventType.TOGGLE_PRINTER4_CAM_BLEND);
         }
 
+        else if (printerID == 5)
+        {
+            EventBus.Publish(EventType.TOGGLE_PRINTER5_CAM_BLEND);
+        }
+
+        else if (printerID == 6)
+        {
+            EventBus.Publish(EventType.TOGGLE_PRINTER6_CAM_BLEND);
+        }
     }
 
     enum PrinterState
@@ -438,5 +457,5 @@ public class PrinterManager : MonoBehaviour, IInteractable
         Completed,
         Halting
     }
-    
+
 }

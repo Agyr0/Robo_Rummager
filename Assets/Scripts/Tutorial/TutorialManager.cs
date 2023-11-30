@@ -34,7 +34,7 @@ public class TutorialManager : MonoBehaviour
     {
         EventBus.Subscribe(EventType.GAME_START, StartTutorialMessage);
         EventBus.Subscribe(EventType.CONTRACTS_TUTORIALS, ContractBoardTutorialMessages);
-        EventBus.Subscribe(EventType.CONTRACTS_OPENED_TUTORIALS, ContractOpenedTutorialMessages);
+        EventBus.Subscribe(EventType.TOGGLE_BULLETIN_CAM_BLEND, ContractOpenedTutorialMessages);
         EventBus.Subscribe(EventType.PLAYER_CONTRACTUPDATE, ContractAcceptedTutorialMessages);
     }
 
@@ -42,7 +42,7 @@ public class TutorialManager : MonoBehaviour
     {
         EventBus.Unsubscribe(EventType.GAME_START, StartTutorialMessage);
         EventBus.Unsubscribe(EventType.CONTRACTS_TUTORIALS, ContractBoardTutorialMessages);
-        EventBus.Unsubscribe(EventType.CONTRACTS_OPENED_TUTORIALS, ContractOpenedTutorialMessages);
+        EventBus.Unsubscribe(EventType.TOGGLE_BULLETIN_CAM_BLEND, ContractOpenedTutorialMessages);
         EventBus.Unsubscribe(EventType.PLAYER_CONTRACTUPDATE, ContractAcceptedTutorialMessages);
     }
 
@@ -71,7 +71,7 @@ public class TutorialManager : MonoBehaviour
     // Contract Opened Tutorial
     public void ContractOpenedTutorialMessages()
     {
-        if (hasPlayedContractBoardTutorial)
+        if (hasPlayedContractBoardTutorial && hasPlayedContractOpenedTutorial == false)
         {
             tutorialContainer.SetActive(true);
             StartCoroutine(WriteContractOpenedTutorialMessages());
@@ -176,7 +176,7 @@ public class TutorialManager : MonoBehaviour
             tutorialText.text += character;
             yield return new WaitForSeconds(messageSpeed);
         }
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         tutorialText.text = null;
         Index++;
         StartCoroutine(OpenTutorialBox(false));
@@ -189,6 +189,7 @@ public class TutorialManager : MonoBehaviour
     // WRITE CONTRACT OPENED TUTORIAL
     IEnumerator WriteContractOpenedTutorialMessages()
     {
+        hasPlayedContractOpenedTutorial = true;
         StartCoroutine(OpenTutorialBox(true));
         foreach (char character in Messages[Index].ToCharArray())
         {
@@ -202,7 +203,6 @@ public class TutorialManager : MonoBehaviour
         yield return new WaitForSeconds(scaleTime);
         tutorialContainer.SetActive(false);
         chipFace.sprite = chipHappy;
-        hasPlayedContractOpenedTutorial = true;
     }
 
     // WRITE CONTRACT ACCEPTED TUTORIAL

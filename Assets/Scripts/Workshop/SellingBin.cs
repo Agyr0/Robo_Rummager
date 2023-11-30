@@ -23,7 +23,7 @@ public class SellingBin : MonoBehaviour
 
     private void Start()
     {
-        player_Contract_Manager = Player_Contract_Manager.Instance;
+        player_Contract_Manager = GameManager.Instance.inventoryManager.player_Contract_Manager;
     }
 
 

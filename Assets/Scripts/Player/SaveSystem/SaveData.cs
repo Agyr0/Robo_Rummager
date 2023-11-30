@@ -29,6 +29,7 @@ namespace SaveLoadSystem
         //SaveData constructor
         public SaveData() 
         {
+            /*
             save_WorkShopStorage = new WorkshopStorage();
             save_Inventory_SlotAmounts = new int[Player_InventoryManager.Instance.Inventory_DataArray.Count()];
             save_Inventory_SlotResources = new ResourceType[Player_InventoryManager.Instance.Inventory_DataArray.Count()];
@@ -38,6 +39,7 @@ namespace SaveLoadSystem
             _robot_PlayerTypeList = new List<RobotType>();
             save_Player_SlotCount = 2;
             save_Player_CreditPurse = 0;
+            */
             //chestDictionary = new SerializableDictionary<string, WorkshopStorage> ();
         }
     }

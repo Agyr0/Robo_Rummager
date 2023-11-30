@@ -6,7 +6,7 @@ TextureImporter:
   serializedVersion: 12
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -37,24 +37,24 @@ TextureImporter:
     filterMode: 1
     aniso: 1
     mipBias: 0
-    wrapU: 0
-    wrapV: 0
+    wrapU: 1
+    wrapV: 1
     wrapW: 0
-  nPOTScale: 1
+  nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 0
+  spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
-  alphaIsTransparency: 0
+  alphaIsTransparency: 1
   spriteTessellationDetail: -1
-  textureType: 0
+  textureType: 8
   textureShape: 1
   singleChannelComponent: 0
   flipbookRows: 1
@@ -134,18 +134,370 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: SpriteSheetButtonsUI_0
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 788
+        width: 232
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc04c1a53730d9d4ea94f93b0a282393
+      internalID: -905626644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteSheetButtonsUI_1
+      rect:
+        serializedVersion: 2
+        x: 310
+        y: 865
+        width: 149
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 811b2af69f13b5f4a83a711848375b62
+      internalID: -1517211105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteSheetButtonsUI_2
+      rect:
+        serializedVersion: 2
+        x: 565
+        y: 864
+        width: 149
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9fe748392397c24fbdf8c4bacaf5cdb
+      internalID: 506390508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteSheetButtonsUI_3
+      rect:
+        serializedVersion: 2
+        x: 789
+        y: 851
+        width: 217
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22df2cd82cfa70241b9d5ce786c37a64
+      internalID: 321090429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteSheetButtonsUI_4
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 528
+        width: 225
+        height: 225
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6756b18da5a00ab48973de1d6e5b86b7
+      internalID: -1065776710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteSheetButtonsUI_5
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 535
+        width: 202
+        height: 202
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d5e6237d0f2f6024ca1a9ebd053ab6a1
+      internalID: 57351061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteSheetButtonsUI_6
+      rect:
+        serializedVersion: 2
+        x: 522
+        y: 604
+        width: 239
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f20eb510ee029b44c990513c0e36fa58
+      internalID: -1760138671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteSheetButtonsUI_7
+      rect:
+        serializedVersion: 2
+        x: 778
+        y: 603
+        width: 239
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de972d06f893fe2429139e925e876411
+      internalID: -1240259383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteSheetButtonsUI_8
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 344
+        width: 239
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4576906b4e998864f9cb53d103683946
+      internalID: 768466435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteSheetButtonsUI_9
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 345
+        width: 239
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7613c94cf389744e870a4b7f6a416db
+      internalID: -227771453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteSheetButtonsUI_10
+      rect:
+        serializedVersion: 2
+        x: 519
+        y: 336
+        width: 242
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73668ef9db57b624b99851d1063ffd15
+      internalID: 509861441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteSheetButtonsUI_11
+      rect:
+        serializedVersion: 2
+        x: 776
+        y: 336
+        width: 242
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 740c7beb61f9a3344844e8911ecd5f89
+      internalID: -681606744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteSheetButtonsUI_12
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 85
+        width: 242
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 079cb9f49d39fdf4a9c9d00173ab94e1
+      internalID: 1626102708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteSheetButtonsUI_13
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 84
+        width: 241
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cbbdd761b3f1cbd4ab1c405f4e9afff9
+      internalID: -1502680615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteSheetButtonsUI_14
+      rect:
+        serializedVersion: 2
+        x: 520
+        y: 84
+        width: 241
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e007cb4bc306454288363d84bc68fe4
+      internalID: 524387072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteSheetButtonsUI_15
+      rect:
+        serializedVersion: 2
+        x: 775
+        y: 84
+        width: 241
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d470781e5fcffb4092031121b7ce847
+      internalID: -510111098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      SpriteSheetButtonsUI_0: -905626644
+      SpriteSheetButtonsUI_1: -1517211105
+      SpriteSheetButtonsUI_10: 509861441
+      SpriteSheetButtonsUI_11: -681606744
+      SpriteSheetButtonsUI_12: 1626102708
+      SpriteSheetButtonsUI_13: -1502680615
+      SpriteSheetButtonsUI_14: 524387072
+      SpriteSheetButtonsUI_15: -510111098
+      SpriteSheetButtonsUI_2: 506390508
+      SpriteSheetButtonsUI_3: 321090429
+      SpriteSheetButtonsUI_4: -1065776710
+      SpriteSheetButtonsUI_5: 57351061
+      SpriteSheetButtonsUI_6: -1760138671
+      SpriteSheetButtonsUI_7: -1240259383
+      SpriteSheetButtonsUI_8: 768466435
+      SpriteSheetButtonsUI_9: -227771453
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

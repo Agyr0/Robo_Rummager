@@ -1,13 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Player_InventoryManager : Singleton<Player_InventoryManager>
+public class Player_InventoryManager : MonoBehaviour
 {
+    [HideInInspector]
+    public Player_Contract_Manager player_Contract_Manager;
+
     [SerializeField]
     private int _creditPurse;
 
@@ -33,7 +37,7 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
     private List<GameObject> _inventory_ItemCullPickupList;
 
     [SerializeField]
-    private Text _creditText;
+    private TextMeshProUGUI _creditText;
 
     [SerializeField]
     private int _slotStackLimit;
@@ -108,7 +112,8 @@ public class Player_InventoryManager : Singleton<Player_InventoryManager>
 
     private void OnEnable()
     {
-        GameManager.Instance.inventoryManager = this;       
+        GameManager.Instance.inventoryManager = this;
+        player_Contract_Manager = this.gameObject.GetComponent<Player_Contract_Manager>();
         EventBus.Subscribe(EventType.INVENTORY_ADDSLOT, OnInventoryAddSlot);
         EventBus.Subscribe(EventType.INVENTORY_REMOVESLOT, OnInventoryRemoveSlot);
         EventBus.Subscribe(EventType.INVENTORY_PICKUP, OnItemPickup);
