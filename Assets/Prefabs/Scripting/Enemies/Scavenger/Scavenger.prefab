@@ -6499,7 +6499,7 @@ MonoBehaviour:
     m_Bits: 64
   occlusionLayer:
     serializedVersion: 2
-    m_Bits: 3871
+    m_Bits: 2847
   playersDetected: []
   playersShooting: []
 --- !u!114 &1673811551153105613
@@ -6537,6 +6537,7 @@ MonoBehaviour:
   gunParticle: {fileID: 5991906932023091045}
   bulletPrefab: {fileID: 5541104777284346043, guid: e053b93d65cffda4c82663e303ea4d1c,
     type: 3}
+  firingGun: 0
 --- !u!114 &386212967073248113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6550,12 +6551,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dropTable:
-  - resource: {fileID: 241085201683115378, guid: 033effc9191ff884f95e1f80ed019235,
+  - resource: {fileID: 3119606838275437859, guid: 1223b21db122e054eb453ddf326762fe,
       type: 3}
     dropChance: 100
     _minDropCount: 1
     _maxDropCount: 1
-    elementName: Z Crystal
+    elementName: Black Matter
   - resource: {fileID: 2652622360622632555, guid: 6ccdceb36497005498250b22a2a1ef20,
       type: 3}
     dropChance: 75

@@ -9,21 +9,20 @@ public class ScavengerFireGun : MonoBehaviour
     public ParticleSystem gunParticle;
     public GameObject bulletPrefab;
 
-    private bool firingGun = false;
+    public bool firingGun = false;
 
     public void Shoot(float timeBetweenShots, ScavengerAgent agent)
     {
         if(!firingGun)
         {
             StartCoroutine(FireGun(timeBetweenShots, agent));
-            firingGun = false;
+            firingGun = true;
         }
     }
 
     IEnumerator FireGun(float timeBetweenShots, ScavengerAgent agent)
     {
         Debug.Log("Starting To Fire My GUN!");
-        firingGun = true;
         int numberOfBullets = Random.Range(agent.config.minShots, agent.config.maxShots);
         Debug.Log("Number of Shots:" + numberOfBullets);
 
@@ -41,6 +40,7 @@ public class ScavengerFireGun : MonoBehaviour
 
             yield return new WaitForSeconds(timeBetweenShots);
         }
+        firingGun = false;
         agent.stateMachine.ChangeState(ScavengerStateId.Reposition);
     }
 }

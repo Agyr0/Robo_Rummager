@@ -48,7 +48,6 @@ public class ScavengerBullets : MonoBehaviour
         // Destroy Bullet if it hits a wall
         if (other.gameObject.layer == LayerMask.NameToLayer("Geometry"))
         {
-            Debug.Log("Hit:" +  other.gameObject);
             this.gameObject.SetActive(false);
         }
     }
