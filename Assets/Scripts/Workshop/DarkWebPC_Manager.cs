@@ -18,6 +18,8 @@ public class DarkWebPC_Manager : Singleton<DarkWebPC_Manager>, IInteractable
     private List<GameObject> _upgradesLaserPistol;
     [SerializeField]
     private List<GameObject> _upgradesMachines;
+    [SerializeField]
+    private List<GameObject> _upgradesRobots;
 
     [SerializeField]
     private GameObject _loginMenu;
@@ -36,6 +38,8 @@ public class DarkWebPC_Manager : Singleton<DarkWebPC_Manager>, IInteractable
     private GameObject _gogglesTab;
     [SerializeField]
     private GameObject _machineTab;
+    [SerializeField]
+    private GameObject _robotsTab;
 
     public List<GameObject> _3DPrinterList;
 
@@ -122,6 +126,7 @@ public class DarkWebPC_Manager : Singleton<DarkWebPC_Manager>, IInteractable
         _gunTab.SetActive(false);
         _gogglesTab.SetActive(false);
         _machineTab.SetActive(false);
+        _robotsTab.SetActive(false);
 
         foreach (GameObject item in _upgradesPlayer)
         {
@@ -142,6 +147,10 @@ public class DarkWebPC_Manager : Singleton<DarkWebPC_Manager>, IInteractable
         foreach (GameObject item in _upgradesMachines)
         {
             item.SetActive(true);
+        }
+        foreach (GameObject item in _upgradesRobots)
+        {
+            item.SetActive(false);
         }
     }
 
@@ -154,6 +163,7 @@ public class DarkWebPC_Manager : Singleton<DarkWebPC_Manager>, IInteractable
         _gunTab.SetActive(false);
         _gogglesTab.SetActive(false);
         _machineTab.SetActive(false);
+        _robotsTab.SetActive(false);
 
         foreach (GameObject item in _upgradesPlayer)
         {
@@ -172,6 +182,10 @@ public class DarkWebPC_Manager : Singleton<DarkWebPC_Manager>, IInteractable
             item.SetActive(false);
         }
         foreach (GameObject item in _upgradesMachines)
+        {
+            item.SetActive(false);
+        }
+        foreach (GameObject item in _upgradesRobots)
         {
             item.SetActive(false);
         }
@@ -186,6 +200,7 @@ public class DarkWebPC_Manager : Singleton<DarkWebPC_Manager>, IInteractable
         _gunTab.SetActive(false);
         _gogglesTab.SetActive(false);
         _machineTab.SetActive(false);
+        _robotsTab.SetActive(false);
 
         foreach (GameObject item in _upgradesPlayer)
         {
@@ -204,6 +219,10 @@ public class DarkWebPC_Manager : Singleton<DarkWebPC_Manager>, IInteractable
             item.SetActive(false);
         }
         foreach (GameObject item in _upgradesMachines)
+        {
+            item.SetActive(false);
+        }
+        foreach (GameObject item in _upgradesRobots)
         {
             item.SetActive(false);
         }
@@ -218,6 +237,7 @@ public class DarkWebPC_Manager : Singleton<DarkWebPC_Manager>, IInteractable
         _gunTab.SetActive(false);
         _gogglesTab.SetActive(true);
         _machineTab.SetActive(false);
+        _robotsTab.SetActive(false);
 
         foreach (GameObject item in _upgradesPlayer)
         {
@@ -236,6 +256,10 @@ public class DarkWebPC_Manager : Singleton<DarkWebPC_Manager>, IInteractable
             item.SetActive(false);
         }
         foreach (GameObject item in _upgradesMachines)
+        {
+            item.SetActive(false);
+        }
+        foreach (GameObject item in _upgradesRobots)
         {
             item.SetActive(false);
         }
@@ -250,6 +274,7 @@ public class DarkWebPC_Manager : Singleton<DarkWebPC_Manager>, IInteractable
         _gunTab.SetActive(true);
         _gogglesTab.SetActive(false);
         _machineTab.SetActive(false);
+        _robotsTab.SetActive(false);
 
         foreach (GameObject item in _upgradesPlayer)
         {
@@ -271,6 +296,10 @@ public class DarkWebPC_Manager : Singleton<DarkWebPC_Manager>, IInteractable
         {
             item.SetActive(false);
         }
+        foreach (GameObject item in _upgradesRobots)
+        {
+            item.SetActive(false);
+        }
     }
 
     public void DisplayMachines()
@@ -282,6 +311,7 @@ public class DarkWebPC_Manager : Singleton<DarkWebPC_Manager>, IInteractable
         _gunTab.SetActive(false);
         _gogglesTab.SetActive(false);
         _machineTab.SetActive(true);
+        _robotsTab.SetActive(false);
 
         foreach (GameObject item in _upgradesPlayer)
         {
@@ -300,6 +330,47 @@ public class DarkWebPC_Manager : Singleton<DarkWebPC_Manager>, IInteractable
             item.SetActive(false);
         }
         foreach (GameObject item in _upgradesMachines)
+        {
+            item.SetActive(true);
+        }
+        foreach (GameObject item in _upgradesRobots)
+        {
+            item.SetActive(false);
+        }
+    }
+
+    public void DisplayRobots()
+    {
+
+        _allTab.SetActive(false);
+        _playerTab.SetActive(false);
+        _wrenchTab.SetActive(false);
+        _gunTab.SetActive(false);
+        _gogglesTab.SetActive(false);
+        _machineTab.SetActive(false);
+        _robotsTab.SetActive(true);
+
+        foreach (GameObject item in _upgradesPlayer)
+        {
+            item.SetActive(false);
+        }
+        foreach (GameObject item in _upgradesWrench)
+        {
+            item.SetActive(false);
+        }
+        foreach (GameObject item in _upgradesScannerGoggles)
+        {
+            item.SetActive(false);
+        }
+        foreach (GameObject item in _upgradesLaserPistol)
+        {
+            item.SetActive(false);
+        }
+        foreach (GameObject item in _upgradesMachines)
+        {
+            item.SetActive(false);
+        }
+        foreach (GameObject item in _upgradesRobots)
         {
             item.SetActive(true);
         }

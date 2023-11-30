@@ -11,6 +11,10 @@ public class Player_UIManager : MonoBehaviour
     [SerializeField]
     private GameObject _startMenu_UI;
     [SerializeField]
+    private GameObject _creditMenu_UI;
+    [SerializeField]
+    private GameObject _controlsMenu_UI;
+    [SerializeField]
     private GameObject _startMenu_QUIT_UI;
     [SerializeField]
     private GameObject _optionMenu_QUIT_UI;
@@ -60,6 +64,30 @@ public class Player_UIManager : MonoBehaviour
             EventBus.Publish(EventType.INVENTORY_TOGGLE);
             EventBus.Publish(EventType.INVENTORY_UPDATE, this.gameObject);
             EventBus.Publish(EventType.GAME_START);
+        }
+    }
+
+    public void OnToggleCreditMenu()
+    {
+        if (_creditMenu_UI.activeSelf)
+        {
+            _creditMenu_UI.SetActive(false);
+        }
+        else
+        {
+            _creditMenu_UI.SetActive(true);
+        }
+    }
+
+    public void OnToggleControlsMenu()
+    {
+        if (_controlsMenu_UI.activeSelf)
+        {
+            _controlsMenu_UI.SetActive(false);
+        }
+        else
+        {
+            _controlsMenu_UI.SetActive(true);
         }
     }
 
