@@ -71,6 +71,8 @@ public class PlayerController : MonoBehaviour
     private float jumpHeight = 1.0f;
     [SerializeField]
     private float gravityValue = -9.81f;
+    [SerializeField]
+    private GameObject speedLines;
 
     public float CurSpeed
     {
@@ -284,6 +286,7 @@ public class PlayerController : MonoBehaviour
     {
         if (CanSprint)
         {
+            speedLines.gameObject.SetActive(true);
             isSprinting = true;
             StopCoroutine(IncreaseStamina());
             stopSprint = null;
@@ -296,6 +299,7 @@ public class PlayerController : MonoBehaviour
     {
         if (CanSprint)
         {
+            speedLines.gameObject.SetActive(false);
             isSprinting = false;
             StopCoroutine(ReduceStamina());
             startSprint = null;
