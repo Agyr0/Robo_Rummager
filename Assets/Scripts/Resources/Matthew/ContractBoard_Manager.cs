@@ -70,9 +70,9 @@ public class ContractBoard_Manager : Singleton<ContractBoard_Manager>, IInteract
         HandleInteract();
     }
 
-    public void AddChassis(Robot_RecipeData chassisColelcted)
+    public void AddChassis(Robot_RecipeData chassisCollcted)
     {
-        Robot_RecipeDataList.Add(chassisColelcted);
+        Robot_RecipeDataList.Add(chassisCollcted);
     }
 
     IEnumerator MakeContracts()

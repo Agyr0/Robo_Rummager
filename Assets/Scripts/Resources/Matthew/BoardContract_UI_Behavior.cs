@@ -154,6 +154,7 @@ public class BoardContract_UI_Behavior : MonoBehaviour
         if (isContractAccepted)
         {
             ContractBoard_Manager.Instance.OnContractAccepted();
+            Debug.Log("adding contract");
             EventBus.Publish(EventType.PLAYER_ADDCONTRACT, this.gameObject);
             EventBus.Publish(EventType.BOARD_RESETCONTRACT, this.gameObject);
             EventBus.Publish(EventType.PLAYER_CONTRACTUPDATE);

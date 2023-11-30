@@ -43,7 +43,15 @@ public class Inventory_SlotHolder : MonoBehaviour, IPointerEnterHandler, IPointe
     private void OnUpdateInventorySlot(GameObject inventoryContainer)
     {
         SlotIconSprite.sprite = inventoryContainer.GetComponent<Player_InventoryManager>().Inventory_DataArray[slotOrderNumber].SlotItemData.ResourceIcon;
-        slotStoredAmountText.text = inventoryContainer.GetComponent<Player_InventoryManager>().Inventory_DataArray[slotOrderNumber].AmountStored.ToString();
+        if (inventoryContainer.GetComponent<Player_InventoryManager>().Inventory_DataArray[slotOrderNumber].AmountStored > 0)
+        {
+            slotStoredAmountText.text = inventoryContainer.GetComponent<Player_InventoryManager>().Inventory_DataArray[slotOrderNumber].AmountStored.ToString();
+        }
+        else
+        {
+            slotStoredAmountText.text = "";
+        }
+        
     }
 
     public void OnPointerEnter(PointerEventData eventData)
