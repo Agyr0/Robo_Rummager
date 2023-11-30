@@ -8,6 +8,7 @@ public enum RobotType
     PoliceBot,
     FootBall,
     Handyman,
+    HouseKeeper,
     YardMaintenance,
     MilitaryBot
 }

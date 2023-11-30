@@ -66,7 +66,7 @@ public class PlayerContract_UI_Behavior : MonoBehaviour
         {
             if (value.Split('/')[0] == "0")
             {
-                _contract_Resource_Scrap_Text.transform.parent.gameObject.SetActive(false);
+                _contract_Resource_Scrap_Text.transform.parent.parent.gameObject.SetActive(false);
             }
             else
             {
@@ -80,7 +80,7 @@ public class PlayerContract_UI_Behavior : MonoBehaviour
         {
             if (value.Split('/')[0] == "0")
             {
-                _contract_Resource_Wires_Text.transform.parent.gameObject.SetActive(false);
+                _contract_Resource_Wires_Text.transform.parent.parent.gameObject.SetActive(false);
             }
             else
             {
@@ -94,7 +94,7 @@ public class PlayerContract_UI_Behavior : MonoBehaviour
         {
             if (value.Split('/')[0] == "0")
             {
-                _contract_Resource_Oilcan_Text.transform.parent.gameObject.SetActive(false);
+                _contract_Resource_Oilcan_Text.transform.parent.parent.gameObject.SetActive(false);
             }
             else
             {
@@ -108,7 +108,7 @@ public class PlayerContract_UI_Behavior : MonoBehaviour
         {
             if (value.Split('/')[0] == "0")
             {
-                _contract_Resource_Motherboards_Text.transform.parent.gameObject.SetActive(false);
+                _contract_Resource_Motherboards_Text.transform.parent.parent.gameObject.SetActive(false);
             }
             else
             {
@@ -122,7 +122,7 @@ public class PlayerContract_UI_Behavior : MonoBehaviour
         {
             if (value.Split('/')[0] == "0")
             {
-                _contract_Resource_AdvSensors_Text.transform.parent.gameObject.SetActive(false);
+                _contract_Resource_AdvSensors_Text.transform.parent.parent.gameObject.SetActive(false);
             }
             else
             {
@@ -136,7 +136,7 @@ public class PlayerContract_UI_Behavior : MonoBehaviour
         {
             if (value.Split('/')[0] == "0")
             {
-                _contract_Resource_RadWaste_Text.transform.parent.gameObject.SetActive(false);
+                _contract_Resource_RadWaste_Text.transform.parent.parent.gameObject.SetActive(false);
             }
             else
             {
@@ -150,7 +150,7 @@ public class PlayerContract_UI_Behavior : MonoBehaviour
         {
             if (value.Split('/')[0] == "0")
             {
-                _contract_Resource_ZCrystal_Text.transform.parent.gameObject.SetActive(false);
+                _contract_Resource_ZCrystal_Text.transform.parent.parent.gameObject.SetActive(false);
             }
             else
             {
@@ -164,7 +164,7 @@ public class PlayerContract_UI_Behavior : MonoBehaviour
         {
             if (value.Split('/')[0] == "0")
             {
-                _contract_Resource_BlackMatter_Text.transform.parent.gameObject.SetActive(false);
+                _contract_Resource_BlackMatter_Text.transform.parent.parent.gameObject.SetActive(false);
             }
             else
             {
