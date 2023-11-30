@@ -25,7 +25,18 @@ public class WorkshopCollider : MonoBehaviour
         {
             if(!WorkshopManager.Instance.WorkshopZone.ResourcesAvailable())
                 EventBus.Publish(EventType.REFRESH_RESOURCES);
-            
+
+            EventBus.Publish(EventType.CHANGE_AMBIENT, AudioType.Workshop_Playlist);
+
+
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            EventBus.Publish(EventType.CHANGE_AMBIENT, AudioType.Scrapyard_Playlist);
         }
     }
 }

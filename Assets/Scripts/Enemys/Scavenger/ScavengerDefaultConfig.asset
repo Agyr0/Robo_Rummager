@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: ScavengerDefaultConfig
   m_EditorClassIdentifier: 
   tickRate: 0.5
+  maxHealth: 100
+  damage: 10
   patrolSpeed: 3.5
   patrolAcceleration: 8
   patrolAngularSpeed: 720
@@ -21,7 +23,7 @@ MonoBehaviour:
   scavengerPatrolPath: {fileID: 0}
   scavengerPatrolPoints: []
   randomPatrol: 0
-  detectionSpeed: 2
+  detectionSpeed: 5
   detectionAcceleration: 8
   detectionAngularSpeed: 720
   detectionStateMaxTime: 15
@@ -30,9 +32,9 @@ MonoBehaviour:
   shootingAngularSpeed: 720
   minShots: 3
   maxShots: 5
-  timeBetweenShots: 1
-  bulletSpeed: 20
-  repositionSpeed: 8
+  timeBetweenShots: 0.75
+  bulletSpeed: 50
+  repositionSpeed: 10
   repositionAcceleration: 12
   repositionAngularSpeed: 720
   repositionDistance: 25

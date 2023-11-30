@@ -1,20 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class Inventory_SlotHolder : MonoBehaviour
+public class Inventory_SlotHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField]
-    private Text _slotStoredAmountText;
+    private GameObject _discardButtons;
+
+    [SerializeField]
+    private TextMeshProUGUI _slotStoredAmountText;
 
     [SerializeField]
     private Image _slotIconSprite;
 
-    [SerializeField]
-    private int _slotOrderNumber;
+    public int slotOrderNumber;
 
-    public Text slotStoredAmountText
+    public TextMeshProUGUI slotStoredAmountText
     {
         set { _slotStoredAmountText = value; }
         get { return _slotStoredAmountText; }
@@ -38,7 +42,23 @@ public class Inventory_SlotHolder : MonoBehaviour
     
     private void OnUpdateInventorySlot(GameObject inventoryContainer)
     {
-        SlotIconSprite.sprite = inventoryContainer.GetComponent<Player_InventoryManager>().Inventory_DataArray[_slotOrderNumber].SlotItemData.ResourceIcon;
-        slotStoredAmountText.text = inventoryContainer.GetComponent<Player_InventoryManager>().Inventory_DataArray[_slotOrderNumber].AmountStored.ToString();
+        SlotIconSprite.sprite = inventoryContainer.GetComponent<Player_InventoryManager>().Inventory_DataArray[slotOrderNumber].SlotItemData.ResourceIcon;
+        slotStoredAmountText.text = inventoryContainer.GetComponent<Player_InventoryManager>().Inventory_DataArray[slotOrderNumber].AmountStored.ToString();
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (GameManager.Instance.inventoryManager.Inventory_DataArray[slotOrderNumber].AmountStored > 0)
+        {
+            _discardButtons.SetActive(true);
+        }
+
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+
+        _discardButtons.SetActive(false);
+
     }
 }

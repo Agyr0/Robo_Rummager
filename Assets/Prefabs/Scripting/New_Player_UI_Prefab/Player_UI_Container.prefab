@@ -1579,14 +1579,14 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 627909446619172034}
   - {fileID: 1734934913647889653}
+  - {fileID: 627909446619172034}
   m_Father: {fileID: 6262838835318187257}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 44.043182, y: 0}
+  m_SizeDelta: {x: -88.0864, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4678908021589081642
 MonoBehaviour:
@@ -15575,9 +15575,9 @@ RectTransform:
   m_Father: {fileID: 792025092198698580}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -40, y: -40}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -7.2355957, y: 2.831398}
+  m_SizeDelta: {x: -4.4044, y: 5.6627}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8244642099637958680
 CanvasRenderer:
@@ -15782,6 +15782,7 @@ MonoBehaviour:
   - {fileID: 2652622360622632555, guid: 2a55e99c8541cd141a4f4581185c60f2, type: 3}
   - {fileID: 2652622360622632555, guid: f5392ea59cf726744bd66960cda3e282, type: 3}
   - {fileID: 2652622360622632555, guid: 124a49b6830509944894a187a26b4149, type: 3}
+  _isSendingPickupEvents: 0
   _inventorySlotCount: 2
 --- !u!114 &3672615972305746384
 MonoBehaviour:
@@ -15820,14 +15821,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65bd8aa2bfd1f8d469ffc2d477263eff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _contract_BlankTemplate_Prefab: {fileID: 3432019062012380271, guid: 17e623c6ed06a8e4e984884888373747,
-    type: 3}
-  _playerContract_Container: {fileID: 4850917691762609547}
-  _purgeContractList: []
-  _contract_Player_DataList: []
-  _contract_DataCullList: []
+  _contractData:
+    _robot_RecipeData: {fileID: 0}
+    _contract_TimerCount: 0
+    _contract_PayOut: 0
+    _contract_IsTimed: 0
+    _contract_Status: 0
   _contract_TimerTickRate: 1
   isContractTimerActive: 0
+  _contract_UI: {fileID: 0}
+  _contractHolder: 0
 --- !u!114 &7082857578903005663
 MonoBehaviour:
   m_ObjectHideFlags: 0

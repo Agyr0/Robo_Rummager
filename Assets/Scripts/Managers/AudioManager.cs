@@ -20,29 +20,19 @@ public class AudioManager : Singleton<AudioManager>
     private void OnEnable()
     {
         EventBus.Subscribe<AudioType>(EventType.CHANGE_AMBIENT, ChangeAmbientAudio);
-        EventBus.Subscribe(EventType.TEST_EVENT_0, testCombat);
-        EventBus.Subscribe(EventType.TEST_EVENT_1, testScrapyard);
     }
     private void OnDisable()
     {
         EventBus.Unsubscribe<AudioType>(EventType.CHANGE_AMBIENT, ChangeAmbientAudio);
-        EventBus.Unsubscribe(EventType.TEST_EVENT_0, testCombat);
-        EventBus.Unsubscribe(EventType.TEST_EVENT_1, testScrapyard);
     }
 
     private void Start()
     {
         ambientSource = GetComponent<AudioSource>();
+        ChangeAmbientAudio(AudioType.Scrapyard_Playlist);
     }
 
-    void testCombat()
-    {
-        EventBus.Publish(EventType.CHANGE_AMBIENT, AudioType.Combat_Playlist);
-    }
-    void testScrapyard()
-    {
-        EventBus.Publish(EventType.CHANGE_AMBIENT, AudioType.Scrapyard_Playlist);
-    }
+
 
     #region Formatting
     //Shhh this was so the descriptions would look better for function summaries
@@ -290,8 +280,13 @@ public class AudioManager : Singleton<AudioManager>
     }
 
     private Coroutine loopAmbient;
+    private AudioType currentPlaylist;
     public void ChangeAmbientAudio(AudioType audioType)
     {
+        if (currentPlaylist == audioType)
+            return;
+        currentPlaylist = audioType;
+
         if(loopAmbient != null)
             StopCoroutine(loopAmbient);
 

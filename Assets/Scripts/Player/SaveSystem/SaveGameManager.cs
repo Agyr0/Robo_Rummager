@@ -13,7 +13,7 @@ public class SaveGameManager : Singleton<SaveGameManager>
 
     [SerializeField]
     private List<Robot_RecipeData> _robot_RecipeDataList;
-
+    /*
     public override void Awake()
     {
         base.Awake();
@@ -21,7 +21,7 @@ public class SaveGameManager : Singleton<SaveGameManager>
         data = new SaveData();
 
         EventBus.Subscribe(EventType.PLAYER_SAVEGAME, SaveWorkshopStorage);
-        EventBus.Subscribe(EventType.PLAYER_SAVEGAME, SavePlayerInventory);
+        //EventBus.Subscribe(EventType.PLAYER_SAVEGAME, SavePlayerInventory);
         EventBus.Subscribe(EventType.PLAYER_SAVEGAME, SavePlayerContract);
         EventBus.Subscribe(EventType.PLAYER_SAVEGAME, SaveBoardContract);
 
@@ -29,7 +29,7 @@ public class SaveGameManager : Singleton<SaveGameManager>
         EventBus.Subscribe<SaveData>(EventType.PLAYER_LOADGAME, LoadPlayerContracts);
         EventBus.Subscribe<SaveData>(EventType.PLAYER_LOADGAME, LoadBoardContracts);
     }
-
+    */
     public void DeleteData(string saveID)
     {
         SaveLoad.DeleteSaveData(saveID);
@@ -41,7 +41,7 @@ public class SaveGameManager : Singleton<SaveGameManager>
 
         SaveLoad.Save(saveData, saveID);
     }
-
+    /*
     public static void TryLoadData(string saveID)
     {
         data = SaveLoad.Load(saveID);
@@ -51,12 +51,12 @@ public class SaveGameManager : Singleton<SaveGameManager>
         EventBus.Publish(EventType.PLAYER_LOADGAME,data);
         EventBus.Publish(EventType.ONLOAD);
     }
-
+    */
     private void SaveWorkshopStorage()
     {
         SaveGameManager.data.save_WorkShopStorage = WorkshopManager.Instance.WorkshopStorage;
     }
-
+    /*
     private void SavePlayerInventory()
     {
         for (int i = 0; i < Player_InventoryManager.Instance.Inventory_DataArray.Length; i++)
@@ -67,7 +67,7 @@ public class SaveGameManager : Singleton<SaveGameManager>
         data.save_Player_CreditPurse = Player_InventoryManager.Instance.CreditPurse;
         data.save_Player_SlotCount = Player_InventoryManager.Instance.InventorySlotCount;
     }
-
+    */
     private void SavePlayerContract()
     {
         /*
@@ -99,7 +99,7 @@ public class SaveGameManager : Singleton<SaveGameManager>
         }
         
     }
-
+    /*
     private void LoadPlayerInventory(SaveData data)
     {
         for (int i = 0; i < data.save_Inventory_SlotAmounts.Length; i++)
@@ -141,7 +141,7 @@ public class SaveGameManager : Singleton<SaveGameManager>
         Player_InventoryManager.Instance.CreditPurse = data.save_Player_CreditPurse;
         Player_InventoryManager.Instance.InventorySlotCount = data.save_Player_SlotCount;
     }
-
+    */
     private void LoadWorkshopStorage(SaveData data)
     {
         WorkshopManager.Instance.WorkshopStorage = data.save_WorkShopStorage;
@@ -166,7 +166,7 @@ public class SaveGameManager : Singleton<SaveGameManager>
         }
         */
     }
-
+    /*
     private void LoadBoardContracts(SaveData data)
     {
         ContractBoard_Manager.Instance.Contract_DataList.Clear();
@@ -184,5 +184,5 @@ public class SaveGameManager : Singleton<SaveGameManager>
             }
         }
     }
-
+    */
 }
