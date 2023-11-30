@@ -16,7 +16,6 @@ public class ScavengerAgent : MonoBehaviour, IDamageable
     public ScavengerStateId initialState;
     public ScavengerConfig config;
 
-    public float scavengerMaxHealth = 100;
     public float scavengerHealth;
 
     void Start()
@@ -38,7 +37,7 @@ public class ScavengerAgent : MonoBehaviour, IDamageable
 
         // Stuff to do when enemy is spawned
         stateMachine.ChangeState(initialState);
-        scavengerHealth = scavengerMaxHealth;
+        scavengerHealth = config.maxHealth;
 
         // Set Spawn Location and patrol points
         GameObject spawnLocation = FindClosestSpawnLocation();
@@ -77,23 +76,37 @@ public class ScavengerAgent : MonoBehaviour, IDamageable
 
     public void TakeDamage(float damage)
     {
-        Debug.Log("I've been shot!");
         scavengerHealth -= damage;
         if (scavengerHealth <= 0)
         {
-            // Item Drops (Disabled drops until I know what Scavengers are supposed to drop)
-            //LootBag lootBag = this.gameObject.GetComponent<LootBag>();
-            //lootBag.DropResource(this.gameObject.transform.position);
-
+            GetComponent<ScavengerFireGun>().enabled = false;
+            navMeshAgent.velocity = Vector3.zero;
+            navMeshAgent.isStopped = true;
+            animator.SetBool("Dead", true);
+            // Play Death Audio
             audioManager.PlayClip(audioSource, audioManager.FindRandomizedClip(AudioType.Scavenger_Death, audioManager.effectAudio));
-            gameObject.SetActive(false);
-            navMeshAgent.enabled = false;
-            scavengerHealth = scavengerMaxHealth;
+            StartCoroutine(DespawnScavenger());
         }
         else
         {
-            // Chase Player
+            // Go after player
             stateMachine.ChangeState(ScavengerStateId.Detection);
         }
+    }
+
+    IEnumerator DespawnScavenger()
+    {
+        yield return new WaitForSeconds(3.069f);
+        // Item Drops
+        LootBag lootBag = this.gameObject.GetComponent<LootBag>();
+        lootBag.DropResource(this.gameObject.transform.position);
+
+        // Respawn and Object Pool stuff
+        navMeshAgent.isStopped = false;
+        gameObject.SetActive(false);
+        navMeshAgent.enabled = false;
+        scavengerHealth = config.maxHealth;
+        GetComponent<ScavengerFireGun>().enabled = true;
+        animator.SetBool("Dead", false);
     }
 }

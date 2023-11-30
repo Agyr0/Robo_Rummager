@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class RogueBotAttackCollisionDetection : MonoBehaviour
 {
+    public RogueBotAgent agent;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
         {
-            GameManager.Instance.playerController.TakeDamage(10);
+            GameManager.Instance.playerController.TakeDamage(agent.config.damage);
             Debug.Log(GameManager.Instance.playerController.Health);
         }
     }
