@@ -98,17 +98,17 @@ public class BoardContract_UI_Behavior : MonoBehaviour
             case RobotType.Nurse:
                 _contract_RobotType_Text.text = "Nurse";
                 break;
-            case RobotType.ServiceWorker:
-                _contract_RobotType_Text.text = "Service Worker";
+            case RobotType.HouseKeeper:
+                _contract_RobotType_Text.text = "House Keeper";
                 break;
             case RobotType.PoliceBot:
                 _contract_RobotType_Text.text = "Police Bot";
                 break;
             case RobotType.FootBall:
-                _contract_RobotType_Text.text = "Foot Ball";
+                _contract_RobotType_Text.text = "Football Bot";
                 break;
-            case RobotType.Handyman:
-                _contract_RobotType_Text.text = "Handyman";
+            case RobotType.YardMaintenance:
+                _contract_RobotType_Text.text = "Yard Maintenance Bot";
                 break;
             default:
                 break;

@@ -7,7 +7,9 @@ public enum RobotType
     ServiceWorker,
     PoliceBot,
     FootBall,
-    Handyman
+    Handyman,
+    YardMaintenance,
+    MilitaryBot
 }
 public enum RobotTier
 {
