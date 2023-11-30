@@ -16,7 +16,6 @@ public class ScavengerAgent : MonoBehaviour, IDamageable
     public ScavengerStateId initialState;
     public ScavengerConfig config;
 
-    public float scavengerMaxHealth = 100;
     public float scavengerHealth;
 
     void Start()
@@ -38,7 +37,7 @@ public class ScavengerAgent : MonoBehaviour, IDamageable
 
         // Stuff to do when enemy is spawned
         stateMachine.ChangeState(initialState);
-        scavengerHealth = scavengerMaxHealth;
+        scavengerHealth = config.maxHealth;
 
         // Set Spawn Location and patrol points
         GameObject spawnLocation = FindClosestSpawnLocation();
@@ -88,11 +87,11 @@ public class ScavengerAgent : MonoBehaviour, IDamageable
             audioManager.PlayClip(audioSource, audioManager.FindRandomizedClip(AudioType.Scavenger_Death, audioManager.effectAudio));
             gameObject.SetActive(false);
             navMeshAgent.enabled = false;
-            scavengerHealth = scavengerMaxHealth;
+            scavengerHealth = config.maxHealth;
         }
         else
         {
-            // Chase Player
+            // Go after player
             stateMachine.ChangeState(ScavengerStateId.Detection);
         }
     }

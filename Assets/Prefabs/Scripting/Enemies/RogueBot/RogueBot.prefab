@@ -66,6 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60605de6cec80b949b4acbd8a3df53e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agent: {fileID: 4387281224788999207}
 --- !u!1 &9152778057369279522
 GameObject:
   m_ObjectHideFlags: 0
@@ -435,6 +436,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 81e61900b3a58f844937ff1ad9b3effd,
+        type: 3}
+      propertyPath: m_TagString
+      value: RogueBot
       objectReference: {fileID: 0}
     - target: {fileID: 1428468553025508205, guid: 81e61900b3a58f844937ff1ad9b3effd,
         type: 3}
@@ -819,7 +825,6 @@ MonoBehaviour:
   config: {fileID: 11400000, guid: 5e20c8badaee5f54da20400d09b0e7e1, type: 2}
   detectedIcon: {fileID: 9152778057369279522}
   chargeHitbox: {fileID: 4369527409071246193}
-  rogueBotMaxHealth: 75
   rogueBotHealth: 0
 --- !u!114 &2505811001324373406
 MonoBehaviour:
