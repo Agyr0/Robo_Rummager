@@ -17,7 +17,6 @@ public class RogueBotAgent : MonoBehaviour, IDamageable
     public GameObject detectedIcon;
     public GameObject chargeHitbox;
 
-    public float rogueBotMaxHealth = 75;
     public float rogueBotHealth;
 
     void Start()
@@ -37,7 +36,7 @@ public class RogueBotAgent : MonoBehaviour, IDamageable
 
         // Stuff to do when enemy is spawned
         stateMachine.ChangeState(initialState);
-        rogueBotHealth = rogueBotMaxHealth;
+        rogueBotHealth = config.maxHealth;
         config.patrolCenterPoint = transform.position;
     }
 
@@ -52,6 +51,7 @@ public class RogueBotAgent : MonoBehaviour, IDamageable
         rogueBotHealth -= damage;
         if (rogueBotHealth <= 0)
         {
+            navMeshAgent.velocity = Vector3.zero;
             navMeshAgent.isStopped = true;
             animator.SetBool("Dead", true);
             // Play Death Audio
@@ -76,7 +76,7 @@ public class RogueBotAgent : MonoBehaviour, IDamageable
         navMeshAgent.isStopped = false;
         gameObject.SetActive(false);
         navMeshAgent.enabled = false;
-        rogueBotHealth = rogueBotMaxHealth;
+        rogueBotHealth = config.maxHealth;
         animator.SetBool("Dead", false);
     }
 

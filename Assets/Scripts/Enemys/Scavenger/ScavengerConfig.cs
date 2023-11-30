@@ -9,6 +9,9 @@ public class ScavengerConfig : ScriptableObject
     [Tooltip("How often various Scavenger actions will be checked. Measured in seconds.")]
     public float tickRate;
 
+    public float maxHealth;
+    public float damage;
+
     #region Patrol
     [Header("Patrol Stats")]
     [Tooltip("Speed of the Scavenger while patrolling.")]
