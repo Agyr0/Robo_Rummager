@@ -6268,7 +6268,7 @@ GameObject:
   - component: {fileID: 8269435159277874595}
   - component: {fileID: 1673811551153105613}
   - component: {fileID: 7553410739082499309}
-  - component: {fileID: 1953114459212705041}
+  - component: {fileID: 386212967073248113}
   m_Layer: 9
   m_Name: Scavenger
   m_TagString: Scavenger
@@ -6537,7 +6537,7 @@ MonoBehaviour:
   gunParticle: {fileID: 5991906932023091045}
   bulletPrefab: {fileID: 5541104777284346043, guid: e053b93d65cffda4c82663e303ea4d1c,
     type: 3}
---- !u!114 &1953114459212705041
+--- !u!114 &386212967073248113
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6546,9 +6546,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 5447517983591290391}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5bdd2c3185d75e47838cfe85b628554, type: 3}
+  m_Script: {fileID: 11500000, guid: 16ead85bb05099445be190410ce4d835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _dropTable:
+  - resource: {fileID: 241085201683115378, guid: 033effc9191ff884f95e1f80ed019235,
+      type: 3}
+    dropChance: 100
+    _minDropCount: 1
+    _maxDropCount: 1
+    elementName: Z Crystal
+  - resource: {fileID: 2652622360622632555, guid: 6ccdceb36497005498250b22a2a1ef20,
+      type: 3}
+    dropChance: 75
+    _minDropCount: 5
+    _maxDropCount: 10
+    elementName: Credits
+  _resourceFullMesh: {fileID: 0}
+  _maxDrops: 10
+  _dropsLeft: 0
+  _explosionForce: 2
+  _explosionRadius: 1
+  _upwardsModifier: 2
 --- !u!1 &5750730331129031345
 GameObject:
   m_ObjectHideFlags: 0

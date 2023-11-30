@@ -51,6 +51,7 @@ public class RogueBotAgent : MonoBehaviour, IDamageable
         rogueBotHealth -= damage;
         if (rogueBotHealth <= 0)
         {
+            navMeshAgent.velocity = Vector3.zero;
             navMeshAgent.isStopped = true;
             animator.SetBool("Dead", true);
             // Play Death Audio
