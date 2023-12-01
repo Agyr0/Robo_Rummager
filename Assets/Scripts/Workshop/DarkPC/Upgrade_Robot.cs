@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Upgrade_FootballRobot : Upgrade_UI_Behavior
+public class Upgrade_Robot : Upgrade_UI_Behavior
 {
+    [SerializeField]
+    private int _robotToUnlock = 0;
     [SerializeField]
     private int _upgradeCurrentLevel = 0;
     [SerializeField]
@@ -27,10 +29,9 @@ public class Upgrade_FootballRobot : Upgrade_UI_Behavior
             {
                 AudioManager.Instance.PlayClip(this.GetComponent<AudioSource>(), AudioManager.Instance.effectAudio[6].myControllers[1]);
                 WorkshopManager.Instance.WorkshopStorage.CreditCount -= _upgradeCost;
-                foreach (var item in DarkWebPC_Manager.Instance._3DPrinterList)
-                {
-                    item.GetComponent<PrinterManager>().CanPrintDarkMatter = true;
-                }
+
+                WorkshopManager.Instance.WorkshopBench.tabManager.tier1Controller.myTabs[_robotToUnlock].isLocked = false;
+
                 _upgradeCurrentLevel++;
                 UpdateText(_upgradeCost, _upgradeDesc, _upgradeCurrentLevel, _upgradeMaxLevel);
             }
