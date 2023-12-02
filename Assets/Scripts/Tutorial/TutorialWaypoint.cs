@@ -176,7 +176,6 @@ public class TutorialWaypoint : MonoBehaviour
                 if ((int)Vector3.Distance(waypointTarget.position, playerTransform.position) < 2 && tutorialManager.hasPlayedDropOffReachedTutorial == true)
                 {
                     EventBus.Publish(EventType.SELLING_TUTORIAL);
-                    Debug.Log("huh");
                     hasTriggeredSellingTutorial = true;
                 }
             }

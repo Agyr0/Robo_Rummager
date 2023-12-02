@@ -133,6 +133,7 @@ public class TutorialManager : MonoBehaviour
     {
         if (hasPlayedSellingTutorial)
         {
+            Debug.Log("Selling Tutorial Message Reached");
             tutorialContainer.SetActive(true);
             StartCoroutine(WriteSellingTutorialMessages());
         }
@@ -420,6 +421,7 @@ public class TutorialManager : MonoBehaviour
         yield return new WaitForSeconds(scaleTime);
         chipFace.sprite = chipHappy;
 
+        hasPlayedSellingTutorial = true;
         tutorialContainer.SetActive(false);
     }
 
@@ -442,5 +444,21 @@ public class TutorialManager : MonoBehaviour
         StartCoroutine(OpenTutorialBox(false));
         yield return new WaitForSeconds(scaleTime);
         chipFace.sprite = chipNeutral;
+
+        StartCoroutine(OpenTutorialBox(true));
+        tutorialObjectiveMarker.SetActive(false);
+        foreach (char character in Messages[Index].ToCharArray())
+        {
+            tutorialText.text += character;
+            yield return new WaitForSeconds(messageSpeed);
+        }
+        yield return new WaitForSeconds(2);
+        tutorialText.text = null;
+        Index++;
+        StartCoroutine(OpenTutorialBox(false));
+        yield return new WaitForSeconds(scaleTime);
+        chipFace.sprite = chipHappy;
+
+        this.gameObject.SetActive(false);
     }
 }
