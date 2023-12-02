@@ -363,11 +363,14 @@ public class PrinterManager : MonoBehaviour, IInteractable
                         }
                         else
                         {
+                            
                             Clock_PrintTime--;
+                            /*
                             if (Clock_PrintTime%7 == 0)
                             {
                                 AudioManager.Instance.PlayClip(this.GetComponent<AudioSource>(), AudioManager.Instance.FindClip(AudioType.Printer_Hum, AudioManager.Instance.effectAudio));
                             }
+                            */
                         }
                         yield return new WaitForSeconds(1);
                     }
