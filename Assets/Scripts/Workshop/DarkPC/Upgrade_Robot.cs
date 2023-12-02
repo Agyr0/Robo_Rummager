@@ -5,8 +5,16 @@ using UnityEngine;
 
 public class Upgrade_Robot : Upgrade_UI_Behavior
 {
+    
     [SerializeField]
     private int _robotToUnlock = 0;
+
+    [SerializeField]
+    private Robot_RecipeData _recipeDataContract;
+
+    [SerializeField]
+    private TabManager _tabManager;
+
     [SerializeField]
     private int _upgradeCurrentLevel = 0;
     [SerializeField]
@@ -30,7 +38,10 @@ public class Upgrade_Robot : Upgrade_UI_Behavior
                 AudioManager.Instance.PlayClip(this.GetComponent<AudioSource>(), AudioManager.Instance.effectAudio[6].myControllers[1]);
                 WorkshopManager.Instance.WorkshopStorage.CreditCount -= _upgradeCost;
 
-                WorkshopManager.Instance.WorkshopBench.tabManager.tier1Controller.myTabs[_robotToUnlock].isLocked = false;
+                //WorkshopManager.Instance.WorkshopBench.tabManager.tier1Controller.myTabs[0].isLocked = false;
+                _tabManager.tier1Controller.myTabs[0].isLocked = false;
+
+                ContractBoard_Manager.Instance.Robot_RecipeDataList.Add(_recipeDataContract);
 
                 _upgradeCurrentLevel++;
                 UpdateText(_upgradeCost, _upgradeDesc, _upgradeCurrentLevel, _upgradeMaxLevel);

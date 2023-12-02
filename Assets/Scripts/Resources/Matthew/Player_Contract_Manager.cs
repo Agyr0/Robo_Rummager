@@ -96,9 +96,7 @@ public class Player_Contract_Manager : MonoBehaviour
     {
         set
         {
-            string tempValue = "";
-            tempValue += value.ToString() + "/" + (WorkshopManager.Instance.WorkshopStorage.MetalScrapCount);
-            _contract_UI.Contract_Resource_Scrap_Text = tempValue;
+            _contract_UI.Contract_Resource_Scrap_Text = value;
         }
     }
     public int Contract_Resource_Wires_Text
@@ -107,7 +105,7 @@ public class Player_Contract_Manager : MonoBehaviour
         {
             string tempValue = "";
             tempValue += value.ToString() + "/" + (WorkshopManager.Instance.WorkshopStorage.WireCount);
-            _contract_UI.Contract_Resource_Wires_Text = tempValue;
+            _contract_UI.Contract_Resource_Wires_Text = value;
         }
     }
     public int Contract_Resource_Oilcan_Text
@@ -116,7 +114,7 @@ public class Player_Contract_Manager : MonoBehaviour
         {
             string tempValue = "";
             tempValue += value.ToString() + "/" + (WorkshopManager.Instance.WorkshopStorage.OilCount);
-            _contract_UI.Contract_Resource_Oilcan_Text = tempValue;
+            _contract_UI.Contract_Resource_Oilcan_Text = value;
         }
     }
     public int Contract_Resource_Motherboards_Text
@@ -125,7 +123,7 @@ public class Player_Contract_Manager : MonoBehaviour
         {
             string tempValue = "";
             tempValue += value.ToString() + "/" + (WorkshopManager.Instance.WorkshopStorage.MotherBoardCount);
-            _contract_UI.Contract_Resource_Motherboards_Text = tempValue;
+            _contract_UI.Contract_Resource_Motherboards_Text = value;
         }
     }
     public int Contract_Resource_AdvSensor_Text
@@ -134,7 +132,7 @@ public class Player_Contract_Manager : MonoBehaviour
         {
             string tempValue = "";
             tempValue += value.ToString() + "/" + (WorkshopManager.Instance.WorkshopStorage.SensorCount);
-            _contract_UI.Contract_Resource_AdvSensor_Text = tempValue;
+            _contract_UI.Contract_Resource_AdvSensor_Text = value;
         }
     }
     public int Contract_Resource_RadWaste_Text
@@ -143,7 +141,7 @@ public class Player_Contract_Manager : MonoBehaviour
         {
             string tempValue = "";
             tempValue += value.ToString() + "/" + (WorkshopManager.Instance.WorkshopStorage.RadioactiveWasteCount);
-            _contract_UI.Contract_Resource_RadWaste_Text = tempValue;
+            _contract_UI.Contract_Resource_RadWaste_Text = value;
         }
     }
     public int Contract_Resource_ZCrystal_Text
@@ -152,7 +150,7 @@ public class Player_Contract_Manager : MonoBehaviour
         {
             string tempValue = "";
             tempValue += value.ToString() + "/" + (WorkshopManager.Instance.WorkshopStorage.ZCrystalCount);
-            _contract_UI.Contract_Resource_ZCrystal_Text = tempValue;
+            _contract_UI.Contract_Resource_ZCrystal_Text = value;
         }
     }
     public int Contract_Resource_BlackMatter_Text
@@ -161,7 +159,7 @@ public class Player_Contract_Manager : MonoBehaviour
         {
             string tempValue = "";
             tempValue += value.ToString() + "/" + (WorkshopManager.Instance.WorkshopStorage.BlackMatterCount);
-            _contract_UI.Contract_Resource_BlackMatter_Text = tempValue;
+            _contract_UI.Contract_Resource_BlackMatter_Text = value;
         }
     }
     public ContractStatus Contract_Status

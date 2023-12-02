@@ -150,7 +150,7 @@ public class DarkWebPC_Manager : Singleton<DarkWebPC_Manager>, IInteractable
         }
         foreach (GameObject item in _upgradesRobots)
         {
-            item.SetActive(false);
+            item.SetActive(true);
         }
     }
 
