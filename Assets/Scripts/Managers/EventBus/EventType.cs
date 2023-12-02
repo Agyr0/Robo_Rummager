@@ -119,6 +119,7 @@ public enum EventType
     #region Tutorial
     CONTRACTS_TUTORIALS,
     CONTRACTS_OPENED_TUTORIALS,
+    LOOTABLE_TUTORIAL,
     #endregion
 
     #region Testing Events

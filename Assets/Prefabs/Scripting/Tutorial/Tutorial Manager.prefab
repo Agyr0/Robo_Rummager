@@ -337,14 +337,15 @@ MonoBehaviour:
   - "\u201CHello Lumen! My name is Chip, Your virtual AI. I live inside of your goggles!\u201D"
   - "\u201CThis is your workshop! This is our home and our workspace. As a black
     market mechanic we build all of our creations here. \u201D"
-  - "\u201CBut first, let\u2019s check out the contracts board\u201D"
-  - "\u201CThis is where we receive customers orders for robots! Commercial robots
-    are expensive and people come to us for a cheaper alternative\u201D "
+  - "\u201CFirst things first, let\u2019s go check out the contracts board.\u201D"
+  - "\u201CThis is where we receive customers orders for robots! Go ahead and press
+    \"E\" to view the currently available contracts. \u201D "
   - "\u201CRemember you can only hold 1 contract at a time, so choose wisely!\u201D"
   - "\u201CGreat choice! Now let\u2019s go find the necessary parts!\u201D"
   - "\u201CHmm, I know I saw some spare parts around here. Try pressing \u201CQ\u201D
-    to activate your scanner goggles \u201D"
-  messageSpeed: 0.04
+    to activate your scanner goggles.\u201D"
+  hasPlayedStartTutorial: 0
+  messageSpeed: 0.001
   scaleTime: 0.2
   scaleAmount: 100
 --- !u!1 &7600869993503680668
