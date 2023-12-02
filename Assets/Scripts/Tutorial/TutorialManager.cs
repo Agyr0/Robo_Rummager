@@ -18,13 +18,15 @@ public class TutorialManager : MonoBehaviour
     private int Index = 0;
 
     public bool hasPlayedStartTutorial = false;
-    private bool hasPlayedContractBoardTutorial = false;
-    private bool hasPlayedContractAcceptedTutorial = false;
+    public bool hasPlayedContractBoardTutorial = false;
+    public bool hasPlayedContractAcceptedTutorial = false;
     public bool hasPlayedScannerGogglesTutorial = false;
-    private bool hasPlayedLootingTutorial = false;
+    public bool hasPlayedLootingTutorial = false;
+    public bool hasPlayedDropOffTutorial = false;
+    public bool hasPlayedDropOffReachedTutorial = false;
+    public bool hasPlayedSellingTutorial = false;
 
     [SerializeField] private float messageSpeed;
-
     [SerializeField] private float scaleTime;
     [SerializeField] private float scaleAmount;
 
@@ -37,6 +39,9 @@ public class TutorialManager : MonoBehaviour
         EventBus.Subscribe<GameObject>(EventType.PLAYER_ADDCONTRACT, ContractAcceptedTutorialMessages);
         EventBus.Subscribe(EventType.TOGGLE_SCANNER, ScannerGogglesTutorialMessages);
         EventBus.Subscribe(EventType.LOOTABLE_TUTORIAL, LootingTutorialMessages);
+        EventBus.Subscribe<GameObject>(EventType.INVENTORY_ADDITEM, DropOffTutorialMessages);
+        EventBus.Subscribe(EventType.DROPOFF_TUTORIAL, DropOffReachedTutorialMessages);
+        EventBus.Subscribe(EventType.SELLING_TUTORIAL, SellingTutorialMessages);
     }
 
     private void OnDisable()
@@ -46,6 +51,8 @@ public class TutorialManager : MonoBehaviour
         EventBus.Unsubscribe<GameObject>(EventType.PLAYER_ADDCONTRACT, ContractAcceptedTutorialMessages);
         EventBus.Unsubscribe(EventType.TOGGLE_SCANNER, ScannerGogglesTutorialMessages);
         EventBus.Unsubscribe(EventType.LOOTABLE_TUTORIAL, LootingTutorialMessages);
+        EventBus.Unsubscribe<GameObject>(EventType.INVENTORY_ADDITEM, DropOffTutorialMessages);
+        EventBus.Unsubscribe(EventType.SELLING_TUTORIAL, SellingTutorialMessages);
     }
 
     private void Start()
@@ -100,9 +107,42 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
+    // Drop Off Tutorial
+    public void DropOffTutorialMessages(GameObject gameobject)
+    {
+        if (hasPlayedLootingTutorial && !hasPlayedDropOffTutorial)
+        {
+            tutorialContainer.SetActive(true);
+            StartCoroutine(WriteDropOffTutorialMessages());
+            hasPlayedDropOffTutorial = true;
+        }
+    }
+
+    // Drop Off Reached Tutorial
+    public void DropOffReachedTutorialMessages()
+    {
+        if (hasPlayedDropOffTutorial)
+        {
+            tutorialContainer.SetActive(true);
+            StartCoroutine(WriteDropOffReachedTutorialMessages());
+        }
+    }
+
+    // Selling Tutorial
+    public void SellingTutorialMessages()
+    {
+        if (hasPlayedSellingTutorial)
+        {
+            tutorialContainer.SetActive(true);
+            StartCoroutine(WriteSellingTutorialMessages());
+        }
+    }
+
+
     //|||||||||||||||||COROUTINES||||||||||||||||| 
     //|||||||||||||||||COROUTINES|||||||||||||||||
     //|||||||||||||||||COROUTINES|||||||||||||||||
+
 
     // OPEN / CLOSE TUTORIAL TEXT BOX
     IEnumerator OpenTutorialBox(bool startingAnimation)
@@ -178,6 +218,7 @@ public class TutorialManager : MonoBehaviour
         StartCoroutine(OpenTutorialBox(false));
         yield return new WaitForSeconds(scaleTime);
         chipFace.sprite = chipNeutral;
+
         tutorialContainer.SetActive(false);
         tutorialObjectiveMarker.SetActive(true);
         hasPlayedStartTutorial = true;
@@ -187,20 +228,20 @@ public class TutorialManager : MonoBehaviour
     IEnumerator WriteContractBoardTutorialMessages()
     {
         // Contract Board Description Text
-        StartCoroutine(OpenTutorialBox(true));
         tutorialObjectiveMarker.SetActive(false);
+
+        StartCoroutine(OpenTutorialBox(true));
         foreach (char character in Messages[Index].ToCharArray())
         {
             tutorialText.text += character;
             yield return new WaitForSeconds(messageSpeed);
         }
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         tutorialText.text = null;
         Index++;
         StartCoroutine(OpenTutorialBox(false));
         yield return new WaitForSeconds(scaleTime);
         chipFace.sprite = chipHappy;
-
 
         // Single Contract Text
         StartCoroutine(OpenTutorialBox(true));
@@ -215,6 +256,8 @@ public class TutorialManager : MonoBehaviour
         StartCoroutine(OpenTutorialBox(false));
         yield return new WaitForSeconds(scaleTime);
         chipFace.sprite = chipNeutral;
+
+        tutorialContainer.SetActive(false);
         hasPlayedContractBoardTutorial = true;
     }
 
@@ -222,38 +265,34 @@ public class TutorialManager : MonoBehaviour
     IEnumerator WriteContractAcceptedTutorialMessages()
     {
         // Contract accepted message
-        tutorialWaypoint.waypointTarget = tutorialWaypoint.tutorialLootableObject;
         StartCoroutine(OpenTutorialBox(true));
         foreach (char character in Messages[Index].ToCharArray())
         {
             tutorialText.text += character;
             yield return new WaitForSeconds(messageSpeed);
         }
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
         tutorialText.text = null;
         Index++;
         StartCoroutine(OpenTutorialBox(false));
         yield return new WaitForSeconds(scaleTime);
-        tutorialContainer.SetActive(false);
-        chipFace.sprite = chipNeutral;
-
-        yield return new WaitForSeconds(0.5f);
+        chipFace.sprite = chipHappy;
 
         // Use Scanner Goggle Message
-        tutorialContainer.SetActive(true);
         StartCoroutine(OpenTutorialBox(true));
         foreach (char character in Messages[Index].ToCharArray())
         {
             tutorialText.text += character;
             yield return new WaitForSeconds(messageSpeed);
         }
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
         tutorialText.text = null;
         Index++;
         StartCoroutine(OpenTutorialBox(false));
         yield return new WaitForSeconds(scaleTime);
+        chipFace.sprite = chipNeutral;
+
         tutorialContainer.SetActive(false);
-        chipFace.sprite = chipHappy;
         hasPlayedContractAcceptedTutorial = true;
     }
 
@@ -261,20 +300,23 @@ public class TutorialManager : MonoBehaviour
     IEnumerator WriteScannerGogglesTutorialMessages()
     {
         // Scanner Goggles Message
-        StartCoroutine(OpenTutorialBox(true));
+        tutorialWaypoint.waypointTarget = tutorialWaypoint.tutorialLootableObject;
         tutorialObjectiveMarker.SetActive(true);
+
+        StartCoroutine(OpenTutorialBox(true));
         foreach (char character in Messages[Index].ToCharArray())
         {
             tutorialText.text += character;
             yield return new WaitForSeconds(messageSpeed);
         }
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
         tutorialText.text = null;
         Index++;
         StartCoroutine(OpenTutorialBox(false));
         yield return new WaitForSeconds(scaleTime);
+        chipFace.sprite = chipHappy;
+
         tutorialContainer.SetActive(false);
-        chipFace.sprite = chipNeutral;
         hasPlayedScannerGogglesTutorial = true;
     }
 
@@ -282,20 +324,123 @@ public class TutorialManager : MonoBehaviour
     IEnumerator WriteLootingTutorialMessages()
     {
         // Looting Message
+        tutorialWaypoint.waypointTarget = tutorialWaypoint.dropOffBin;
+        tutorialObjectiveMarker.SetActive(false);
+
         StartCoroutine(OpenTutorialBox(true));
-        tutorialObjectiveMarker.SetActive(true);
         foreach (char character in Messages[Index].ToCharArray())
         {
             tutorialText.text += character;
             yield return new WaitForSeconds(messageSpeed);
         }
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
         tutorialText.text = null;
         Index++;
         StartCoroutine(OpenTutorialBox(false));
         yield return new WaitForSeconds(scaleTime);
         tutorialContainer.SetActive(false);
         chipFace.sprite = chipHappy;
+
+        tutorialContainer.SetActive(false);
         hasPlayedLootingTutorial = true;
+    }
+
+    // WRITE DROP OFF TUTORIAL
+    IEnumerator WriteDropOffTutorialMessages()
+    {
+        // Drop Off
+        tutorialObjectiveMarker.SetActive(true);
+
+        StartCoroutine(OpenTutorialBox(true));
+        foreach (char character in Messages[Index].ToCharArray())
+        {
+            tutorialText.text += character;
+            yield return new WaitForSeconds(messageSpeed);
+        }
+        yield return new WaitForSeconds(2);
+        tutorialText.text = null;
+        Index++;
+        StartCoroutine(OpenTutorialBox(false));
+        yield return new WaitForSeconds(scaleTime);
+        chipFace.sprite = chipNeutral;
+
+        tutorialContainer.SetActive(false);
+        hasPlayedDropOffTutorial = true;
+    }
+
+    // WRITE DROP OFF REACHED TUTORIAL
+    IEnumerator WriteDropOffReachedTutorialMessages()
+    {
+        // Drop Off Reached
+        tutorialObjectiveMarker.SetActive(false);
+
+        StartCoroutine(OpenTutorialBox(true));
+        foreach (char character in Messages[Index].ToCharArray())
+        {
+            tutorialText.text += character;
+            yield return new WaitForSeconds(messageSpeed);
+        }
+        yield return new WaitForSeconds(4);
+        tutorialText.text = null;
+        Index++;
+        StartCoroutine(OpenTutorialBox(false));
+        yield return new WaitForSeconds(scaleTime);
+        chipFace.sprite = chipHappy;
+
+        hasPlayedDropOffReachedTutorial = true;
+
+        // Check Contract
+        StartCoroutine(OpenTutorialBox(true));
+        foreach (char character in Messages[Index].ToCharArray())
+        {
+            tutorialText.text += character;
+            yield return new WaitForSeconds(messageSpeed);
+        }
+        yield return new WaitForSeconds(4);
+        tutorialText.text = null;
+        Index++;
+        StartCoroutine(OpenTutorialBox(false));
+        yield return new WaitForSeconds(scaleTime);
+        chipFace.sprite = chipNeutral;
+
+        // Show them Selling Teleporter
+        tutorialWaypoint.waypointTarget = tutorialWaypoint.selling;
+        tutorialObjectiveMarker.SetActive(true);
+
+        StartCoroutine(OpenTutorialBox(true));
+        foreach (char character in Messages[Index].ToCharArray())
+        {
+            tutorialText.text += character;
+            yield return new WaitForSeconds(messageSpeed);
+        }
+        yield return new WaitForSeconds(4);
+        tutorialText.text = null;
+        Index++;
+        StartCoroutine(OpenTutorialBox(false));
+        yield return new WaitForSeconds(scaleTime);
+        chipFace.sprite = chipHappy;
+
+        tutorialContainer.SetActive(false);
+    }
+
+    // WRITE SELLING TUTORIAL
+    IEnumerator WriteSellingTutorialMessages()
+    {
+        // Selling Bin
+        tutorialObjectiveMarker.SetActive(false);
+
+        StartCoroutine(OpenTutorialBox(true));
+        tutorialObjectiveMarker.SetActive(false);
+        foreach (char character in Messages[Index].ToCharArray())
+        {
+            tutorialText.text += character;
+            yield return new WaitForSeconds(messageSpeed);
+        }
+        yield return new WaitForSeconds(2);
+        tutorialText.text = null;
+        Index++;
+        StartCoroutine(OpenTutorialBox(false));
+        yield return new WaitForSeconds(scaleTime);
+        chipFace.sprite = chipNeutral;
     }
 }
