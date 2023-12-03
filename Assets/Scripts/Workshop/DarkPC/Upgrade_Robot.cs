@@ -1,6 +1,7 @@
 using Agyr.Workshop;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Upgrade_Robot : Upgrade_UI_Behavior
@@ -27,7 +28,7 @@ public class Upgrade_Robot : Upgrade_UI_Behavior
     private void Start()
     {
         UpdateText(_upgradeCost, _upgradeDesc, _upgradeCurrentLevel, _upgradeMaxLevel);
-        _tabManager = DarkWebPC_Manager.Instance.gameObject.transform.parent.GetChild(15).GetChild(1).GetChild(0).GetChild(0).GetChild(2).GetComponent<TabManager>();
+        _tabManager = GameObject.Find("WorkshopArea/Workbench").transform.GetChild(1).GetChild(0).GetChild(0).GetChild(2).GetComponent<TabManager>(); ;
     }
 
     public void Upgrade()
