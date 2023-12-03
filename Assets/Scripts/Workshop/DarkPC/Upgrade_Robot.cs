@@ -27,7 +27,7 @@ public class Upgrade_Robot : Upgrade_UI_Behavior
     private void Start()
     {
         UpdateText(_upgradeCost, _upgradeDesc, _upgradeCurrentLevel, _upgradeMaxLevel);
-        _tabManager = DarkWebPC_Manager.Instance.gameObject.transform.parent.GetChild(12).GetChild(1).GetChild(0).GetChild(0).GetChild(2).GetComponent<TabManager>();
+        _tabManager = DarkWebPC_Manager.Instance.gameObject.transform.parent.GetChild(15).GetChild(1).GetChild(0).GetChild(0).GetChild(2).GetComponent<TabManager>();
     }
 
     public void Upgrade()
