@@ -10,12 +10,15 @@ GameObject:
   m_Component:
   - component: {fileID: 1280902771783077844}
   - component: {fileID: 6062388514835430856}
+  - component: {fileID: 824814518971235349}
+  - component: {fileID: 3169360815125916196}
+  - component: {fileID: 1717989893274693007}
   m_Layer: 0
   m_Name: Scrapyard_FlowerPot_Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1280902771783077844
 Transform:
@@ -48,7 +51,7 @@ LODGroup:
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.27018788
+  - screenRelativeHeight: 0.08098189
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 7135182090272723278}
@@ -57,6 +60,67 @@ LODGroup:
     renderers:
     - renderer: {fileID: 8174437390183322555}
   m_Enabled: 1
+--- !u!65 &824814518971235349
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743695521076374858}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &3169360815125916196
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743695521076374858}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &1717989893274693007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743695521076374858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3138eec820a0d642bafd0622664c6ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offSet: {x: -1, y: 0, z: 1}
 --- !u!1001 &7399690022417256255
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -140,6 +204,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Scrapyard_FlowerPotLOD
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5a0072fa3bf5c844b9f87ca9240f8564,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -203,17 +272,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 29bda1f064d802a49a5db4a847044b7c,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 29bda1f064d802a49a5db4a847044b7c,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 29bda1f064d802a49a5db4a847044b7c,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 29bda1f064d802a49a5db4a847044b7c,
         type: 3}
@@ -240,22 +309,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Scrapyard_FlowerPot
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 29bda1f064d802a49a5db4a847044b7c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 29bda1f064d802a49a5db4a847044b7c,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5413434979573847900}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 29bda1f064d802a49a5db4a847044b7c,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7452370266945676190}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 29bda1f064d802a49a5db4a847044b7c,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6380224712140189751}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29bda1f064d802a49a5db4a847044b7c, type: 3}
 --- !u!23 &7135182090272723278 stripped
 MeshRenderer:
@@ -269,70 +331,3 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8414087427358838218}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &8648527835562045595 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 29bda1f064d802a49a5db4a847044b7c,
-    type: 3}
-  m_PrefabInstance: {fileID: 8414087427358838218}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &5413434979573847900
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8648527835562045595}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.8316581, y: 0.8290333, z: 0.83165807}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &7452370266945676190
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8648527835562045595}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &6380224712140189751
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8648527835562045595}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3138eec820a0d642bafd0622664c6ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offSet: {x: -1, y: 0, z: 1}

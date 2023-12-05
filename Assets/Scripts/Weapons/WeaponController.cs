@@ -198,8 +198,15 @@ public class WeaponController : MonoBehaviour
 
             LootBag lootBag = hit.transform.gameObject.GetComponent<LootBag>();
             PetBuildingController petBuildingController = hit.transform.gameObject.GetComponent<PetBuildingController>();
+            IDamageable enemy = hit.transform.GetComponent<IDamageable>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(_curWeapon.Damage);
+                return;
+
+            }
             //If I hit an item with a lootbag script run drop resource
-            if (lootBag != null && hit.transform.gameObject.GetComponent<RogueBotAgent>() == null)
+            if (lootBag != null && enemy == null )
             {
                 lootBag.DropResource(hit.point);
                 isSwinging = false;

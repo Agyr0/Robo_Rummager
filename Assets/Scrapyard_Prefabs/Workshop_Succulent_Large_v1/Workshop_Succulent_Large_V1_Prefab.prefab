@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5655604344407652971}
   - component: {fileID: 3176358383207475252}
-  - component: {fileID: 9064682893705004384}
   m_Layer: 0
   m_Name: Workshop_Succulent_Large_V1_Prefab
   m_TagString: Untagged
@@ -58,27 +57,6 @@ LODGroup:
     renderers:
     - renderer: {fileID: 7880149600893835676}
   m_Enabled: 1
---- !u!65 &9064682893705004384
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5491114572390058080}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.75663006, y: 0.43188325, z: 0.668005}
-  m_Center: {x: 0.06441903, y: 0.06770168, z: -0.012136102}
 --- !u!1001 &572115881734184512
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using Cinemachine;
 using Cinemachine.PostFX;
 using System.Collections;
+using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 using UnityEngine.VFX;
 using static UnityEngine.Rendering.DebugUI;
@@ -64,7 +65,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float staminaDrain = 3f;
     private float staminaRegen;
-
+    [SerializeField]
+    private NoiseSettings walkNoise;
+    [SerializeField]
+    private NoiseSettings sprintNoise;
 
     [Space(5)]
     [SerializeField]
@@ -73,6 +77,17 @@ public class PlayerController : MonoBehaviour
     private float gravityValue = -9.81f;
     [SerializeField]
     private GameObject speedLines;
+
+    public bool IsSprinting
+    {
+        get { return isSprinting; }
+        set
+        {
+            speedLines.gameObject.SetActive(value);
+            gameManager.PlayerVCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_NoiseProfile = value ? sprintNoise : walkNoise;
+            isSprinting = value;
+        }
+    }
 
     public float CurSpeed
     {
@@ -286,8 +301,7 @@ public class PlayerController : MonoBehaviour
     {
         if (CanSprint)
         {
-            speedLines.gameObject.SetActive(true);
-            isSprinting = true;
+            IsSprinting = true;
             StopCoroutine(IncreaseStamina());
             stopSprint = null;
             if (startSprint == null)
@@ -299,8 +313,7 @@ public class PlayerController : MonoBehaviour
     {
         if (CanSprint)
         {
-            speedLines.gameObject.SetActive(false);
-            isSprinting = false;
+            IsSprinting = false;
             StopCoroutine(ReduceStamina());
             startSprint = null;
             if (stopSprint == null)
@@ -312,7 +325,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator ReduceStamina()
     {
 
-        while (true && CurStamina >= (0 + staminaDrain) && isSprinting)
+        while (true && CurStamina >= (0 + staminaDrain) && IsSprinting)
         {
             CurSpeed = runSpeed;
             yield return new WaitForSeconds(1f);
@@ -320,13 +333,15 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
         CurSpeed = walkSpeed;
+        speedLines.gameObject.SetActive(false);
+        IsSprinting = false;
 
     }
 
     private IEnumerator IncreaseStamina()
     {
 
-        while (true && CurStamina <= staminaMax && !isSprinting)
+        while (true && CurStamina <= staminaMax && !IsSprinting)
         {
             CurSpeed = walkSpeed;
             yield return new WaitForSeconds(1f);
