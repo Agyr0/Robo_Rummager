@@ -39,6 +39,11 @@ namespace Agyr.Workshop
             EventBus.Unsubscribe(EventType.ROBOT_BUILT, RobotBuilt);
         }
 
+        private void Start()
+        {
+            tier1Controller.EnableTabs();
+        }
+
         #region Enable Tabs
         public void EnableTier1() => tier1Controller.EnableTabs();
         public void EnableTier2() => tier2Controller.EnableTabs();
