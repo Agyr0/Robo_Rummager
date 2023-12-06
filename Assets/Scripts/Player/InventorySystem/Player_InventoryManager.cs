@@ -1,3 +1,4 @@
+using Agyr.Workshop;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,7 +64,7 @@ public class Player_InventoryManager : MonoBehaviour
         set 
         { 
             _creditPurse = value;
-            _creditText.text = "Credit: $" + _creditPurse;
+            _creditText.text = WorkshopManager.Instance.WorkshopStorage.CreditCount.ToString();
         }
     }
 
