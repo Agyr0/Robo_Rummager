@@ -77,6 +77,7 @@ public class ContractBoard_Manager : Singleton<ContractBoard_Manager>, IInteract
 
     IEnumerator MakeContracts()
     {
+        EventBus.Publish(EventType.BOARD_ADDCONTRACT, 0, 0f);
         while (true)
         {
             Debug.Log("Spawning contract");
