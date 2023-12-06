@@ -6486,8 +6486,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4254cb0ffc18efc49b95d8f228c5a777, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionDistance: 30
-  shootingDistance: 15
+  detectionDistance: 35
+  shootingDistance: 20
   detectionAngle: 60
   shootingAngle: 5
   height: 2
@@ -6554,8 +6554,8 @@ MonoBehaviour:
   - resource: {fileID: 3119606838275437859, guid: 1223b21db122e054eb453ddf326762fe,
       type: 3}
     dropChance: 100
-    _minDropCount: 1
-    _maxDropCount: 1
+    _minDropCount: 2
+    _maxDropCount: 2
     elementName: Black Matter
   - resource: {fileID: 2652622360622632555, guid: 6ccdceb36497005498250b22a2a1ef20,
       type: 3}
