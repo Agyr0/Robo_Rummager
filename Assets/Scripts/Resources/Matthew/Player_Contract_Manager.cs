@@ -317,8 +317,8 @@ public class Player_Contract_Manager : MonoBehaviour
             _contractHolder = ContractHolder.Unoccupied;
             OnContractRemove();
             ContractBoard_Manager.Instance._bulletinBoard_InProgress_UI.SetActive(false);
-            return;
         }
+
         if (_firstContract == true)
         {
             ContractBoard_Manager.Instance.StartContracts();
