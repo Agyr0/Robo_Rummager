@@ -18,6 +18,9 @@ public class Player_Contract_Manager : MonoBehaviour
     private PlayerContract_UI_Behavior _contract_UI;
     [SerializeField]
     private ContractHolder _contractHolder;
+
+    private bool _firstContract = true;
+
     public Contract_Data Contract_Data
     {
         get { return _contractData; }
@@ -315,6 +318,11 @@ public class Player_Contract_Manager : MonoBehaviour
             OnContractRemove();
             ContractBoard_Manager.Instance._bulletinBoard_InProgress_UI.SetActive(false);
             return;
+        }
+        if (_firstContract == true)
+        {
+            ContractBoard_Manager.Instance.StartContracts();
+            _firstContract = false;
         }
     }
 
