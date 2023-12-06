@@ -454,11 +454,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4d3c8664fda6044f9e3ec74176fc4d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialState: 0
-  navMeshAgent: {fileID: 7583740813042448557}
-  config: {fileID: 11400000, guid: b677f49e753f9af40ae92d873dace45b, type: 2}
-  scavengerSensor: {fileID: 4720486706446910123}
+  audioManager: {fileID: 0}
+  audioSource: {fileID: 0}
   animator: {fileID: 0}
+  navMeshAgent: {fileID: 7583740813042448557}
+  scavengerSensor: {fileID: 4720486706446910123}
+  scavengerWeaponIK: {fileID: 0}
+  initialState: 0
+  config: {fileID: 11400000, guid: b677f49e753f9af40ae92d873dace45b, type: 2}
+  scavengerHealth: 0
 --- !u!114 &4720486706446910123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -472,7 +476,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectionDistance: 30
-  shootingDistance: 12.5
+  shootingDistance: 30
   detectionAngle: 30
   shootingAngle: 2.5
   height: 2
