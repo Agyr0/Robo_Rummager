@@ -68,6 +68,14 @@ public class Player_InventoryManager : MonoBehaviour
         }
     }
 
+    public string CreditText
+    {
+        set
+        {
+            _creditText.text = value;
+        }
+    }
+
     public Inventory_Slot[] Inventory_DataArray
     {
         get { return _inventory_DataArray; }
