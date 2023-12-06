@@ -62,8 +62,9 @@ public class Player_InventoryManager : MonoBehaviour
     {
         get { return _creditPurse; }
         set 
-        { 
-            _creditPurse = value;
+        {
+            _creditPurse = 0;
+            WorkshopManager.Instance.WorkshopStorage.CreditCount += value;
             _creditText.text = WorkshopManager.Instance.WorkshopStorage.CreditCount.ToString();
         }
     }
