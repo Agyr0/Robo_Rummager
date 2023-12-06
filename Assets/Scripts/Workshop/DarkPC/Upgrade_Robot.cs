@@ -43,6 +43,8 @@ public class Upgrade_Robot : Upgrade_UI_Behavior
                 //WorkshopManager.Instance.WorkshopBench.tabManager.tier1Controller.myTabs[0].isLocked = false;
                 _tabManager.tier1Controller.myTabs[0].isLocked = false;
 
+                _tabManager.tier1Controller.EnableTabs();
+
                 ContractBoard_Manager.Instance.Robot_RecipeDataList.Add(_recipeDataContract);
 
                 _upgradeCurrentLevel++;

@@ -19,7 +19,7 @@ public class Player_Contract_Manager : MonoBehaviour
     [SerializeField]
     private ContractHolder _contractHolder;
 
-    private bool _firstContract = true;
+    public bool firstContract = true;
 
     public Contract_Data Contract_Data
     {
@@ -319,10 +319,10 @@ public class Player_Contract_Manager : MonoBehaviour
             ContractBoard_Manager.Instance._bulletinBoard_InProgress_UI.SetActive(false);
         }
 
-        if (_firstContract == true)
+        if (firstContract == true)
         {
             ContractBoard_Manager.Instance.StartContracts();
-            _firstContract = false;
+            firstContract = false;
         }
     }
 
