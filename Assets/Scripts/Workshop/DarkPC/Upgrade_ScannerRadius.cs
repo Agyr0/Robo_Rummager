@@ -37,6 +37,7 @@ public class Upgrade_ScannerRadius : Upgrade_UI_Behavior
             {
                 AudioManager.Instance.PlayClip(this.GetComponent<AudioSource>(), AudioManager.Instance.effectAudio[6].myControllers[1]);
                 WorkshopManager.Instance.WorkshopStorage.CreditCount -= _upgradeCost;
+                GameManager.Instance.inventoryManager.CreditText = WorkshopManager.Instance.WorkshopStorage.CreditCount.ToString();
                 _upgradeCurrentLevel++;
                 UpdateText(_upgradeCost, _upgradeDesc, _upgradeCurrentLevel, _upgradeMaxLevel);
                 _radiusCurrent = scannerVFX.GetFloat("RangeMultiplier");

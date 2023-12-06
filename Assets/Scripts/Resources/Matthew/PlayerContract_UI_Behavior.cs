@@ -73,6 +73,8 @@ public class PlayerContract_UI_Behavior : MonoBehaviour
             }
             else
             {
+                _contract_Resource_Scrap_Text.transform.parent.parent.gameObject.SetActive(true);
+
                 string tempValue = "";
                 tempValue += value.ToString() + "/" + (WorkshopManager.Instance.WorkshopStorage.MetalScrapCount);
 
@@ -102,6 +104,7 @@ public class PlayerContract_UI_Behavior : MonoBehaviour
             }
             else
             {
+                _contract_Resource_Wires_Text.transform.parent.parent.gameObject.SetActive(true);
                 string tempValue = "";
                 tempValue += value.ToString() + "/" + (WorkshopManager.Instance.WorkshopStorage.WireCount);
 
@@ -128,6 +131,7 @@ public class PlayerContract_UI_Behavior : MonoBehaviour
             }
             else
             {
+                _contract_Resource_Oilcan_Text.transform.parent.parent.gameObject.SetActive(true);
                 string tempValue = "";
                 tempValue += value.ToString() + "/" + (WorkshopManager.Instance.WorkshopStorage.OilCount);
 
@@ -154,6 +158,8 @@ public class PlayerContract_UI_Behavior : MonoBehaviour
             }
             else
             {
+                _contract_Resource_Motherboards_Text.transform.parent.parent.gameObject.SetActive(true);
+
                 string tempValue = "";
                 tempValue += value.ToString() + "/" + (WorkshopManager.Instance.WorkshopStorage.MotherBoardCount);
 
@@ -180,6 +186,8 @@ public class PlayerContract_UI_Behavior : MonoBehaviour
             }
             else
             {
+                _contract_Resource_AdvSensors_Text.transform.parent.parent.gameObject.SetActive(true);
+
                 string tempValue = "";
                 tempValue += value.ToString() + "/" + (WorkshopManager.Instance.WorkshopStorage.SensorCount);
 
@@ -206,6 +214,8 @@ public class PlayerContract_UI_Behavior : MonoBehaviour
             }
             else
             {
+                _contract_Resource_RadWaste_Text.transform.parent.parent.gameObject.SetActive(true);
+
                 string tempValue = "";
                 tempValue += value.ToString() + "/" + (WorkshopManager.Instance.WorkshopStorage.RadioactiveWasteCount);
 
@@ -234,6 +244,8 @@ public class PlayerContract_UI_Behavior : MonoBehaviour
             }
             else
             {
+                _contract_Resource_ZCrystal_Text.transform.parent.parent.gameObject.SetActive(true);
+
                 string tempValue = "";
                 tempValue += value.ToString() + "/" + (WorkshopManager.Instance.WorkshopStorage.ZCrystalCount);
 
@@ -260,6 +272,8 @@ public class PlayerContract_UI_Behavior : MonoBehaviour
             }
             else
             {
+                _contract_Resource_BlackMatter_Text.transform.parent.parent.gameObject.SetActive(true);
+
                 string tempValue = "";
                 tempValue += value.ToString() + "/" + (WorkshopManager.Instance.WorkshopStorage.BlackMatterCount);
 

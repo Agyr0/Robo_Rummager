@@ -33,6 +33,7 @@ public class Upgrade_3DPrinter : Upgrade_UI_Behavior
             {
                 AudioManager.Instance.PlayClip(this.GetComponent<AudioSource>(), AudioManager.Instance.effectAudio[6].myControllers[1]);
                 WorkshopManager.Instance.WorkshopStorage.CreditCount -= _upgradeCost;
+                GameManager.Instance.inventoryManager.CreditText = WorkshopManager.Instance.WorkshopStorage.CreditCount.ToString();
                 DarkWebPC_Manager.Instance._3DPrinterList[_upgradeCurrentLevel].SetActive(true);
                 _upgradeCurrentLevel++;
                 UpdateText(_upgradeCost, _upgradeDesc, _upgradeCurrentLevel, _upgradeMaxLevel);
