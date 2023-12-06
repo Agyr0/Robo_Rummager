@@ -51,18 +51,24 @@ MonoBehaviour:
   _dropTable:
   - resource: {fileID: 2652622360622632555, guid: 6ccdceb36497005498250b22a2a1ef20,
       type: 3}
-    dropChance: 100
-    _minDropCount: 1
+    dropChance: 20
+    _minDropCount: 5
     _maxDropCount: 10
     elementName: Credits
   - resource: {fileID: 2652622360622632555, guid: f5392ea59cf726744bd66960cda3e282,
       type: 3}
-    dropChance: 100
-    _minDropCount: 2
-    _maxDropCount: 4
+    dropChance: 50
+    _minDropCount: 5
+    _maxDropCount: 10
+    elementName: Z_Crystal
+  - resource: {fileID: 2652622360622632555, guid: 2a55e99c8541cd141a4f4581185c60f2,
+      type: 3}
+    dropChance: 50
+    _minDropCount: 5
+    _maxDropCount: 10
     elementName: Z_Crystal
   _resourceFullMesh: {fileID: 6605563872198495263}
-  _maxDrops: 6
+  _maxDrops: 10
   _dropsLeft: 0
   _explosionForce: 2
   _explosionRadius: 1

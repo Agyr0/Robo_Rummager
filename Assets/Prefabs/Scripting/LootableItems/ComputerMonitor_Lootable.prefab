@@ -51,18 +51,24 @@ MonoBehaviour:
   _dropTable:
   - resource: {fileID: 2652622360622632555, guid: 6ccdceb36497005498250b22a2a1ef20,
       type: 3}
-    dropChance: 100
+    dropChance: 20
     _minDropCount: 1
     _maxDropCount: 5
     elementName: Credits
   - resource: {fileID: 2652622360622632555, guid: 7f7d96b6610083b41bf6b9018c6f9080,
       type: 3}
-    dropChance: 100
-    _minDropCount: 1
-    _maxDropCount: 3
+    dropChance: 50
+    _minDropCount: 5
+    _maxDropCount: 10
+    elementName: Wires
+  - resource: {fileID: 2652622360622632555, guid: 6a152fca52c1b7846a4547f550b59247,
+      type: 3}
+    dropChance: 50
+    _minDropCount: 5
+    _maxDropCount: 10
     elementName: Wires
   _resourceFullMesh: {fileID: 8709471081424903118}
-  _maxDrops: 3
+  _maxDrops: 10
   _dropsLeft: 0
   _explosionForce: 2
   _explosionRadius: 1
