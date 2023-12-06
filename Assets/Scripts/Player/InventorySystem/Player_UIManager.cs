@@ -29,8 +29,6 @@ public class Player_UIManager : MonoBehaviour
     [SerializeField]
     private GameObject _playerHUD_UI;
     [SerializeField]
-    private GameObject _creditBox;
-    [SerializeField]
     private GameObject _bulletinBoardInteract_UI;
 
     private void OnEnable()
@@ -113,7 +111,6 @@ public class Player_UIManager : MonoBehaviour
         _playerHUD_UI.SetActive(false);
         _contracts_UI.SetActive(false);
         _options_UI.SetActive(false);
-        _creditBox.SetActive(false);
         EventBus.Publish(EventType.INVENTORY_UPDATE, this.gameObject);
         //EventBus.Publish(EventType.INVENTORY_TOGGLE);
     }
@@ -124,7 +121,6 @@ public class Player_UIManager : MonoBehaviour
         _fannyPack_UI.SetActive(false);
         _playerHUD_UI.SetActive(true);
         _options_UI.SetActive(false);
-        _creditBox.SetActive(false);
         EventBus.Publish(EventType.INVENTORY_UPDATE, this.gameObject);
         //EventBus.Publish(EventType.INVENTORY_TOGGLE);
     }
@@ -135,7 +131,6 @@ public class Player_UIManager : MonoBehaviour
         _inventory_UI.SetActive(false);
         _contracts_UI.SetActive(true);
         _options_UI.SetActive(false);
-        _creditBox.SetActive(true);
     }
 
     public void OnDisplay_Options()
@@ -143,7 +138,6 @@ public class Player_UIManager : MonoBehaviour
         _inventory_UI.SetActive(false);
         _contracts_UI.SetActive(false);
         _options_UI.SetActive(true);
-        _creditBox.SetActive(false);
     }
 
     public void OnDisplay_PlayerHUD()
@@ -153,7 +147,6 @@ public class Player_UIManager : MonoBehaviour
         _contracts_UI.SetActive(false);
         _options_UI.SetActive(false);
         _playerHUD_UI.SetActive(true);
-        _creditBox.SetActive(false);
     }
 
     public void OnDisplayToggle_BulletinInteract()
@@ -185,7 +178,6 @@ public class Player_UIManager : MonoBehaviour
         _options_UI.SetActive(false);
         _playerHUD_UI.SetActive(false);
         _fannyPack_UI.SetActive(false);
-        _creditBox.SetActive(true);
     }
 
     public void OnDisplay_ExitBulletin()
@@ -194,7 +186,6 @@ public class Player_UIManager : MonoBehaviour
         _contracts_UI.SetActive(false);
         _options_UI.SetActive(false);
         _playerHUD_UI.SetActive(true);
-        _creditBox.SetActive(false);
     }
 
     public void doFeedBackForm()
