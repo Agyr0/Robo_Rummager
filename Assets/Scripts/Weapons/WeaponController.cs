@@ -202,8 +202,6 @@ public class WeaponController : MonoBehaviour
             if (enemy != null)
             {
                 enemy.TakeDamage(_curWeapon.Damage);
-                return;
-
             }
             //If I hit an item with a lootbag script run drop resource
             if (lootBag != null && enemy == null )

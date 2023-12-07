@@ -19,6 +19,9 @@ public class RogueBotAgent : MonoBehaviour, IDamageable
 
     public float rogueBotHealth;
 
+    [SerializeField]
+    private bool isTutorialBot = false;
+
     void Start()
     {
         audioManager = AudioManager.Instance;
@@ -26,16 +29,20 @@ public class RogueBotAgent : MonoBehaviour, IDamageable
         animator = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
 
-        // State Machine Stuff
-        stateMachine = new RogueBotStateMachine(this);
-        stateMachine.RegisterState(new RogueBotPatrolState());
-        stateMachine.RegisterState(new RogueBotChaseState());
-        stateMachine.RegisterState(new RogueBotChargeState());
-        stateMachine.RegisterState(new RogueBotRepositionState());
-        config = RogueBotConfig.Instantiate(config);
 
-        // Stuff to do when enemy is spawned
-        stateMachine.ChangeState(initialState);
+        if (!isTutorialBot)
+        {
+            // State Machine Stuff
+            stateMachine = new RogueBotStateMachine(this);
+            stateMachine.RegisterState(new RogueBotPatrolState());
+            stateMachine.RegisterState(new RogueBotChaseState());
+            stateMachine.RegisterState(new RogueBotChargeState());
+            stateMachine.RegisterState(new RogueBotRepositionState());
+            config = RogueBotConfig.Instantiate(config);
+
+            // Stuff to do when enemy is spawned
+            stateMachine.ChangeState(initialState);
+        }
         rogueBotHealth = config.maxHealth;
         config.patrolCenterPoint = transform.position;
     }
@@ -43,7 +50,8 @@ public class RogueBotAgent : MonoBehaviour, IDamageable
     void Update()
     {
         animator.SetFloat("Speed", navMeshAgent.velocity.magnitude);
-        stateMachine.Update();
+        if (!isTutorialBot)
+            stateMachine.Update();
     }
 
     public void TakeDamage(float damage)
@@ -51,8 +59,11 @@ public class RogueBotAgent : MonoBehaviour, IDamageable
         rogueBotHealth -= damage;
         if (rogueBotHealth <= 0)
         {
-            navMeshAgent.velocity = Vector3.zero;
-            navMeshAgent.isStopped = true;
+            if (!isTutorialBot)
+            {
+                navMeshAgent.velocity = Vector3.zero;
+                navMeshAgent.isStopped = true;
+            }
             animator.SetBool("Dead", true);
             // Play Death Audio
             audioManager.PlayClip(audioSource, audioManager.FindRandomizedClip(AudioType.RogueBot_Death, audioManager.effectAudio));
@@ -61,7 +72,8 @@ public class RogueBotAgent : MonoBehaviour, IDamageable
         else
         {
             // Chase Player
-            stateMachine.ChangeState(RogueBotStateId.Chase);
+            if (!isTutorialBot)
+                stateMachine.ChangeState(RogueBotStateId.Chase);
         }
     }
 
@@ -71,13 +83,16 @@ public class RogueBotAgent : MonoBehaviour, IDamageable
         // Item Drops
         LootBag lootBag = this.gameObject.GetComponent<LootBag>();
         lootBag.DropResource(this.gameObject.transform.position);
+            gameObject.SetActive(false);
 
-        // Respawn and Object Pool stuff
-        navMeshAgent.isStopped = false;
-        gameObject.SetActive(false);
-        navMeshAgent.enabled = false;
-        rogueBotHealth = config.maxHealth;
-        animator.SetBool("Dead", false);
+        if (!isTutorialBot)
+        {
+            // Respawn and Object Pool stuff
+            navMeshAgent.isStopped = false;
+            navMeshAgent.enabled = false;
+            rogueBotHealth = config.maxHealth;
+            animator.SetBool("Dead", false);
+        }
     }
 
     private void OnDrawGizmos()
