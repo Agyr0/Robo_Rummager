@@ -139,6 +139,7 @@ namespace Agyr.Workshop
         public Color inactiveColor;
         public Color activeColor;
         public Color lockedColor;
+        public Color unLockedColor;
 
 
 
@@ -172,6 +173,10 @@ namespace Agyr.Workshop
                 if (!myTabs[i].CheckUnlock())
                 {
                     myTabs[i].buttonImage.color = lockedColor;
+                }
+                else
+                {
+                    myTabs[i].buttonImage.color = unLockedColor;
                 }
             }
         }
@@ -250,6 +255,7 @@ namespace Agyr.Workshop
     public class TabButtonHeader
     {
         public TabHeader myTab;
+        public Robot_RecipeData myRecipieData;
 
         public Button myButton
         {

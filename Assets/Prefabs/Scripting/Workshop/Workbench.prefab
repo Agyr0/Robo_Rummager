@@ -14355,6 +14355,7 @@ MonoBehaviour:
     hologramPrefab: {fileID: 0}
     selectedTab:
       myTab: {fileID: 0}
+      myRecipieData: {fileID: 0}
       isLocked: 1
       hasPurchased: 0
       elementName: ChangeMe
@@ -14362,30 +14363,35 @@ MonoBehaviour:
         value: 
     myTabs:
     - myTab: {fileID: 2579876511891725288}
+      myRecipieData: {fileID: 11400000, guid: be1a9ca0bc57671439cec7c0e7395266, type: 2}
       isLocked: 0
       hasPurchased: 0
       elementName: Dog
       ButtonText:
         value: 
     - myTab: {fileID: 5888214058910301614}
+      myRecipieData: {fileID: 11400000, guid: b75652f004a40e543bca02b6dca47fdc, type: 2}
       isLocked: 0
       hasPurchased: 0
       elementName: Cat
       ButtonText:
         value: 
     - myTab: {fileID: 8151905862206409534}
+      myRecipieData: {fileID: 11400000, guid: dcdf9f5a486807744960ae92235d4433, type: 2}
       isLocked: 1
       hasPurchased: 0
       elementName: Rat
       ButtonText:
         value: 
     - myTab: {fileID: 1005155559253053414}
+      myRecipieData: {fileID: 11400000, guid: 14fd27192e52bdf4e85eb503dd10c376, type: 2}
       isLocked: 1
       hasPurchased: 0
       elementName: Football
       ButtonText:
         value: 
     - myTab: {fileID: 4191927349622423855}
+      myRecipieData: {fileID: 11400000, guid: 256d3e66b417eb24abe9bb460301c566, type: 2}
       isLocked: 1
       hasPurchased: 0
       elementName: Police
@@ -14394,11 +14400,13 @@ MonoBehaviour:
     inactiveColor: {r: 0.24313727, g: 0.25882354, b: 0.43921572, a: 1}
     activeColor: {r: 0.18431373, g: 0.5882353, b: 0.85098046, a: 1}
     lockedColor: {r: 0, g: 0, b: 0, a: 1}
+    unLockedColor: {r: 1, g: 1, b: 1, a: 1}
   tier2Controller:
     tabGroup: {fileID: 0}
     hologramPrefab: {fileID: 0}
     selectedTab:
       myTab: {fileID: 0}
+      myRecipieData: {fileID: 0}
       isLocked: 1
       hasPurchased: 0
       elementName: ChangeMe
@@ -14408,11 +14416,13 @@ MonoBehaviour:
     inactiveColor: {r: 0, g: 0, b: 0, a: 0}
     activeColor: {r: 0, g: 0, b: 0, a: 0}
     lockedColor: {r: 0, g: 0, b: 0, a: 0}
+    unLockedColor: {r: 0, g: 0, b: 0, a: 0}
   tier3Controller:
     tabGroup: {fileID: 0}
     hologramPrefab: {fileID: 0}
     selectedTab:
       myTab: {fileID: 0}
+      myRecipieData: {fileID: 0}
       isLocked: 1
       hasPurchased: 0
       elementName: ChangeMe
@@ -14422,6 +14432,7 @@ MonoBehaviour:
     inactiveColor: {r: 0, g: 0, b: 0, a: 0}
     activeColor: {r: 0, g: 0, b: 0, a: 0}
     lockedColor: {r: 0, g: 0, b: 0, a: 0}
+    unLockedColor: {r: 0, g: 0, b: 0, a: 0}
   prefabSpawnPoint: {fileID: 3110179576577980846}
   robotParent: {fileID: 3110179576577980846}
 --- !u!1 &4396055947363042280

@@ -10,8 +10,7 @@ public class PickUpObject : MonoBehaviour, IInteractable
     private Vector3 offSet = new Vector3(-1, 0, 1);
     private Rigidbody rb;
 
-
-
+   
     public virtual void HandleInteract()
     {
         pickedUp = !pickedUp;
