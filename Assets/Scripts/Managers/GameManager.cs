@@ -137,6 +137,8 @@ public class GameManager : Singleton<GameManager>
         weaponController.enabled = false;
     }
 
+
+
     private void ToggleInput()
     {
         InUI = !InUI;

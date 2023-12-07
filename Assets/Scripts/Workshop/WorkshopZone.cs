@@ -5,10 +5,17 @@ using UnityEngine;
 [System.Serializable]
 public class WorkshopZone
 {
+    [HideInInspector]
     public LootableItemManager lootableItemManager;
+
+    [SerializeField, Range(0,1)]
+    private float percentResourcesLeftBeforeRespawn = .25f;
 
     public bool ResourcesAvailable()
     {
+
+        float resourcesFound = 0;
+
         //Get ref to lootableItemManager
         if (lootableItemManager == null)
             lootableItemManager = LootableItemManager.Instance;
@@ -20,13 +27,17 @@ public class WorkshopZone
             if (lootableItemManager.possibleSpawnLocations[i].active)
                 continue;
 
-            //If the lootable item is active in the scene return true
+            //If the lootable item is active in the scene
             if (lootableItemManager.possibleSpawnLocations[i].myCurObject.activeInHierarchy)
-                return true;
+                resourcesFound++;
         }
 
-        //If made it through the for loop all spawned in lootable items are not active in scene
-        //so return true
+        //If there are more resources in the map than the percentResourcesLeftBeforeRespawn
+        if ((resourcesFound/ lootableItemManager.curNumResources) > percentResourcesLeftBeforeRespawn)
+            return true;
+        
+
+        
         return false;
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -50,6 +51,9 @@ public class WeaponController : MonoBehaviour
     private Animator _animator;
     [SerializeField]
     private Text _curAmmoText;
+
+    [SerializeField]
+    private LayerMask ignoreLayers;
 
     public Text CurAmmoText
     {
@@ -275,7 +279,7 @@ public class WeaponController : MonoBehaviour
             if (_weaponInstance.GetComponent<WeaponRecoil>() != null)
                 _weaponInstance.GetComponent<WeaponRecoil>().GenerateRecoil();
 
-            if (Physics.Raycast(ray, out hit, _curWeapon.Range))
+            if (Physics.Raycast(ray, out hit, _curWeapon.Range, ~ignoreLayers))
             {
 
                 IDamageable enemy = hit.transform.GetComponent<IDamageable>();
@@ -283,6 +287,8 @@ public class WeaponController : MonoBehaviour
                 {
                     enemy.TakeDamage(_curWeapon.Damage);
                 }
+
+                Debug.Log("<color=blue> " + hit.transform.gameObject.name + "</color>");
             }
             StartCoroutine(ShootTrail(trail, hit));
             

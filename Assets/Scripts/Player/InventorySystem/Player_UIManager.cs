@@ -1,7 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class Player_UIManager : MonoBehaviour
 {
@@ -30,6 +34,10 @@ public class Player_UIManager : MonoBehaviour
     private GameObject _playerHUD_UI;
     [SerializeField]
     private GameObject _bulletinBoardInteract_UI;
+    [SerializeField]
+    private TextMeshProUGUI ambientValue, effectValue;
+    [SerializeField]
+    private AudioMixer masterMixer;
 
     private void OnEnable()
     {
@@ -217,6 +225,19 @@ public class Player_UIManager : MonoBehaviour
         }
     }
 
+
+    public void ChangeAmbientAudio(Single value)
+    {
+        float volume = value + 80;
+        ambientValue.text = volume.ToString("0.0");
+        masterMixer.SetFloat("Ambient", value);
+    }
+    public void ChangeEffectAudio(Single value)
+    {
+        float volume = value + 80;
+        effectValue.text = volume.ToString("0.0");
+        masterMixer.SetFloat("Effects", value);
+    }
 
     public void doExitGame()
     {
